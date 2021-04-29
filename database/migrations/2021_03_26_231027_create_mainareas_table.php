@@ -16,7 +16,7 @@ class CreateMainareasTable extends Migration
         Schema::create('mainareas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name_main_area');
-            $table->string('supervisor_id');
+            $table->string('supervisor_id'); 
             $table->timestamps();
         });
     }
