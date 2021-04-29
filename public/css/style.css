@@ -1,0 +1,33 @@
+/* register page */
+.floatt{
+    float: right;
+}
+.leftspace{
+    margin-left: 10px;
+}
+.font{
+    font-size: 18px;
+    width: 60px;
+}
+/* end register page */
+/*.col-sm-offset-3{margin-right:25%}
+.col-sm-3 {
+    width: 25%;
+    margin-right:75%
+}*/
+.panel-default .panel-heading{
+	background: #fff;
+	border-bottom: 1px solid #e9ecf2;
+	color: #444444;
+	text-align: center;
+}
+  .profile-img-card{
+	width:96px;
+	height: 96px;
+	margin-left: 129px;
+	margin-right:100px;
+	border-radius: 50%;
+	display: block;
+}
+
+
