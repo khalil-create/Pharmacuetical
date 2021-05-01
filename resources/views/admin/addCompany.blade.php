@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة منطقة رئيسية
+    اضافة شركة
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">إضافة منطقة رئيسية</h3>
+                    <h3 class="card-title" style="float: right">إضافة شركة</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,25 +42,41 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('storeMainArea') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('storeCompany') }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name_main_area">اسم المنطقة الرئيسية</label>
-                                    <input type="text" name="name_main_area" class="form-control" id="name_main_area">
-                                    @if ($errors->has('name_main_area'))
+                                    <label for="name_company">اسم الشركة</label>
+                                    <input type="text" name="name_company" class="form-control" id="name_company">
+                                    @if ($errors->has('name_company'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('name_main_area') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('name_company') }}</small>
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="country_manufacturing">بلد التصنيع</label>
+                                    <input type="text" name="country_manufacturing" class="form-control" id="country_manufacturing">
+                                    @if ($errors->has('country_manufacturing'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('country_manufacturing') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="sign_img_company">تحميل الصورة</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="sign_img_company">
+                                            <label class="custom-file-label" for="sign_img_company"></label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group{{ $errors->has('supervisor_name') ? ' has-error' : '' }}">
                                     <label for="supervisor_name" class="col-md-2 control-label">المشرف عليها</label>
-                                    {{-- <div class="col-md-8"> --}}
-                                        {{-- <input name="supervisor_name"  id="supervisor_name" list="usertype" > --}}
                                             <select name="supervisor_name" id="supervisor_name" class="form-control custom-select rounded-0">
-                                                @foreach ($supervisor as $sup)
-                                                <option value="{{$sup->user_name_third}}">{{ $sup->user_name_third }} {{$sup->user_surname}}</option>
+                                                @foreach ($supervisor as $row)
+                                                <option value="{{$row->user_name_third}}">{{ $row->user_name_third }} {{$row->user_surname}}</option>
                                                 @endforeach
                                             </select>
                                         @if ($errors->has('supervisor_name'))

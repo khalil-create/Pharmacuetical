@@ -49,6 +49,27 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
     Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
     Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
+
+    Route::get('/manageCompany', 'CompanyController@getAllCompanys');
+    Route::get('/addCompany', 'CompanyController@addCompany');
+    Route::post('/storeCompany', 'CompanyController@storeCompany');
+    Route::get('/editCompany/{id}', 'CompanyController@editCompany');
+    Route::put('/UpdateCompany/{id}', 'CompanyController@UpdateCompany');
+    Route::delete('/deleteCompany/{id}', 'CompanyController@deleteCompany');
+    
+    Route::get('/manageCategories', 'CategoryController@getAllCategories');
+    Route::get('/addCategory', 'CategoryController@addCategory');
+    Route::post('/storeCategory', 'CategoryController@storeCategory');
+    Route::get('/editCategory/{id}', 'CategoryController@editCategory');
+    Route::put('/UpdateCategory/{id}', 'CategoryController@UpdateCategory');
+    Route::delete('/deleteCategory/{id}', 'CategoryController@deleteCategory');
+    
+    Route::get('/manageItems', 'ItemController@getAllItems');
+    Route::get('/addItem', 'ItemController@addItem');
+    Route::post('/storeItem', 'ItemController@storeItem');
+    Route::get('/editItem/{id}', 'ItemController@editItem');
+    Route::put('/UpdateItem/{id}', 'ItemController@UpdateItem');
+    Route::delete('/deleteItem/{id}', 'ItemController@deleteItem');
 });
 Auth::routes();
 

@@ -59,7 +59,7 @@ class SubAreaController extends Controller
     public function editSubArea($id)
     {
         $subarea = Subarea::find($id);
-        if(!$subarea)
+        if($subarea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $mainarea = Mainarea::find($subarea->mainarea_id);
         $mainareas = Mainarea::all();
@@ -68,8 +68,14 @@ class SubAreaController extends Controller
     }
     public function UpdateSubArea(Request $request,$id)
     {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $subarea = Subarea::find($id);
-        if(!$subarea)
+        if($subarea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $mainarea = Mainarea::where('name_main_area',$request->name_main_area)->first();
         $subarea->name_sub_area = $request->Input('name_sub_area');
@@ -81,7 +87,7 @@ class SubAreaController extends Controller
     public function deleteSubArea($id)
     {
         $subarea = Subarea::find($id);
-        if(!$subarea)
+        if($subarea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $subarea->delete();
         return redirect('/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');

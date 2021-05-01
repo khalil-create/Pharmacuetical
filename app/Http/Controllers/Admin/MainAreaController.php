@@ -14,15 +14,7 @@ class MainAreaController extends Controller
     public function getAllAreas()
     {
         $mainareas = Mainarea::whereHas('supervisor')->get();
-
-        $supervisors = Supervisor::with(['user'=>function($q){
-            $q->select('user_name_third','user_surname','id');
-        }])->get();
-
-        $users = User::whereHas('supervisor')->get();
-        return view('admin.manageMainAreas',compact('users',$users))
-        ->with('mainareas',$mainareas)->with('supervisors',$supervisors);
-
+        return view('admin.manageMainAreas',compact('mainareas',$mainareas));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +22,6 @@ class MainAreaController extends Controller
     {
         $supervisor = User::whereHas('supervisor')->get();
         return view('admin.addMainArea', compact('supervisor',$supervisor));
-        //return view('admin.addMainArea')->with('supervisors' , $supervisors);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,36 +56,32 @@ class MainAreaController extends Controller
     }
     public function editMainArea($areaid)
     {
-        // $ss = Supervisor::whereHas('user')->whereHas('mainareas')->get();
-        // return $ss;
         $area = Mainarea::find($areaid); 
-        if(!$area)
+        if($area->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        //return $area->supervisor_id;
         $sup1 = Supervisor::findOrfail($area->supervisor_id);
         $supervisor = $sup1->user()->get();
-        //return $sup1->user_id;
-        // $supervisors = User::where('id',$sup1->user_id)->get();
-        // return $supervisor;
-        // return $supervisor->user_name_third;
         $supervisors = User::whereHas('supervisor')->get();
-        //$supervisors = Supervisor::whereHas('mainareas')->where('user_id',$sup->id)-first();
-        //return $supervisors;
-        
         return view('admin.editMainArea', compact('supervisor',$supervisor))->with('supervisors',$supervisors)
         ->with('area',$area);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function UpdateMainArea(Request $request,$areaid)
     {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $mainArea = Mainarea::find($areaid);
         
-        if(!$mainArea)
+        if($mainArea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $supervisorName = $request->Input('supervisor_name');
         $user = User::where('user_name_third',$supervisorName)->first();
         $sup = $user->supervisor()->get();
-        $supID;
+        $supID = 0;
         foreach($sup as $s){
             $supID = $s->id;
         }

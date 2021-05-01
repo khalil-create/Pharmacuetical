@@ -74,6 +74,8 @@
             </a>
         </li>
         <li class="nav-item {{ $p == 'manageMainAreas' || 
+                                $p == 'addMainArea' || 
+                                $p == 'addSubArea' || 
                                 $p == 'manageSubAreas' ||
                                 $path == 'editMainArea' ||
                                 $path == 'editSubArea' ||
@@ -81,6 +83,8 @@
                             }}">
             <a href="{{url('manageMainAreas')}}" 
             class="nav-link {{  $p == 'manageMainAreas' ||
+                                $p == 'addMainArea' || 
+                                $p == 'addSubArea' || 
                                 $p == 'manageSubAreas' || 
                                 $path == 'editMainArea'||
                                 $path == 'editSubArea' ||
@@ -96,6 +100,7 @@
                 <li class="nav-item">
                 <a href="{{url('manageMainAreas')}}" 
                 class="nav-link {{  $p == 'manageMainAreas' ||
+                                    $p == 'addMainArea' || 
                                     $path == 'editMainArea' ||
                                     $path == 'supAreas'? 'active' : '' 
                                 }}" class="nav-link">
@@ -106,6 +111,7 @@
                 <li class="nav-item">
                 <a href="{{url('manageSubAreas')}}" 
                 class="nav-link {{  $p == 'manageSubAreas'||
+                                    $p == 'addSubArea' || 
                                     $path == 'editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -114,19 +120,85 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item {{ $p == 'manageCompany' || 
+                                $p == 'addCompany' ||
+                                $p == 'manageCategories' ||
+                                $p == 'addCategories' ||
+                                $p == 'manageItems' ||
+                                $p == 'addItems' ||
+                                $path == 'editCompany' ||
+                                $path == 'editCategries' ||
+                                $path == 'editItems'? 'menu-open' : ''
+                            }}">
+            <a href="{{url('manageCompany')}}" 
+            class="nav-link {{  $p == 'manageCompany' || 
+                                $p == 'addCompany' ||
+                                $p == 'addCategory' ||
+                                $p == 'manageCategories' ||
+                                $p == 'manageItems' ||
+                                $p == 'addItem' ||
+                                $path == 'editCompany' ||
+                                $path == 'editCategry' ||
+                                $path == 'editItem'? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                ادارة الشركات
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="{{url('manageCompany')}}" 
+                class="nav-link {{  $p == 'manageCompany' ||
+                                    $p == 'addCompany' ||
+                                    $path == 'editCompany' ? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>الشركات</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{url('manageCategories')}}" 
+                class="nav-link {{  $p == 'manageCategories'||
+                                    $p == 'addCategory' ||
+                                    $path == 'editCategry' ? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>مجموعات الاصناف</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('manageItems')}}" 
+                    class="nav-link {{  $p == 'manageItems'||
+                                        $p == 'addItem' ||
+                                        $path == 'editItem' ? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الاصناف</p>
+                    </a>
+                    </li>
+            </ul>
+        </li>
         <li class="nav-item">
-            <a href="{{url('manageItems')}}" class="nav-link {{ request()->path() == 'displayAllItems' ? 'active' : '' }}">
+            <a href="{{url('manageSamples')}}" 
+            class="nav-link {{  $p == 'manageSamples' ||
+                                $p == 'addSample' ||
+                                $path == 'editSample' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
-                ادارة الأصناف
+                ادارة العينات
                 </p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->path() == 'displayAllCompanies' ? 'active' : '' }}">
+            <a href="{{url('manageCustomers')}}" 
+            class="nav-link {{  $p == 'manageCustomers' ||
+                                $p == 'addCustomer' ||
+                                $path == 'editCustomer' ? 'active' : ''  }}">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
-                ادارة الشركات
+                ادارة العملاء
                 </p>
             </a>
         </li>

@@ -47,13 +47,19 @@
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
+              <thead>                 
+                @if($subArea->count() > 0)
+                  <tr>            
                     <th>العدد</th>
-                  <th>اسم المنطقة الفرعية</th>
-                  <th>اسم منطقتها الرئيسية</th>
-                  <th colspan="2"> العملية</th>
-                </tr>
+                    <th>اسم المنطقة الفرعية</th>
+                    <th>اسم منطقتها الرئيسية</th>
+                    <th colspan="2"> العملية</th>
+                  </tr>
+                @else
+                  <div class="alert alert-success notify-success">
+                    {{ 'لم يتم اضافة اي منطقة فرعية' }}
+                  </div>
+                @endif
               </thead>
               <tbody>
                 <?php $i=1?>

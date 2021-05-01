@@ -8,7 +8,6 @@ class Mainarea extends Model
 {
     protected $fillable = [
             'name_main_area',
-            'supervisor_id',
             'created_at',
             'updated_at',
         ];
@@ -27,8 +26,4 @@ class Mainarea extends Model
         return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
     }
     
-    // public function supervisor()
-    // {
-    //     return $this->belongsTo('App\Models\User','supervisor_id','id');//(related,foriegn key,primary key)
-    // }
 }

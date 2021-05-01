@@ -48,14 +48,20 @@
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
-                  <th>العدد</th>
-                  <th>اسم المشرف</th>
-                  <th>الجنس</th>
-                  <th>البريد الالكتروني</th>
-                  <th colspan="2" class="align-center"> العملية</th>
-                </tr>
+              <thead>            
+                @if($supervisor->count() > 0)
+                  <tr>
+                    <th>العدد</th>
+                    <th>اسم المشرف</th>
+                    <th>الجنس</th>
+                    <th>البريد الالكتروني</th>
+                    <th colspan="2" class="align-center"> العملية</th>
+                  </tr>
+                @else
+                  <div class="alert alert-success notify-success">
+                    {{ 'لم يتم اضافة اي مشرف' }}
+                  </div>
+                @endif
               </thead>
               <tbody>
                 <?php $i=1?>

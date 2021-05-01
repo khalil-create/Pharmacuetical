@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-   ادارة المناطق
+    ادارة مجموعات الاصناف 
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
       <div class="col-10">
         <div class="card">
           <div class="card-header">
-            <span class="card-title" style="float: right">قائمة المناطق الرئيسية</span>
+            <span class="card-title" style="float: right">قائمة مجموعات الاصناف</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -48,32 +48,31 @@
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
               <thead>
-                @if($mainareas->count() > 0)
+                @if($cat->count() > 0)
                   <tr>
                       <th>العدد</th>
-                    <th>اسم المنطقة</th>
-                    <th>اسم المشرف عليها</th>
+                    <th>اسم المجموعة</th>
+                    <th>اسم الشركة</th>
                     <th colspan="2"> العملية</th>
                   </tr>
                 @else
                   <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي منطقة رئيسية' }}
+                    {{ 'لم يتم اضافة اي مجموعة اصناف' }}
                   </div>
                 @endif
               </thead>
               <tbody>
                 <?php $i=1?>
-                @foreach ($mainareas as $row)
+                @foreach ($cat as $row)
                     <tr>
                       <td>{{$i++}}</td>
-                      <td>{{$row->name_main_area}}</td>
-                      <td>{{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}</td>
+                      <td>{{$row->name_cat}}</td>
+                      <td>{{$row->company->name_company}}</td>
                       <td style="padding-left:  0px">
-                          <a href="/editMainArea/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                          <a href="/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
+                          <a href="/editCategory/{{$row->id}}" class="btn btn-success" >تعديل</a>
                       </td>
                       <td style="padding-right: 0px">
-                          <form action="/deleteMainArea/{{$row->id}}" method="post" style="margin-right: -20px">
+                          <form action="/deleteCategory/{{$row->id}}" method="post" style="margin-right: -20px">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button type="submit" class="btn btn-danger">حذف</button>
@@ -82,7 +81,7 @@
                     </tr>
                 @endforeach
                 <div>
-                <a href="{{url('/addMainArea')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة رئيسية</a>
+                <a href="{{url('/addCategory')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
