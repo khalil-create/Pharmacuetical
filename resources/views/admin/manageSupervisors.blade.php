@@ -96,13 +96,15 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    <tr>
-                      <th rowspan="1" colspan="1">العدد</th>
-                      <th rowspan="1" colspan="1">الاسم</th>
-                      <th rowspan="1" colspan="1">الجنس</th>
-                      <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
-                      <th rowspan="1" colspan="1" style="">العملية</th>
-                    </tr>
+                    @if($supervisor->count() > 0)
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">الاسم</th>
+                        <th rowspan="1" colspan="1">الجنس</th>
+                        <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
                   </tfoot>
                 </table>
               </div>

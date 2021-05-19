@@ -46,47 +46,59 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                @if($company->count() > 0)
-                  <tr>
-                    <th>العدد</th>
-                    <th>اسم الشركة</th>
-                    <th>بلد التصنيع</th>
-                    <th>اسم المشرف عليها</th>
-                    <th colspan="2"> العملية</th>
-                  </tr>
-                @else
-                  <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي شركة' }}
-                  </div>
-                @endif
-              </thead>
-              <tbody>
-                <?php $i=1?>
-                @foreach ($company as $row)
-                        <tr>
-                          <td>{{$i++}}</td>
-                          <td>
-                            <img src="{{asset('images/signsCompany/'.$row->sign_img_company)}}" class="img-users">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  @if($company->count() > 0)                    
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        اسم الشركة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        بلد التصنيع
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        اسم المشرف عليها
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        العملية
+                      </th>
+                    </tr>
+                  @else
+                    <div class="alert alert-success notify-success">
+                      {{ 'لم يتم اضافة اي شركة' }}
+                    </div>
+                  @endif
+                  </thead>
+                  <tbody>
+                  <?php $i=1?>
+                  @foreach ($company as $row)
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                      <td>
+                        <img src="{{asset('images/signsCompany/'.$row->sign_img_company)}}" class="img-users">
                             {{ $row->name_company }} 
-                          </td>
-                          <td>{{ $row->country_manufacturing }}</td>
-                          <td>{{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}</td>
-                          <td style="padding-left:  0px">
-                              <a href="/editCompany/{{$row->id}}" class="btn btn-success">تعديل</a>
-                          </td>
-                          <td style="padding-right: 0px">
-                              <form action="/deleteCompany/{{$row->id}}" method="post" style="margin-right: -20px">
+                      </td>
+                      <td>{{ $row->country_manufacturing }}</td>
+                      <td>
+                        {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
+                      </td>
+                      <td class="" style="">
+                        <a href="/editCompany/{{$row->id}}" class="btn btn-success">تعديل</a>
+                        <form action="/deleteCompany/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                                 <button type="submit" class="btn btn-danger">حذف</button>
-                              </form>
-                          </td> 
-                        </tr>
-                @endforeach
-                <div>
-                <a href="{{url('/addCompany')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة شركة</a>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
+                  <div>
+                    <a href="{{url('/addCompany')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة شركة</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
@@ -98,11 +110,19 @@
                               </div>
                     @endif
                   </div>
-                </div>
-                  
-                </div>
-              </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th rowspan="1" colspan="1">العدد</th>
+                      <th rowspan="1" colspan="1">اسم الشركة</th>
+                      <th rowspan="1" colspan="1">بلد التصنيع</th>
+                      <th rowspan="1" colspan="1">اسم المشرف عليها</th>
+                      <th rowspan="1" colspan="1" style="">العملية</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

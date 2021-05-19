@@ -105,12 +105,14 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    <tr>
-                      <th rowspan="1" colspan="1">العدد</th>
-                      <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>
-                      <th rowspan="1" colspan="1">اسم منطقتها الرئيسية</th>
-                      <th rowspan="1" colspan="1" style="">العملية</th>
-                    </tr>
+                    @if($subArea->count() > 0)
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>
+                        <th rowspan="1" colspan="1">اسم منطقتها الرئيسية</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
                   </tfoot>
                 </table>
               </div>

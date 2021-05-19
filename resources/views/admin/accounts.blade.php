@@ -46,47 +46,64 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>العدد</th>
-                    <th class="align-center">الاسم</th>
-                    <th class="align-center">الصفة الوظيفية</th>
-                    <th class="align-center">الجنس</th>
-                    <th class="align-center">البريد الالكتروني</th>
-                    <th class="align-center">رقم الهاتف</th>
-                    <th colspan="2" class="align-center"> العملية</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $i=1?>
-                @foreach ($users as $row)
-                <tr>
-                  <td>{{$i++}}</td>
-                  <td class="user-name"><img src="{{asset('images/users/'.$row->user_image)}}" class="img-users">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  @if($users->count() > 0)
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        الاسم
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        الصفة الوظيفية
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الجنس
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        البريد الالكتروني
+                      </th>
+                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        رقم الهاتف
+                      </th> --}}
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        العملية
+                      </th>
+                    </tr>
+                  @else
+                    <div class="alert alert-success notify-success">
+                      {{ 'لم يتم اضافة اي مستخدم' }}
+                    </div>
+                  @endif
+                  </thead>
+                  <tbody>
+                  <?php $i=1?>
+                  @foreach ($users as $row)               
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                      <td>
+                        <img src="{{asset('images/users/'.$row->user_image)}}" class="img-users">
                         {{$row->user_name_third}} {{$row->user_surname}}
-                  </td>
-                  <td class="align-center">{{$row->user_type}}</td>
-                  <td>{{$row->sex}}</td>
-                  <td class="text-left">{{$row->email}}</td>
-                  <td>{{$row->phone_number}}</td>
-                  <td style="padding-left:10px">
-                      <a href="/editUser/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                  </td>
-                  <td>
-                    <form action="/deleteUser/{{$row->id}}" method="post">
-                      {{csrf_field()}}
-                      {{method_field('DELETE')}}
-                      <button type="submit" class="btn btn-danger">حذف</button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach     
-                {{-- <div class="d-flex justify-content-center">
-                  {!! $users->links() !!}
-                </div>           --}}
-              </tbody>
-                <div>
+                      </td>
+                      <td>{{$row->user_type}}</td>
+                      <td>{{$row->sex}}</td>
+                      <td class="float-left">{{$row->email}}</td>
+                      {{-- <td>{{$row->phone_number}}</td> --}}
+                      <td>
+                        <a href="/editUser/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <form action="/deleteUser/{{$row->id}}" method="post" style="float: right;">
+                          {{csrf_field()}}
+                          {{method_field('DELETE')}}
+                          <button type="submit" class="btn btn-danger">حذف</button>
+                      </form>
+                      </td>
+                    </tr>
+                  @endforeach
+                  <div>
                     <a href="{{url('/addUser')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مستخدم</a>
                     @if (session('status'))
                           <div class="alert alert-success notify-success">
@@ -98,14 +115,24 @@
                                   {{ session('error') }}
                               </div>
                     @endif
-                    {{-- <div class="d-flex justify-content-center">
-                      {!! $users->links() !!}
-                    </div> --}}
                   </div>
-                </div>
-                {{-- </div> --}}
-              
-            </table>
+                  </tbody>
+                  <tfoot>
+                  @if($users->count() > 0)
+                    <tr>
+                      <th rowspan="1" colspan="1">العدد</th>
+                      <th rowspan="1" colspan="1">الاسم</th>
+                      <th rowspan="1" colspan="1">الصفة الوظيفية</th>
+                      <th rowspan="1" colspan="1">الجنس</th>
+                      <th rowspan="1" colspan="1">البريد الالكتروني</th>
+                      {{-- <th rowspan="1" colspan="1">رقم الهاتف</th> --}}
+                      <th rowspan="1" colspan="1" style="">العملية</th>
+                    </tr>
+                  @endif
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

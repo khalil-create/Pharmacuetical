@@ -83,6 +83,10 @@
                       <td class="" style="">
                         <a href="/editMainArea/{{$row->id}}" class="btn btn-success" >تعديل</a>
                         <a href="/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
+                        <form action="/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
+                          {{csrf_field()}}
+                          {{method_field('DELETE')}}
+                          <button type="submit" class="btn btn-danger">حذف</button>
                         </form>
                       </td>
                     </tr>
@@ -102,12 +106,14 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    <tr>
-                      <th rowspan="1" colspan="1">العدد</th>
-                      <th rowspan="1" colspan="1">اسم المنطقة</th>
-                      <th rowspan="1" colspan="1">اسم المشرف عليها</th>
-                      <th rowspan="1" colspan="1" style="">العملية</th>
-                    </tr>
+                    @if($mainareas->count() > 0)
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">اسم المنطقة</th>
+                        <th rowspan="1" colspan="1">اسم المشرف عليها</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
                   </tfoot>
                 </table>
               </div>

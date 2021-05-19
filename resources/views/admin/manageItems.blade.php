@@ -46,67 +46,95 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                @if($items->count() > 0)
-                  <tr>
-                    <th>العدد</th>
-                    <th>الاسم التجاري </th>
-                    <th>الاسم العلمي </th>
-                    <th>السعر</th>
-                    <th>البونص</th>
-                    <th>الوحدة</th>
-                    <th>اسم المجموعة</th>
-                    <th colspan="2"> العملية</th>
-                  </tr>
-                @else
-                  <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي صنف' }}
-                  </div>
-                @endif
-              </thead>
-              <tbody>
-                <?php $i=1?>
-                @foreach ($items as $row)
-                    <tr>
-                      <td>{{$i++}}</td>
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  @if($items->count() > 0)
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        الاسم التجاري
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الاسم العلمي
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        السعر
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        البونص
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الوحدة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        اسم المجموعة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        العملية
+                      </th>
+                    </tr>
+                  @else
+                    <div class="alert alert-success notify-success">
+                      {{ 'لم يتم اضافة اي صنف' }}
+                    </div>
+                  @endif
+                  </thead>
+                  <tbody>
+                  <?php $i=1?>
+                  @foreach ($items as $row)
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->commercial_name}}</td>
                       <td>{{$row->science_name}}</td>
                       <td>{{$row->price}}</td>
-                      <td>{{$row->bonus}}</td>
-                      <td>{{$row->unit}}</td>
-                      <td>{{$row->category->name_cat}}</td>
-                      <td style="padding-left:  0px">
-                          <a href="/editItem/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                          <a href="/itemsUses/{{$row->id}}" class="btn btn-success" >استخداماته</a>
-                      </td>
-                      <td style="padding-right: 0px">
-                          <form action="/deleteItem/{{$row->id}}" method="post" style="margin-right: -20px">
+                      <td class="sorting_1">bonus</td>
+                      <td class="sorting_1">unit</td>
+                      <td class="sorting_1">category->name_cat</td>
+                      <td class="" style="">
+                        <a href="/editItem/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <a href="/itemsUses/{{$row->id}}" class="btn btn-success" >استخداماته</a>
+                        <form action="/deleteItem/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button type="submit" class="btn btn-danger">حذف</button>
-                          </form>
-                      </td> 
+                        </form>
+                      </td>
                     </tr>
-                @endforeach
-                <div>
-                <a href="{{url('/addItem')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                              <div class="alert alert-success notify-error">
-                                  {{ session('error') }}
-                              </div>
-                    @endif
+                  @endforeach
+                  <div>
+                    <a href="{{url('/addItem')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
+                        @if (session('status'))
+                            <div class="alert alert-success notify-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                                  <div class="alert alert-success notify-error">
+                                      {{ session('error') }}
+                                  </div>
+                        @endif
                   </div>
-                </div>
-                  
-                </div>
-              </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                    @if($items->count() > 0)
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">الاسم التجاري</th>
+                        <th rowspan="1" colspan="1">السعر</th>
+                        <th rowspan="1" colspan="1">البونص</th>
+                        <th rowspan="1" colspan="1">الوحدة</th>
+                        <th rowspan="1" colspan="1">اسم المجموعة</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

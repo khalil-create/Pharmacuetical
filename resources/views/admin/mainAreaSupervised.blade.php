@@ -59,29 +59,58 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <a href="{{url('/')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة</a>
-            <table id="example1" class="table table-bordered table-striped">
-              @if(isset($mainarea) && $mainarea->count() > 0)
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                    <tr>
-                      <th id="name_area" class="align-right" style="padding-right: 14px;">اسم المنطقة الرئيسية</th>
+                  @if(isset($mainarea) && $mainarea->count() > 0)
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        اسم المنطقة الرئيسية
+                      </th>
                     </tr>
+                  @elseif($exist == 1)
+                    <div class="alert alert-success notify-success">
+                      {{ 'لايوجد مناطق رئيسية لهذا المشرف' }}                    
+                    </div>
+                  @endif
                   </thead>
                   <tbody>
-                    @foreach ($mainarea as $row)
-                      <tr>
-                        <td class="align-right" style="padding-right: 14px;">{{$row->name_main_area}}</td>
-                      </tr>
-                    @endforeach
-                @elseif($exist == 1)
+                  <?php $i=1?>
+                  @foreach ($mainarea as $row)                  
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                      <td>{{$row->name_main_area}}</td>
+                    </tr>
+                  @endforeach
                   <div>
-                      <div class="alert alert-success notify-success">
-                          {{ 'لايوجد مناطق رئيسية لهذا المشرف' }}
-                      </div>
+                    <a href="{{url('/addMainAreaForSupervisor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
+                    @if (session('status'))
+                        <div class="alert alert-success notify-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                              <div class="alert alert-success notify-error">
+                                  {{ session('error') }}
+                              </div>
+                    @endif
                   </div>
-                @endif
-              </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                  @if(isset($mainarea) && $mainarea->count() > 0)
+                    <tr>
+                      <th rowspan="1" colspan="1">العدد</th>
+                      <th rowspan="1" colspan="1">اسم المنطقة الرئيسية</th>
+                    </tr>
+                  @endif
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

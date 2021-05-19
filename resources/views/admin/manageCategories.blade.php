@@ -46,44 +46,52 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                @if($cat->count() > 0)
-                  <tr>
-                      <th>العدد</th>
-                    <th>اسم المجموعة</th>
-                    <th>اسم الشركة</th>
-                    <th colspan="2"> العملية</th>
-                  </tr>
-                @else
-                  <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي مجموعة اصناف' }}
-                  </div>
-                @endif
-              </thead>
-              <tbody>
-                <?php $i=1?>
-                @foreach ($cat as $row)
-                @foreach($row->companies as $comp)
-                    <tr>
-                      <td>{{$i++}}</td>
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  @if($cat->count() > 0)
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        اسم المجموعة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        اسم الشركة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        العملية
+                      </th>
+                    </tr>
+                  @else
+                    <div class="alert alert-success notify-success">
+                      {{ 'لم يتم اضافة اي مجموعة اصناف' }}
+                    </div>
+                  @endif
+                  </thead>
+                  <tbody>
+                  <?php $i=1?>
+                  @foreach ($cat as $row)
+                    @foreach($row->companies as $comp)                    
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->name_cat}}</td>
                       <td>{{$comp->name_company}}</td>
-                      <td style="padding-left:  0px">
-                          <a href="/editCategory/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                      </td>
-                      <td style="padding-right: 0px">
-                          <form action="/deleteCategory/{{$row->id}}" method="post" style="margin-right: -20px">
+                      <td>
+                        <a href="/editCategory/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <form action="/deleteCategory/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button type="submit" class="btn btn-danger">حذف</button>
-                          </form>
-                      </td> 
+                        </form>
+                      </td>
                     </tr>
-                @endforeach
-                @endforeach
-                <div>
-                <a href="{{url('/addCategory')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
+                    @endforeach
+                  @endforeach
+                  <div>
+                    <a href="{{url('/addCategory')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
@@ -95,11 +103,20 @@
                               </div>
                     @endif
                   </div>
-                </div>
-                  
-                </div>
-              </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                  @if($cat->count() > 0)
+                    <tr>
+                      <th rowspan="1" colspan="1">العدد</th>
+                      <th rowspan="1" colspan="1">اسم المجموعة</th>
+                      <th rowspan="1" colspan="1">اسم الشركة</th>
+                      <th rowspan="1" colspan="1" style="">العملية</th>
+                    </tr>
+                  @endif
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>
