@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Representative\Representative;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/manageRepresentative', [Representative::class ,'index'])->name('showRep');
 
 Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],function(){
 
@@ -71,6 +74,7 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::put('/UpdateItem/{id}', 'ItemController@UpdateItem');
     Route::delete('/deleteItem/{id}', 'ItemController@deleteItem');
 });
+
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
