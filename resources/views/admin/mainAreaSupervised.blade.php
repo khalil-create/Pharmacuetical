@@ -58,9 +58,9 @@
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
+          <div class="card-body">
             <a href="{{url('/')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة</a>
-            <table class="table table-hover text-nowrap">
+            <table id="example1" class="table table-bordered table-striped">
               @if(isset($mainarea) && $mainarea->count() > 0)
                   <thead>
                     <tr>

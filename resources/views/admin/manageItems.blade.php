@@ -45,8 +45,8 @@
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
               <thead>
                 @if($items->count() > 0)
                   <tr>
@@ -78,6 +78,7 @@
                       <td>{{$row->category->name_cat}}</td>
                       <td style="padding-left:  0px">
                           <a href="/editItem/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                          <a href="/itemsUses/{{$row->id}}" class="btn btn-success" >استخداماته</a>
                       </td>
                       <td style="padding-right: 0px">
                           <form action="/deleteItem/{{$row->id}}" method="post" style="margin-right: -20px">

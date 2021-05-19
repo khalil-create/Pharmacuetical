@@ -45,8 +45,8 @@
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
               <thead>
                 @if($cat->count() > 0)
                   <tr>
@@ -64,10 +64,11 @@
               <tbody>
                 <?php $i=1?>
                 @foreach ($cat as $row)
+                @foreach($row->companies as $comp)
                     <tr>
                       <td>{{$i++}}</td>
                       <td>{{$row->name_cat}}</td>
-                      <td>{{$row->company->name_company}}</td>
+                      <td>{{$comp->name_company}}</td>
                       <td style="padding-left:  0px">
                           <a href="/editCategory/{{$row->id}}" class="btn btn-success" >تعديل</a>
                       </td>
@@ -79,6 +80,7 @@
                           </form>
                       </td> 
                     </tr>
+                @endforeach
                 @endforeach
                 <div>
                 <a href="{{url('/addCategory')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>

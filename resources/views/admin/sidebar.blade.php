@@ -50,8 +50,8 @@
         <li class="nav-item">
             <a href="{{url('displayAllUsers')}}" 
             class="nav-link {{  $p == 'displayAllUsers' || 
-                                $path =='editUser' || 
-                                $path =='addUser' ? 'active' : '' 
+                                $p =='addUser' ||
+                                $path =='editUser' ? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
@@ -62,9 +62,9 @@
         <li class="nav-item">
             <a href="{{url('manageSupervisors')}}" 
             class="nav-link {{  $p == 'manageSupervisors' || 
+                                $p == 'addSupervisor' ||
                                 $path =='editSupervisor' || 
-                                $path =='mainAreaSupervised' || 
-                                $path == 'addSupervisor' ? 'active' : '' 
+                                $path =='mainAreaSupervised'? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>

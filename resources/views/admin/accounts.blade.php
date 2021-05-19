@@ -3,21 +3,21 @@
     ادارة الحسابات
 @endsection
 @section('content')
-  <!-- Content Header (Page header) -->
-  <div class="content-header content-wrapper">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+<!-- Content Header (Page header) -->
+<div class="content-header content-wrapper">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Dashboard</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard v1</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
   <!-- /.content-header -->
   <div>
     <div class="row">
@@ -27,10 +27,10 @@
             <span class="card-title" style="float: right">قائمة المستخدمين</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
             <div class="card-title">
@@ -45,13 +45,13 @@
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>العدد</th>
                     <th class="align-center">الاسم</th>
-                    <th class="align-center">نوع المستخدم</th>
+                    <th class="align-center">الصفة الوظيفية</th>
                     <th class="align-center">الجنس</th>
                     <th class="align-center">البريد الالكتروني</th>
                     <th class="align-center">رقم الهاتف</th>
@@ -81,7 +81,11 @@
                     </form>
                   </td>
                 </tr>
-                @endforeach
+                @endforeach     
+                {{-- <div class="d-flex justify-content-center">
+                  {!! $users->links() !!}
+                </div>           --}}
+              </tbody>
                 <div>
                     <a href="{{url('/addUser')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مستخدم</a>
                     @if (session('status'))
@@ -94,11 +98,13 @@
                                   {{ session('error') }}
                               </div>
                     @endif
+                    {{-- <div class="d-flex justify-content-center">
+                      {!! $users->links() !!}
+                    </div> --}}
                   </div>
                 </div>
-                  
-                </div>
-              </tbody>
+                {{-- </div> --}}
+              
             </table>
           </div>
           <!-- /.card-body -->

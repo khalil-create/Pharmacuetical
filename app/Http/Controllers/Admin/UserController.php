@@ -61,15 +61,10 @@ class UserController extends Controller
     //accountController
     public function getAllUsers()
     {
-        //Start Exercise
-
-        // $area = Mainarea::find(1);
-        // return $area->supervisor->user->id;
-
-        //End Exercise
-
-        //$users = User::all();
-        $users = User::select('id','user_name_third','user_surname','user_type','sex','email','phone_number','user_image')->get();
+        // $users = User::select('id','user_name_third','user_surname','user_type',
+        // 'sex','email','phone_number','user_image')->get();
+        $users = User::select('id','user_name_third','user_surname','user_type',
+        'sex','email','phone_number','user_image')->paginate(5);
         return view('admin.accounts')->with('users',$users);
     }
 

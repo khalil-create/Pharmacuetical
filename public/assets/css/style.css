@@ -54,6 +54,7 @@ body{
 .img-users{
     margin-left: 15px;
     width: 50px;
+    float: right;
     border-radius: 10px;
 
 }
