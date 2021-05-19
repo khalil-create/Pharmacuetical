@@ -54,16 +54,16 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('company_name') ? ' has-error' : '' }}">
-                                    <label for="company_name" class="col-md-2 control-label">اسم الشركة</label>
-                                        <select name="company_name" id="company_name" class="form-control custom-select rounded-0">
+                                <div class="form-group{{ $errors->has('company_id') ? ' has-error' : '' }}">
+                                    <label for="company_id" class="col-md-2 control-label">اسم الشركة</label>
+                                        <select name="company_id" id="company_id" class="form-control custom-select rounded-0">
                                             @foreach ($company as $comp)
-                                                <option value="{{$comp->name_company}}">{{$comp->name_company}}</option>
+                                                <option value="{{$comp->id}}">{{$comp->name_company}}</option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('company_name'))
+                                        @if ($errors->has('company_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('company_name') }}</strong>
+                                                <strong>{{ $errors->first('company_id') }}</strong>
                                             </span>
                                         @endif
                                     {{-- </div> --}}

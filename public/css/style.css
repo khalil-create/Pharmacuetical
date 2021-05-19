@@ -29,5 +29,8 @@
 	border-radius: 50%;
 	display: block;
 }
+.dataTables_wrapper .row .col-sm-12{
+	width: 66.66%;
+}
 
 

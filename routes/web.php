@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Representative\Representative;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/khalil', function () {
+    $supervisor = User::whereHas('supervisor')->paginate(2);
+    return view('admin.temp')->with('supervisor',$supervisor);
 });
 
 Route::get('/manageRepresentative', [Representative::class ,'index'])->name('showRep');

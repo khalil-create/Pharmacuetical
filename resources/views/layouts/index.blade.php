@@ -34,7 +34,17 @@
     <link rel="stylesheet" href="{{asset('css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap-rtl.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <style>
+        .row .col-md-6 .flex-wrap{
+	        width: 500px;
+        }
+        .row .col-md-6 .dataTables_filter{
+            float: left;
+        }
+
         /* // @media (min-width: 992px) */
     /* .sidebar-mini.sidebar-collapse .content-wrapperr, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
         margin-right: 4.6rem!important;
@@ -66,7 +76,7 @@
     {{-- @include('Layout.footer') --}}
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    <aside class="control-sidebar control-sidebar-dark" style="height: 35.7252%; width: 20px;">
         <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
@@ -74,7 +84,6 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -108,5 +117,29 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
+
+<!-- Bootstrap 4 -->
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+  </script>
 </body>
 </html>

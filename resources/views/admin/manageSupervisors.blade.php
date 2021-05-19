@@ -24,7 +24,7 @@
       <div class="col-10">
         <div class="card">
           <div class="card-header">
-            <span class="card-title" style="float: right">قائمة المشرفين</span>
+            <h3 class="card-title" style="float: right">قائمة المشرفين</h3>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -33,63 +33,55 @@
               <i class="fas fa-times"></i>
               </button>
             </div>
-            <div class="card-title">
-              <div class="input-group input-group-sm" style="width: 200px;margin-left:10px">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>            
-                @if($supervisor->count() > 0)
-                  <tr>
-                    <th>العدد</th>
-                    <th>اسم المشرف</th>
-                    <th>الجنس</th>
-                    <th>البريد الالكتروني</th>
-                    <th colspan="2" class="align-center"> العملية</th>
-                  </tr>
-                @else
-                  <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي مشرف' }}
-                  </div>
-                @endif
-              </thead>
-              <tbody>
-                <?php $i=1?>
-                @foreach ($supervisor as $row)
-                <tr>
-                  <td>{{$i++}}</td>
-                  <td class="user-name"><img src="{{asset('images/users/'.$row->user_image)}}" class="img-users">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  @if($supervisor->count() > 0)
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        اسم المشرف
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الجنس
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">
+                        البريد الالكتروني
+                      </th>
+                      <th class="sorting align-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">
+                        العملية
+                      </th>
+                    </tr>
+                  @else
+                    <div class="alert alert-success notify-success">
+                      {{ 'لم يتم اضافة اي مشرف' }}
+                    </div>
+                  @endif
+                  </thead>
+                  <tbody>
+                  <?php $i=1?>
+                  @foreach ($supervisor as $row)
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                      <td>
+                        <img src="{{asset('images/users/'.$row->user_image)}}" class="img-users">
                         {{$row->user_name_third}} {{$row->user_surname}}
-                  </td>
-                  <td>{{$row->sex}}</td>
-                  <td>{{$row->email}}</td>
-                  <td style="">
-                      <a href="/editSupervisor/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                  </td>
-                  <td>
-                      <a href="/mainAreaSupervised/{{$row->id}}" class="btn btn-success"  >مناطق الإشراف</a>
-                  </td>
-                  {{-- <td> 
-                    <form action="/deleteSupervisor/{{$row->id}}" method="post">
-                      {{csrf_field()}}
-                      {{method_field('DELETE')}}
-                      <button type="submit" class="btn btn-danger">حذف</button>
-                    </form>
-                    <a href="/deleteSupervisor/{{$row->id}}" class="btn btn-danger">حذف</a> 
-                  </td> --}}
-                </tr>
-                @endforeach
-                <div>
+                      </td>
+                      <td class="sorting_1">{{$row->sex}}</td>
+                      <td class="" style="">{{$row->email}}</td>
+                      <td class="" style="">
+                        <a href="/editSupervisor/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <a href="/mainAreaSupervised/{{$row->id}}" class="btn btn-success"  >مناطق الإشراف</a>
+                      </td>
+                    </tr>
+                  @endforeach
+                  <div>
                     <a href="{{url('/addSupervisor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مشرف</a>
                     @if (session('status'))
                       <div class="alert alert-success notify-success">
@@ -100,13 +92,23 @@
                       <div class="alert alert-danger notify-error">
                           {{ session('error') }}
                       </div>
-                  @endif
+                    @endif
                   </div>
-                </div>
-                  
-                </div>
-              </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                    @if($supervisor->count() > 0)
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">الاسم</th>
+                        <th rowspan="1" colspan="1">الجنس</th>
+                        <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

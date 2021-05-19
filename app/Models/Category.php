@@ -10,7 +10,7 @@ class Category extends Model
     use HasFactory;
     protected $fillable = [
         'name_cat',
-        'company_id',
+        // 'company_id',
         'created_at',
         'updated_at',
     ];
@@ -18,9 +18,9 @@ class Category extends Model
         'created_at',
         'updated_at',
     ];
-    public function company()
+    public function companies()
     {
-        return $this->belongsTo('App\Models\Company','company_id','id');//(related,foriegn key,primary key)
+        return $this->belongsToMany('App\Models\Company','categories_companies');
     }
     public function items()
     {

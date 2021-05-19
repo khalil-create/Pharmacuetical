@@ -26,6 +26,6 @@ class Company extends Model
     }
     public function categories()
     {
-        return $this->hasMany('App\Models\Category','company_id','id');//(related,foriegn key,primary key)
+        return $this->belongsToMany('App\Models\Category','categories_companies');
     }
 }

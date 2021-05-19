@@ -63,6 +63,17 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
+                                    <label for="unit" class="col-md-2 control-label">وحدة البيع</label>
+                                        <select name="unit" id="unit" class="form-control custom-select rounded-0">
+                                                <option value="باكت">باكت</option>
+                                        </select>
+                                        @if ($errors->has('unit'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('unit') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="price">السعر</label>
                                     <input type="text" name="price" class="form-control" id="price">
@@ -72,6 +83,7 @@
                                         </span>
                                     @endif
                                 </div>
+                                
                                 <div class="form-group">
                                     <label for="bonus">البونص</label>
                                     <input type="text" name="bonus" class="form-control" id="bonus">
@@ -91,17 +103,6 @@
                                         @if ($errors->has('category_name'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('category_name') }}</strong>
-                                            </span>
-                                        @endif
-                                </div>
-                                <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
-                                    <label for="unit" class="col-md-2 control-label">الوحده</label>
-                                        <select name="unit" id="unit" class="form-control custom-select rounded-0">
-                                                <option value="باكت">باكت</option>
-                                        </select>
-                                        @if ($errors->has('unit'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('unit') }}</strong>
                                             </span>
                                         @endif
                                 </div>

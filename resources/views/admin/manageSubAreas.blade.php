@@ -45,44 +45,53 @@
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>                 
-                @if($subArea->count() > 0)
-                  <tr>            
-                    <th>العدد</th>
-                    <th>اسم المنطقة الفرعية</th>
-                    <th>اسم منطقتها الرئيسية</th>
-                    <th colspan="2"> العملية</th>
-                  </tr>
-                @else
-                  <div class="alert alert-success notify-success">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  @if($subArea->count() > 0)
+                    <tr role="row">
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        العدد
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        اسم المنطقة الفرعية
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        اسم منطقتها الرئيسية
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">
+                        العملية
+                      </th>
+                    </tr>
+                  @else
+                    <div class="alert alert-success notify-success">
                     {{ 'لم يتم اضافة اي منطقة فرعية' }}
-                  </div>
-                @endif
-              </thead>
-              <tbody>
-                <?php $i=1?>
-                    @foreach ($subArea as $area)
-                        <tr>
-                          <td>{{$i++}}</td>
-                          <td>{{$area->name_sub_area}}</td>
-                          <td>{{$area->mainarea->name_main_area}}</td>
-                          <td style="padding-left:  0px">
-                              <a href="/editSubArea/{{$area->id}}" class="btn btn-success" >تعديل</a>
-                              {{-- <a href="/deleteSubArea/{{$area->id}}" class="btn btn-danger">حذف</a> --}}
-                          </td> 
-                          <td style="padding-right: 0px">
-                            <form action="/deleteSubArea/{{$area->id}}" method="post" style="margin-right: -20px">
-                              {{csrf_field()}}
-                              {{method_field('DELETE')}}
-                              <button type="submit" class="btn btn-danger">حذف</button>
-                            </form>
-                        </td> 
-                        </tr>
-                @endforeach
-                <div>
-                <a href="{{url('/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
+                    </div>
+                  @endif
+                  </thead>
+                  <tbody>
+                  <?php $i=1?>
+                  @foreach ($subArea as $area)
+                    <tr class="odd">
+                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                      <td>
+                        {{$area->name_sub_area}}
+                      </td>
+                      <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
+                      <td class="" style="">
+                        <a href="/editSubArea/{{$area->id}}" class="btn btn-success" >تعديل</a>
+                        <form action="/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
+                          {{csrf_field()}}
+                          {{method_field('DELETE')}}
+                          <button type="submit" class="btn btn-danger">حذف</button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
+                  <div>
+                    <a href="{{url('/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
@@ -94,11 +103,20 @@
                               </div>
                     @endif
                   </div>
-                </div>
-                  
-                </div>
-              </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                    @if($subArea->count() > 0)
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>
+                        <th rowspan="1" colspan="1">اسم منطقتها الرئيسية</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
           <!-- /.card-body -->
         </div>
