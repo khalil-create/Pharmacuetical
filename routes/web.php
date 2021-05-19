@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +15,6 @@ use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
-});
-Route::get('/khalil', function () {
-    $supervisor = User::whereHas('supervisor')->paginate(2);
-    return view('admin.temp')->with('supervisor',$supervisor);
 });
 
 Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],function(){

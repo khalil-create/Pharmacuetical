@@ -64,7 +64,7 @@ class UserController extends Controller
         // $users = User::select('id','user_name_third','user_surname','user_type',
         // 'sex','email','phone_number','user_image')->get();
         $users = User::select('id','user_name_third','user_surname','user_type',
-        'sex','email','phone_number','user_image')->paginate(5);
+        'sex','email','phone_number','user_image')->get();
         return view('admin.accounts')->with('users',$users);
     }
 

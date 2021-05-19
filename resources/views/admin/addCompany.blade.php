@@ -72,6 +72,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="">لديها مجموعة اصناف</label>
+                                    <div class="radiobox">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="1" name="have_category" checked>
+                                            <label class="form-check-label">نعم</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="have_category" value="0">
+                                            <label class="form-check-label">لا</label>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('have_category'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('have_category') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
                                 <div class="form-group{{ $errors->has('supervisor_name') ? ' has-error' : '' }}">
                                     <label for="supervisor_name" class="col-md-2 control-label">المشرف عليها</label>
                                             <select name="supervisor_name" id="supervisor_name" class="form-control custom-select rounded-0">

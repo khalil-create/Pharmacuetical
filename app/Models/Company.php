@@ -12,6 +12,7 @@ class Company extends Model
         'name_company',
         'country_manufacturing',
         'sign_img_company',
+        'have_category',
         'supervisor_id',
         'created_at',
         'updated_at',

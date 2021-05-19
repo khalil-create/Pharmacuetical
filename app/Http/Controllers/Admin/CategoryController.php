@@ -77,6 +77,8 @@ class CategoryController extends Controller
         $category = Category::findOrfail($id);
         if($category->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        
+        $category->companies()->detach();
         $category->items()->delete();
         $category->delete();
 

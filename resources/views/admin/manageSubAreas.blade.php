@@ -50,7 +50,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($subArea->count() > 0)
+                  @if(isset($subArea) && $subArea->count() > 0)
                     <tr role="row">
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         العدد
@@ -73,23 +73,26 @@
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($subArea as $area)
-                    <tr class="odd">
-                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>
-                        {{$area->name_sub_area}}
-                      </td>
-                      <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
-                      <td class="" style="">
-                        <a href="/editSubArea/{{$area->id}}" class="btn btn-success" >تعديل</a>
-                        <form action="/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
-                          {{csrf_field()}}
-                          {{method_field('DELETE')}}
-                          <button type="submit" class="btn btn-danger">حذف</button>
-                        </form>
-                      </td>
-                    </tr>
-                  @endforeach
+                  @if(isset($subArea))
+                    @foreach ($subArea as $area)
+                      <tr class="odd">
+                        <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                        <td>
+                          {{$area->name_sub_area}}
+                        </td>
+                        <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
+                        <td class="" style="">
+                          <a href="/editSubArea/{{$area->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                          <form action="/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
+                            {{csrf_field()}}
+                            {{method_field('DELETE')}}
+                            <button style="border: none"><i class="fas fa-trash"></i></button>
+                          </form>
+                          <i class="fas fa-eye"></i>
+                        </td>
+                      </tr>
+                    @endforeach
+                  @endif
                   <div>
                     <a href="{{url('/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
                     @if (session('status'))
@@ -105,7 +108,7 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($subArea->count() > 0)
+                    @if(isset($subArea) && $subArea->count() > 0)
                       <tr>
                         <th rowspan="1" colspan="1">العدد</th>
                         <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>

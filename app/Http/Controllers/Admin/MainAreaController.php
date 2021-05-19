@@ -35,9 +35,9 @@ class MainAreaController extends Controller
         }
         $user = User::where('user_name_third',$request->supervisor_name)->first();
         $supervisor = Supervisor::where('user_id',$user->id)->first();
-        $mainArea = Mainarea::create([
+        Mainarea::create([
             'name_main_area' => $request->name_main_area,
-            'supervisor_id' =>$supervisor->id,
+            'supervisor_id' => $supervisor->id,
         ]);        
         return redirect('/manageMainAreas')->with('status','تم إضافة البيانات بشكل ناجح');
     }
