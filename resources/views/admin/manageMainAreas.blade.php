@@ -81,13 +81,14 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
                       <td class="" style="">
-                        <a href="/editMainArea/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <a href="/editMainArea/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
                         <a href="/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
-                        <form action="/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
+                        <form action="/deleteMainArea/{{$row->id}}" method="post" style="float: left;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
-                          <button type="submit" class="btn btn-danger">حذف</button>
+                          <button style="border: none"><i class="fas fa-trash"></i></button>
                         </form>
+                        <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach

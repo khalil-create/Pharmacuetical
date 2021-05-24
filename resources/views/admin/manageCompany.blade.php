@@ -88,12 +88,14 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
                       <td class="" style="">
-                        <a href="/editCompany/{{$row->id}}" class="btn btn-success">تعديل</a>
+                        <a href="/editCompany/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
                         <form action="/deleteCompany/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
-                                <button type="submit" class="btn btn-danger">حذف</button>
+                                <button style="border: none"><i class="fas fa-trash"></i></button>
                         </form>
+                        <i class="fas fa-eye"></i>
+
                       </td>
                     </tr>
                   @endforeach
@@ -112,13 +114,15 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    <tr>
-                      <th rowspan="1" colspan="1">العدد</th>
-                      <th rowspan="1" colspan="1">اسم الشركة</th>
-                      <th rowspan="1" colspan="1">بلد التصنيع</th>
-                      <th rowspan="1" colspan="1">اسم المشرف عليها</th>
-                      <th rowspan="1" colspan="1" style="">العملية</th>
-                    </tr>
+                    @if($company->count() > 0)                    
+                      <tr>
+                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">اسم الشركة</th>
+                        <th rowspan="1" colspan="1">بلد التصنيع</th>
+                        <th rowspan="1" colspan="1">اسم المشرف عليها</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
+                      </tr>
+                    @endif
                   </tfoot>
                 </table>
               </div>

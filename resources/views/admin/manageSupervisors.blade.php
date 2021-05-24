@@ -76,8 +76,9 @@
                       <td class="sorting_1">{{$row->sex}}</td>
                       <td class="" style="">{{$row->email}}</td>
                       <td class="" style="">
-                        <a href="/editSupervisor/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                        <a href="/mainAreaSupervised/{{$row->id}}" class="btn btn-success"  >مناطق الإشراف</a>
+                        <a href="/editSupervisor/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                        <a href="/mainAreaSupervised/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
+                        <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach

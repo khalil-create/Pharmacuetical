@@ -91,17 +91,18 @@
                       <td>{{$row->commercial_name}}</td>
                       <td>{{$row->science_name}}</td>
                       <td>{{$row->price}}</td>
-                      <td class="sorting_1">bonus</td>
-                      <td class="sorting_1">unit</td>
-                      <td class="sorting_1">category->name_cat</td>
+                      <td class="sorting_1">{{$row->bonus}}</td>
+                      <td class="sorting_1">{{$row->unit}}</td>
+                      <td class="sorting_1">{{$row->category->name_cat}}</td>
                       <td class="" style="">
-                        <a href="/editItem/{{$row->id}}" class="btn btn-success" >تعديل</a>
-                        <a href="/itemsUses/{{$row->id}}" class="btn btn-success" >استخداماته</a>
+                        <a href="/editItem/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                        <a href="/itemsUses/{{$row->id}}"><i class="fas fa-info"></i></a>
                         <form action="/deleteItem/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button type="submit" class="btn btn-danger">حذف</button>
-                        </form>
+                            <button style="border: none"><i class="fas fa-trash"></i></button>
+                          </form>
+                          <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach
@@ -124,6 +125,7 @@
                       <tr>
                         <th rowspan="1" colspan="1">العدد</th>
                         <th rowspan="1" colspan="1">الاسم التجاري</th>
+                        <th rowspan="1" colspan="1">الاسم العلمي</th>
                         <th rowspan="1" colspan="1">السعر</th>
                         <th rowspan="1" colspan="1">البونص</th>
                         <th rowspan="1" colspan="1">الوحدة</th>

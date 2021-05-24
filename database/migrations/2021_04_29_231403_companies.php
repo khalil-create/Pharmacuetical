@@ -17,6 +17,7 @@ class Companies extends Migration
             $table->increments('id');
             $table->string('name_company');
             $table->string('country_manufacturing');
+            $table->string('have_category');
             $table->string('supervisor_id');
             $table->binary('sign_img_company'); 
             $table->timestamps();

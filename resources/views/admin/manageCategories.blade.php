@@ -80,12 +80,13 @@
                       <td>{{$row->name_cat}}</td>
                       <td>{{$comp->name_company}}</td>
                       <td>
-                        <a href="/editCategory/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <a href="/editCategory/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
                         <form action="/deleteCategory/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button type="submit" class="btn btn-danger">حذف</button>
-                        </form>
+                            <button style="border: none"><i class="fas fa-trash"></i></button>
+                          </form>
+                          <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                     @endforeach

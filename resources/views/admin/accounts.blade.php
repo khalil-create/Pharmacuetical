@@ -91,16 +91,18 @@
                       </td>
                       <td>{{$row->user_type}}</td>
                       <td>{{$row->sex}}</td>
-                      <td class="float-left">{{$row->email}}</td>
+                      <td class="text-left">{{$row->email}}</td>
                       {{-- <td>{{$row->phone_number}}</td> --}}
                       <td>
-                        <a href="/editUser/{{$row->id}}" class="btn btn-success" >تعديل</a>
+                        <a href="/editUser/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
                         <form action="/deleteUser/{{$row->id}}" method="post" style="float: right;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
-                          <button type="submit" class="btn btn-danger">حذف</button>
+                          <button style="border: none"><i class="fas fa-trash"></i></button>
                       </form>
-                      </td>
+                      <i class="fas fa-eye"></i>
+                      {{-- <i class="fas fa-trash-alt"></i>                       --}}
+                    </td>
                     </tr>
                   @endforeach
                   <div>

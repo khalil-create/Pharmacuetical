@@ -17,6 +17,8 @@ class CompanyController extends Controller
     public function getAllCompanys()
     {
         $company = Company::whereHas('supervisor')->get();
+        if(!$company)
+            return view('admin.manageCompany');
         return view('admin.manageCompany',compact('company',$company));
     }
     public function addCompany()
@@ -38,6 +40,7 @@ class CompanyController extends Controller
         $company = Company::create([
             'name_company' => $request->name_company,
             'country_manufacturing' => $request->country_manufacturing,
+            'have_category' => $request->have_category,
             'sign_img_company' => $file_name,
             'supervisor_id' => $supervisor->id,
         ]);
