@@ -66,8 +66,8 @@
     @include('admin.sidebar')
     @if(Auth::user()->user_type=='مشرف')
             @include('admin.sidebar')
-        @elseif(Auth::user()->state==2)
-            @include('Supervisor.side')
+        {{-- @elseif(Auth::user()->user_type=='مندوب')
+            @include('representative.side') --}}
         @elseif(Auth::user()->state==3)
             @include('Representitive.side')
         @endif
