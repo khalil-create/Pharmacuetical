@@ -1,9 +1,9 @@
 @extends('layouts.index')
 @section('title')
-   ادارة المناطق
+    ادارة المناطق
 @endsection
 @section('content')
-  <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 <div class="content-header content-wrapper">
   <div class="container-fluid">
       <div class="row mb-2">
@@ -24,7 +24,7 @@
       <div class="col-10">
         <div class="card">
           <div class="card-header">
-            <span class="card-title" style="float: right">قائمة المناطق الرئيسية</span>
+            <h3 class="card-title" style="float: right">قائمة المناطق الرئيسية</h3>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -33,16 +33,6 @@
               <i class="fas fa-times"></i>
               </button>
             </div>
-            <div class="card-title">
-              <div class="input-group input-group-sm" style="width: 200px;margin-left:20px">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -50,10 +40,10 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                @if($mainareas->count() > 0)
+                  @if($mainareas->count() > 0)
                     <tr role="row">
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                        العدد
+                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم المنطقة
@@ -81,7 +71,7 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
                       <td class="" style="">
-                        <a href="/editMainArea/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                        <a href="/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
                         <a href="/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
                         <form action="/deleteMainArea/{{$row->id}}" method="post" style="float: left;">
                           {{csrf_field()}}
@@ -93,14 +83,14 @@
                     </tr>
                   @endforeach
                   <div>
-                <a href="{{url('/addMainArea')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة رئيسية</a>
+                    <a href="{{url('/addMainArea')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة رئيسية</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
                         </div>
                     @endif
                     @if (session('error'))
-                              <div class="alert alert-success notify-error">
+                              <div class="alert alert-danger notify-error">
                                   {{ session('error') }}
                               </div>
                     @endif
@@ -109,7 +99,7 @@
                   <tfoot>
                     @if($mainareas->count() > 0)
                       <tr>
-                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم المنطقة</th>
                         <th rowspan="1" colspan="1">اسم المشرف عليها</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>

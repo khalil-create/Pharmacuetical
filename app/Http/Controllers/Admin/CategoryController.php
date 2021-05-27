@@ -31,8 +31,6 @@ class CategoryController extends Controller
         $company = Company::find($request->company_id);
         $cat = Category::create([
             'name_cat' => $request->name_cat,
-            // 'name_company' => $request->company_name,
-            //'company_id' =>$company->id,
         ]);  
         //attach is add the new value above the old value even the new is the same old value
         $company->categories()->attach($cat->id);

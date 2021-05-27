@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Supervisor;
 use App\Models\Mainarea;
+use App\Models\Manager;
 use App\Traits\userTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Representative;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Image;
@@ -55,6 +57,10 @@ class UserController extends Controller
             $sup = Supervisor::create(['user_id' => $user->id]);
             $sup->update();
         }
+        elseif($request->Input('usertype') == 'مدير تسويق' || $request->Input('usertype') == 'مدير مبيعات')
+        {
+            Manager::create(['user_id' => $user->id]);
+        }
         return redirect('/displayAllUsers')->with('status','تم إضافة البيانات بشكل ناجح');
     }
 
@@ -68,7 +74,7 @@ class UserController extends Controller
         return view('admin.accounts')->with('users',$users);
     }
 
-    public function editUser(Request $request,$id)
+    public function editUser($id)
     {
         $user = User::findOrfail($id);
         return view('admin.editUser')->with('user',$user );
@@ -96,70 +102,9 @@ class UserController extends Controller
         $user->identity_type = $request->Input('identitytype');
         $user->identity_number = $request->Input('identitynumber');
         $user->password = bcrypt($request->Input('password'));
-        ################################# start image #######################################################
-    /*
-        $image = $request->file('userimage');
-        $slug = str_slug($request->usernamethird);
-        $category = Category::find($id);
-        if (isset($image))
-        {
-        //            make unique name for image
-            $currentDate = Carbon::now()->toDateString();
-            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-        //            check category dir is exists
-            if (!Storage::disk('public')->exists('category'))
-            {
-                Storage::disk('public')->makeDirectory('category');
-            }
-        //            delete old image
-            if (Storage::disk('public')->exists('category/'.$category->image))
-            {
-                Storage::disk('public')->delete('category/'.$category->image);
-            }
-        //            resize image for category and upload
-            $categoryimage = Image::make($image)->resize(1600,479)->stream();
-            Storage::disk('public')->put('category/'.$imagename,$categoryimage);
-            //            check category slider dir is exists
-            if (!Storage::disk('public')->exists('category/slider'))
-            {
-                Storage::disk('public')->makeDirectory('category/slider');
-            }
-            //            delete old slider image
-            if (Storage::disk('public')->exists('category/slider/'.$category->image))
-            {
-                Storage::disk('public')->delete('category/slider/'.$category->image);
-            }
-            //            resize image for category slider and upload
-            $slider = Image::make($image)->resize(500,333)->stream();
-            Storage::disk('public')->put('category/slider/'.$imagename,$slider);
-        } else {
-            $imagename = $category->image;
-        }
-        $category->name = $request->name;
-        $category->slug = $slug;
-        $category->image = $imagename;
-        $category->save();
-        Toastr::success('Category Successfully Updated :)' ,'Success');
-        return redirect()->route('admin.category.index');
-    }
-        $this->validate($request,[
-            'image' => 'nullable|mimes:jpeg,bmp,png,jpg'
-        ]);
-        ############# in editCategory page ##########################
-        <img src="{{asset($category->image)}}">
-        ################################# end image #########################################################
-    */
         if($request->hasfile('userimage'))
         {
-            // $file = $request->file('userimage');
-            // $extention =$file->getClientOriginalExtension();
-            // $filename = time().'.'.$extention;
-            // $path = 'images/users/';
-            // $file->move($path,$filename);
             $user->user_image = $file_name;
-        }
-        else{
-
         }
         $user->update();
         
@@ -176,10 +121,6 @@ class UserController extends Controller
         }
         //$user->save();
         if($request->Input('usertype') == 'مشرف' && !($prevSupervisor)){ //edit user to new supervisor
-            // $sup = Supervisor::find($user->id);
-            // // return $sup->user_id;
-            // $sup->user_id = $user->id;            
-            // $sup->update();
             $sup = Supervisor::create(['user_id' => $user->id]);
             $sup->update();
         }

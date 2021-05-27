@@ -71,7 +71,6 @@
                                                 <strong>{{ $errors->first('company_id') }}</strong>
                                             </span>
                                         @endif
-                                    {{-- </div> --}}
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">

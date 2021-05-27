@@ -17,8 +17,9 @@ class CompanyController extends Controller
     public function getAllCompanys()
     {
         $company = Company::whereHas('supervisor')->get();
-        if(!$company)
-            return view('admin.manageCompany');
+        // return $company;
+        // if(!$company)
+        //     return view('admin.manageCompany');
         return view('admin.manageCompany',compact('company',$company));
     }
     public function addCompany()

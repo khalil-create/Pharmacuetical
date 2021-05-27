@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-      ادارة المناطق الرئيسية
+      ادارة المناطق الفرعية
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -33,16 +33,6 @@
               <i class="fas fa-times"></i>
               </button>
             </div>
-            <div class="card-title">
-              <div class="input-group input-group-sm" style="width: 200px;margin-left:20px">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -52,8 +42,8 @@
                   <thead>
                   @if(isset($subArea) && $subArea->count() > 0)
                     <tr role="row">
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                        العدد
+                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم المنطقة الفرعية
@@ -82,12 +72,13 @@
                         </td>
                         <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
                         <td class="" style="">
-                          <a href="/editSubArea/{{$area->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                          <a href="/editSubArea/{{$area->id}}"><i class="nav-icon fas fa-edit"></i></a>
                           <form action="/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none"><i class="fas fa-trash"></i></button>
                           </form>
+                          <a href="/showRepresentatives/{{$area->id}}" ><i class="fas fa-tasks"></i></a>
                           <i class="fas fa-eye"></i>
                         </td>
                       </tr>
@@ -110,7 +101,7 @@
                   <tfoot>
                     @if(isset($subArea) && $subArea->count() > 0)
                       <tr>
-                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>
                         <th rowspan="1" colspan="1">اسم منطقتها الرئيسية</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>

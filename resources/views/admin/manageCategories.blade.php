@@ -33,16 +33,6 @@
               <i class="fas fa-times"></i>
               </button>
             </div>
-            <div class="card-title">
-              <div class="input-group input-group-sm" style="width: 200px;margin-left:20px">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -52,8 +42,8 @@
                   <thead>
                   @if($cat->count() > 0)
                     <tr role="row">
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                        العدد
+                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم المجموعة
@@ -80,7 +70,7 @@
                       <td>{{$row->name_cat}}</td>
                       <td>{{$comp->name_company}}</td>
                       <td>
-                        <a href="/editCategory/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                        <a href="/editCategory/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
                         <form action="/deleteCategory/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
@@ -108,7 +98,7 @@
                   <tfoot>
                   @if($cat->count() > 0)
                     <tr>
-                      <th rowspan="1" colspan="1">العدد</th>
+                      <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">اسم المجموعة</th>
                       <th rowspan="1" colspan="1">اسم الشركة</th>
                       <th rowspan="1" colspan="1" style="">العملية</th>

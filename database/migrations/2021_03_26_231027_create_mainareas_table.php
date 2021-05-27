@@ -17,6 +17,7 @@ class CreateMainareasTable extends Migration
             $table->increments('id');
             $table->string('name_main_area');
             $table->string('supervisor_id'); 
+            $table->string('representative_id'); 
             $table->timestamps();
         });
     }

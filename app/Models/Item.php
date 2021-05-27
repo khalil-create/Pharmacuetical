@@ -26,4 +26,8 @@ class Item extends Model
     {
         return $this->belongsTo('App\Models\Category','category_id','id');//(related,foriegn key,primary key)
     }
+    public function uses()
+    {
+        return $this->belongsToMany('App\Models\Uses','uses_items');
+    }
 }

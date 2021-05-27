@@ -42,8 +42,8 @@
                   <thead>
                   @if($supervisor->count() > 0)
                     <tr role="row">
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                        العدد
+                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم المشرف
@@ -76,7 +76,7 @@
                       <td class="sorting_1">{{$row->sex}}</td>
                       <td class="" style="">{{$row->email}}</td>
                       <td class="" style="">
-                        <a href="/editSupervisor/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                        <a href="/editSupervisor/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
                         <a href="/mainAreaSupervised/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
                         <i class="fas fa-eye"></i>
                       </td>
@@ -99,7 +99,7 @@
                   <tfoot>
                     @if($supervisor->count() > 0)
                       <tr>
-                        <th rowspan="1" colspan="1">العدد</th>
+                        <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">الاسم</th>
                         <th rowspan="1" colspan="1">الجنس</th>
                         <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>

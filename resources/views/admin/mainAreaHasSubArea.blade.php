@@ -35,17 +35,6 @@
               <i class="fas fa-times"></i>
               </button>
             </div>
-            <div class="card-title">
-              <div class="input-group input-group-sm" style="width: 200px;margin-left:10px">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -55,8 +44,8 @@
                   <thead>
                   @if(isset($subareas) && $exist == 1)                    
                     <tr role="row">
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                        العدد
+                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم المنطقة الرئيسية
@@ -93,7 +82,7 @@
                   <tfoot>
                   @if(isset($subareas) && $exist == 1)                    
                     <tr>
-                      <th rowspan="1" colspan="1">العدد</th>
+                      <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">اسم المنطقة الرئيسية</th>
                     </tr>
                   @endif

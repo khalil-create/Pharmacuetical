@@ -16,6 +16,7 @@ class CreateSupervisorsTable extends Migration
         Schema::create('supervisors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id')->unique();
+            $table->string('manager_id');
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Mainarea;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Manager;
 use App\Traits\userTrait;
 
 class SupervisorController extends Controller
@@ -14,7 +15,8 @@ class SupervisorController extends Controller
 
     public function addSupervisor()
     {
-        return view('admin.addSupervisor');
+        $marketingManager = Manager::get();
+        return view('admin.addSupervisor',compact('marketingManager',$marketingManager));
     }
     public function storeSupervisor(Request $request)
     {
@@ -36,7 +38,10 @@ class SupervisorController extends Controller
             'user_image' => $file_name,
             'password' => bcrypt($request->password),
         ]);
-            $sup = Supervisor::create(['user_id' => $user->id]);
+            $sup = Supervisor::create([
+                'user_id' => $user->id,
+                'manager_id' => $request->manager_id,
+                ]);
             $sup->update();
 
         return redirect('/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
@@ -86,17 +91,6 @@ class SupervisorController extends Controller
     {
         $supervisor = User::whereHas('supervisor')->get();
         return view('admin.manageSupervisors', compact('supervisor',$supervisor));
-       // return view('admin.manageSupervisors')->with('supervisor',$s);
-        // foreach($s as $d)
-        //     echo $d->id.' ';
-        // $supervisors = \App\Models\Supervisor::with(['user' => function($q){
-        //     $q->select('user_name_third','user_surname','user_image','email','sex','id');
-        // }])->get();
-        // return view('admin.manageSupervisors')->with('supervisor',\App\Models\Supervisor::with(['user' => function($q){
-        //     $q->select('user_name_third','user_surname','user_image','email','sex','id');
-        // }])->get());
-        // $users = User::select('id','user_name_third','user_surname','user_type','sex','email','phone_number','user_image')->get();
-        // return view('admin.accounts')->with('users',$users);
     }
     public function displayAllAreas($id)
     {
@@ -107,11 +101,13 @@ class SupervisorController extends Controller
     public function editSupervisor($id)
     {
         $user = User::findOrfail($id);
-        return view('admin.editSupervisor')->with('user',$user );
+        $marketingManager = Manager::get();
+        return view('admin.editSupervisor')->with('user',$user )->with('marketingManager',$marketingManager);
     }
     public function updateSupervisor(Request $request,$id)
     {
         $user = User::find($id);
+        $supervisor = $user->supervisor->first();
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
@@ -133,48 +129,11 @@ class SupervisorController extends Controller
         $user->password = bcrypt($request->Input('password'));
         if($request->hasfile('userimage'))
         {
-            // $file = $request->file('userimage');
-            // $extention =$file->getClientOriginalExtension();
-            // $filename = time().'.'.$extention;
-            // $path = 'images/users/';
-            // $file->move($path,$filename);
             $user->user_image = $file_name;
-
-            
         }
         $user->update();
-        
-        // //$user->save();
-        // if($request->Input('usertype') == 'مشرف' /* && request()->path() == 'userUpdate/'.$user->id */){
-        //     // $sup = Supervisor::find($user->id);
-        //     // // return $sup->user_id;
-        //     // $sup->user_id = $user->id;            
-        //     // $sup->update();
-        //     $sup = Supervisor::create(['user_id' => $user->id]);
-        //     $sup->update();
-        // }
-        // //global $id;
-        // // $i = $id;
-        // // $sup = User::whereHas('supervisor',function($q){
-        // //     $q->where('user_id',$ii);
-        // // })->get();
-        // // return $i;
-        
-        // else{
-        //     $supId = 0;
-        //     $sup1 = Supervisor::get();
-        //     foreach($sup1 as $sup){
-        //         if($sup->user_id == $id)
-        //             $supId = $sup->id;
-        //     }
-        //     $supdelet = Supervisor::find($supId);
-        //     $supdelet->delete();
-        // }
-        // //return $sup;
-        // // if($sup->user_id == $id){
-        // //     $sup = Supervisor::findOrFail($id);
-        // //     $sup->delete();
-        // // }
+        $supervisor->manager_id = $request->manager_id;
+        $supervisor->update();
 
         return redirect('/manageSupervisors')->with('status','تم تعديل البيانات بشكل ناجح');
     }

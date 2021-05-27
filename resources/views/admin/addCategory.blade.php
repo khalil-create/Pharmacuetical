@@ -58,7 +58,9 @@
                                     <label for="company_id" class="col-md-2 control-label">اسم الشركة</label>
                                         <select name="company_id" id="company_id" class="form-control custom-select rounded-0">
                                             @foreach ($company as $comp)
-                                                <option value="{{$comp->id}}">{{$comp->name_company}}</option>
+                                                @if($comp->have_category == 1)
+                                                    <option value="{{$comp->id}}">{{$comp->name_company}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @if ($errors->has('company_id'))

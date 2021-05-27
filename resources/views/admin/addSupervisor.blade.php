@@ -62,6 +62,16 @@
                                     </select>
                             </div>
                             <div class="form-group">
+                                <label for="manager_id">مدير التسويق</label>
+                                    <select name="manager_id" value="مشرف" class="custom-select rounded-0">
+                                        @foreach ($marketingManager as $manager)
+                                            <option value="{{$manager->id}}">
+                                                {{$manager->user->user_name_third}} {{$manager->user->user_surname}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="">الجنس</label>
                                 <div class="radiobox">
                                     <div class="form-check">
@@ -93,7 +103,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">كلمة السر</label>
-                                <input type="password" class="form-control" name="password_confirmation">
+                                <input type="password" class="form-control" name="password">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">تأكيد كلمة السر</label>
@@ -110,12 +120,12 @@
                                     <input type="date" class="form-control" name="birthdate">
                                 </div>
                                 <div class="form-group">
-                                <label for="birthplace">مكان الميلاد (محافظة)</label>
-                                <input type="text" class="form-control" name="birthplace">
+                                    <label for="birthplace">مكان الميلاد (محافظة)</label>
+                                    <input type="text" class="form-control" name="birthplace">
                                 </div>
                                 <div class="form-group">
-                                <label for="town">المديريه</label>
-                                <input type="text" class="form-control" name="town">
+                                    <label for="town">المديريه</label>
+                                    <input type="text" class="form-control" name="town">
                                 </div>
                                 <div class="form-group margin-top">
                                 <label for="village">العزلة</label>

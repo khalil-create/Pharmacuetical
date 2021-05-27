@@ -22,4 +22,8 @@ class Subarea extends Model
     {
         return $this->belongsTo('App\Models\Mainarea','mainarea_id','id');//(related,foriegn key,primary key)
     }
+    public function representatives()
+    {
+        return $this->belongsToMany('App\Models\Representative','representatives_subareas');
+    }
 }

@@ -27,7 +27,8 @@ class SubAreaController extends Controller
         }
         return view('admin.addSubArea', compact('mainareas',$mainareas));
     }
-    public function storeSubArea(Request $request,$id){
+    public function storeSubArea(Request $request,$id)
+    {
         $rules = $this->getRules();
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);

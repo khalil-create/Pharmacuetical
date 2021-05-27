@@ -26,6 +26,13 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::get('/editUser/{id}', 'UserController@editUser');
     Route::put('/userUpdate/{id}', 'UserController@userUpdate');
     Route::delete('/deleteUser/{id}', 'UserController@deleteUser');
+    
+    Route::get('/manageManagers', 'ManagerController@getAllManagers');
+    Route::get('/addManager', 'ManagerController@addManager');
+    Route::post('/storeManager', 'ManagerController@storeManager');
+    Route::get('/editManager/{id}', 'ManagerController@editManager');
+    Route::put('/updateManager/{id}', 'ManagerController@updateManager');
+    Route::delete('/deleteUser/{id}', 'UserController@deleteUser');
 
     Route::get('/manageSupervisors', 'SupervisorController@getAllSupervisor');
     Route::get('/addSupervisor', 'SupervisorController@addSupervisor');
@@ -34,6 +41,16 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::put('/supervisorUpdate/{id}', 'SupervisorController@updateSupervisor');
     Route::get('/mainAreaSupervised/{id}', 'SupervisorController@getSupervisorAreas');
     Route::delete('/deleteSupervisor/{id}', 'SupervisorController@deleteSupervisor');
+    
+    Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives');
+    Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');
+    Route::post('/storeRepresentative', 'RepresentativeController@storeRepresentative');
+    Route::get('/editRepresentative/{id}', 'RepresentativeController@editRepresentative');
+    Route::put('/updateRepresentative/{id}', 'RepresentativeController@updateRepresentative');
+    Route::get('/showRepresentatives/{id}', 'RepresentativeController@showRepresentatives');
+    Route::get('/showMainareas/{id}', 'RepresentativeController@showMainareas');
+    Route::post('/storeRepMainArea/{id}', 'RepresentativeController@storeRepMainArea');
+    Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
 
     Route::get('/manageMainAreas', 'MainAreaController@getAllAreas');
     Route::get('/addMainArea', 'MainAreaController@addMainArea');
@@ -70,7 +87,58 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::get('/editItem/{id}', 'ItemController@editItem');
     Route::put('/UpdateItem/{id}', 'ItemController@UpdateItem');
     Route::delete('/deleteItem/{id}', 'ItemController@deleteItem');
+    
+    Route::get('/manageStudies', 'StudyController@getAllStudies');
+    Route::get('/addStudy', 'StudyController@addStudy');
+    Route::post('/storeStudy', 'StudyController@storeStudy');
+    Route::get('/editStudy/{id}', 'StudyController@editStudy');
+    Route::put('/UpdateStudy/{id}', 'StudyController@UpdateStudy');
+    Route::delete('/deleteStudy/{id}', 'StudyController@deleteStudy');
+
+    Route::get('/studyStrengths/{id}', 'StrengthController@getStudyStrengths');
+    Route::get('/addStrength/{id}', 'StrengthController@addStrength');
+    Route::post('/storeStrength', 'StrengthController@storeStrength');
+    Route::get('/editStrength/{id}', 'StrengthController@editStrength');
+    Route::put('/updateStrength/{id}', 'StrengthController@updateStrength');
+    Route::delete('/deleteStrength/{id}', 'StrengthController@deleteStrength');
+    // Route::get('/addStrengthsExist/{id}', 'StrengthController@addStrengthsExist');
+    // Route::post('/storeStrengthsExist', 'StrengthController@storeStrengthsExist');
+
+    Route::get('/itemUses/{id}', 'UsesController@getItemUses');
+    Route::get('/addUse/{id}', 'UsesController@addUse');
+    Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
+    Route::post('/storeUse', 'UsesController@storeUse');
+    Route::post('/storeUsesExist', 'UsesController@storeUsesExist');
+    Route::get('/editUse/{id}', 'UsesController@editUse');
+    Route::put('/updateUse/{id}', 'UsesController@updateUse');
+    Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
+
+    Route::get('/manageSamples', 'SampleController@getAllSamples');
+    Route::get('/addSample', 'SampleController@addSample');
+    Route::post('/storeSample', 'SampleController@storeSample');
+    Route::get('/editSample/{id}', 'SampleController@editSample');
+    Route::put('/updateSample/{id}', 'SampleController@updateSample');
+    Route::delete('/deleteSample/{id}', 'SampleController@deleteSample');
+    
+    Route::get('/manageTasks', 'TaskController@getAllTasks');
+    Route::get('/addTask', 'TaskController@addTask');
+    Route::post('/storeTask', 'TaskController@storeTask');
+    Route::get('/editTask/{id}', 'TaskController@editTask');
+    Route::put('/updateTask/{id}', 'TaskController@updateTask');
+    Route::delete('/deleteTask/{id}', 'TaskController@deleteTask');
+    
 });
+Route::group(['namespace'=>'App\Http\Controllers\Managers','middleware'=>'auth'],function(){
+    Route::get('/manageSalesObjectives', 'SalesobjectiveController@getAllSalesObjectives');
+    Route::get('/addSalesObjective', 'SalesobjectiveController@addSalesObjective');
+    Route::post('/storeSalesObjective', 'SalesobjectiveController@storeSalesObjective');
+    Route::get('/editSalesObjective/{id}', 'SalesobjectiveController@editSalesObjective');
+    Route::put('/updateSalesObjective/{id}', 'SalesobjectiveController@updateSalesObjective');
+    Route::delete('/deleteSalesObjective/{id}', 'SalesobjectiveController@deleteSalesObjective');
+    Route::get('/distributeSalesObjective/{id}', 'SalesobjectiveController@distributeSalesObjective');
+    Route::post('/storeDistributedSalesObjForSup', 'SalesobjectiveController@storeDistributedSalesObjForSup');
+});
+
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

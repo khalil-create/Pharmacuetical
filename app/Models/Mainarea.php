@@ -9,6 +9,7 @@ class Mainarea extends Model
     protected $fillable = [
             'name_main_area',
             'supervisor_id',
+            'representative_id',
             'created_at',
             'updated_at',
         ];
@@ -21,6 +22,10 @@ class Mainarea extends Model
     public function subareas()
     {
         return $this->hasMany('App\Models\Subarea','mainarea_id','id');//(related,foriegn key,primary key)
+    }
+    public function representatives()
+    {
+        return $this->hasMany('App\Models\Representative','representative_id','id');//(related,foriegn key,primary key)
     }
     public function supervisor()
     {

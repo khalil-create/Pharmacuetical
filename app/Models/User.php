@@ -28,17 +28,17 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Supervisor','user_id','id');//(related,foriegn key,primary key)
     }
-    // public function mainareas()
-    // {
-    //     return $this->hasMany('App\Models\Mainarea','supervisor_id','id');//(related,foriegn key,primary key)
-    // }
-
+    public function representatives()
+    {
+        return $this->hasMany('App\Models\Representative','user_id','id');//(related,foriegn key,primary key)
+    }
+    public function managers()
+    {
+        return $this->hasMany('App\Models\Manager','user_id','id');//(related,foriegn key,primary key)
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    // protected $hidden = [
-    //     'password', 'remember_token',
-    // ];
 }

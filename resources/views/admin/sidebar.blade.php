@@ -60,6 +60,18 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{url('manageManagers')}}" 
+            class="nav-link {{  $p == 'manageManagers' || 
+                                $p =='addManager' ||
+                                $path =='editManager' ? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                ادارة مدراء الشركة
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{url('manageSupervisors')}}" 
             class="nav-link {{  $p == 'manageSupervisors' || 
                                 $p == 'addSupervisor' ||
@@ -69,6 +81,21 @@
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                 ادارة المشرفين
+                <span class="badge badge-info right">6</span>
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('manageRepresentatives')}}" 
+            class="nav-link {{  $p == 'manageRepresentatives' || 
+                                $p == 'addRepresentative' ||
+                                $path == 'showMainareas' ||
+                                $path == 'storeRepMainArea' ||
+                                $path =='editRepresentative'? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                ادارة المناديب
                 <span class="badge badge-info right">6</span>
                 </p>
             </a>
@@ -123,11 +150,12 @@
         <li class="nav-item {{ $p == 'manageCompany' || 
                                 $p == 'addCompany' ||
                                 $p == 'manageCategories' ||
-                                $p == 'addCategories' ||
+                                $p == 'addCategory' ||
                                 $p == 'manageItems' ||
-                                $p == 'addItems' ||
+                                $p == 'addItem' ||
                                 $path == 'editCompany' ||
                                 $path == 'editCategries' ||
+                                $path == 'itemUses' ||
                                 $path == 'editItems'? 'menu-open' : ''
                             }}">
             <a href="{{url('manageCompany')}}" 
@@ -139,6 +167,7 @@
                                 $p == 'addItem' ||
                                 $path == 'editCompany' ||
                                 $path == 'editCategry' ||
+                                $path == 'itemUses' ||
                                 $path == 'editItem'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -172,6 +201,7 @@
                     <a href="{{url('manageItems')}}" 
                     class="nav-link {{  $p == 'manageItems'||
                                         $p == 'addItem' ||
+                                        $path == 'itemUses' ||
                                         $path == 'editItem' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -181,6 +211,21 @@
             </ul>
         </li>
         <li class="nav-item">
+            <a href="{{url('manageStudies')}}" 
+            class="nav-link {{  $p == 'manageStudies' ||
+                                $p == 'addStudy' ||
+                                $path == 'studyStrengths' ||
+                                $path == 'addStrength' ||
+                                $path == 'addStrengthsExist' ||
+                                $path == 'editStrength' ||
+                                $path == 'editStudies' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                الدراسات العلمية
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{url('manageSamples')}}" 
             class="nav-link {{  $p == 'manageSamples' ||
                                 $p == 'addSample' ||
@@ -188,6 +233,17 @@
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
                 ادارة العينات
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('manageTasks')}}" 
+            class="nav-link {{  $p == 'manageTasks' ||
+                                $p == 'addTask' ||
+                                $path == 'editTask' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                ادارة المهام
                 </p>
             </a>
         </li>
