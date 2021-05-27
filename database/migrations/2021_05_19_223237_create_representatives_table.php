@@ -15,7 +15,6 @@ class CreateRepresentativesTable extends Migration
     {
         Schema::create('representatives', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
             $table->unsignedBigInteger('teamleader_id')->nullable();
             $table->foreign('teamleader_id')->references('id')->on('representatives');
             $table->unsignedInteger('user_id');
