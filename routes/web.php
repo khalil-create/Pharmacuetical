@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Representative\Representative;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/khalil', function () {
+    $supervisor = User::whereHas('supervisor')->paginate(2);
+    return view('admin.temp')->with('supervisor',$supervisor);
+});
+
+Route::get('/manageRepresentative', [Representative::class ,'index'])->name('showRep');
 
 Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],function(){
 
@@ -73,14 +82,14 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::get('/editCompany/{id}', 'CompanyController@editCompany');
     Route::put('/UpdateCompany/{id}', 'CompanyController@UpdateCompany');
     Route::delete('/deleteCompany/{id}', 'CompanyController@deleteCompany');
-    
+
     Route::get('/manageCategories', 'CategoryController@getAllCategories');
     Route::get('/addCategory', 'CategoryController@addCategory');
     Route::post('/storeCategory', 'CategoryController@storeCategory');
     Route::get('/editCategory/{id}', 'CategoryController@editCategory');
     Route::put('/UpdateCategory/{id}', 'CategoryController@UpdateCategory');
     Route::delete('/deleteCategory/{id}', 'CategoryController@deleteCategory');
-    
+
     Route::get('/manageItems', 'ItemController@getAllItems');
     Route::get('/addItem', 'ItemController@addItem');
     Route::post('/storeItem', 'ItemController@storeItem');
