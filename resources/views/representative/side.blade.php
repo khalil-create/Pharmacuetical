@@ -1,8 +1,3 @@
-@extends('layouts.index')
-{{-- @section('title')
-    ادارة الحسابات
-@endsection --}}
-@section('content')
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -213,4 +208,3 @@
     </div>
     <!-- /.sidebar -->
 </aside>
-@endsection

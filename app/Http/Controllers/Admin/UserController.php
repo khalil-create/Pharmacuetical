@@ -27,15 +27,15 @@ class UserController extends Controller
     }
     public function storeUser(Request $request)
     {
-        // $rules = $this->getRules();
-        // $messages = $this->getMessages();
-        // $validator = Validator::make($request->all(),$rules,$messages);
-        // if($validator->fails()){
-        //     return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        // }
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
 
         $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-            
+
         $user = User::create([
             'user_name_third' => $request->usernamethird,
             'user_surname' => $request->usersurname,
@@ -87,7 +87,7 @@ class UserController extends Controller
 
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        
+
         //$user->update($request->all());
         $user->user_name_third = $request->Input('usernamethird');
         $user->user_surname = $request->Input('usersurname');
@@ -107,7 +107,7 @@ class UserController extends Controller
             $user->user_image = $file_name;
         }
         $user->update();
-        
+
         $prevSupervisor = FALSE;
         $supervisorID = 0;
         $sup = Supervisor::get();
@@ -170,13 +170,13 @@ class UserController extends Controller
 
             'usernamethird.string' => ' يجب كتابة الاسم الثلاثي بشكل نصي',
             'usersurname.string' => ' يجب كتابة اللقب بشكل نصي',
-            
+
         ];
     }
     public function deleteUser($id)
     {
         $user = User::findOrFail($id);
-        
+
         $supervisorID = 0;
         $sup = Supervisor::whereHas('user')->get();
         foreach($sup as $s)
@@ -196,7 +196,7 @@ class UserController extends Controller
                 $mainareaID = $s->id;
             }
         }
-        
+
         if(!$user)
             return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
         else
@@ -206,6 +206,6 @@ class UserController extends Controller
             $mainareaDeleted->delete();
             $user->delete();
             return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
-        }       
+        }
     }
 }

@@ -66,8 +66,8 @@
     {{-- @include('admin.sidebar') --}}
     @if(Auth::user()->user_type=='أدمن')
         @include('admin.sidebar')
-    @elseif(Auth::user()->user_type=='مدير تسويق')
-        @include('managers.sidebar')
+    @elseif(Auth::user()->user_type==='مندوب علمي' || 'مندوب مبيعات' || 'مندوب فريق')
+        @include('representative.side')
     @elseif(Auth::user()->user_type=='مدير تسويق')
         @include('managers.sidebar')
     @elseif(Auth::user()->user_type==3)
