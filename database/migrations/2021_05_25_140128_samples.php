@@ -17,8 +17,10 @@ class Samples extends Migration
             $table->increments('id');
             $table->string('item');
             $table->string('count');
-            $table->string('supervisor_id');
-            $table->string('manager_id');
+            $table->unsignedInteger('supervisor_id');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->unsignedInteger('manager_id');
+            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
             $table->timestamps();
         });
     }

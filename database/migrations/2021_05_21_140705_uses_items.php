@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Salesobjectives extends Migration
+class UsesItems extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class Salesobjectives extends Migration
      */
     public function up()
     {
-        Schema::create('salesobjectives', function (Blueprint $table) {
+        Schema::create('uses_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('objective');
-            $table->string('description');
-            $table->string('manager_id');
+            $table->unsignedInteger('item_id');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->unsignedInteger('uses_id');
+            $table->foreign('uses_id')->references('id')->on('uses')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class Salesobjectives extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salesobjectives');
+        Schema::dropIfExists('uses_items');
     }
 }

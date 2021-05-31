@@ -22,6 +22,10 @@ class Supervisor extends Model
     {
         return $this->hasMany('App\Models\MainArea','supervisor_id','id');//(related,foriegn key,primary key)
     }
+    public function subareas()
+    {
+        return $this->hasManyThrough('App\Models\Subarea','App\Models\MainArea','supervisor_id','mainarea_id');//(related,foriegn key,primary key)
+    }
     public function representatives()
     {
         return $this->hasMany('App\Models\Representative','supervisor_id','id');//(related,foriegn key,primary key)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UsesItems extends Migration
+class Strengths extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class UsesItems extends Migration
      */
     public function up()
     {
-        Schema::create('uses_items', function (Blueprint $table) {
+        Schema::create('strengths', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('item_id');
-            $table->string('uses_id');
+            $table->string('strength');
+            $table->unsignedInteger('study_id');
+            $table->foreign('study_id')->references('id')->on('studies')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class UsesItems extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('uses_items');
+        Schema::dropIfExists('strengthspromotions');
     }
 }

@@ -9,9 +9,9 @@ class Representative extends Model
 {
     use HasFactory;
     protected $fillable = [
-        // 'type',
         'user_id',
         'supervisor_id',
+        'manager_id',
         'created_at',
         'updated_at',
     ];
@@ -27,6 +27,10 @@ class Representative extends Model
     public function supervisor()
     {
         return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
+    }
+    public function manager()
+    {
+        return $this->belongsTo('App\Models\Manager','manager_id','id');//(related,foriegn key,primary key)
     }
     public function mainarea()
     {

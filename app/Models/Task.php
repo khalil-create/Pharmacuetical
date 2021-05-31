@@ -33,6 +33,6 @@ class Task extends Model
     }
     public function representative()
     {
-        return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
+        return $this->belongsTo('App\Models\Representative','representative_id','id');//(related,foriegn key,primary key)
     }
 }

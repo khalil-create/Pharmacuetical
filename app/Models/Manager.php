@@ -24,6 +24,10 @@ class Manager extends Model
     {
         return $this->hasMany('App\Models\Supervisor','manager_id','id');//(related,foriegn key,primary key)
     }
+    public function representatives()
+    {
+        return $this->hasMany('App\Models\Representative','manager_id','id');//(related,foriegn key,primary key)
+    }
     public function samples()
     {
         return $this->hasMany('App\Models\Sample','manager_id','id');//(related,foriegn key,primary key)

@@ -25,7 +25,7 @@ class Mainarea extends Model
     }
     public function representatives()
     {
-        return $this->hasMany('App\Models\Representative','representative_id','id');//(related,foriegn key,primary key)
+        return $this->hasOne('App\Models\Representative','representative_id','id');//(related,foriegn key,primary key)
     }
     public function supervisor()
     {

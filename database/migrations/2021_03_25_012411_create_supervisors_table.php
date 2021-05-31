@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateRepresentativesTable extends Migration
+class CreateSupervisorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateRepresentativesTable extends Migration
      */
     public function up()
     {
-        Schema::create('representatives', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('teamleader_id')->nullable();
-            $table->foreign('teamleader_id')->references('id')->on('representatives');
+        Schema::create('supervisors', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('manager_id');
+            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateRepresentativesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('representatives');
+        Schema::dropIfExists('supervisors');
     }
 }

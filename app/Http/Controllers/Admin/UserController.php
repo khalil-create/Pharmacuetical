@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Representative;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Image;
 
 class UserController extends Controller
@@ -23,19 +24,57 @@ class UserController extends Controller
     }
     public function adduser()
     {
-        return view('admin.addUser');
+        // $supervisors = Supervisor::get();
+        $supervisors = Supervisor::get();
+        
+        $manager = Manager::get();
+        $teemLeaders = Representative::with('user')->get();
+        return view('admin.addUser',compact('supervisors'))->with('teemLeaders',$teemLeaders)
+        ->with('manager',$manager);
     }
     public function storeUser(Request $request)
     {
+        $usertype = $request->Input('usertype');
+        $managerMarketing = User::where('user_type','مدير تسويق')->first();
+        $managerSales = User::where('user_type','مدير مبيعات')->first();
+        if($usertype == 'مشرف' )
+        {
+            if(!$managerMarketing || $managerMarketing->count() < 1)
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
+        }
+        else if($usertype == 'مندوب مبيعات')
+        {
+            if(!$managerSales || $managerSales->count() < 1)
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات قبل مايتم اضافة مدير المبيعات']);
+        }
+        else if($usertype == 'مدير فريق')
+        {
+            $sup = Supervisor::get();
+            if(!$sup || $sup->count() < 1 && $usertype != 'مشرف')
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مدير فريق قبل مايتم اضافة مشرف']);
+        }
+        else if($usertype == 'مندوب علمي')
+        {
+            $teemL = User::where('user_type','مدير فريق')->get();
+            if(!$teemL || $teemL->count() < 1 && $usertype != 'مدير فريق')
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب قبل مايتم اضافة مدير فريق']);
+        }
+        
+        // dd($request->all());
         $rules = $this->getRules();
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-
-        $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-
+        // $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+        if($request->hasfile('userimage'))
+        {
+            $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+        }
+        else{
+            $file_name = null;
+        }
         $user = User::create([
             'user_name_third' => $request->usernamethird,
             'user_surname' => $request->usersurname,
@@ -52,14 +91,38 @@ class UserController extends Controller
             'user_image' => $file_name,
             'password' => bcrypt($request->password),
         ]);
-        if($request->Input('usertype') == 'مشرف'){
-            //$id = auth()->user($request->Input('email'))->id;
-            $sup = Supervisor::create(['user_id' => $user->id]);
-            $sup->update();
+        if($usertype == 'مشرف')
+        {
+            Supervisor::create([
+                'user_id' => $user->id,
+                'manager_id' => $managerMarketing->manager->id,
+            ]);
         }
-        elseif($request->Input('usertype') == 'مدير تسويق' || $request->Input('usertype') == 'مدير مبيعات')
+        else if($usertype == 'مدير تسويق' || $usertype == 'مدير مبيعات')
         {
             Manager::create(['user_id' => $user->id]);
+        }
+        else if($usertype == 'مدير فريق')
+        {
+            Representative::create([
+                'user_id' => $user->id,
+                'supervisor_id' => $request->supervisor_id,
+            ]);
+        }
+        else if($usertype == 'مندوب علمي')
+        {
+            Representative::create([
+                'user_id' => $user->id,
+                'supervisor_id' => $request->supervisor_id,
+                'teemLeader_id' => $request->teemleader_id,
+            ]);
+        }
+        else if($usertype == 'مندوب مبيعات')
+        {
+            Representative::create([
+                'user_id' => $user->id,
+                'supervisor_id' => $managerSales->id, //لأنه مندوب مبيعات فإن المشرف الذي يتبعه هو مدير المبيعات
+            ]);
         }
         return redirect('/displayAllUsers')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -67,8 +130,6 @@ class UserController extends Controller
     //accountController
     public function getAllUsers()
     {
-        // $users = User::select('id','user_name_third','user_surname','user_type',
-        // 'sex','email','phone_number','user_image')->get();
         $users = User::select('id','user_name_third','user_surname','user_type',
         'sex','email','phone_number','user_image')->get();
         return view('admin.accounts')->with('users',$users);
@@ -77,7 +138,11 @@ class UserController extends Controller
     public function editUser($id)
     {
         $user = User::findOrfail($id);
-        return view('admin.editUser')->with('user',$user );
+        $supervisors = Supervisor::get();
+        // $manager = Manager::get();
+        $teemLeaders = Representative::with('user')->get();
+        return view('admin.editUser',compact('user'))->with('supervisors',$supervisors)
+        ->with('teemLeaders',$teemLeaders);
     }
 
     public function userUpdate(Request $request,$id)
@@ -121,13 +186,27 @@ class UserController extends Controller
         }
         //$user->save();
         if($request->Input('usertype') == 'مشرف' && !($prevSupervisor)){ //edit user to new supervisor
-            $sup = Supervisor::create(['user_id' => $user->id]);
+            $manager = Manager::get()->first();
+            if(!$manager)
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
+            $sup = Supervisor::create(['user_id' => $user->id,'manager_id' => $manager->id]);
             $sup->update();
         }
         else if($request->Input('usertype') != 'مشرف' && $prevSupervisor) //delete supervisor becuase converted to another type
         {
             $supdelet = Supervisor::find($supervisorID);
             $supdelet->delete();
+        }
+        else if($request->Input('usertype') == 'مدير تسويق' || 'مدير مبيعات')
+        {
+            $manager = Manager::create(['user_id' => $user->id]);
+        }
+        else if($request->Input('usertype') == 'مندوب فريق' || 'مندوب علمي' || 'مندوب مبيعات')
+        {
+            $supervisor = Supervisor::get()->first();
+            if(!$supervisor)
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
+            $manager = Manager::create(['user_id' => $user->id]);
         }
         return redirect('/displayAllUsers')->with('status','تم تعديل البيانات بشكل ناجح');
     }
@@ -144,10 +223,10 @@ class UserController extends Controller
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'phonenumber' => 'numeric|required|max:999999999',
+                'phonenumber' => 'required|numeric|max:999999999',
                 'identitytype' => 'required|string',
                 'identitynumber' => 'required|numeric',
-                'userimage' => 'required|string|max:255',
+                'userimage' => 'required|max:255',
                 'password' => 'required|string|min:6|confirmed',
             ];
     }
@@ -165,47 +244,75 @@ class UserController extends Controller
             'phonenumber.required' => 'يجب عليك كتابة رقم الهاتف',
             'identitytype.required' => 'يجب عليك كتابة نوع الهوية',
             'identitynumber.required' => 'يجب عليك كتابة رقم الهوية',
-            'userimage.required' => 'يجب عليك تحميل الصورة',
+            // 'userimage.required' => 'يجب عليك تحميل الصورة',
             'password.required' => 'يجب عليك كتابة كلمة السر',
+
+            'phonenumber.numeric' => 'يجب ان يكون هذا الحقل عدداً',
+            'phonenumber.max' => 'يجب ان لا يتجاوز العدد لأكثر من 9 ارقام',
+            'email.unique' => 'يوجد مستخدم اخر يستخدم هذا البريد الالكتروني',
 
             'usernamethird.string' => ' يجب كتابة الاسم الثلاثي بشكل نصي',
             'usersurname.string' => ' يجب كتابة اللقب بشكل نصي',
 
         ];
     }
+    // public function deleteUser($id)
+    // {
+    //     return "kkk";
+    //     $user = User::findOrFail($id);
+    //     if(!$user)
+    //             return redirect()->back();
+    //     $supervisorID = 0;
+    //     $sup = Supervisor::whereHas('user')->get();
+    //     foreach($sup as $s)
+    //     {
+    //         if($s->user_id == $id)
+    //         {
+    //             $supervisorID = $s->id;
+    //         }
+    //     }
+    //     $supDeleted = Supervisor::find($supervisorID);
+    //     $mainarea = Mainarea::whereHas('supervisor')->get();
+    //     $mainareaID = 0;
+    //     foreach($mainarea as $s)
+    //     {
+    //         if($s->supervisor_id == $supDeleted->id)
+    //         {
+    //             $mainareaID = $s->id;
+    //         }
+    //     }
+
+    //     if(!$user)
+    //         return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
+    //     else
+    //     {
+    //         $mainareaDeleted = Mainarea::find($mainareaID);
+    //         $supDeleted->delete();
+    //         $mainareaDeleted->delete();
+    //         $user->delete();
+    //         return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
+    //     }
+    // }
     public function deleteUser($id)
     {
-        $user = User::findOrFail($id);
-
-        $supervisorID = 0;
-        $sup = Supervisor::whereHas('user')->get();
-        foreach($sup as $s)
-        {
-            if($s->user_id == $id)
-            {
-                $supervisorID = $s->id;
-            }
-        }
-        $supDeleted = Supervisor::find($supervisorID);
-        $mainarea = Mainarea::whereHas('supervisor')->get();
-        $mainareaID = 0;
-        foreach($mainarea as $s)
-        {
-            if($s->supervisor_id == $supDeleted->id)
-            {
-                $mainareaID = $s->id;
-            }
-        }
-
+        $user = User::find($id);
         if(!$user)
-            return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
-        else
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
+        if($user->user_type == 'مشرف')
         {
-            $mainareaDeleted = Mainarea::find($mainareaID);
-            $supDeleted->delete();
-            $mainareaDeleted->delete();
+            $user->supervisor()->delete();
             $user->delete();
-            return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
         }
+        else if($user->user_type == 'مدير تسويق' || 'مدير مبيعات')
+        {
+            $user->manager()->delete();
+            $user->delete();
+        }
+        else if($user->user_type == 'مندوب علمي' || 'مندوب مبيعات' || 'مدير فريق')
+        {
+            $user->representatives()->delete();
+            $user->delete();
+        }
+        return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

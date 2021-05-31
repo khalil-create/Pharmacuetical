@@ -38,6 +38,11 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                @if (session('error'))
+                    <div class="alert alert-danger notify-error">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">
@@ -72,9 +77,29 @@
                                     <!-- /.card-body -->
                                 </div>
                             </div>
+                            @php
+                                $managerMarketing = true; //manager marketing was added
+                                $managerSales = true; //manager sales was added
+                                foreach ($manager as $m) {
+                                    if($m->user->user_type == 'مدير تسويق')
+                                        $managerMarketing = false; //manager marketing was not added
+                                    else if($m->user->user_type == 'مدير مبيعات')
+                                        $managerSales = false; //manager sales was not added
+                                }
+                            @endphp
                             <div class="form-group">
                                 <label for="usertype">الصفة الوظيفية</label>
-                                    <select name="usertype" class="custom-select rounded-0" id="usertype">
+                                    <select onchange="showList()" id="usertype" name="usertype" class="custom-select rounded-0">
+                                            @if($managerMarketing)
+                                                <option value="مدير تسويق">
+                                                    مدير تسويق
+                                                </option>
+                                            @endif
+                                            @if($managerSales)
+                                                <option value="مدير مبيعات">
+                                                    مدير مبيعات
+                                                </option>
+                                            @endif
                                         <option value="مشرف">
                                             مشرف
                                         </option>
@@ -87,15 +112,6 @@
                                         <option value="مدير فريق">
                                             مدير فريق
                                         </option>
-                                        <option value="مدير مبيعات">
-                                            مدير مبيعات
-                                        </option>
-                                        <option value="مدير تسويق">
-                                            مدير تسويق
-                                        </option>
-                                        <option value="أدمن">
-                                            أدمن
-                                        </option>
                                     </select>
                                     @if ($errors->has('usertype'))
                                         <span class="help-block">
@@ -103,6 +119,43 @@
                                         </span>
                                     @endif
                             </div>
+                            @if($supervisors->count() > 0)
+                                <div class="form-group" id="supervisor" hidden>
+                                    <label for="supervisor_id" class="col-md-4 control-label">المشرف</label>
+                                            <select id="teemleaders" name="supervisor_id" class="form-control custom-select rounded-0">
+                                                @foreach($supervisors as $row)
+                                                    <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
+                                                @endforeach
+                                            </select>
+                                        @if ($errors->has('supervisor_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
+                            @endif
+                            @if($teemLeaders->count() > 0)
+                                <input id="emptyTeemLeader" value="existTeemLeader" hidden>
+                                <div class="form-group" id="teemLeadersList" hidden>
+                                    <label class="col-md-4 control-label">مدير الفريق</label>
+                                            <select id="teamleader" name="teemleader_id" class="form-control custom-select rounded-0">
+                                                @foreach($teemLeaders as $row)
+                                                    @if($row->user->user_type == 'مدير فريق')
+                                                        <option value="{{$row->id}}">
+                                                            {{ $row->user->user_name_third }} {{$row->user->user_surname}}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        @if ($errors->has('teemleader_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('teemleader_id') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
+                            @else
+                                <input id="emptyTeemLeader" value="NothingTeemLeader" hidden>
+                            @endif 
                             <div class="form-group">
                                 <label for="">الجنس</label>
                                 <div class="radiobox">
@@ -122,23 +175,32 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="password">كلمة السر</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('password') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="password_confirmation">تأكيد كلمة السر</label>
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-                                <small id="ShowErrorPwd" class="form-text text-danger"></small>
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('password_confirmation') }}</small>
-                                    </span>
-                                @endif
+                                <div class="khalil">
+                                    <div class="card-header">
+                                        <h3 class="card-title" style="float: right">كلمة السر</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="password" name="password" class="form-control" placeholder="كلمة السر">
+                                                @if ($errors->has('password'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('password') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="password" name="password_confirmation" class="form-control" placeholder="التأكيد">
+                                                @if ($errors->has('password_confirmation'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('password_confirmation') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
                             </div>
                             <div class="form-group" >
                                 <button type="submit" class="btn btn-primary font" style="margin: 10px">
@@ -152,22 +214,33 @@
                         <div class="col-md-6" style="margin-top:20px">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="email">البريد الإلكتروني</label>
-                                    <input type="email" class="form-control" id="email" name="email">
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('email') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="phonenumber">رقم الهاتف</label>
-                                    <input type="text" class="form-control" id="phonenumber" name="phonenumber">
-                                    @if ($errors->has('phonenumber'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('phonenumber') }}</small>
-                                        </span>
-                                    @endif
+                                    <div class="khalil">
+                                        <div class="card-header">
+                                            <h3 class="card-title" style="float: right">معلومات الاتصال</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <input type="text" name="email" class="form-control" placeholder="البريد الإلكتروني">
+                                                    @if ($errors->has('email'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('email') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-4">
+                                                    <input id="phonenumber" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
+                                                    <small id="invalidPhoneNo" class="form-text text-danger" hidden>يجب ان لا يتجاوز العدد لأكثر من 9 ارقام</small>
+                                                    @if ($errors->has('phonenumber'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('phonenumber') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="userimage">تحميل الصورة</label>
@@ -192,12 +265,39 @@
                                             <div class="row">
                                                 <div class="col-4">
                                                 <input type="text" name="birthplace" class="form-control" placeholder="المحافظة">
+                                                {{-- <label class="col-md-4 control-label">المحافظة</label>
+                                                <select id="teamleader" name="teemleader_id" class="form-control custom-select rounded-0">
+                                                        <option value="صنعاء">صنعاء</option>
+                                                        <option value="تعز"> تعز</option>
+                                                        <option value="الحديده">الحديده</option>
+                                                        <option value="حجه">حجه</option>
+                                                        <option value="اب">اب</option>
+                                                        <option value="عمران">عمران</option>
+                                                        <option value="صعده">صعده</option>
+                                                        <option value="ذمار">ذمار</option>
+                                                        <option value="ريمة">ريمة</option>
+                                                </select> --}}
+                                                @if ($errors->has('birthplace'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('birthplace') }}</small>
+                                                    </span>
+                                                @endif
                                                 </div>
                                                 <div class="col-4">
-                                                <input type="text" name="town" class="form-control" placeholder="المديرية">
+                                                    <input type="text" name="town" class="form-control" placeholder="المديرية">
+                                                    @if ($errors->has('town'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('town') }}</small>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                                 <div class="col-4">
-                                                <input type="text" name="village" class="form-control" placeholder="العزلة">
+                                                    <input type="text" name="village" class="form-control" placeholder="العزلة">
+                                                    @if ($errors->has('village'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('village') }}</small>
+                                                    </span>
+                                                @endif
                                                 </div>
                                             </div>
                                         </div>

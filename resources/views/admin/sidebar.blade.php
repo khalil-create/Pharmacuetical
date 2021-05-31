@@ -59,7 +59,7 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="{{url('manageManagers')}}" 
             class="nav-link {{  $p == 'manageManagers' || 
                                 $p =='addManager' ||
@@ -70,8 +70,8 @@
                 ادارة مدراء الشركة
                 </p>
             </a>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
             <a href="{{url('manageSupervisors')}}" 
             class="nav-link {{  $p == 'manageSupervisors' || 
                                 $p == 'addSupervisor' ||
@@ -84,8 +84,8 @@
                 <span class="badge badge-info right">6</span>
                 </p>
             </a>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{-- <li class="nav-item">
             <a href="{{url('manageRepresentatives')}}" 
             class="nav-link {{  $p == 'manageRepresentatives' || 
                                 $p == 'addRepresentative' ||
@@ -99,7 +99,7 @@
                 <span class="badge badge-info right">6</span>
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item {{ $p == 'manageMainAreas' || 
                                 $p == 'addMainArea' || 
                                 $p == 'addSubArea' || 

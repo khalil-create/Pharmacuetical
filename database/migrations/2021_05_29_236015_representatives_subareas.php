@@ -15,8 +15,10 @@ class RepresentativesSubareas extends Migration
     {
         Schema::create('representatives_subareas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('representative_id');
-            $table->string('subarea_id');
+            $table->unsignedInteger('subarea_id');
+            $table->foreign('subarea_id')->references('id')->on('subareas');
+            $table->unsignedInteger('representative_id');
+            $table->foreign('representative_id')->references('id')->on('representatives');
             $table->timestamps();
         });
     }

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -32,9 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Representative','user_id','id');//(related,foriegn key,primary key)
     }
-    public function managers()
+    public function manager()
     {
-        return $this->hasMany('App\Models\Manager','user_id','id');//(related,foriegn key,primary key)
+        return $this->hasOne('App\Models\Manager','user_id','id');//(related,foriegn key,primary key)
     }
     /**
      * The attributes that should be hidden for arrays.

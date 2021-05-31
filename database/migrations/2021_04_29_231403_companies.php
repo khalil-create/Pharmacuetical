@@ -18,7 +18,8 @@ class Companies extends Migration
             $table->string('name_company');
             $table->string('country_manufacturing');
             $table->string('have_category');
-            $table->string('supervisor_id');
+            $table->unsignedInteger('supervisor_id');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
             $table->binary('sign_img_company'); 
             $table->timestamps();
         });

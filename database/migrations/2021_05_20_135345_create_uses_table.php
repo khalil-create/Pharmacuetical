@@ -14,7 +14,7 @@ class CreateUsesTable extends Migration
     public function up()
     {
         Schema::create('uses', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('use');
             $table->timestamps();
         });

@@ -48,6 +48,20 @@
             $path = substr($p,0,$index);
         @endphp
         <li class="nav-item">
+            <a href="{{url('manageSupervisors')}}" 
+            class="nav-link {{  $p == 'manageSupervisors' || 
+                                $p == 'addSupervisor' ||
+                                $path =='editSupervisor' || 
+                                $path =='mainAreaSupervised'? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                ادارة المشرفين
+                <span class="badge badge-info right">6</span>
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{url('manageSalesObjectives')}}" 
             class="nav-link {{  $p == 'manageSalesObjectives' ||
                                 $p == 'addSalesObjective' ||

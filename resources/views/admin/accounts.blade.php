@@ -88,6 +88,7 @@
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
                           <button style="border: none"><i class="fas fa-trash"></i></button>
+                          {{-- <button onclick="confirm('هل انت متأكد انك تريد حذف هذه البيانات؟')" style="border: none"><i class="fas fa-trash"></i></button> --}}
                       </form>
                       <i class="fas fa-eye"></i>
                       {{-- <i class="fas fa-trash-alt"></i>                       --}}

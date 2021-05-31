@@ -30,9 +30,6 @@ body{
 .align-center{
     text-align: center;
 }
-.form input{
-    border:1px solid rgb(21, 24, 182); 
-}
 .card{
     margin-top: 16px;
     border:1px solid rgb(21, 24, 182);

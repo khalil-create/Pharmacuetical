@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number');
             $table->string('identity_type');//نوع الهوية
             $table->string('identity_number');//نوع الهوية
-            $table->binary('user_image')->nullable();
+            $table->string('user_image')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

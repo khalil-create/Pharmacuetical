@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Managers extends Migration
+class Salesobjectives extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class Managers extends Migration
      */
     public function up()
     {
-        Schema::create('managers', function (Blueprint $table) {
+        Schema::create('salesobjectives', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id');
+            $table->string('objective');
+            $table->string('description');
+            $table->unsignedInteger('manager_id');
+            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class Managers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('managers');
+        Schema::dropIfExists('salesobjectives');
     }
 }

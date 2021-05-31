@@ -142,6 +142,45 @@
         "buttons": ["copy", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
-  </script>
+    
+    function showList(){
+        var usertype = document.getElementById("usertype").value;
+        var existTeemLeader = document.getElementById("emptyTeemLeader").value;
+        var existSupervisor = document.getElementById("emptySupervisor").value;
+        console.log(usertype);
+        if(usertype == 'مدير فريق')
+        {
+            document.getElementById("supervisor").hidden = false;
+            document.getElementById("teemLeadersList").hidden = true;
+        }
+        else if(usertype == 'مندوب علمي')
+        {
+            // document.getElementById("supervisor").hidden = false;
+            if(existTeemLeader == "NothingTeemLeader")
+            {
+                confirm("لايمكنك اضافة المندوب العلمي قبل مايتم اضافة على الأقل مدير فريق واحد");
+                document.getElementById("usertype").value = "مدير فريق";
+            }
+            else
+                document.getElementById("teemLeadersList").hidden = false;
+        }
+        else
+        {
+            document.getElementById("supervisor").hidden = true;
+            document.getElementById("teemLeadersList").hidden = true;
+            
+        }
+    }
+        var phone_number = document.getElementById("phonenumber");
+        var ee = document.getElementById("invalidPhoneNo");
+        phone_number.onkeyup = function()
+        {
+            if(phone_number.value >= 799999999){
+                ee.hidden = false;
+            }
+            else
+                ee.hidden = true;
+        }
+    </script>
 </body>
 </html>

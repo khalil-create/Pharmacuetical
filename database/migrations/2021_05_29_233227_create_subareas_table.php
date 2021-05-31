@@ -16,7 +16,8 @@ class CreateSubareasTable extends Migration
         Schema::create('subareas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name_sub_area');
-            $table->string('mainarea_id');
+            $table->unsignedInteger('mainarea_id');
+            $table->foreign('mainarea_id')->references('id')->on('mainareas')->onDelete('cascade');
             $table->timestamps();
         });
     }

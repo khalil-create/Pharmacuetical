@@ -14,11 +14,12 @@ class Studies extends Migration
     public function up()
     {
         Schema::create('studies', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('title');
             $table->string('source');
             $table->date('emission_date');
-            $table->string('supervisor_id');
+            $table->unsignedInteger('supervisor_id');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
             $table->timestamps();
         });
     }
