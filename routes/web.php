@@ -51,16 +51,6 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth'],fu
     Route::get('/mainAreaSupervised/{id}', 'SupervisorController@getSupervisorAreas');
     Route::delete('/deleteSupervisor/{id}', 'SupervisorController@deleteSupervisor');
     
-    Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives');
-    Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');
-    Route::post('/storeRepresentative', 'RepresentativeController@storeRepresentative');
-    Route::get('/editRepresentative/{id}', 'RepresentativeController@editRepresentative');
-    Route::put('/updateRepresentative/{id}', 'RepresentativeController@updateRepresentative');
-    Route::get('/showRepresentatives/{id}', 'RepresentativeController@showRepresentatives');
-    Route::get('/showMainareas/{id}', 'RepresentativeController@showMainareas');
-    Route::post('/storeRepMainArea/{id}', 'RepresentativeController@storeRepMainArea');
-    Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
-
     Route::get('/manageMainAreas', 'MainAreaController@getAllAreas');
     Route::get('/addMainArea', 'MainAreaController@addMainArea');
     Route::post('/storeMainArea', 'MainAreaController@storeMainArea');
@@ -147,7 +137,17 @@ Route::group(['namespace'=>'App\Http\Controllers\Managers','middleware'=>'auth']
     Route::get('/distributeSalesObjective/{id}', 'SalesobjectiveController@distributeSalesObjective');
     Route::post('/storeDistributedSalesObjForSup', 'SalesobjectiveController@storeDistributedSalesObjForSup');
 });
-
+Route::group(['namespace'=>'App\Http\Controllers\Supervisor','middleware'=>'auth'],function(){
+    Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives');
+    Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');
+    Route::post('/storeRepresentative', 'RepresentativeController@storeRepresentative');
+    Route::get('/editRepresentative/{id}', 'RepresentativeController@editRepresentative');
+    Route::put('/updateRepresentative/{id}', 'RepresentativeController@updateRepresentative');
+    Route::get('/showRepresentatives/{id}', 'RepresentativeController@showRepresentatives');
+    Route::get('/showMainareas/{id}', 'RepresentativeController@showMainareas');
+    Route::post('/storeRepMainArea/{id}', 'RepresentativeController@storeRepMainArea');
+    Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
+});
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

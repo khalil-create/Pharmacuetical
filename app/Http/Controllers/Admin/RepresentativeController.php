@@ -28,14 +28,40 @@ class RepresentativeController extends Controller
     }
     public function storeRepresentative(Request $request)
     {
+        $usertype = $request->Input('usertype');
+        $managerSales = User::where('user_type','مدير مبيعات')->first();
+        if($usertype == 'مندوب مبيعات')
+        {
+            if(!$managerSales || $managerSales->count() < 1)
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات قبل مايتم اضافة مدير المبيعات']);
+        }
+        else if($usertype == 'مدير فريق')
+        {
+            $sup = Supervisor::get();
+            if(!$sup || $sup->count() < 1 && $usertype != 'مشرف')
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مدير فريق قبل مايتم اضافة مشرف']);
+        }
+        else if($usertype == 'مندوب علمي')
+        {
+            $teemL = User::where('user_type','مدير فريق')->get();
+            if(!$teemL || $teemL->count() < 1 && $usertype != 'مدير فريق')
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب قبل مايتم اضافة مدير فريق']);
+        }
+
         // $rules = $this->getRules();
         // $messages = $this->getMessages();
         // $validator = Validator::make($request->all(),$rules,$messages);
         // if($validator->fails()){
         //     return redirect()->back()->withErrors($validator)->withInputs($request->all());
         // }
-        $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-        
+
+        if($request->hasfile('userimage'))
+        {
+            $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+        }
+        else{
+            $file_name = null;
+        }
         $user = User::create([
             'user_name_third' => $request->usernamethird,
             'user_surname' => $request->usersurname,
@@ -52,7 +78,7 @@ class RepresentativeController extends Controller
             'user_image' => $file_name,
             'password' => bcrypt($request->password),
         ]);
-            $rep = Representative::create(
+            Representative::create(
                 [
                     // 'type' => $request->usertype,
                     'user_id' => $user->id,
@@ -116,8 +142,11 @@ class RepresentativeController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
-        $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-        
+            if($request->hasfile('userimage'))
+            {
+                $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+            }
+
         //$user->update($request->all());
         $user->user_name_third = $request->Input('usernamethird');
         $user->user_surname = $request->Input('usersurname');

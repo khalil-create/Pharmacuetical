@@ -20,8 +20,8 @@ class Items extends Migration
             $table->string('price');
             $table->string('bonus');
             $table->string('unit');
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

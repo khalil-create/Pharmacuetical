@@ -48,10 +48,18 @@ class Supervisor extends Model
     }
     public function samples()
     {
-        return $this->hasMany('App\Models\Sample','supervisor_id','id');//(related,foriegn key,primary key)
+        return $this->belongsToMany('App\Models\Sample','supervisors_samples');//(related,foriegn key,primary key)
     }
     public function tasks()
     {
         return $this->hasMany('App\Models\Task','supervisor_id','id');//(related,foriegn key,primary key)
+    }
+    public function tests()
+    {
+        return $this->hasMany('App\Models\Test','supervisor_id','id');//(related,foriegn key,primary key)
+    }
+    public function trainingCourses()
+    {
+        return $this->hasMany('App\Models\TrainingCourse','supervisor_id','id');//(related,foriegn key,primary key)
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Samples extends Migration
+class CreateTestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class Samples extends Migration
      */
     public function up()
     {
-        Schema::create('samples', function (Blueprint $table) {
+        Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('item');
-            $table->string('count');
+            $table->string('question');
+            $table->string('answer');
             $table->unsignedInteger('supervisor_id');
             $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
-            $table->unsignedInteger('manager_id');
-            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class Samples extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('samples');
+        Schema::dropIfExists('tests');
     }
 }

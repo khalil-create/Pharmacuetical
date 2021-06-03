@@ -26,4 +26,8 @@ class Study extends Model
     {
         return $this->hasMany('App\Models\Strengthspromotion','study_id','id');//(related,foriegn key,primary key)
     }
+    public function representatives()
+    {
+        return $this->belongsToMany('App\Models\Representative','representatives_studies');
+    }
 }

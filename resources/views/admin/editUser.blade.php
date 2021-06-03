@@ -134,18 +134,22 @@
                                             @endif>
                                                 مشرف
                                             </option>
-                                            <option value="مدير فريق"
-                                            @if ($user->user_type=='مدير فريق')
-                                                {{$usertype}}
-                                            @endif>
-                                                مدير فريق
-                                            </option>
-                                            <option value="مندوب علمي"
-                                            @if ($user->user_type=='مندوب علمي')
-                                                {{$usertype}}
-                                            @endif>
-                                                مندوب علمي
-                                            </option>
+                                            @if($supervisors->count() > 0)
+                                                <option value="مدير فريق"
+                                                @if ($user->user_type=='مدير فريق')
+                                                    {{$usertype}}
+                                                @endif>
+                                                    مدير فريق
+                                                </option>
+                                            @endif
+                                            @if($teemLeaders->count() > 0 || $teemLeaders->count() > 0)
+                                                <option value="مندوب علمي"
+                                                @if ($user->user_type=='مندوب علمي')
+                                                    {{$usertype}}
+                                                @endif>
+                                                    مندوب علمي
+                                                </option>
+                                            @endif
                                             <option value="مندوب مبيعات"
                                             @if ($user->user_type=='مندوب مبيعات')
                                                 {{$usertype}}
@@ -175,7 +179,6 @@
                                             @endif
                                     </div> 
                                 @else
-                                    <div>khalil</div>
                                     <input id="emptySupervisor" value="NothingSupervisor" hidden>
                                 @endif 
                                 @if($teemLeaders->count() > 0)
@@ -270,22 +273,33 @@
                             <!-- /.col -->
                             <div class="col-md-6" style="margin-top:20px">
                                 <div class="form-group">
-                                    <label for="email">البريد الإلكتروني</label>
-                                    <input type="email" class="form-control" value="{{$user->email}}" name="email">
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('email') }}</small>
-                                    </span>
-                                @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="phonenumber">رقم الهاتف</label>
-                                    <input type="text" class="form-control" value="{{$user->phone_number}}" name="phonenumber">
-                                    @if ($errors->has('phonenumber'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('phonenumber') }}</small>
-                                        </span>
-                                    @endif
+                                    <div class="khalil">
+                                        <div class="card-header">
+                                            <h3 class="card-title" style="float: right">معلومات الاتصال</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-7">
+                                                    <input type="text" value="{{$user->email}}" name="email" class="form-control" placeholder="البريد الإلكتروني">
+                                                    @if ($errors->has('email'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('email') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-5">
+                                                    <input id="phonenumber" value="{{$user->phone_number}}" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
+                                                    <small id="invalidPhoneNo" class="form-text text-danger"></small>
+                                                    @if ($errors->has('phonenumber'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('phonenumber') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="userimage">تحميل الصورة</label>

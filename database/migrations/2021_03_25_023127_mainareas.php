@@ -16,8 +16,8 @@ class Mainareas extends Migration
         Schema::create('mainareas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name_main_area');
-            $table->unsignedInteger('supervisor_id');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->unsignedInteger('supervisor_id')->nullable();
+            $table->foreign('supervisor_id')->references('id')->on('supervisors');
             $table->timestamps();
         });
     }

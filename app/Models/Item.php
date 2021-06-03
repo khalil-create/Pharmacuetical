@@ -30,4 +30,17 @@ class Item extends Model
     {
         return $this->belongsToMany('App\Models\Uses','uses_items');
     }
+    public function specialists()
+    {
+        return $this->belongsToMany('App\Models\Spesialist','specialists_items');
+    }
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order','item_id','id');
+    }
+    public function samples()
+    {
+        return $this->hasMany('App\Models\Sample','item_id','id');
+    }
+    
 }

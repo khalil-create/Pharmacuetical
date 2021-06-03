@@ -9,10 +9,12 @@ class Sample extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'item',
         'count',
         'supervisor_id',
         'manager_id',
+        'representative_id',
+        'composition_id',
+        'item_id',
         'created_at',
         'updated_at',
     ];
@@ -29,5 +31,17 @@ class Sample extends Model
     public function supervisor()
     {
         return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
+    }
+    public function representative()
+    {
+        return $this->belongsTo('App\Models\Sepresentative','representative_id','id');//(related,foriegn key,primary key)
+    }
+    public function item()
+    {
+        return $this->belongsTo('App\Models\Item','item_id','id');//(related,foriegn key,primary key)
+    }
+    public function composition()
+    {
+        return $this->belongsTo('App\Models\Composition','composition_id','id');//(related,foriegn key,primary key)
     }
 }

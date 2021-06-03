@@ -39,6 +39,11 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    @if (session('error'))
+                        <div class="alert alert-danger notify-error">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                 <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">

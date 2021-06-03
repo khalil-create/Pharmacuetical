@@ -19,9 +19,9 @@
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
   <!-- /.content-header -->
-    <div class="row">
-      <div class="col-10">
-        <div class="card">
+    <div class="content">
+      <div class="container-fluid">
+        <div class="card card-default">
           <div class="card-header">
             <span class="card-title" style="float: right">قائمة المستخدمين</span>
             <div class="card-tools float-right">

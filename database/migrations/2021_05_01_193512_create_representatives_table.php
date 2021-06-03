@@ -21,14 +21,14 @@ class CreateRepresentativesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
-            $table->unsignedInteger('supervisor_id')->nullable();
+            $table->unsignedInteger('supervisor_id');
             $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
             
-            $table->unsignedInteger('mainarea_id');
+            $table->unsignedInteger('mainarea_id')->nullable();
             $table->foreign('mainarea_id')->references('id')->on('mainareas');
             
             $table->unsignedInteger('manager_id')->nullable();
-            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
+            $table->foreign('manager_id')->references('id')->on('managers');
             
             $table->timestamps();
         });

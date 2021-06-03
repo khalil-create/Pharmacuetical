@@ -34,8 +34,6 @@ body{
     margin-top: 16px;
     border:1px solid rgb(21, 24, 182);
     border-radius: 10px;
-    margin-left: -80px;
-    margin-right: 15px;
 }
 .form label{
     color: rgb(15, 17, 19);
