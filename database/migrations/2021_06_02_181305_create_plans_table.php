@@ -19,7 +19,7 @@ class CreatePlansTable extends Migration
             $table->tinyInteger('period');//1 for AM and 0 for PM
             $table->string('note');
             $table->unsignedInteger('representative_id')->unsigned();
-            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

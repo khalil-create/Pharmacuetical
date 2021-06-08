@@ -63,6 +63,21 @@
                                             </span>
                                         @endif
                                     </div>
+                                    <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
+                                        <label for="unit" class="col-md-2 control-label">الوحده</label>
+                                        <select name="unit" id="unit" class="form-control custom-select rounded-0">
+                                                <option value="باكت"
+                                                    @if($item->unit == 'باكت')
+                                                        {{'selected'}}
+                                                    @endif >باكت
+                                                </option>
+                                        </select>
+                                        @if ($errors->has('unit'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('unit') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                     <div class="form-group">
                                         <label for="price">السعر</label>
                                         <input type="text" value="{{$item->price}}" name="price" class="form-control" id="price">
@@ -82,34 +97,19 @@
                                         @endif
                                     </div>
                                     <div class="form-group{{ $errors->has('category_name') ? ' has-error' : '' }}">
-                                        <label for="category_name" class="col-md-2 control-label">اسم المجموعة</label>
-                                        <select name="category_name" id="category_name" class="form-control custom-select rounded-0">
+                                        <label class="col-md-2 control-label">اسم المجموعة</label>
+                                        <select name="category_id" id="category_id" class="form-control custom-select rounded-0">
                                             @foreach ($categories as $cats)
-                                                <option value="{{$cats->name_cat}}"
+                                                <option value="{{$cats->id}}"
                                                     @if($cats->id == $item->category->id)
                                                         {{'selected'}}
                                                     @endif
                                                     >{{$cats->name_cat}}</option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('category_name'))
+                                        @if ($errors->has('category_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('category_name') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
-                                        <label for="unit" class="col-md-2 control-label">الوحده</label>
-                                        <select name="unit" id="unit" class="form-control custom-select rounded-0">
-                                                <option value="باكت"
-                                                    @if($item->unit == 'باكت')
-                                                        {{'selected'}}
-                                                    @endif >باكت
-                                                </option>
-                                        </select>
-                                        @if ($errors->has('unit'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('unit') }}</strong>
+                                                <strong>{{ $errors->first('category_id') }}</strong>
                                             </span>
                                         @endif
                                     </div>

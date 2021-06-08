@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Managers\marketing;
 use App\Models\Sample;
 use App\Http\Controllers\Controller;
 use App\Models\Manager;
@@ -13,15 +13,16 @@ class SampleController extends Controller
 {
     public function getAllSamples()
     {
-        $samples = Sample::get();
-        return view('admin.manageSamples',compact('samples',$samples));
+        $samples = Sample::whereHas('manager')->get();
+        return view('managers.marketing.manageSamples',compact('samples',$samples));
     }
     public function addSample()
     {
-        $managers = Manager::with('user')->get();
+        $items = Item::get();
+        if($items->count() < 1)
+            return redirect('/manageSamples')->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد');
         $supervisors = Supervisor::whereHas('user')->get();
-        // $items = Item::select('commercial_name')->get();
-        return view('admin.addSample',compact('managers',$managers))->with('supervisors',$supervisors);
+        return view('managers.marketing.addSample',compact('supervisors',$supervisors))->with('items',$items);
     }
     public function storeSample(Request $request)
     {
@@ -64,7 +65,7 @@ class SampleController extends Controller
         
         $managers = Manager::with('user')->get();
         $supervisors = Supervisor::whereHas('user')->get();
-        return view('admin.editSample',compact('sample',$sample))->
+        return view('managers.marketing.editSample',compact('sample',$sample))->
         with('managers',$managers)->with('supervisors',$supervisors);
     }
     public function updateSample(Request $request,$id)

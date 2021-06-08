@@ -19,7 +19,7 @@ class Studies extends Migration
             $table->string('source');
             $table->date('emission_date');
             $table->unsignedInteger('supervisor_id');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

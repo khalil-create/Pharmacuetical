@@ -127,35 +127,36 @@
                                                 @endif>
                                                     مدير مبيعات
                                                 </option>
-                                            @endif
-                                            <option value="مشرف"
-                                            @if ($user->user_type=='مشرف')
-                                                {{$usertype}}
-                                            @endif>
-                                                مشرف
-                                            </option>
-                                            @if($supervisors->count() > 0)
-                                                <option value="مدير فريق"
-                                                @if ($user->user_type=='مدير فريق')
+                                            @else
+                                                <option value="مشرف"
+                                                @if ($user->user_type=='مشرف')
                                                     {{$usertype}}
                                                 @endif>
-                                                    مدير فريق
+                                                    مشرف
                                                 </option>
-                                            @endif
-                                            @if($teemLeaders->count() > 0 || $teemLeaders->count() > 0)
-                                                <option value="مندوب علمي"
-                                                @if ($user->user_type=='مندوب علمي')
+                                                @if($supervisors->count() > 0)
+                                                    <option value="مدير فريق"
+                                                    @if ($user->user_type=='مدير فريق')
+                                                        {{$usertype}}
+                                                    @endif>
+                                                        مدير فريق
+                                                    </option>
+                                                @endif
+                                                @if($teemLeaders->count() > 0 || $teemLeaders->count() > 0)
+                                                    <option value="مندوب علمي"
+                                                    @if ($user->user_type=='مندوب علمي')
+                                                        {{$usertype}}
+                                                    @endif>
+                                                        مندوب علمي
+                                                    </option>
+                                                @endif
+                                                <option value="مندوب مبيعات"
+                                                @if ($user->user_type=='مندوب مبيعات')
                                                     {{$usertype}}
                                                 @endif>
-                                                    مندوب علمي
+                                                    مندوب مبيعات
                                                 </option>
                                             @endif
-                                            <option value="مندوب مبيعات"
-                                            @if ($user->user_type=='مندوب مبيعات')
-                                                {{$usertype}}
-                                            @endif>
-                                                مندوب مبيعات
-                                            </option>
                                         </select>
                                     @if ($errors->has('usertype'))
                                         <span class="help-block">
@@ -169,8 +170,10 @@
                                         <label for="supervisor_id" class="col-md-4 control-label">المشرف</label>
                                                 <select name="supervisor_id" class="form-control custom-select rounded-0">
                                                     @foreach($supervisors as $row)
-                                                        <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                    @endforeach
+                                                        @if($row->user_id != $user->id)
+                                                            <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
+                                                        @endif
+                                                        @endforeach
                                                 </select>
                                             @if ($errors->has('supervisor_id'))
                                                 <span class="help-block">

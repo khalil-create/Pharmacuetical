@@ -19,13 +19,13 @@ class CreateTasksTable extends Migration
             $table->string('description');
             $table->date('last_date');
             $table->unsignedInteger('manager_id')->nullable();
-            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
+            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('supervisor_id')->nullable();
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('representative_id')->nullable();
-            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             
             $table->timestamps();
         });

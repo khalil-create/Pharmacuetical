@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Managers\marketing;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Supervisor;
 use App\Models\User;
 use App\Models\Mainarea;
@@ -15,8 +16,7 @@ class SupervisorController extends Controller
 
     public function addSupervisor()
     {
-        $marketingManager = Manager::get();
-        return view('admin.addSupervisor',compact('marketingManager',$marketingManager));
+        return view('managers.marketing.addSupervisor');
     }
     public function storeSupervisor(Request $request)
     {
@@ -25,7 +25,7 @@ class SupervisorController extends Controller
         $user = User::create([
             'user_name_third' => $request->usernamethird,
             'user_surname' => $request->usersurname,
-            'user_type' => $request->usertype,
+            'user_type' => 'مشرف',
             'sex' => $request->sex,
             'birthdate' => $request->birthdate,
             'birthplace' => $request->birthplace,
@@ -38,11 +38,10 @@ class SupervisorController extends Controller
             'user_image' => $file_name,
             'password' => bcrypt($request->password),
         ]);
-            $sup = Supervisor::create([
+            Supervisor::create([
                 'user_id' => $user->id,
-                'manager_id' => $request->manager_id,
+                'manager_id' => Auth::user()->manager->id,
                 ]);
-            $sup->update();
 
         return redirect('/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -90,33 +89,28 @@ class SupervisorController extends Controller
     public function getAllSupervisor()
     {
         $supervisor = User::whereHas('supervisor')->get();
-        return view('admin.manageSupervisors', compact('supervisor',$supervisor));
+        return view('managers.marketing.manageSupervisors', compact('supervisor',$supervisor));
     }
     public function displayAllAreas($id)
     {
-        return view('admin.manageSupervisors')->with('supervisor',\App\Models\MainArea::with(['mainareas' => function($q){
+        return view('managers.marketing.manageSupervisors')->with('supervisor',\App\Models\MainArea::with(['mainareas' => function($q){
             $q->select('user_name_third','user_surname','user_image','email','sex','id');
         }])->get());
     }
     public function editSupervisor($id)
     {
         $user = User::findOrfail($id);
-        $marketingManager = Manager::get();
-        return view('admin.editSupervisor')->with('user',$user )->with('marketingManager',$marketingManager);
+        return view('managers.marketing.editSupervisor')->with('user',$user );
     }
     public function updateSupervisor(Request $request,$id)
     {
         $user = User::find($id);
-        $supervisor = $user->supervisor->first();
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        
-        $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-        
+                
         //$user->update($request->all());
         $user->user_name_third = $request->Input('usernamethird');
         $user->user_surname = $request->Input('usersurname');
-        $user->user_type = $request->Input('usertype');
         $user->sex = $request->Input('sex');
         $user->birthdate = $request->Input('birthdate');
         $user->birthplace = $request->Input('birthplace');
@@ -129,11 +123,10 @@ class SupervisorController extends Controller
         $user->password = bcrypt($request->Input('password'));
         if($request->hasfile('userimage'))
         {
+            $file_name = $this->saveImage($request->file('userimage'),'images/users/');
             $user->user_image = $file_name;
         }
         $user->update();
-        $supervisor->manager_id = $request->manager_id;
-        $supervisor->update();
 
         return redirect('/manageSupervisors')->with('status','تم تعديل البيانات بشكل ناجح');
     }
@@ -150,25 +143,11 @@ class SupervisorController extends Controller
     }
     public function getSupervisorAreas($id)
     {
-        $sup = Supervisor::where('user_id',$id)->get();
-        $supID = 0;
-        foreach($sup as $s)
-        {
-            if($s->user_id == $id)
-            {
-                $supID = $s->id;
-            }
-        }
-        // return $supID;
-        if($supID != 0){
-            $mainAreas = Mainarea::where('supervisor_id',$supID)->get();
-            $supervisor = Supervisor::find($supID);
-            $supName = $supervisor->user->user_name_third.' '.$supervisor->user->user_surname;
-            return view('admin.mainAreaSupervised')->with('mainarea',$mainAreas)->with('exist',1)->with('supervisor_name',$supName);// exist = 1 that mean have at least one main area
-        }
-        else
-            return view('admin.mainAreaSupervised')->with('exist',0);//supervisor but haven't main area
+        $sup = Supervisor::where('user_id',$id)->first();
+        $supervisor = Supervisor::find($sup->id);
         
-        
+        if(!$supervisor)
+            return redirect()->back()->with(['error' => 'لا توجد بيانات']);
+        return view('managers.marketing.mainAreaSupervised',compact('supervisor',$supervisor));
     }
 }

@@ -19,10 +19,10 @@ class CreateRepresentativesTable extends Migration
             $table->foreign('teamleader_id')->references('id')->on('representatives');
             
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('supervisor_id');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('mainarea_id')->nullable();
             $table->foreign('mainarea_id')->references('id')->on('mainareas');

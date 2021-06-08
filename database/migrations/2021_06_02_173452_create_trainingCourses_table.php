@@ -17,7 +17,7 @@ class CreateTrainingCoursesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->unsignedInteger('supervisor_id');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

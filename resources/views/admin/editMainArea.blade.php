@@ -55,29 +55,27 @@
                                         </span>
                                     @endif
                                 </div>
-                                <input id="supervisor_name_hidden" type="text" name="supervisor_name_hidden" hidden>
                                 <div class="form-group{{ $errors->has('supervisor_name') ? ' has-error' : '' }}">
                                     <label for="supervisor_name" class="col-md-2 control-label">المشرف عليها</label>
                                     {{-- <div class="col-md-8"> --}}
                                         {{-- <input name="supervisor_name"  id="supervisor_name" list="usertype" > --}}
-                                            <select name="supervisor_name" id="supervisor_name" class="form-control custom-select rounded-0">
+                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
                                                 @php
                                                     $selected = "selected";
                                                 @endphp
                                                     
                                                 @foreach ($supervisors as $sup)
-                                                @foreach ($supervisor as $s)
-                                                <option value="{{ $sup->user_name_third }}" 
-                                                        @if ($s->user_name_third == $sup->user_name_third)
-                                                            {{ $selected }}
-                                                        @endif    
-                                                    >{{ $sup->user_name_third }} {{ $sup->user_surname }}</option>
-                                                    @endforeach
-                                                    @endforeach
+                                                    <option value="{{ $sup->id }}" 
+                                                            @if ($supervisor->id == $sup->id)
+                                                                {{ $selected }}
+                                                            @endif    
+                                                        >{{ $sup->user->user_name_third }} {{ $sup->user->user_surname }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-                                        @if ($errors->has('supervisor_name'))
+                                        @if ($errors->has('supervisor_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_name') }}</strong>
+                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
                                             </span>
                                         @endif
                                     {{-- </div> --}}

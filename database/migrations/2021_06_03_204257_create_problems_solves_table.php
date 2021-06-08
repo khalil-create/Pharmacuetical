@@ -17,7 +17,7 @@ class CreateProblemsSolvesTable extends Migration
             $table->increments('id');
             $table->string('description',500);
             $table->unsignedInteger('visit_id')->unsigned();
-            $table->foreign('visit_id')->references('id')->on('visits')->onDelete('cascade');
+            $table->foreign('visit_id')->references('id')->on('visits')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

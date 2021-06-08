@@ -16,9 +16,9 @@ class CreateRepresentativesStudiesTable extends Migration
         Schema::create('representatives_studies', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('study_id');
-            $table->foreign('study_id')->references('id')->on('studies')->onDelete('cascade');
+            $table->foreign('study_id')->references('id')->on('studies')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('representative_id');
-            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

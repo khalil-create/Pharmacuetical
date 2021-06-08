@@ -94,15 +94,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('category_name') ? ' has-error' : '' }}">
-                                    <label for="category_name" class="col-md-2 control-label">اسم المجموعة</label>
-                                        <select name="category_name" id="category_name" class="form-control custom-select rounded-0">
+                                    <label class="col-md-2 control-label">اسم المجموعة</label>
+                                        <select name="category_id" id="category_id" class="form-control custom-select rounded-0">
                                             @foreach ($category as $cat)
-                                                <option value="{{$cat->name_cat}}">{{$cat->name_cat}}</option>
+                                                <option value="{{$cat->id}}">{{$cat->name_cat}}</option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('category_name'))
+                                        @if ($errors->has('category_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('category_name') }}</strong>
+                                                <strong>{{ $errors->first('category_id') }}</strong>
                                             </span>
                                         @endif
                                 </div>

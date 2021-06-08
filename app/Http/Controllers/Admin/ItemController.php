@@ -27,14 +27,13 @@ class ItemController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        $category = Category::where('name_cat',$request->category_name)->first();
         $item = Item::create([
             'commercial_name' => $request->commercial_name,
             'science_name' => $request->science_name,
             'price' => $request->price,
             'bonus' => $request->bonus,
             'unit' => $request->unit,
-            'category_id' =>$category->id,
+            'category_id' =>$request->category_id,
         ]);
         return redirect('/manageItems')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -77,18 +76,13 @@ class ItemController extends Controller
         
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $categoryName = $request->Input('category_name');
-        $category = Category::where('name_cat',$categoryName)->get();
-        $catID = 0;
-        foreach($category as $s){
-            $catID = $s->id;
-        }
+        
         $item->commercial_name = $request->Input('commercial_name');
         $item->science_name = $request->Input('science_name');
         $item->price = $request->Input('price');
         $item->bonus = $request->Input('bonus');
         $item->unit = $request->Input('unit');
-        $item->category_id = $catID;
+        $item->category_id = $request->category_id;
         $item->update();
 
         return redirect('/manageItems')->with('status','تم تعديل البيانات بشكل ناجح');

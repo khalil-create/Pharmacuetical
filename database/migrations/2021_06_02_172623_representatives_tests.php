@@ -16,9 +16,9 @@ class RepresentativesTests extends Migration
         Schema::create('representatives_tests', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('test_id');
-            $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
+            $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('representative_id');
-            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

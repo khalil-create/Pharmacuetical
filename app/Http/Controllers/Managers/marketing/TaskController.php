@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Managers\marketing;
 use App\Models\Task;
 use App\Models\Manager;
 use App\Models\Supervisor;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
     public function getAllTasks()
     {
-        $tasks = Task::get();
-        return view('admin.manageTasks',compact('tasks',$tasks));
+        $tasks = Task::whereHas('manager')->get();
+        return view('managers.marketing.manageTasks',compact('tasks',$tasks));
     }
     public function addTask()
     {
-        $managers = Manager::with('user')->get();
         $supervisors = Supervisor::whereHas('user')->get();
-        return view('admin.addTask',compact('managers',$managers))->with('supervisors',$supervisors);
+        return view('managers.marketing.addTask',compact('supervisors',$supervisors));
     }
     public function storeTask(Request $request)
     {
@@ -34,7 +34,7 @@ class TaskController extends Controller
             'task_title' => $request->task_title,
             'description' => $request->description,
             'last_date' => $request->last_date,
-            'manager_id' => $request->manager_id,
+            'manager_id' => Auth::user()->manager->id,
             'supervisor_id' => $request->supervisor_id,
         ]);
         return redirect('/manageTasks')->with('status','تم إضافة البيانات بشكل ناجح');
@@ -61,10 +61,8 @@ class TaskController extends Controller
         if(!$task)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         
-        $managers = Manager::with('user')->get();
         $supervisors = Supervisor::whereHas('user')->get();
-        return view('admin.editTask',compact('task',$task))->
-        with('managers',$managers)->with('supervisors',$supervisors);
+        return view('managers.marketing.editTask',compact('task',$task))->with('supervisors',$supervisors);
     }
     public function updateTask(Request $request,$id)
     {
@@ -78,7 +76,6 @@ class TaskController extends Controller
         $task->task_title = $request->task_title;
         $task->description = $request->description;
         $task->last_date = $request->last_date;
-        $task->manager_id = $request->manager_id;
         $task->supervisor_id = $request->supervisor_id;
         $task->update();
 

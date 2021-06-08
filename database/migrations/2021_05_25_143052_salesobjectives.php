@@ -19,16 +19,16 @@ class Salesobjectives extends Migration
             $table->string('description');
             
             $table->unsignedInteger('manager_id')->nullable();
-            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade');
+            $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedInteger('supervisor_id')->nullable();
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('representative_id')->nullable();
-            $table->foreign('representative_id')->references('id')->on('representatives');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onUpdate('cascade');
             
             $table->unsignedInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

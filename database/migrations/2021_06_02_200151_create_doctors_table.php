@@ -26,7 +26,7 @@ class CreateDoctorsTable extends Migration
             $table->string('name_sub_area');
             $table->boolean('statues');
             $table->unsignedInteger('representative_id')->unsigned();
-            $table->foreign('representative_id')->references('id')->on('representatives');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 class Representative extends Controller
 {
     
-    public function index()
+    public function home()
     {
-        return view('Representative.side');
+        return view('Representative.repSales.home');
+    }
+    public function notAllowed()
+    {
+        return view('unAuth.not');
     }
 }

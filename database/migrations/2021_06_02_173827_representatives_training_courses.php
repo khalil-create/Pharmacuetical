@@ -16,9 +16,9 @@ class RepresentativesTrainingCourses extends Migration
         Schema::create('representatives_training_courses', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('trainingCourse_id');
-            $table->foreign('trainingCourse_id')->references('id')->on('training_courses')->onDelete('cascade');
+            $table->foreign('trainingCourse_id')->references('id')->on('training_courses')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('representative_id');
-            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

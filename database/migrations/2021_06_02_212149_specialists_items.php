@@ -16,9 +16,9 @@ class SpecialistsItems extends Migration
         Schema::create('specialists_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('item_id')->unsigned();
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('specialist_id')->unsigned();
-            $table->foreign('specialist_id')->references('id')->on('specialists')->onDelete('cascade');
+            $table->foreign('specialist_id')->references('id')->on('specialists')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

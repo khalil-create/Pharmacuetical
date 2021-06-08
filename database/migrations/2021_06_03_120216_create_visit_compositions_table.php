@@ -18,7 +18,7 @@ class CreateVisitCompositionsTable extends Migration
             $table->string('item');
             $table->string('scientific_mission',500);
             $table->unsignedInteger('visit_id')->unsigned();
-            $table->foreign('visit_id')->references('id')->on('visits')->onDelete('cascade');
+            $table->foreign('visit_id')->references('id')->on('visits')->onDelete('cascade')->onUpdate('cascade');
             
             $table->timestamps();
         });

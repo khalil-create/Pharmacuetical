@@ -73,21 +73,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group" hidden>
-                                    <label for="manager_id" class="col-md-2 control-label">مدير التسويق</label>
-                                            <select name="manager_id" class="form-control custom-select rounded-0">
-                                                @foreach ($managers as $row)
-                                                    @if ($row->user->user_type == 'مدير تسويق')
-                                                        <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('manager_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('manager_id') }}</strong>
-                                            </span>
-                                        @endif
-                                </div>
                                 <div class="form-group">
                                     <label for="supervisor_id" class="col-md-2 control-label">المشرف</label>
                                             <select name="supervisor_id" class="form-control custom-select rounded-0">

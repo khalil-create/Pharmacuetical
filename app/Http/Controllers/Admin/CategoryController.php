@@ -13,6 +13,7 @@ class CategoryController extends Controller
     public function getAllCategories()
     {
         $cat = Category::with('companies')->get();
+        
         return view('admin.manageCategories',compact('cat',$cat));
     }
     public function addCategory()

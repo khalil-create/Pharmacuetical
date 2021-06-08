@@ -16,9 +16,9 @@ class UsesItems extends Migration
         Schema::create('uses_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('uses_id');
-            $table->foreign('uses_id')->references('id')->on('uses')->onDelete('cascade');
+            $table->foreign('uses_id')->references('id')->on('uses')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

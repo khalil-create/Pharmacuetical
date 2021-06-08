@@ -18,7 +18,7 @@ class CreateTestsTable extends Migration
             $table->string('question');
             $table->string('answer');
             $table->unsignedInteger('supervisor_id');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

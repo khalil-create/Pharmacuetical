@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة مهمة
+    اضافة عينة
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">إضافة مهمة</h3>
+                    <h3 class="card-title" style="float: right">إضافة عينة</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,50 +42,30 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('storeTask') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('storeSample') }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="task_title">المهمه</label>
-                                    <input type="text" name="task_title" class="form-control">
-                                    @if ($errors->has('task_title'))
+                                    <label for="item">العينة</label>
+                                    <select name="item" class="form-control custom-select rounded-0">
+                                        @foreach ($items as $row)
+                                                <option value="{{$row->id}}">{{ $row->commercial_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('item'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('task_title') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('item') }}</small>
                                         </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">الوصف</label>
-                                    <input type="text" name="description" class="form-control">
-                                    @if ($errors->has('description'))
+                                    <label for="count">الكمية</label>
+                                    <input type="text" name="count" class="form-control">
+                                    @if ($errors->has('count'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('description') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('count') }}</small>
                                         </span>
                                     @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="last_date">اخر تأريخ لتنفيذ المهمه</label>
-                                    <input type="date" class="form-control" name="last_date">
-                                    @if ($errors->has('last_date'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('last_date') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group" hidden>
-                                    <label for="manager_id" class="col-md-2 control-label">مدير التسويق</label>
-                                            <select name="manager_id" class="form-control custom-select rounded-0">
-                                                @foreach ($managers as $row)
-                                                    @if ($row->user->user_type == 'مدير تسويق')
-                                                        <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('manager_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('manager_id') }}</strong>
-                                            </span>
-                                        @endif
                                 </div>
                                 <div class="form-group">
                                     <label for="supervisor_id" class="col-md-2 control-label">المشرف</label>

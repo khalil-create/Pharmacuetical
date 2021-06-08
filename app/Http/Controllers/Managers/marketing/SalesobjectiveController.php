@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Managers;
+namespace App\Http\Controllers\Managers\marketing;
 use App\Models\Salesobjective;
 use App\Models\Manager;
 use App\Http\Controllers\Controller;
@@ -10,15 +10,19 @@ use Illuminate\Http\Request;
 
 class SalesobjectiveController extends Controller
 {
+    public function home()
+    {
+        return view('managers.marketing.home');
+    }
     public function getAllSalesObjectives()
     {
         $salesObjectives = Salesobjective::get();
-        return view('managers.manageSalesObjectives',compact('salesObjectives',$salesObjectives));
+        return view('managers.marketing.manageSalesObjectives',compact('salesObjectives',$salesObjectives));
     }
     public function addSalesObjective()
     {
         $managers = Manager::with('user')->get();
-        return view('managers.addSalesObjective',compact('managers',$managers));
+        return view('managers.marketing.addSalesObjective',compact('managers',$managers));
     }
     public function storeSalesObjective(Request $request)
     {
@@ -56,7 +60,7 @@ class SalesobjectiveController extends Controller
         if(!$salesObjective)
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         $managers = Manager::with('user')->get();
-        return view('managers.editSalesObjective',compact('salesObjective',$salesObjective))->with('managers',$managers);
+        return view('managers.marketing.editSalesObjective',compact('salesObjective',$salesObjective))->with('managers',$managers);
     }
     public function updateSalesObjective(Request $request,$id)
     {
@@ -89,7 +93,7 @@ class SalesobjectiveController extends Controller
         if(!$salesObjective)
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         $supervisors = Supervisor::get();
-        return view('managers.distributeSalesObjective',compact('salesObjective',$salesObjective))
+        return view('managers.marketing.distributeSalesObjective',compact('salesObjective',$salesObjective))
         ->with('supervisors',$supervisors);
     }
     public function storeDistributedSalesObjForSup(Request $request)

@@ -59,9 +59,10 @@ class MainAreaController extends Controller
         $area = Mainarea::find($areaid); 
         if($area->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $sup1 = Supervisor::findOrfail($area->supervisor_id);
-        $supervisor = $sup1->user()->get();
-        $supervisors = User::whereHas('supervisor')->get();
+        $supervisor = Supervisor::findOrfail($area->supervisor_id);
+        // $supervisor = $sup1->user()->get();
+        $supervisors = Supervisor::whereHas('user')->get();
+        // return $supervisors;
         return view('admin.editMainArea', compact('supervisor',$supervisor))->with('supervisors',$supervisors)
         ->with('area',$area);
     }
@@ -78,15 +79,9 @@ class MainAreaController extends Controller
         
         if($mainArea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $supervisorName = $request->Input('supervisor_name');
-        $user = User::where('user_name_third',$supervisorName)->first();
-        $sup = $user->supervisor()->get();
-        $supID = 0;
-        foreach($sup as $s){
-            $supID = $s->id;
-        }
+        $sup = Supervisor::find($request->supervisor_id);
         $mainArea->name_main_area = $request->Input('name_main_area');
-        $mainArea->supervisor_id = $supID;
+        $mainArea->supervisor_id = $sup->id;
         $mainArea->update();
 
         return redirect('/manageMainAreas')->with('status','تم تعديل البيانات بشكل ناجح');
@@ -96,7 +91,6 @@ class MainAreaController extends Controller
         $mainarea = Mainarea::findOrfail($id);
         if(!$mainarea)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $mainarea->subareas()->delete();
         $mainarea->delete();
 
         return redirect('/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');

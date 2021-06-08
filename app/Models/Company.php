@@ -29,4 +29,8 @@ class Company extends Model
     {
         return $this->belongsToMany('App\Models\Category','categories_companies');
     }
+    public function items()
+    {
+        return $this->belongsToMany('App\Models\Item','companies_items');
+    }
 }

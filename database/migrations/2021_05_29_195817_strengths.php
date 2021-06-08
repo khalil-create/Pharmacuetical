@@ -17,7 +17,7 @@ class Strengths extends Migration
             $table->increments('id');
             $table->string('strength');
             $table->unsignedInteger('study_id');
-            $table->foreign('study_id')->references('id')->on('studies')->onDelete('cascade');
+            $table->foreign('study_id')->references('id')->on('studies')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

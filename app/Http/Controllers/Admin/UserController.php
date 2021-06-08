@@ -121,7 +121,7 @@ class UserController extends Controller
         {
             Representative::create([
                 'user_id' => $user->id,
-                'supervisor_id' => $managerSales->id, //لأنه مندوب مبيعات فإن المشرف الذي يتبعه هو مدير المبيعات
+                'manager_id' => $managerSales->id, //لأنه مندوب مبيعات فإن المشرف الذي يتبعه هو مدير المبيعات
             ]);
         }
         return redirect('/displayAllUsers')->with('status','تم إضافة البيانات بشكل ناجح');
@@ -150,7 +150,15 @@ class UserController extends Controller
         $usertype = $request->Input('usertype');
         $managerMarketing = User::where('user_type','مدير تسويق')->first();
         $managerSales = User::where('user_type','مدير مبيعات')->first();
-        if($usertype == 'مشرف' )
+        if($usertype == 'مدير تسويق' && $managerMarketing->count() > 0 )
+        {
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مدير التسويق فهناك يوجد مدير تسويق بالفعل ولا يمكنك اضافة اكثر من مدير تسويق واحد']);
+        }
+        else if($usertype == 'مدير مبيعات' && $managerSales->count() > 0)
+        {
+                return redirect()->back()->with(['error' => 'لايمكنك اضافة مدير التسويق فهناك يوجد مدير مبيعات بالفعل ولا يمكنك اضافة اكثر من مدير مبيعات واحد']);
+        }
+        else if($usertype == 'مشرف' )
         {
             if(!$managerMarketing || $managerMarketing->count() < 1)
                 return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
@@ -177,63 +185,127 @@ class UserController extends Controller
 
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-
-        //$user->update($request->all());
-        $user->user_name_third = $request->Input('usernamethird');
-        $user->user_surname = $request->Input('usersurname');
-        $user->user_type = $request->Input('usertype');
-        $user->sex = $request->Input('sex');
-        $user->birthdate = $request->Input('birthdate');
-        $user->birthplace = $request->Input('birthplace');
-        $user->town = $request->Input('town');
-        $user->village = $request->Input('village');
-        $user->email = $request->Input('email');
-        $user->phone_number = $request->Input('phonenumber');
-        $user->identity_type = $request->Input('identitytype');
-        $user->identity_number = $request->Input('identitynumber');
-        $user->password = bcrypt($request->Input('password'));
-        if($request->hasfile('userimage'))
-        {
-            $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-            $user->user_image = $file_name;
-        }
-        $user->update();
-
-        $prevSupervisor = FALSE;
-        $supervisorID = 0;
-        $sup = Supervisor::get();
-        foreach($sup as $s)
-        {
-            if($s->user_id == $id)
+            
+        // if($user->user_type == $usertype)
+        // {
+        // //$user->update($request->all());
+        //     $user->user_name_third = $request->Input('usernamethird');
+        //     $user->user_surname = $request->Input('usersurname');
+        //     $user->user_type = $request->Input('usertype');
+        //     $user->sex = $request->Input('sex');
+        //     $user->birthdate = $request->Input('birthdate');
+        //     $user->birthplace = $request->Input('birthplace');
+        //     $user->town = $request->Input('town');
+        //     $user->village = $request->Input('village');
+        //     $user->email = $request->Input('email');
+        //     $user->phone_number = $request->Input('phonenumber');
+        //     $user->identity_type = $request->Input('identitytype');
+        //     $user->identity_number = $request->Input('identitynumber');
+        //     $user->password = bcrypt($request->Input('password'));
+        //     if($request->hasfile('userimage'))
+        //     {
+        //         $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+        //         $user->user_image = $file_name;
+        //     }
+        //     else{
+        //         $user->user_image = $user->user_image;
+        //     }
+        //     $user->update();
+        // }
+        // else
+        // {
+            $userTemp = $user;
+            $user->delete();
+            if($request->hasfile('userimage'))
             {
-                $prevSupervisor = TRUE;
-                $supervisorID = $s->id;
+                $file_name = $this->saveImage($request->file('userimage'),'images/users/');
             }
-        }
-        //$user->save();
-        if($request->Input('usertype') == 'مشرف' && !($prevSupervisor)){ //edit user to new supervisor
-            $manager = Manager::get()->first();
-            if(!$manager)
-                return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
-            $sup = Supervisor::create(['user_id' => $user->id,'manager_id' => $manager->id]);
-            $sup->update();
-        }
-        else if($request->Input('usertype') != 'مشرف' && $prevSupervisor) //delete supervisor becuase converted to another type
-        {
-            $supdelet = Supervisor::find($supervisorID);
-            $supdelet->delete();
-        }
-        else if($request->Input('usertype') == 'مدير تسويق' || 'مدير مبيعات')
-        {
-            $manager = Manager::create(['user_id' => $user->id]);
-        }
-        else if($request->Input('usertype') == 'مندوب فريق' || 'مندوب علمي' || 'مندوب مبيعات')
-        {
-            $supervisor = Supervisor::get()->first();
-            if(!$supervisor)
-                return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
-            $manager = Manager::create(['user_id' => $user->id]);
-        }
+            else{
+                $file_name = $userTemp->user_image;
+            }
+            $user = User::create([
+                'id' => $id,
+                'user_name_third' => $request->usernamethird,
+                'user_surname' => $request->usersurname,
+                'user_type' => $request->usertype,
+                'sex' => $request->sex,
+                'birthdate' => $request->birthdate,
+                'birthplace' => $request->birthplace,
+                'town' => $request->town,
+                'village' => $request->village,
+                'email' => $request->email,
+                'phone_number' => $request->phonenumber,
+                'identity_type' => $request->identitytype,
+                'identity_number' => $request->identitynumber,
+                'user_image' => $file_name,
+                'password' => bcrypt($request->password),
+            ]);
+            if($usertype == 'مشرف')
+            {
+                Supervisor::create([
+                    'user_id' => $user->id,
+                    'manager_id' => $managerMarketing->manager->id,
+                ]);
+            }
+            else if($usertype == 'مدير تسويق' || $usertype == 'مدير مبيعات')
+            {
+                Manager::create(['user_id' => $user->id]);
+            }
+            else if($usertype == 'مدير فريق')
+            {
+                Representative::create([
+                    'user_id' => $user->id,
+                    'supervisor_id' => $request->supervisor_id,
+                ]);
+            }
+            else if($usertype == 'مندوب علمي')
+            {
+                Representative::create([
+                    'user_id' => $user->id,
+                    'supervisor_id' => $request->supervisor_id,
+                    'teemLeader_id' => $request->teemleader_id,
+                ]);
+            }
+            else if($usertype == 'مندوب مبيعات')
+            {
+                Representative::create([
+                    'user_id' => $user->id,
+                    'manager_id' => $managerSales->id,//لأنه مندوب مبيعات فإن المشرف الذي يتبعه هو مدير المبيعات
+                ]);
+            }
+        // }
+        // $prevSupervisor = FALSE;
+        // $supervisorID = 0;
+        // $sup = Supervisor::get();
+        // foreach($sup as $s)
+        // {
+        //     if($s->user_id == $id)
+        //     {
+        //         $prevSupervisor = TRUE;
+        //         $supervisorID = $s->id;
+        //     }
+        // }
+        // //$user->save();
+        // if($request->Input('usertype') == 'مشرف' && !($prevSupervisor)){ //edit user to new supervisor
+        //     // $manager = Manager::get()->first();
+        //     if(!$managerMarketing)
+        //         return redirect()->back()->with(['error' => 'لايمكنك اضافة مشرف قبل مايتم اضافة مدير التسويق']);
+        //     $sup = Supervisor::create(['user_id' => $user->id,'manager_id' => $managerMarketing->id]);
+        //     $sup->update();
+        // }
+        // else if($request->Input('usertype') != 'مشرف' && $prevSupervisor) //delete supervisor becuase converted to another type
+        // {
+        //     $supdelet = Supervisor::find($supervisorID);
+        //     $supdelet->delete();
+        // }
+        // if($request->Input('usertype') == 'مدير تسويق' || 'مدير مبيعات')
+        // {
+        //     Manager::create(['user_id' => $user->id]);
+        // }
+        // else if($request->Input('usertype') == 'مندوب فريق' || 'مندوب علمي' || 'مندوب مبيعات')
+        // {
+        //     Representative::create(['user_id' => $user->id]);
+        // }
         return redirect('/displayAllUsers')->with('status','تم تعديل البيانات بشكل ناجح');
     }
 
@@ -282,63 +354,28 @@ class UserController extends Controller
 
         ];
     }
-    // public function deleteUser($id)
-    // {
-    //     return "kkk";
-    //     $user = User::findOrFail($id);
-    //     if(!$user)
-    //             return redirect()->back();
-    //     $supervisorID = 0;
-    //     $sup = Supervisor::whereHas('user')->get();
-    //     foreach($sup as $s)
-    //     {
-    //         if($s->user_id == $id)
-    //         {
-    //             $supervisorID = $s->id;
-    //         }
-    //     }
-    //     $supDeleted = Supervisor::find($supervisorID);
-    //     $mainarea = Mainarea::whereHas('supervisor')->get();
-    //     $mainareaID = 0;
-    //     foreach($mainarea as $s)
-    //     {
-    //         if($s->supervisor_id == $supDeleted->id)
-    //         {
-    //             $mainareaID = $s->id;
-    //         }
-    //     }
-
-    //     if(!$user)
-    //         return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
-    //     else
-    //     {
-    //         $mainareaDeleted = Mainarea::find($mainareaID);
-    //         $supDeleted->delete();
-    //         $mainareaDeleted->delete();
-    //         $user->delete();
-    //         return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
-    //     }
-    // }
     public function deleteUser($id)
     {
         $user = User::find($id);
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
-        if($user->user_type == 'مشرف')
-        {
-            $user->supervisor()->delete();
-            $user->delete();
-        }
-        else if($user->user_type == 'مدير تسويق' || 'مدير مبيعات')
-        {
-            $user->manager()->delete();
-            $user->delete();
-        }
-        else if($user->user_type == 'مندوب علمي' || 'مندوب مبيعات' || 'مدير فريق')
-        {
-            $user->representatives()->delete();
-            $user->delete();
-        }
+        
+        $user->delete();
+        // if($user->user_type == 'مشرف')
+        // {
+        //     $user->supervisor()->delete();
+        //     $user->delete();
+        // }
+        // else if($user->user_type == 'مدير تسويق' || 'مدير مبيعات')
+        // {
+        //     $user->manager()->delete();
+        //     $user->delete();
+        // }
+        // else if($user->user_type == 'مندوب علمي' || 'مندوب مبيعات' || 'مدير فريق')
+        // {
+        //     $user->representatives()->delete();
+        //     $user->delete();
+        // }
         return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

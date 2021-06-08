@@ -18,7 +18,7 @@ class RepresentativesSubareas extends Migration
             $table->unsignedInteger('subarea_id');
             $table->foreign('subarea_id')->references('id')->on('subareas');
             $table->unsignedInteger('representative_id');
-            $table->foreign('representative_id')->references('id')->on('representatives');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onUpdate('cascade');
             $table->timestamps();
         });
     }

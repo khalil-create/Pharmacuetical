@@ -16,10 +16,10 @@ class ServicesCustomers extends Migration
         Schema::create('services_customers', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('customer_id')->unsigned()->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedInteger('service_id')->unsigned();
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

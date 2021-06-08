@@ -1,9 +1,9 @@
 @extends('layouts.index')
 @section('title')
-    ادارة المشرفين
+    ادارة مجموعات الاصناف 
 @endsection
 @section('content')
-<!-- Content Header (Page header) -->
+  <!-- Content Header (Page header) -->
 <div class="content-header content-wrapper">
   <div class="container-fluid">
       <div class="row mb-2">
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title" style="float: right">قائمة المشرفين</h3>
+            <span class="card-title" style="float: right">قائمة مجموعات الاصناف</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -40,72 +40,70 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($supervisor->count() > 0)
+                  @if($cat->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        اسم المشرف
+                        اسم المجموعة
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الجنس
+                        اسم الشركة
                       </th>
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">
-                        البريد الالكتروني
-                      </th>
-                      <th class="sorting align-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
                     </tr>
                   @else
                     <div class="alert alert-success notify-success">
-                      {{ 'لم يتم اضافة اي مشرف' }}
+                      {{ 'لم يتم اضافة اي مجموعة اصناف' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($supervisor as $row)
+                  @foreach ($cat as $row)
+                    @foreach($row->companies as $comp)                    
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                      <td>{{$row->name_cat}}</td>
+                      <td>{{$comp->name_company}}</td>
                       <td>
-                        <img src="{{asset('images/users/'.$row->user_image)}}" class="img-users">
-                        {{$row->user_name_third}} {{$row->user_surname}}
-                      </td>
-                      <td class="sorting_1">{{$row->sex}}</td>
-                      <td class="" style="">{{$row->email}}</td>
-                      <td class="" style="">
-                        <a href="/editSupervisor/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/mainAreaSupervised/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
-                        <i class="fas fa-eye"></i>
+                        <a href="/categoryEdit/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/categoryDelete/{{$row->id}}" method="post" style="float: right;">
+                            {{csrf_field()}}
+                            {{method_field('DELETE')}}
+                            <button style="border: none"><i class="fas fa-trash"></i></button>
+                          </form>
+                          <i class="fas fa-eye"></i>
                       </td>
                     </tr>
+                    @endforeach
                   @endforeach
                   <div>
-                    <a href="{{url('/addSupervisor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مشرف</a>
+                    <a href="{{url('/categoryAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
                     @if (session('status'))
-                      <div class="alert alert-success notify-success">
-                          {{ session('status') }}
-                      </div>
+                        <div class="alert alert-success notify-success">
+                            {{ session('status') }}
+                        </div>
                     @endif
                     @if (session('error'))
-                      <div class="alert alert-danger notify-error">
-                          {{ session('error') }}
-                      </div>
+                              <div class="alert alert-success notify-error">
+                                  {{ session('error') }}
+                              </div>
                     @endif
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($supervisor->count() > 0)
-                      <tr>
-                        <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">الاسم</th>
-                        <th rowspan="1" colspan="1">الجنس</th>
-                        <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
-                        <th rowspan="1" colspan="1" style="">العملية</th>
-                      </tr>
-                    @endif
+                  @if($cat->count() > 0)
+                    <tr>
+                      <th rowspan="1" colspan="1">#</th>
+                      <th rowspan="1" colspan="1">اسم المجموعة</th>
+                      <th rowspan="1" colspan="1">اسم الشركة</th>
+                      <th rowspan="1" colspan="1" style="">العملية</th>
+                    </tr>
+                  @endif
                   </tfoot>
                 </table>
               </div>

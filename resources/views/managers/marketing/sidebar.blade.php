@@ -13,7 +13,10 @@
             <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-            <a href="#" class="d-block">{{Auth::user()->user_name_third}} {{Auth::user()->user_surname}}</a>
+                <a href="#" class="d-block">{{Auth::user()->user_name_third}} {{Auth::user()->user_surname}}
+                    <br>
+                    <b> {{Auth::user()->user_type}} </b>
+                </a>
             </div>
         </div>
 
@@ -35,7 +38,7 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-            <a href="{{url('home')}}" class="nav-link {{ request()->path() == 'home' ? 'active' : ''}}">
+            <a href="{{url('/home')}}" class="nav-link {{ request()->path() == 'home' ? 'active' : ''}}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                 الصفحة الرئيسية
@@ -60,6 +63,93 @@
                 <span class="badge badge-info right">6</span>
                 </p>
             </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('manageTasks')}}" 
+            class="nav-link {{  $p == 'manageTasks' || 
+                                $p == 'addTask' ||
+                                $path =='editTask'? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                ادارة المهام
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('manageSamples')}}" 
+            class="nav-link {{  $p == 'manageSamples' || 
+                                $p == 'addSample' ||
+                                $path =='editSample'? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                ادارة العينات
+                </p>
+            </a>
+        </li>
+        <li class="nav-item {{ $p == 'manageCompanies' || 
+                                $p == 'companyAdd' ||
+                                $p == 'manageCategory' ||
+                                $p == 'categoryAdd' ||
+                                $p == 'manageItem' ||
+                                $p == 'itemAdd' ||
+                                $path == 'companyEdit' ||
+                                $path == 'categryEdit' ||
+                                $path == 'itemUses' ||
+                                $path == 'editItems'? 'menu-open' : ''
+                            }}">
+            <a
+            class="nav-link {{  $p == 'manageCompanies' || 
+                                $p == 'companyAdd' ||
+                                $p == 'categoryAdd' ||
+                                $p == 'manageCategory' ||
+                                $p == 'manageItem' ||
+                                $p == 'itemAdd' ||
+                                $path == 'companyEdit' ||
+                                $path == 'categryEdit' ||
+                                $path == 'itemUses' ||
+                                $path == 'itemEdit'? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                ادارة الشركات
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="{{url('manageCompanies')}}" 
+                class="nav-link {{  $p == 'manageCompanies' ||
+                                    $p == 'companyAdd' ||
+                                    $path == 'companyEdit' ? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>الشركات</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{url('manageCategory')}}" 
+                class="nav-link {{  $p == 'manageCategory'||
+                                    $p == 'categoryAdd' ||
+                                    $path == 'categoryEdit' ? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>مجموعات الاصناف</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('manageItem')}}" 
+                    class="nav-link {{  $p == 'manageItem'||
+                                        $p == 'itemAdd' ||
+                                        $path == 'itemUses' ||
+                                        $path == 'itemEdit' ? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الاصناف</p>
+                    </a>
+                    </li>
+            </ul>
         </li>
         <li class="nav-item">
             <a href="{{url('manageSalesObjectives')}}" 

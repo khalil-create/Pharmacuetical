@@ -16,10 +16,10 @@ class ServicesDoctors extends Migration
         Schema::create('services_doctors', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('doctor_id')->unsigned()->nullable();
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedInteger('service_id')->unsigned();
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

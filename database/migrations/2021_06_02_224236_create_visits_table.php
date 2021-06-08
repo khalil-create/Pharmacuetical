@@ -20,13 +20,13 @@ class CreateVisitsTable extends Migration
             $table->date('date');
             $table->string('result',500);
             $table->unsignedInteger('representative_id')->unsigned();
-            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedInteger('customer_id')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('doctor_id')->nullable();
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

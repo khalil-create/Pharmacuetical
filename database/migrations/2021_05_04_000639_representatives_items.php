@@ -16,9 +16,9 @@ class RepresentativesItems extends Migration
         Schema::create('representatives_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('representative_id');
-            $table->foreign('representative_id')->references('id')->on('representatives');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

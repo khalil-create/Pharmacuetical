@@ -39,7 +39,7 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-            <a href="{{url('home')}}" class="nav-link {{ request()->path() == 'home' ? 'active' : ''}}">
+            <a href="/home" class="nav-link {{ request()->path() == 'home' ? 'active' : ''}}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                 الصفحة الرئيسية
@@ -112,7 +112,7 @@
                                 $path == 'editSubArea' ||
                                 $path == 'supAreas'? 'menu-open' : ''
                             }}">
-            <a href="{{url('manageMainAreas')}}" 
+            <a
             class="nav-link {{  $p == 'manageMainAreas' ||
                                 $p == 'addMainArea' || 
                                 $p == 'addSubArea' || 
@@ -162,7 +162,7 @@
                                 $path == 'itemUses' ||
                                 $path == 'editItems'? 'menu-open' : ''
                             }}">
-            <a href="{{url('manageCompany')}}" 
+            <a
             class="nav-link {{  $p == 'manageCompany' || 
                                 $p == 'addCompany' ||
                                 $p == 'addCategory' ||

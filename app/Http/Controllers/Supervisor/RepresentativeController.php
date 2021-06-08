@@ -15,6 +15,10 @@ use App\Traits\userTrait;
 class RepresentativeController extends Controller
 {
     use userTrait;//for save images of users
+    public function home()
+    {
+        return view('supervisors.home');
+    }
     public function getAllRepresentatives()
     {
         $rep = Representative::with(['user','supervisor'])->get();

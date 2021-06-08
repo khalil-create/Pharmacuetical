@@ -21,7 +21,7 @@ class Items extends Migration
             $table->string('bonus');
             $table->string('unit');
             $table->unsignedInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

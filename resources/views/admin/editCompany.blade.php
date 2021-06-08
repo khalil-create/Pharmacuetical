@@ -74,19 +74,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('supervisor_name') ? ' has-error' : '' }}">
-                                    <label for="supervisor_name" class="col-md-2 control-label">المشرف عليها</label>
-                                            <select name="supervisor_name" id="supervisor_name" class="form-control custom-select rounded-0">
+                                    <label class="col-md-2 control-label">المشرف عليها</label>
+                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
                                                 @foreach ($supervisors as $row)
-                                                <option value="{{$row->user->user_name_third}}" 
+                                                <option value="{{$row->id}}" 
                                                     @if($row->id == $company->supervisor_id) 
                                                         {{ 'selected' }}
                                                     @endif
                                                     >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
                                                 @endforeach
                                             </select>
-                                        @if ($errors->has('supervisor_name'))
+                                        @if ($errors->has('supervisor_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_name') }}</strong>
+                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
                                             </span>
                                         @endif
                                     {{-- </div> --}}
