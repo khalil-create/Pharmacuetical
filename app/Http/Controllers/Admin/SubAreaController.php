@@ -41,8 +41,8 @@ class SubAreaController extends Controller
             'mainarea_id' =>$mainarea->id,
         ]);   
         if(isset($id) && $id != 0)
-            return redirect('/supAreas/'.$id)->with('status','تم إضافة البيانات بشكل ناجح');
-        return redirect('/manageSubAreas')->with('status','تم إضافة البيانات بشكل ناجح');
+            return redirect('/admin/supAreas/'.$id)->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageSubAreas')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -83,7 +83,7 @@ class SubAreaController extends Controller
         $subarea->mainarea_id = $mainarea->id;
         $subarea->update();
 
-        return redirect('/manageSubAreas')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageSubAreas')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteSubArea($id)
     {
@@ -91,6 +91,6 @@ class SubAreaController extends Controller
         if($subarea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $subarea->delete();
-        return redirect('/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

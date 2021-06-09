@@ -79,9 +79,9 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
                       <td class="" style="">
-                        <a href="/editStudy/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/studyStrengths/{{$row->id}}"><i class="fas fa-info"></i></a>
-                        <form action="/deleteStudy/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/admin/editStudy/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <a href="/admin/studyStrengths/{{$row->id}}"><i class="fas fa-info"></i></a>
+                        <form action="/admin/deleteStudy/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                                 <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>

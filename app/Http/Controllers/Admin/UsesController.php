@@ -41,7 +41,7 @@ class UsesController extends Controller
             'use' => $request->use,
         ]); 
         $use->items()->attach($request->id);
-        return redirect('/itemUses/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/itemUses/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
     }
     public function storeUsesExist(Request $request)
     {
@@ -53,7 +53,7 @@ class UsesController extends Controller
         }
         $item = Item::find($request->id);
         $item->uses()->syncWithoutDetaching($request->usesIds);
-        return redirect('/itemUses/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/itemUses/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
     }
     public function editUse($id)
     {

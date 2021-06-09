@@ -35,7 +35,7 @@ class CategoryController extends Controller
         //attach is add the new value above the old value even the new is the same old value
         $company->categories()->attach($cat->id);
         
-        return redirect('/manageCategory')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageCategory')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -68,7 +68,7 @@ class CategoryController extends Controller
         //sync is delete the old value and add the new value
         $category->companies()->sync($request->company_id);
 
-        return redirect('/manageCategory')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageCategory')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteCategory($id)
     {
@@ -78,6 +78,6 @@ class CategoryController extends Controller
         
         $category->delete();
 
-        return redirect('/manageCategory')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageCategory')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

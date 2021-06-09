@@ -78,8 +78,8 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
                       <td class="" style="">
-                        <a href="/editCompany/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/deleteCompany/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/admin/editCompany/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/admin/deleteCompany/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                                 <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
@@ -90,7 +90,7 @@
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addCompany')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة شركة</a>
+                    <a href="{{url('/admin/addCompany')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة شركة</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

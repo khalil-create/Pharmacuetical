@@ -83,11 +83,11 @@
                       <td class="text-left">{{$row->email}}</td>
                       {{-- <td>{{$row->phone_number}}</td> --}}
                       <td>
-                        <a href="/editUser/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
-                        <form action="/deleteUser/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/admin/editUser/{{$row->id}}"><i style="margin: 2px 3px 2px 3px" class="nav-icon fas fa-edit"></i></a>
+                        <form action="/admin/deleteUser/{{$row->id}}" method="post" style="float: right;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
-                          <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
+                          <button style="border: none;margin-left: -15px;"><i class="fas fa-trash"></i></button>
                           {{-- <button onclick="confirm('هل انت متأكد انك تريد حذف هذه البيانات؟')" style="border: none"><i class="fas fa-trash"></i></button> --}}
                       </form>
                       <i class="fas fa-eye"></i>
@@ -96,7 +96,7 @@
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addUser')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مستخدم</a>
+                    <a href="{{url('/admin/addUser')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مستخدم</a>
                     @if (session('status'))
                           <div class="alert alert-success notify-success">
                               {{ session('status') }}

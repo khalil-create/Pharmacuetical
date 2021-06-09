@@ -80,13 +80,13 @@
                       <td class="sorting_1">{{$row->sex}}</td>
                       <td class="" style="">{{$row->email}}</td>
                       <td class="" style="">
-                        <a href="/editManager/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <a href="/admin/editManager/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
                         <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addManager')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مدير</a>
+                    <a href="{{url('/admin/addManager')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مدير</a>
                     @if (session('status'))
                       <div class="alert alert-success notify-success">
                           {{ session('status') }}

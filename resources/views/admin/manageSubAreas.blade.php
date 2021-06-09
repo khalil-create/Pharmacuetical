@@ -72,20 +72,20 @@
                         </td>
                         <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
                         <td class="" style="">
-                          <a href="/editSubArea/{{$area->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                          <form action="/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
+                          <a href="/admin/editSubArea/{{$area->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                          <form action="/admin/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
+                            <button style="border: none;margin-left: -70px;"><i class="fas fa-trash"></i></button>
                           </form>
-                          <a href="/showRepresentatives/{{$area->id}}" ><i class="fas fa-tasks"></i></a>
+                          <a href="/admin/showRepresentatives/{{$area->id}}" ><i class="fas fa-tasks"></i></a>
                           <i class="fas fa-eye"></i>
                         </td>
                       </tr>
                     @endforeach
                   @endif
                   <div>
-                    <a href="{{url('/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
+                    <a href="{{url('/admin/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

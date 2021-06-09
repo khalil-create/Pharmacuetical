@@ -76,7 +76,7 @@
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addMainAreaForSupervisor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
+                    <a href="{{url('/admin/addMainAreaForSupervisor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

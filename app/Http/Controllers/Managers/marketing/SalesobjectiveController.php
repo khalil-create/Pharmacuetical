@@ -82,7 +82,7 @@ class SalesobjectiveController extends Controller
         $salesObjective->item_id = $request->item_id;
         $salesObjective->update();
 
-        return redirect('/manageSalesObjectives')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageSalesObjectives')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteSalesObjective($id)
     {
@@ -91,7 +91,7 @@ class SalesobjectiveController extends Controller
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         $salesObjective->delete();
 
-        return redirect('/manageSalesObjectives')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageSalesObjectives')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function distributeSalesObjective($id)
     {
@@ -116,6 +116,6 @@ class SalesobjectiveController extends Controller
                 'item_id' => $request->item_id,
             ]);
         }
-        return redirect('/manageSalesObjectives')->with('status','تم توزيع الهدف البيعي بشكل ناجح');
+        return redirect('/managerMarketing/manageSalesObjectives')->with('status','تم توزيع الهدف البيعي بشكل ناجح');
     }
 }

@@ -124,7 +124,7 @@ class UserController extends Controller
                 'manager_id' => $managerSales->id, //لأنه مندوب مبيعات فإن المشرف الذي يتبعه هو مدير المبيعات
             ]);
         }
-        return redirect('/displayAllUsers')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/displayAllUsers')->with('status','تم إضافة البيانات بشكل ناجح');
     }
 
     //accountController
@@ -306,7 +306,7 @@ class UserController extends Controller
         // {
         //     Representative::create(['user_id' => $user->id]);
         // }
-        return redirect('/displayAllUsers')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/displayAllUsers')->with('status','تم تعديل البيانات بشكل ناجح');
     }
 
     protected function getRules()
@@ -376,6 +376,6 @@ class UserController extends Controller
         //     $user->representatives()->delete();
         //     $user->delete();
         // }
-        return redirect('/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

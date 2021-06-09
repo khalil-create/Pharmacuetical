@@ -71,19 +71,19 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
                       <td class="" style="">
-                        <a href="/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
-                        <form action="/deleteMainArea/{{$row->id}}" method="post" style="float: left;">
+                        <a href="/admin/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <a href="/admin/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
+                        <form action="/admin/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
-                          <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
+                          <button style="border: none;margin-left: -150px;"><i class="fas fa-trash"></i></button>
                         </form>
                         <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addMainArea')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة رئيسية</a>
+                    <a href="{{url('/admin/addMainArea')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة رئيسية</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

@@ -35,7 +35,7 @@ class ItemController extends Controller
             'unit' => $request->unit,
             'category_id' =>$request->category_id,
         ]);
-        return redirect('/manageItems')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageItems')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -85,7 +85,7 @@ class ItemController extends Controller
         $item->category_id = $request->category_id;
         $item->update();
 
-        return redirect('/manageItems')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageItems')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteItem($id)
     {
@@ -93,6 +93,6 @@ class ItemController extends Controller
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $item->delete();
-        return redirect('/manageItems')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/manageItems')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/updateUse/{{$use->id}}"  enctype="multipart/form-data">
+                            <form method="POST" action="/admin/updateUse/{{$use->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                                        تعديل
+                                        تعديل <i class="fas fa-edit"></i>
                                     </button>
                                 </div>
                             </div>

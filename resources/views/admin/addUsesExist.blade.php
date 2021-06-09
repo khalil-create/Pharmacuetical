@@ -43,7 +43,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 @if($uses->count() > 0)
-                                    <form method="POST" action="{{ url('storeUsesExist') }}"  enctype="multipart/form-data">
+                                    <form method="POST" action="{{ url('admin/storeUsesExist') }}"  enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="card-body">
                                             <div class="form-group">
@@ -74,7 +74,7 @@
                                     <div class="alert alert-success notify-success">
                                         {{ 'لم يتم اضافة اي استخدام' }}               
                                     </div>
-                                    <a href="/addUse/{{$id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
+                                    <a href="/admin/addUse/{{$id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
                                 @endif
                             </div>
                             <!-- / form-group -->

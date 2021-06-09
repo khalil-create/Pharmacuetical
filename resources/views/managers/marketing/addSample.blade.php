@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('storeSample') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('managerMarketing/storeSample') }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">

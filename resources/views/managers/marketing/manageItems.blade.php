@@ -85,19 +85,19 @@
                       <td class="sorting_1">{{$row->unit}}</td>
                       <td class="sorting_1">{{$row->category->name_cat}}</td>
                       <td class="" style="">
-                        <a href="/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk"></i></a>
-                        <a href="/itemUses/{{$row->id}}"><i class="fas fa-info"></i></a>
-                        <form action="/itemDelete/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/managerMarketing/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk"></i></a>
+                        <a href="/managerMarketing/itemUses/{{$row->id}}"><i class="fas fa-info"></i></a>
+                        <form action="/managerMarketing/itemDelete/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
+                            <button style="border: none;margin-left: -25px;"><i class="fas fa-trash"></i></button>
                           </form>
-                          <a href="/showDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
+                          <a href="/managerMarketing/showDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/itemAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
+                    <a href="{{url('/managerMarketing/itemAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
                         @if (session('status'))
                             <div class="alert alert-success notify-success">
                                 {{ session('status') }}

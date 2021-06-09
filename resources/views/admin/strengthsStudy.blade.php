@@ -72,8 +72,8 @@
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->strength}}</td>
                       <td>
-                        <a href="/editStrength/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/deleteStrength/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/admin/editStrength/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/admin/deleteStrength/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
@@ -83,7 +83,7 @@
                   @endforeach
                   @endif
                   <div>
-                    <a href="/addStrength/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقطة</a>
+                    <a href="/admin/addStrength/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقطة</a>
                     {{-- <a href="/addStrengthsExist/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقاط موجودة</a> --}}
                     @if (session('status'))
                         <div class="alert alert-success notify-success">

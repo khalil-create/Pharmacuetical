@@ -51,11 +51,11 @@
             $path = substr($p,0,$index);
         @endphp
         <li class="nav-item">
-            <a href="{{url('manageSupervisors')}}" 
-            class="nav-link {{  $p == 'manageSupervisors' || 
-                                $p == 'addSupervisor' ||
-                                $path =='editSupervisor' || 
-                                $path =='mainAreaSupervised'? 'active' : '' 
+            <a href="{{url('managerMarketing/manageSupervisors')}}" 
+            class="nav-link {{  $p == 'managerMarketing/manageSupervisors' || 
+                                $p == 'managerMarketing/addSupervisor' ||
+                                $path =='managerMarketing/editSupervisor' || 
+                                $path =='managerMarketing/mainAreaSupervised'? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
@@ -65,10 +65,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{url('manageTasks')}}" 
-            class="nav-link {{  $p == 'manageTasks' || 
-                                $p == 'addTask' ||
-                                $path =='editTask'? 'active' : '' 
+            <a href="{{url('managerMarketing/manageTasks')}}" 
+            class="nav-link {{  $p == 'managerMarketing/manageTasks' || 
+                                $p == 'managerMarketing/addTask' ||
+                                $path =='managerMarketing/editTask'? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
@@ -77,10 +77,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{url('manageSamples')}}" 
-            class="nav-link {{  $p == 'manageSamples' || 
-                                $p == 'addSample' ||
-                                $path =='editSample'? 'active' : '' 
+            <a href="{{url('managerMarketing/manageSamples')}}" 
+            class="nav-link {{  $p == 'managerMarketing/manageSamples' || 
+                                $p == 'managerMarketing/addSample' ||
+                                $path =='managerMarketing/editSample'? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
@@ -88,28 +88,28 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item {{ $p == 'manageCompanies' || 
-                                $p == 'companyAdd' ||
-                                $p == 'manageCategory' ||
-                                $p == 'categoryAdd' ||
-                                $p == 'manageItem' ||
-                                $p == 'itemAdd' ||
-                                $path == 'companyEdit' ||
-                                $path == 'categryEdit' ||
-                                $path == 'itemUses' ||
-                                $path == 'editItems'? 'menu-open' : ''
+        <li class="nav-item {{ $p == 'managerMarketing/manageCompanies' || 
+                                $p == 'managerMarketing/companyAdd' ||
+                                $p == 'managerMarketing/manageCategory' ||
+                                $p == 'managerMarketing/categoryAdd' ||
+                                $p == 'managerMarketing/manageItem' ||
+                                $p == 'managerMarketing/itemAdd' ||
+                                $path == 'managerMarketing/companyEdit' ||
+                                $path == 'managerMarketing/categryEdit' ||
+                                $path == 'managerMarketing/itemUses' ||
+                                $path == 'managerMarketing/editItems'? 'menu-open' : ''
                             }}">
             <a
-            class="nav-link {{  $p == 'manageCompanies' || 
-                                $p == 'companyAdd' ||
-                                $p == 'categoryAdd' ||
-                                $p == 'manageCategory' ||
-                                $p == 'manageItem' ||
-                                $p == 'itemAdd' ||
-                                $path == 'companyEdit' ||
-                                $path == 'categryEdit' ||
-                                $path == 'itemUses' ||
-                                $path == 'itemEdit'? 'active' : ''
+            class="nav-link {{  $p == 'managerMarketing/manageCompanies' || 
+                                $p == 'managerMarketing/companyAdd' ||
+                                $p == 'managerMarketing/categoryAdd' ||
+                                $p == 'managerMarketing/manageCategory' ||
+                                $p == 'managerMarketing/manageItem' ||
+                                $p == 'managerMarketing/itemAdd' ||
+                                $path == 'managerMarketing/companyEdit' ||
+                                $path == 'managerMarketing/categryEdit' ||
+                                $path == 'managerMarketing/itemUses' ||
+                                $path == 'managerMarketing/itemEdit'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
@@ -119,31 +119,31 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{url('manageCompanies')}}" 
-                class="nav-link {{  $p == 'manageCompanies' ||
-                                    $p == 'companyAdd' ||
-                                    $path == 'companyEdit' ? 'active' : '' 
+                <a href="{{url('managerMarketing/manageCompanies')}}" 
+                class="nav-link {{  $p == 'managerMarketing/manageCompanies' ||
+                                    $p == 'managerMarketing/companyAdd' ||
+                                    $path == 'managerMarketing/companyEdit' ? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>الشركات</p>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a href="{{url('manageCategory')}}" 
-                class="nav-link {{  $p == 'manageCategory'||
-                                    $p == 'categoryAdd' ||
-                                    $path == 'categoryEdit' ? 'active' : ''
+                <a href="{{url('managerMarketing/manageCategory')}}" 
+                class="nav-link {{  $p == 'managerMarketing/manageCategory'||
+                                    $p == 'managerMarketing/categoryAdd' ||
+                                    $path == 'managerMarketing/categoryEdit' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>مجموعات الاصناف</p>
                 </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{url('manageItem')}}" 
-                    class="nav-link {{  $p == 'manageItem'||
-                                        $p == 'itemAdd' ||
-                                        $path == 'itemUses' ||
-                                        $path == 'itemEdit' ? 'active' : ''
+                    <a href="{{url('managerMarketing/manageItem')}}" 
+                    class="nav-link {{  $p == 'managerMarketing/manageItem'||
+                                        $p == 'managerMarketing/itemAdd' ||
+                                        $path == 'managerMarketing/itemUses' ||
+                                        $path == 'managerMarketing/itemEdit' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>الاصناف</p>
@@ -152,10 +152,10 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="{{url('manageSalesObjectives')}}" 
-            class="nav-link {{  $p == 'manageSalesObjectives' ||
-                                $p == 'addSalesObjective' ||
-                                $path == 'editSalesObjective' ? 'active' : ''  }}">
+            <a href="{{url('managerMarketing/manageSalesObjectives')}}" 
+            class="nav-link {{  $p == 'managerMarketing/manageSalesObjectives' ||
+                                $p == 'managerMarketing/addSalesObjective' ||
+                                $path == 'managerMarketing/editSalesObjective' ? 'active' : ''  }}">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
                 ادارة الاهداف البيعية

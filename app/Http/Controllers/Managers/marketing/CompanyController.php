@@ -36,7 +36,7 @@ class CompanyController extends Controller
             'sign_img_company' => $file_name,
             'supervisor_id' => $request->supervisor_id,
         ]);
-        return redirect('/manageCompanies')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageCompanies')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -78,7 +78,7 @@ class CompanyController extends Controller
         $company->have_category = $request->have_category;
         $company->supervisor_id = $request->supervisor_id;
         $company->update();
-        return redirect('/manageCompanies')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageCompanies')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteCompany($id)
     {
@@ -86,6 +86,6 @@ class CompanyController extends Controller
         if(!$company)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $company->delete();
-        return redirect('/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

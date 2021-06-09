@@ -43,7 +43,7 @@ class SupervisorController extends Controller
                 'manager_id' => Auth::user()->manager->id,
                 ]);
 
-        return redirect('/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -128,7 +128,7 @@ class SupervisorController extends Controller
         }
         $user->update();
 
-        return redirect('/manageSupervisors')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageSupervisors')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteSupervisor($id)
     {
@@ -139,7 +139,7 @@ class SupervisorController extends Controller
         
         $user->delete();
 
-        return redirect('/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');        
+        return redirect('/managerMarketing/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');        
     }
     public function getSupervisorAreas($id)
     {

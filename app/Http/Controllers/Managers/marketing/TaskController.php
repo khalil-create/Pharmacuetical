@@ -37,7 +37,7 @@ class TaskController extends Controller
             'manager_id' => Auth::user()->manager->id,
             'supervisor_id' => $request->supervisor_id,
         ]);
-        return redirect('/manageTasks')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageTasks')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -79,12 +79,12 @@ class TaskController extends Controller
         $task->supervisor_id = $request->supervisor_id;
         $task->update();
 
-        return redirect('/manageTasks')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageTasks')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteTask($id)
     {
         $task = Task::find($id);
         $task->delete();
-        return redirect('/manageTasks')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageTasks')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

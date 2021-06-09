@@ -69,24 +69,24 @@
                   @foreach ($samples as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{ $row->item }}</td>
+                      <td>{{ $row->item->commercial_name }}</td>
                       <td>{{ $row->count }}</td>
                       <td>
                         {{ $row->supervisor->user->user_name_third }} {{ $row->supervisor->user->user_surname }}
                       </td>
                       <td>
-                        <a href="/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/deleteSample/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/managerMarketing/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/managerMarketing/deleteSample/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
+                                <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
                         </form>
                         <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
+                    <a href="{{url('/managerMarketing/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

@@ -52,10 +52,10 @@
             $path = substr($p,0,$index);
         @endphp
         <li class="nav-item">
-            <a href="{{url('displayAllUsers')}}" 
-            class="nav-link {{  $p == 'displayAllUsers' || 
-                                $p =='addUser' ||
-                                $path =='editUser' ? 'active' : '' 
+            <a href="{{url('admin/displayAllUsers')}}" 
+            class="nav-link {{  $p == 'admin/displayAllUsers' || 
+                                $p =='admin/addUser' ||
+                                $path =='admin/editUser' ? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
@@ -104,22 +104,22 @@
                 </p>
             </a>
         </li> --}}
-        <li class="nav-item {{ $p == 'manageMainAreas' || 
-                                $p == 'addMainArea' || 
-                                $p == 'addSubArea' || 
-                                $p == 'manageSubAreas' ||
-                                $path == 'editMainArea' ||
-                                $path == 'editSubArea' ||
-                                $path == 'supAreas'? 'menu-open' : ''
+        <li class="nav-item {{ $p == 'admin/manageMainAreas' || 
+                                $p == 'admin/addMainArea' || 
+                                $p == 'admin/addSubArea' || 
+                                $p == 'admin/manageSubAreas' ||
+                                $path == 'admin/editMainArea' ||
+                                $path == 'admin/editSubArea' ||
+                                $path == 'admin/supAreas'? 'menu-open' : ''
                             }}">
             <a
-            class="nav-link {{  $p == 'manageMainAreas' ||
-                                $p == 'addMainArea' || 
-                                $p == 'addSubArea' || 
-                                $p == 'manageSubAreas' || 
-                                $path == 'editMainArea'||
-                                $path == 'editSubArea' ||
-                                $path == 'supAreas'? 'active' : ''
+            class="nav-link {{  $p == 'admin/manageMainAreas' ||
+                                $p == 'admin/addMainArea' || 
+                                $p == 'admin/addSubArea' || 
+                                $p == 'admin/manageSubAreas' || 
+                                $path == 'admin/editMainArea'||
+                                $path == 'admin/editSubArea' ||
+                                $path == 'admin/supAreas'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
@@ -129,21 +129,21 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{url('manageMainAreas')}}" 
-                class="nav-link {{  $p == 'manageMainAreas' ||
-                                    $p == 'addMainArea' || 
-                                    $path == 'editMainArea' ||
-                                    $path == 'supAreas'? 'active' : '' 
+                <a href="{{url('admin/manageMainAreas')}}" 
+                class="nav-link {{  $p == 'admin/manageMainAreas' ||
+                                    $p == 'admin/addMainArea' || 
+                                    $path == 'admin/editMainArea' ||
+                                    $path == 'admin/supAreas'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>المناطق الرئيسية</p>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a href="{{url('manageSubAreas')}}" 
-                class="nav-link {{  $p == 'manageSubAreas'||
-                                    $p == 'addSubArea' || 
-                                    $path == 'editSubArea' ? 'active' : ''
+                <a href="{{url('admin/manageSubAreas')}}" 
+                class="nav-link {{  $p == 'admin/manageSubAreas'||
+                                    $p == 'admin/addSubArea' || 
+                                    $path == 'admin/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>المناطق الفرعية</p>
@@ -151,28 +151,28 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item {{ $p == 'manageCompany' || 
-                                $p == 'addCompany' ||
-                                $p == 'manageCategories' ||
-                                $p == 'addCategory' ||
-                                $p == 'manageItems' ||
-                                $p == 'addItem' ||
-                                $path == 'editCompany' ||
-                                $path == 'editCategries' ||
-                                $path == 'itemUses' ||
-                                $path == 'editItems'? 'menu-open' : ''
+        <li class="nav-item {{ $p == 'admin/manageCompany' || 
+                                $p == 'admin/addCompany' ||
+                                $p == 'admin/manageCategories' ||
+                                $p == 'admin/addCategory' ||
+                                $p == 'admin/manageItems' ||
+                                $p == 'admin/addItem' ||
+                                $path == 'admin/editCompany' ||
+                                $path == 'admin/editCategries' ||
+                                $path == 'admin/itemUses' ||
+                                $path == 'admin/editItems'? 'menu-open' : ''
                             }}">
             <a
-            class="nav-link {{  $p == 'manageCompany' || 
-                                $p == 'addCompany' ||
-                                $p == 'addCategory' ||
-                                $p == 'manageCategories' ||
-                                $p == 'manageItems' ||
-                                $p == 'addItem' ||
-                                $path == 'editCompany' ||
-                                $path == 'editCategry' ||
-                                $path == 'itemUses' ||
-                                $path == 'editItem'? 'active' : ''
+            class="nav-link {{  $p == 'admin/manageCompany' || 
+                                $p == 'admin/addCompany' ||
+                                $p == 'admin/addCategory' ||
+                                $p == 'admin/manageCategories' ||
+                                $p == 'admin/manageItems' ||
+                                $p == 'admin/addItem' ||
+                                $path == 'admin/editCompany' ||
+                                $path == 'admin/editCategry' ||
+                                $path == 'admin/itemUses' ||
+                                $path == 'admin/editItem'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
@@ -182,31 +182,31 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{url('manageCompany')}}" 
-                class="nav-link {{  $p == 'manageCompany' ||
-                                    $p == 'addCompany' ||
-                                    $path == 'editCompany' ? 'active' : '' 
+                <a href="{{url('admin/manageCompany')}}" 
+                class="nav-link {{  $p == 'admin/manageCompany' ||
+                                    $p == 'admin/addCompany' ||
+                                    $path == 'admin/editCompany' ? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>الشركات</p>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a href="{{url('manageCategories')}}" 
-                class="nav-link {{  $p == 'manageCategories'||
-                                    $p == 'addCategory' ||
-                                    $path == 'editCategry' ? 'active' : ''
+                <a href="{{url('admin/manageCategories')}}" 
+                class="nav-link {{  $p == 'admin/manageCategories'||
+                                    $p == 'admin/addCategory' ||
+                                    $path == 'admin/editCategry' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>مجموعات الاصناف</p>
                 </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{url('manageItems')}}" 
-                    class="nav-link {{  $p == 'manageItems'||
-                                        $p == 'addItem' ||
-                                        $path == 'itemUses' ||
-                                        $path == 'editItem' ? 'active' : ''
+                    <a href="{{url('admin/manageItems')}}" 
+                    class="nav-link {{  $p == 'admin/manageItems'||
+                                        $p == 'admin/addItem' ||
+                                        $path == 'admin/itemUses' ||
+                                        $path == 'admin/editItem' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>الاصناف</p>
@@ -215,14 +215,14 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="{{url('manageStudies')}}" 
-            class="nav-link {{  $p == 'manageStudies' ||
-                                $p == 'addStudy' ||
-                                $path == 'studyStrengths' ||
-                                $path == 'addStrength' ||
-                                $path == 'addStrengthsExist' ||
-                                $path == 'editStrength' ||
-                                $path == 'editStudies' ? 'active' : '' }}">
+            <a href="{{url('admin/manageStudies')}}" 
+            class="nav-link {{  $p == 'admin/manageStudies' ||
+                                $p == 'admin/addStudy' ||
+                                $path == 'admin/studyStrengths' ||
+                                $path == 'admin/addStrength' ||
+                                $path == 'admin/addStrengthsExist' ||
+                                $path == 'admin/editStrength' ||
+                                $path == 'admin/editStudies' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
                 الدراسات العلمية
@@ -230,38 +230,38 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{url('manageSamples')}}" 
-            class="nav-link {{  $p == 'manageSamples' ||
-                                $p == 'addSample' ||
-                                $path == 'editSample' ? 'active' : '' }}">
+            <a href="{{url('admin/manageSamples')}}" 
+            class="nav-link {{  $p == 'admin/manageSamples' ||
+                                $p == 'admin/addSample' ||
+                                $path == 'admin/editSample' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
                 ادارة العينات
                 </p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="{{url('manageTasks')}}" 
-            class="nav-link {{  $p == 'manageTasks' ||
-                                $p == 'addTask' ||
-                                $path == 'editTask' ? 'active' : '' }}">
+        {{-- <li class="nav-item">
+            <a href="{{url('admin/manageTasks')}}" 
+            class="nav-link {{  $p == 'admin/manageTasks' ||
+                                $p == 'admin/addTask' ||
+                                $path == 'admin/editTask' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
                 ادارة المهام
                 </p>
             </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{url('manageCustomers')}}" 
-            class="nav-link {{  $p == 'manageCustomers' ||
-                                $p == 'addCustomer' ||
-                                $path == 'editCustomer' ? 'active' : ''  }}">
+        </li> --}}
+        {{-- <li class="nav-item">
+            <a href="{{url('admin/manageCustomers')}}" 
+            class="nav-link {{  $p == 'admin/manageCustomers' ||
+                                $p == 'admin/addCustomer' ||
+                                $path == 'admin/editCustomer' ? 'active' : ''  }}">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
                 ادارة العملاء
                 </p>
             </a>
-        </li>
+        </li> --}}
     </nav>
     <!-- /.sidebar-menu -->
     </div>

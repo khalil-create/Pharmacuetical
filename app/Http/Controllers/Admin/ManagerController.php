@@ -48,7 +48,7 @@ class ManagerController extends Controller
             $manager = Manager::create(['user_id' => $user->id]);
             $manager->update();
 
-        return redirect('/manageManagers')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageManagers')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     public function editManager($id)
     {
@@ -83,6 +83,6 @@ class ManagerController extends Controller
         }
         $user->update();
 
-        return redirect('/manageManagers')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageManagers')->with('status','تم تعديل البيانات بشكل ناجح');
     }
 }

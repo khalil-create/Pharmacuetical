@@ -42,18 +42,21 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/updateSample/{{$sample->id}}"  enctype="multipart/form-data">
+                            <form method="POST" action="/managerMarketing/updateSample/{{$sample->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="item">العينة</label>
-                                    <input value="{{$sample->item}}" type="text" name="item" class="form-control">
-                                    {{-- <select name="item" class="form-control custom-select rounded-0">
+                                    <select name="item" class="form-control custom-select rounded-0">
                                         @foreach ($items as $row)
-                                                <option value="{{$row->commercial_name}}">{{ $row->commercial_name }}</option>
+                                                <option value="{{$row->id}}" 
+                                                    @if($row->id == $sample->item_id)
+                                                        {{'selected'}}
+                                                    @endif
+                                                    >{{ $row->commercial_name }}</option>
                                         @endforeach
-                                    </select> --}}
+                                    </select>
                                     @if ($errors->has('item'))
                                         <span class="help-block">
                                             <small class="form-text text-danger">{{ $errors->first('item') }}</small>
@@ -70,30 +73,14 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="manager_id" class="col-md-2 control-label">مدير التسويق</label>
-                                            <select name="manager_id" class="form-control custom-select rounded-0">
-                                                @foreach ($managers as $row)
-                                                    @if ($row->user->user_type == 'مدير تسويق')
-                                                        <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('manager_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('manager_id') }}</strong>
-                                            </span>
-                                        @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="supervisor_id" class="col-md-2 control-label">المشرف</label>
-                                            <select name="supervisor_id" class="form-control custom-select rounded-0">
+                                    <label class="col-md-2 control-label">المشرف</label>
+                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
                                                 @foreach ($supervisors as $row)
-                                                    <option value="{{$row->id}}"
-                                                        @if ($row->id == $sample->supervisor_id)
-                                                            {{'selected'}}
-                                                        @endif
-                                                        >{{ $row->user->user_name_third }} {{$row->user->user_surname}}
-                                                    </option>
+                                                <option value="{{$row->id}}" 
+                                                    @if($row->id == $sample->supervisor_id) 
+                                                        {{ 'selected' }}
+                                                    @endif
+                                                    >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
                                                 @endforeach
                                             </select>
                                         @if ($errors->has('supervisor_id'))
@@ -101,6 +88,7 @@
                                                 <strong>{{ $errors->first('supervisor_id') }}</strong>
                                             </span>
                                         @endif
+                                    {{-- </div> --}}
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">

@@ -33,7 +33,7 @@ class StrengthController extends Controller
             'strength' => $request->strength,
             'study_id' => $request->id,
         ]); 
-        return redirect('/studyStrengths/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/studyStrengths/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -83,7 +83,7 @@ class StrengthController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->strength = $request->strength;
         $str->update();
-        return redirect('/studyStrengths/'.$str->study_id)->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/studyStrengths/'.$str->study_id)->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteStrength($id)
     {
@@ -91,6 +91,6 @@ class StrengthController extends Controller
         if(!$str)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->delete();
-        return redirect('/studyStrengths/'.$str->study_id)->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/studyStrengths/'.$str->study_id)->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

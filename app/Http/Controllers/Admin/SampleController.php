@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Managers\marketing;
+namespace App\Http\Controllers\Admin;
 use App\Models\Sample;
 use App\Http\Controllers\Controller;
 use App\Models\Manager;
+use App\Models\User;
 use App\Models\Supervisor;
 use App\Models\Item;
 use Illuminate\Support\Facades\Validator;
@@ -15,15 +16,15 @@ class SampleController extends Controller
     public function getAllSamples()
     {
         $samples = Sample::whereHas('manager')->get();
-        return view('managers.marketing.manageSamples',compact('samples',$samples));
+        return view('admin.manageSamples',compact('samples',$samples));
     }
     public function addSample()
     {
         $items = Item::get();
         if($items->count() < 1)
-            return redirect('/managerMarketing/manageSamples')->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد');
+            return redirect('/admin/manageSamples')->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد');
         $supervisors = Supervisor::whereHas('user')->get();
-        return view('managers.marketing.addSample',compact('supervisors',$supervisors))->with('items',$items);
+        return view('admin.addSample',compact('supervisors',$supervisors))->with('items',$items);
     }
     public function storeSample(Request $request)
     {
@@ -34,27 +35,25 @@ class SampleController extends Controller
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
         // return $request->manager_id;
+        $managerMarketing = User::where('user_type','مدير تسويق')->first();
         Sample::create([
-            'item' => $request->item,
+            'item_id' => $request->item_id,
             'count' => $request->count,
-            'manager_id' => Auth::user()->manager->id,
+            'manager_id' => $managerMarketing->manager->id,
             'supervisor_id' => $request->supervisor_id,
         ]);
-        return redirect('/managerMarketing/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
         return $rules = [
-                'item' => 'required|string|max:255',
                 'count' => 'required|numeric|max:255',
             ];
     }
     protected function getMessages()
     {
         return $messages = [
-            'item.required' => 'يجب عليك كتابة اسم العينة',
             'count.required' => 'يجب عليك كتابة الكمية',
-            'item.string' => 'يجب ان يكون هذا الحقل بشكل نصي',
             'count.numeric' => 'يجب ان يكون هذا الحقل عدداً',
         ];
     }
@@ -77,19 +76,21 @@ class SampleController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
+        return $request->item_id;
+        $managerMarketing = User::where('user_type','مدير تسويق')->first();
         $sample = Sample::find($id);
-        $sample->item = $request->item;
+        $sample->item_id = $request->item_id;
         $sample->count = $request->count;
-        $sample->manager_id = Auth::user()->manager->id;
+        $sample->manager_id = $managerMarketing->manager->id;
         $sample->supervisor_id = $request->supervisor_id;
         $sample->update();
 
-        return redirect('/managerMarketing/manageSamples')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageSamples')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteSample($id)
     {
         $sample = Sample::find($id);
         $sample->delete();
-        return redirect('/managerMarketing/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

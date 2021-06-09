@@ -40,7 +40,7 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row col-14">
-              <form style="width: 100%" method="POST" action="/storeDistributedSalesObjForSup" enctype="multipart/form-data">
+              <form style="width: 100%" method="POST" action="/managerMarketing/storeDistributedSalesObjForSup" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 
                 <div class="col-sm-12">

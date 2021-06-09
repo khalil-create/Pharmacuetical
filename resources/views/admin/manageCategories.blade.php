@@ -70,8 +70,8 @@
                       <td>{{$row->name_cat}}</td>
                       <td>{{$comp->name_company}}</td>
                       <td>
-                        <a href="/editCategory/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/deleteCategory/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/admin/editCategory/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/admin/deleteCategory/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
@@ -82,7 +82,7 @@
                     @endforeach
                   @endforeach
                   <div>
-                    <a href="{{url('/addCategory')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
+                    <a href="{{url('/admin/addCategory')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

@@ -84,7 +84,7 @@ class RepresentativeController extends Controller
                     'user_id' => $user->id,
                     'supervisor_id' => $request->supervisor_id,
                 ]);
-        return redirect('/manageRepresentatives')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageRepresentatives')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -170,7 +170,7 @@ class RepresentativeController extends Controller
         $rep->supervisor_id = $request->Input('supervisor_id');
         $rep->update();
         
-        return redirect('/manageRepresentatives')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageRepresentatives')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function showRepresentatives($id)
     {
@@ -200,6 +200,6 @@ class RepresentativeController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $rep->subareas()->syncWithoutDetaching($request->subareasids);
 
-        return redirect('/manageRepresentatives')->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
+        return redirect('/admin/manageRepresentatives')->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
     }
 }

@@ -26,7 +26,7 @@ Route::get('/not-allowed', function(){
 })->name('notAllowed');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth','middleware'=>'admin'],function(){
+Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth','middleware'=>'admin'],function(){
 
     // Route::get('/home-admin', 'UserController@home');
     Route::get('/displayAllUsers', 'UserController@getAllUsers');
@@ -86,6 +86,13 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth','mi
     Route::put('/UpdateStudy/{id}', 'StudyController@UpdateStudy');
     Route::delete('/deleteStudy/{id}', 'StudyController@deleteStudy');
 
+    Route::get('/manageSamples', 'SampleController@getAllSamples');
+    Route::get('/addSample', 'SampleController@addSample');
+    Route::post('/storeSample', 'SampleController@storeSample');
+    Route::get('/editSample/{id}', 'SampleController@editSample');
+    Route::put('/updateSample/{id}', 'SampleController@updateSample');
+    Route::delete('/deleteSample/{id}', 'SampleController@deleteSample');
+
     Route::get('/studyStrengths/{id}', 'StrengthController@getStudyStrengths');
     Route::get('/addStrength/{id}', 'StrengthController@addStrength');
     Route::post('/storeStrength', 'StrengthController@storeStrength');
@@ -105,7 +112,7 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth','mi
     Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
     
 });
-Route::group(['namespace'=>'App\Http\Controllers\Managers\marketing','middleware'=>'auth','middleware'=>'managerMarketing'],function(){
+Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Managers\marketing','middleware'=>'auth','middleware'=>'managerMarketing'],function(){
     // Route::get('/home', 'SalesobjectiveController@home');
     Route::get('/manageSalesObjectives', 'SalesobjectiveController@getAllSalesObjectives');
     Route::get('/addSalesObjective', 'SalesobjectiveController@addSalesObjective');
@@ -162,12 +169,12 @@ Route::group(['namespace'=>'App\Http\Controllers\Managers\marketing','middleware
 
 });
 
-Route::group(['namespace'=>'App\Http\Controllers\Managers\sales','middleware'=>'auth','middleware'=>'manageSales'],function(){
+Route::group(['prefix'=>'manageSales','namespace'=>'App\Http\Controllers\Managers\sales','middleware'=>'auth','middleware'=>'manageSales'],function(){
     // Route::get('/home-manager-sales', 'SalesobjectiveController@home');
     
 });
 
-Route::group(['namespace'=>'App\Http\Controllers\Supervisor','middleware'=>'auth','middleware'=>'supervisor'],function(){
+Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervisor','middleware'=>'auth','middleware'=>'supervisor'],function(){
     // Route::get('/home', 'RepresentativeController@home');
     Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives');
     Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');

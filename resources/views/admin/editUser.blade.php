@@ -45,7 +45,7 @@
                     <div class="row">
                         <div class="col-md-6">
                         <div class="form-group">
-                            <form action="/userUpdate/{{$user->id}}" class="form" method="POST" enctype="multipart/form-data">
+                            <form action="/admin/userUpdate/{{$user->id}}" class="form" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">

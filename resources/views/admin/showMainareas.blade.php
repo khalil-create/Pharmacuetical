@@ -47,7 +47,7 @@
                 <div class="col-md-12">
                 <div class="form-group">
                   @if($mainareas->count() > 0)
-                    <form method="POST" action="/storeRepMainArea/{{$rep->id}}"  enctype="multipart/form-data">
+                    <form method="POST" action="/admin/storeRepMainArea/{{$rep->id}}"  enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card-body">
                         <div class="form-group">

@@ -35,7 +35,7 @@ class StudyController extends Controller
             'emission_date' => $request->emission_date,
             'supervisor_id' => $request->supervisor_id,
         ]);
-        return redirect('/manageStudies')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageStudies')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -71,7 +71,7 @@ class StudyController extends Controller
         $study->emission_date = $request->emission_date;
         $study->supervisor_id = $request->supervisor_id;
         $study->update();
-        return redirect('/manageStudies')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageStudies')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteStudy($id)
     {
@@ -82,7 +82,7 @@ class StudyController extends Controller
         $study->strengths()->delete();
         $study->delete();
 
-        return redirect('/manageStudies')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/manageStudies')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getStudyStrengths($id)
     {

@@ -72,8 +72,8 @@
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->use}}</td>
                       <td>
-                        <a href="/editUse/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/deleteUse/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/admin/editUse/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/admin/deleteUse/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
@@ -83,8 +83,8 @@
                   @endforeach
                   @endif
                   <div>
-                    <a href="/addUse/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
-                    <a href="/addUseExist/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدامات موجودة</a>
+                    <a href="/admin/addUse/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
+                    <a href="/admin/addUseExist/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدامات موجودة</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

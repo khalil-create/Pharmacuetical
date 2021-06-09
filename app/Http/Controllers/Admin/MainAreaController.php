@@ -39,7 +39,7 @@ class MainAreaController extends Controller
             'name_main_area' => $request->name_main_area,
             'supervisor_id' => $supervisor->id,
         ]);        
-        return redirect('/manageMainAreas')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageMainAreas')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected function getRules()
@@ -84,7 +84,7 @@ class MainAreaController extends Controller
         $mainArea->supervisor_id = $sup->id;
         $mainArea->update();
 
-        return redirect('/manageMainAreas')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageMainAreas')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteMainArea($id)
     {
@@ -93,7 +93,7 @@ class MainAreaController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $mainarea->delete();
 
-        return redirect('/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/admin/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getSupAreasForMainArea($id)
     {
