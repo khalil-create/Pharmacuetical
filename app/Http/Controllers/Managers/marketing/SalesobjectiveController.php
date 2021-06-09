@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Managers\marketing;
 use App\Models\Salesobjective;
-use App\Models\Manager;
+use App\Models\Item;
 use App\Http\Controllers\Controller;
 use App\Models\Supervisor;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalesobjectiveController extends Controller
 {
@@ -16,13 +17,16 @@ class SalesobjectiveController extends Controller
     }
     public function getAllSalesObjectives()
     {
-        $salesObjectives = Salesobjective::get();
-        return view('managers.marketing.manageSalesObjectives',compact('salesObjectives',$salesObjectives));
+        $salesObjectives = Salesobjective::whereHas('manager')->get();
+        $supObj = Salesobjective::whereHas('supervisor')->get();
+        // return $salesObjectives;
+        return view('managers.marketing.manageSalesObjectives',compact('salesObjectives',$salesObjectives))
+        ->with('supObj',$supObj);
     }
     public function addSalesObjective()
     {
-        $managers = Manager::with('user')->get();
-        return view('managers.marketing.addSalesObjective',compact('managers',$managers));
+        $items = Item::get();
+        return view('managers.marketing.addSalesObjective',compact('items',$items));
     }
     public function storeSalesObjective(Request $request)
     {
@@ -35,7 +39,8 @@ class SalesobjectiveController extends Controller
         Salesobjective::create([
             'objective' => $request->objective,
             'description' => $request->description,
-            'manager_id' => $request->manager_id,
+            'manager_id' => Auth::user()->manager->id,
+            'item_id' => $request->item_id,
         ]);
         return redirect('/manageSalesObjectives')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -57,10 +62,10 @@ class SalesobjectiveController extends Controller
     public function editSalesObjective($id)
     {
         $salesObjective = Salesobjective::find($id);
+        $items = Item::get();
         if(!$salesObjective)
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
-        $managers = Manager::with('user')->get();
-        return view('managers.marketing.editSalesObjective',compact('salesObjective',$salesObjective))->with('managers',$managers);
+        return view('managers.marketing.editSalesObjective',compact('salesObjective',$salesObjective))->with('items',$items);
     }
     public function updateSalesObjective(Request $request,$id)
     {
@@ -73,7 +78,8 @@ class SalesobjectiveController extends Controller
         $salesObjective = Salesobjective::find($id);
         $salesObjective->objective = $request->objective;
         $salesObjective->description = $request->description;
-        $salesObjective->manager_id = $request->manager_id;
+        $salesObjective->manager_id = Auth::user()->manager->id;
+        $salesObjective->item_id = $request->item_id;
         $salesObjective->update();
 
         return redirect('/manageSalesObjectives')->with('status','تم تعديل البيانات بشكل ناجح');
@@ -98,13 +104,18 @@ class SalesobjectiveController extends Controller
     }
     public function storeDistributedSalesObjForSup(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        $i = -1;
+        foreach($request->objective as $s)
+        {
+            $i++;
+            Salesobjective::create([
+                'objective' => $s,
+                'description' => $request->description,
+                // 'manager_id' => Auth::user()->manager->id,
+                'supervisor_id' => $request->supervisor[$i],
+                'item_id' => $request->item_id,
+            ]);
         }
-        return $request->objective;
-        return $request->objective;
+        return redirect('/manageSalesObjectives')->with('status','تم توزيع الهدف البيعي بشكل ناجح');
     }
 }

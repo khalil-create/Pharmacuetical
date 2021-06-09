@@ -16,11 +16,15 @@ class managerMarketing
      */
     public function handle(Request $request, Closure $next)
     {
-        $usertype = Auth::user()->user_type;
-        if($usertype != 'مدير تسويق')
-        {
-            return redirect()->route('notAllowed');
+        if(Auth::user()){
+            $usertype = Auth::user()->user_type;
+            if($usertype != 'مدير تسويق')
+            {
+                return redirect()->route('notAllowed');
+            }
+            return $next($request);
         }
-        return $next($request);
+        else
+            return redirect('login');
     }
 }

@@ -47,6 +47,23 @@
                             {{method_field('PUT')}}
                             <div class="card-body">
                                 <div class="form-group">
+                                    <label>الصنف</label>
+                                    <select name="item_id" class="form-control custom-select rounded-0">
+                                        @foreach ($items as $row)
+                                                <option value="{{$row->id}}"
+                                                    @if ($salesObjective->item_id == $row->id)
+                                                        {{'selected'}}
+                                                    @endif
+                                                    >{{ $row->commercial_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('item_id'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label for="objective">الهدف</label>
                                     <input value="{{$salesObjective->objective}}" type="text" name="objective" class="form-control">
                                     @if ($errors->has('objective'))
@@ -63,21 +80,6 @@
                                             <small class="form-text text-danger">{{ $errors->first('description') }}</small>
                                         </span>
                                     @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="manager_id" class="col-md-2 control-label">مدير التسويق</label>
-                                            <select name="manager_id" class="form-control custom-select rounded-0">
-                                                @foreach ($managers as $row)
-                                                    @if ($row->user->user_type == 'مدير تسويق')
-                                                        <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('manager_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('manager_id') }}</strong>
-                                            </span>
-                                        @endif
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">

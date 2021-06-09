@@ -75,6 +75,7 @@ class CompanyController extends Controller
         $company->name_company = $request->name_company;
         $company->country_manufacturing = $request->country_manufacturing;
         $company->sign_img_company = $file_name;
+        $company->have_category = $request->have_category;
         $company->supervisor_id = $request->supervisor_id;
         $company->update();
         return redirect('/manageCompanies')->with('status','تم تعديل البيانات بشكل ناجح');

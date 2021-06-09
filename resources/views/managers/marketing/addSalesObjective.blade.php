@@ -46,7 +46,20 @@
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="objective">الهدف</label>
+                                    <label>الصنف</label>
+                                    <select name="item_id" class="form-control custom-select rounded-0">
+                                        @foreach ($items as $row)
+                                                <option value="{{$row->id}}">{{ $row->commercial_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('item_id'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="objective">مقدار الهدف</label>
                                     <input type="text" name="objective" class="form-control">
                                     @if ($errors->has('objective'))
                                         <span class="help-block">
@@ -62,21 +75,6 @@
                                             <small class="form-text text-danger">{{ $errors->first('description') }}</small>
                                         </span>
                                     @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="manager_id" class="col-md-2 control-label">مدير التسويق</label>
-                                            <select name="manager_id" class="form-control custom-select rounded-0">
-                                                @foreach ($managers as $row)
-                                                    @if ($row->user->user_type == 'مدير تسويق')
-                                                        <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('manager_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('manager_id') }}</strong>
-                                            </span>
-                                        @endif
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">

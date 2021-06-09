@@ -45,8 +45,11 @@
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
+                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                        الصنف
+                      </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        الهدف البيعي
+                        الهدف
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         الوصف
@@ -67,6 +70,7 @@
                     @foreach ($salesObjectives as $row)
                       <tr class="odd">
                         <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                        <td>{{$row->item->commercial_name}}</td>
                         <td>{{$row->objective}}</td>
                         <td class="sorting_1">{{$row->description}}</td>
                         <td>
@@ -74,7 +78,7 @@
                           <form action="/deleteSalesObjective/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button style="border: none"><i class="fas fa-trash"></i></button>
+                            <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
                           </form>
                           <a href="/distributeSalesObjective/{{$row->id}}" class="btn btn-success">توزيع</a>
                         </td>
@@ -100,6 +104,7 @@
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">الهدف</th>
+                        <th rowspan="1" colspan="1">الصنف</th>
                         <th rowspan="1" colspan="1">الوصف</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>

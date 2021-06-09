@@ -104,7 +104,6 @@ Route::group(['namespace'=>'App\Http\Controllers\Admin','middleware'=>'auth','mi
     Route::put('/updateUse/{id}', 'UsesController@updateUse');
     Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
     
-    
 });
 Route::group(['namespace'=>'App\Http\Controllers\Managers\marketing','middleware'=>'auth','middleware'=>'managerMarketing'],function(){
     // Route::get('/home', 'SalesobjectiveController@home');

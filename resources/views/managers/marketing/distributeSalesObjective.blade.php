@@ -24,7 +24,10 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">توزيع الهدف البيعي على المشرفين</span>
+            <span class="card-title" style="float: right">
+              توزيع الهدف البيعي  (<b>{{$salesObjective->objective}}</b>)
+              للصنف (<b>{{$salesObjective->item->commercial_name}}</b>) على المشرفين
+            </span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -41,19 +44,23 @@
                 {{ csrf_field() }}
                 
                 <div class="col-sm-12">
-                  <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <table class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                     <thead>
                       <tr role="row">
-                        <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                          المشرف</th>
-                        <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                          الهدف</th>
+                        <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                          المشرف
+                        </th>
+                        <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                          الهدف
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
+                      <input name="item_id" value="{{$salesObjective->item_id}}" hidden>
                       @foreach ($supervisors as $row)
                       <tr>
                         <td>
+                          <input name="supervisor[]" value="{{$row->id}}" hidden>
                           <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                         </td>
                         <td>
@@ -66,11 +73,15 @@
                         </td>
                       </tr>
                       @endforeach
+                      <tr rowspan="2">
+                        <label>الوصف</label>
+                        <input  name="description" value="{{$salesObjective->description}}" type="text" placeholder="اضافة وصف للهدف البيعي" class="form-control">
+                      </tr>
                     </tbody>
                   </table>
                   </div>
                 <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                  اضافة <i class="fas fa-plus"></i>
+                  توزيع 
                 </button>
               </form>
             </div>

@@ -8,6 +8,7 @@ use App\Models\Supervisor;
 use App\Models\Item;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SampleController extends Controller
 {
@@ -36,7 +37,7 @@ class SampleController extends Controller
         Sample::create([
             'item' => $request->item,
             'count' => $request->count,
-            'manager_id' => $request->manager_id,
+            'manager_id' => Auth::user()->manager->id,
             'supervisor_id' => $request->supervisor_id,
         ]);
         return redirect('/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
