@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    نقاط القوة الترويجية
+    ادارة المناطق
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -24,10 +24,8 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right"> قائمة نقاط القوة الترويجية :- <h5>
-              @if(isset($study))    
-                {{ $study->title }}
-              @endif
+            <span class="card-title" style="float: right"> قائمة المناطق الفرعية الخاصة بالمنطقة الرئيسية <h5>
+                  {{ $mainarea->name_main_area }}
             </h5></span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -44,47 +42,31 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if(isset($study) && $study->strengths->count() > 0)                    
+                  @if(isset($subareas) && $exist == 1)                    
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        النقطة
-                      </th>
-                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        العملية
+                        اسم المنطقة الرئيسية
                       </th>
                     </tr>
-                  @else
-                  <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي نقطة لهذه الدراسة' }}               
-                  </div>
+                  @elseif($exist == 1)
+                    <div class="alert alert-success notify-success">
+                      {{ 'لايوجد مناطق فرعية لهذه المنطقة الرئيسية' }}               
+                    </div>
                   @endif
                   </thead>
                   <tbody>
-                  <?php 
-                    $i=1;
-                  ?>
-                  @if(isset($study))    
-                  @foreach ($study->strengths as $row)               
+                  <?php $i=1?>
+                  @foreach ($subareas as $row)               
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{$row->strength}}</td>
-                      <td>
-                        <a href="/admin/editStrength/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/admin/deleteStrength/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
-                          </form>
-                      </td>
+                      <td>{{$row->name_sub_area}}</td>
                     </tr>
                   @endforeach
-                  @endif
                   <div>
-                    <a href="/admin/addStrength/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقطة</a>
-                    {{-- <a href="/addStrengthsExist/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقاط موجودة</a> --}}
+                    <a href="/supervisor/addSubArea/{{$mainarea->id}}" class="btn btn-primary add" title="اضافة"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
@@ -98,11 +80,10 @@
                   </div>
                   </tbody>
                   <tfoot>
-                  @if(isset($study) && $study->strengths->count() > 0)                    
+                  @if(isset($subareas) && $exist == 1)                    
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
-                      <th rowspan="1" colspan="1">النقطة</th>
-                      <th rowspan="1" colspan="1">العملية</th>
+                      <th rowspan="1" colspan="1">اسم المنطقة الرئيسية</th>
                     </tr>
                   @endif
                   </tfoot>

@@ -79,28 +79,13 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middl
     Route::put('/UpdateItem/{id}', 'ItemController@UpdateItem');
     Route::delete('/deleteItem/{id}', 'ItemController@deleteItem');
     
-    Route::get('/manageStudies', 'StudyController@getAllStudies');
-    Route::get('/addStudy', 'StudyController@addStudy');
-    Route::post('/storeStudy', 'StudyController@storeStudy');
-    Route::get('/editStudy/{id}', 'StudyController@editStudy');
-    Route::put('/UpdateStudy/{id}', 'StudyController@UpdateStudy');
-    Route::delete('/deleteStudy/{id}', 'StudyController@deleteStudy');
-
+    
     Route::get('/manageSamples', 'SampleController@getAllSamples');
     Route::get('/addSample', 'SampleController@addSample');
     Route::post('/storeSample', 'SampleController@storeSample');
     Route::get('/editSample/{id}', 'SampleController@editSample');
     Route::put('/updateSample/{id}', 'SampleController@updateSample');
     Route::delete('/deleteSample/{id}', 'SampleController@deleteSample');
-
-    Route::get('/studyStrengths/{id}', 'StrengthController@getStudyStrengths');
-    Route::get('/addStrength/{id}', 'StrengthController@addStrength');
-    Route::post('/storeStrength', 'StrengthController@storeStrength');
-    Route::get('/editStrength/{id}', 'StrengthController@editStrength');
-    Route::put('/updateStrength/{id}', 'StrengthController@updateStrength');
-    Route::delete('/deleteStrength/{id}', 'StrengthController@deleteStrength');
-    // Route::get('/addStrengthsExist/{id}', 'StrengthController@addStrengthsExist');
-    // Route::post('/storeStrengthsExist', 'StrengthController@storeStrengthsExist');
 
     Route::get('/itemUses/{id}', 'UsesController@getItemUses');
     Route::get('/addUse/{id}', 'UsesController@addUse');
@@ -113,7 +98,7 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middl
     
 });
 Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Managers\marketing','middleware'=>'auth','middleware'=>'managerMarketing'],function(){
-    // Route::get('/home', 'SalesobjectiveController@home');
+    // Route::get('/managerMarketing/home', 'SalesobjectiveController@home')->name('home');
     Route::get('/manageSalesObjectives', 'SalesobjectiveController@getAllSalesObjectives');
     Route::get('/addSalesObjective', 'SalesobjectiveController@addSalesObjective');
     Route::post('/storeSalesObjective', 'SalesobjectiveController@storeSalesObjective');
@@ -166,7 +151,20 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
     Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
     
+    Route::get('/manageMainAreas', 'MainAreaController@getAllAreas');
+    Route::get('/addMainArea', 'MainAreaController@addMainArea');
+    Route::post('/storeMainArea', 'MainAreaController@storeMainArea');
+    Route::get('/editMainArea/{areaid}', 'MainAreaController@editMainArea');
+    Route::put('/UpdateMainArea/{areaid}', 'MainAreaController@UpdateMainArea');
+    Route::delete('/deleteMainArea/{id}', 'MainAreaController@deleteMainArea');
+    Route::get('/supAreas/{id}', 'MainAreaController@getSupAreasForMainArea');
 
+    Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea');
+    Route::get('/addSubArea/{id?}', 'SubAreaController@addSubArea');
+    Route::post('/storeSubArea/{id?}', 'SubAreaController@storeSubArea');
+    Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
+    Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
+    Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
 });
 
 Route::group(['prefix'=>'manageSales','namespace'=>'App\Http\Controllers\Managers\sales','middleware'=>'auth','middleware'=>'manageSales'],function(){
@@ -186,6 +184,74 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::post('/storeRepMainArea/{id}', 'RepresentativeController@storeRepMainArea');
     Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
 
+    Route::get('/manageSamples', 'SampleController@getAllSamples');
+    Route::get('/addSample', 'SampleController@addSample');
+    Route::post('/storeSample', 'SampleController@storeSample');
+    Route::get('/editSample/{id}', 'SampleController@editSample');
+    Route::put('/updateSample/{id}', 'SampleController@updateSample');
+    Route::delete('/deleteSample/{id}', 'SampleController@deleteSample');
+    Route::get('/divideSample/{id}', 'SampleController@divideSample');
+
+    Route::get('/manageCompanies', 'CompanyController@getAllCompanies');
+    Route::get('/companyAdd', 'CompanyController@addCompany');
+    Route::post('/companyStore', 'CompanyController@storeCompany');
+    Route::get('/companyEdit/{id}', 'CompanyController@editCompany');
+    Route::put('/companyUpdate/{id}', 'CompanyController@UpdateCompany');
+    Route::delete('/companyDelete/{id}', 'CompanyController@deleteCompany');
+
+    Route::get('/manageCategory', 'CategoryController@getAllCategories');
+    Route::get('/categoryAdd', 'CategoryController@addCategory');
+    Route::post('/categoryStore', 'CategoryController@storeCategory');
+    Route::get('/categoryEdit/{id}', 'CategoryController@editCategory');
+    Route::put('/categoryUpdate/{id}', 'CategoryController@UpdateCategory');
+    Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
+
+    Route::get('/manageItem', 'ItemController@getAllItems');
+    Route::get('/itemAdd', 'ItemController@addItem');
+    Route::post('/itemStore', 'ItemController@storeItem');
+    Route::get('/itemEdit/{id}', 'ItemController@editItem');
+    Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
+    Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
+
+    Route::get('/itemUses/{id}', 'UsesController@getItemUses');
+    Route::get('/addUse/{id}', 'UsesController@addUse');
+    Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
+    Route::post('/storeUse', 'UsesController@storeUse');
+    Route::post('/storeUsesExist', 'UsesController@storeUsesExist');
+    Route::get('/editUse/{id}', 'UsesController@editUse');
+    Route::put('/updateUse/{id}', 'UsesController@updateUse');
+    Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
+    
+    Route::get('/manageMainAreas', 'MainAreaController@getAllAreas');
+    Route::get('/addMainArea', 'MainAreaController@addMainArea');
+    Route::post('/storeMainArea', 'MainAreaController@storeMainArea');
+    Route::get('/editMainArea/{areaid}', 'MainAreaController@editMainArea');
+    Route::put('/UpdateMainArea/{areaid}', 'MainAreaController@UpdateMainArea');
+    Route::delete('/deleteMainArea/{id}', 'MainAreaController@deleteMainArea');
+    Route::get('/supAreas/{id}', 'MainAreaController@getSupAreasForMainArea');
+
+    Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea');
+    Route::get('/addSubArea/{id?}', 'SubAreaController@addSubArea');
+    Route::post('/storeSubArea/{id?}', 'SubAreaController@storeSubArea');
+    Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
+    Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
+    Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
+
+    Route::get('/manageStudies', 'StudyController@getAllStudies');
+    Route::get('/addStudy', 'StudyController@addStudy');
+    Route::post('/storeStudy', 'StudyController@storeStudy');
+    Route::get('/editStudy/{id}', 'StudyController@editStudy');
+    Route::put('/UpdateStudy/{id}', 'StudyController@UpdateStudy');
+    Route::delete('/deleteStudy/{id}', 'StudyController@deleteStudy');
+    
+    Route::get('/studyStrengths/{id}', 'StrengthController@getStudyStrengths');
+    Route::get('/addStrength/{id}', 'StrengthController@addStrength');
+    Route::post('/storeStrength', 'StrengthController@storeStrength');
+    Route::get('/editStrength/{id}', 'StrengthController@editStrength');
+    Route::put('/updateStrength/{id}', 'StrengthController@updateStrength');
+    Route::delete('/deleteStrength/{id}', 'StrengthController@deleteStrength');
+    // Route::get('/addStrengthsExist/{id}', 'StrengthController@addStrengthsExist');
+    // Route::post('/storeStrengthsExist', 'StrengthController@storeStrengthsExist');
 });
 Auth::routes();
 

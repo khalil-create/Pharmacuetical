@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    تعديل النقطة الترويجية
+    تعديل المنطقة الرئيسية
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">تعديل النقطة الترويجية</h3>
+                    <h3 class="card-title" style="float: right">تعديل المنطقة الرئيسية</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -37,21 +37,21 @@
                         </button>
                     </div>
                 </div>
-                <!-- /.card-header -->
+                <!-- /.card-header -->   
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/admin/updateStrength/{{$strength->id}}"  enctype="multipart/form-data">
+                            <form method="POST" action="/supervisor/UpdateMainArea/{{$area->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="strength">النقطة الترويجية</label>
-                                    <input type="text" value="{{$strength->strength}}" name="strength" class="form-control">
-                                    @if ($errors->has('strength'))
+                                    <label for="name_main_area">اسم المنطقة الرئيسية</label>
+                                    <input type="text" value="{{$area->name_main_area}}" name="name_main_area" class="form-control" id="name_main_area">
+                                    @if ($errors->has('name_main_area'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('strength') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('name_main_area') }}</small>
                                         </span>
                                     @endif
                                 </div>
@@ -84,4 +84,7 @@
         <!-- /.container-fluid -->
     </section>
 </div>
+@endsection
+@section('scripts')
+
 @endsection

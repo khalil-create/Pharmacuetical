@@ -43,9 +43,9 @@
                         <div class="col-md-12">
                         <div class="form-group">
                             @if(isset($mainarea))
-                                <form method="POST" action="/admin/storeSubArea/{{$mainarea->id}}"  enctype="multipart/form-data">
+                                <form method="POST" action="/managerMarketing/storeSubArea/{{$mainarea->id}}"  enctype="multipart/form-data">
                             @else
-                                <form method="POST" action="{{ url('admin/storeSubArea/0') }}"  enctype="multipart/form-data">
+                                <form method="POST" action="{{ url('managerMarketing/storeSubArea/0') }}"  enctype="multipart/form-data">
                             @endif
                             {{ csrf_field() }}
                             <div class="card-body">

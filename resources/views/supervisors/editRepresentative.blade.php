@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">
-                        <form method="POST" action="/updateRepresentative/{{$rep->user->id}}"  enctype="multipart/form-data">
+                        <form method="POST" action="/supervisor/updateRepresentative/{{$rep->user->id}}"  enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{method_field('PUT')}}
                         <div class="card-body">
@@ -106,23 +106,22 @@
                                         </span>
                                     @endif
                             </div>
-                            <div class="form-group">
-                                <label for="supervisor_id" class="col-md-4 control-label">المشرف عليه</label>
-                                        <select name="supervisor_id" class="form-control custom-select rounded-0">
-                                            @foreach ($supervisor as $sup)
-                                                <option value="{{$sup->id}}"
-                                                    @if ($sup->id == $rep->supervisor_id)
-                                                        {{'selected'}}
-                                                    @endif
-                                                    >{{ $sup->user->user_name_third }} {{$sup->user->user_surname}}</option>
+                            <div class="form-group" id="teemLeadersList">
+                                <label class="col-md-4 control-label">مدير الفريق</label>
+                                        <select id="teamleader" name="teemleader_id" class="form-control custom-select rounded-0">
+                                            @foreach($rep2 as $row)
+                                                @if($row->user_type == 'مدير فريق')
+                                                    <option value="{{$row->representatives->id}}">
+                                                        {{ $row->user_name_third }} {{$row->user_surname}}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
-                                    @if ($errors->has('supervisor_id'))
+                                    @if ($errors->has('teemleader_id'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                            <strong>{{ $errors->first('teemleader_id') }}</strong>
                                         </span>
                                     @endif
-                                {{-- </div> --}}
                             </div>
                             <div class="form-group">
                                 <label for="">الجنس</label>

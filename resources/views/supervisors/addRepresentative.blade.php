@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">
-                        <form method="POST" action="{{ url('storeRepresentative') }}"  enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('supervisor/storeRepresentative') }}"  enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="card-body">
                             <div class="form-group">
@@ -92,9 +92,6 @@
                                         <option value="مندوب علمي">
                                             مندوب علمي
                                         </option>
-                                        <option value="مندوب مبيعات">
-                                            مندوب مبيعات
-                                        </option>
                                         <option value="مدير فريق">
                                             مدير فريق
                                         </option>
@@ -105,19 +102,22 @@
                                         </span>
                                     @endif
                             </div>
-                            <div class="form-group">
-                                <label for="supervisor_id" class="col-md-4 control-label">المشرف عليه</label>
-                                        <select name="supervisor_id" class="form-control custom-select rounded-0">
-                                            @foreach ($supervisor as $sup)
-                                                <option id="sup_id" value="{{$sup->id}}">{{ $sup->user->user_name_third }} {{$sup->user->user_surname}}</option>
+                            <div class="form-group" id="teemLeadersList">
+                                <label class="col-md-4 control-label">مدير الفريق</label>
+                                        <select id="teamleader" name="teemleader_id" class="form-control custom-select rounded-0">
+                                            @foreach($rep as $row)
+                                                @if($row->user_type == 'مدير فريق')
+                                                    <option value="{{$row->representatives->id}}">
+                                                        {{ $row->user_name_third }} {{$row->user_surname}}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
-                                    @if ($errors->has('supervisor_id'))
+                                    @if ($errors->has('teemleader_id'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                            <strong>{{ $errors->first('teemleader_id') }}</strong>
                                         </span>
                                     @endif
-                                {{-- </div> --}}
                             </div>
                             {{-- <script>
                                 var sup_id = document.getElementById("sup_id");

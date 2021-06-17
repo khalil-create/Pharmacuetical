@@ -26,11 +26,11 @@ class User extends Authenticatable
     ];
     public function supervisor()
     {
-        return $this->hasMany('App\Models\Supervisor','user_id','id');//(related,foriegn key,primary key)
+        return $this->hasOne('App\Models\Supervisor','user_id','id');//(related,foriegn key,primary key)
     }
     public function representatives()
     {
-        return $this->hasMany('App\Models\Representative','user_id','id');//(related,foriegn key,primary key)
+        return $this->hasOne('App\Models\Representative','user_id','id');//(related,foriegn key,primary key)
     }
     public function manager()
     {

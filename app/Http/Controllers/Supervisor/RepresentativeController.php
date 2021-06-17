@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Supervisor;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Mainarea;
 use App\Models\Representative;
@@ -26,9 +26,9 @@ class RepresentativeController extends Controller
     }
     public function addRepresentative()
     {
-        $supervisor = Supervisor::with('user')->get();
+        $rep = User::where('user_type','مدير فريق')->get();
         $subareas = SubArea::get();
-        return view('supervisors.addRepresentative', compact('supervisor',$supervisor));
+        return view('supervisors.addRepresentative', compact('rep',$rep));              
     }
     public function storeRepresentative(Request $request)
     {
@@ -82,13 +82,22 @@ class RepresentativeController extends Controller
             'user_image' => $file_name,
             'password' => bcrypt($request->password),
         ]);
+        if($user->user_type == 'مدير فريق'){
             Representative::create(
                 [
-                    // 'type' => $request->usertype,
                     'user_id' => $user->id,
-                    'supervisor_id' => $request->supervisor_id,
+                    'supervisor_id' => Auth::user()->supervisor->id,
                 ]);
-        return redirect('/manageRepresentatives')->with('status','تم إضافة البيانات بشكل ناجح');
+        }
+        else if($user->user_type == 'مندوب علمي'){
+            Representative::create(
+                [
+                    'user_id' => $user->id,
+                    'supervisor_id' => Auth::user()->supervisor->id,
+                    'teemleader_id' => $request->teemleader_id,
+                ]);
+        }
+        return redirect('/supervisor/manageRepresentatives')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -137,8 +146,8 @@ class RepresentativeController extends Controller
     public function editRepresentative($id)
     {
         $rep = Representative::findOrfail($id);
-        $supervisor = Supervisor::get();
-        return view('supervisors.editRepresentative',compact('supervisor',$supervisor))->with('rep',$rep );
+        $rep2 = User::where('user_type','مدير فريق')->get();
+        return view('supervisors.editRepresentative',compact('rep2',$rep2))->with('rep',$rep );
     }
     public function updateRepresentative(Request $request,$id)
     {
@@ -169,12 +178,17 @@ class RepresentativeController extends Controller
             $user->user_image = $file_name;
         $user->update();
 
-        $rep = Representative::find($request->rep_id);
         // $rep->type = $request->Input('usertype');
-        $rep->supervisor_id = $request->Input('supervisor_id');
-        $rep->update();
+        $rep = Representative::find($request->rep_id);
+        if($user->user_type == 'مدير فريق'){
+            $rep->supervisor_id = Auth::user()->supervisor->id;
+            $rep->update();
+        }
+        else if($user->user_type == 'مندوب علمي'){
+            $rep->teemleader_id = $request->teemleader_id;
+        }
         
-        return redirect('/manageRepresentatives')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/supervisor/manageRepresentatives')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function showRepresentatives($id)
     {
@@ -204,6 +218,6 @@ class RepresentativeController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $rep->subareas()->syncWithoutDetaching($request->subareasids);
 
-        return redirect('/manageRepresentatives')->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
+        return redirect('/supervisor/manageRepresentatives')->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    تعديل الدراسة العلمية
+    تعديل الشركة
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">تعديل الدراسة العلمية</h3>
+                    <h3 class="card-title" style="float: right">تعديل الشركة</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,43 +42,69 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/admin/UpdateStudy/{{$study->id}}"  enctype="multipart/form-data">
+                            <form method="POST" action="/supervisor/companyUpdate/{{$company->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="title">عنوان الدراسة</label>
-                                    <input type="text" value="{{$study->title}}" name="title" class="form-control">
-                                    @if ($errors->has('title'))
+                                    <label for="name_company">اسم الشركة</label>
+                                    <input type="text" value="{{$company->name_company}}" name="name_company" class="form-control" id="name_company">
+                                    @if ($errors->has('name_company'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('title') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('name_company') }}</small>
                                         </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="source">الجهة المحكمة</label>
-                                    <input type="text" value="{{$study->source}}" name="source" class="form-control">
-                                    @if ($errors->has('source'))
+                                    <label for="country_manufacturing">بلد التصنيع</label>
+                                    <input type="text" value="{{$company->country_manufacturing}}" name="country_manufacturing" class="form-control" id="country_manufacturing">
+                                    @if ($errors->has('country_manufacturing'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('source') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('country_manufacturing') }}</small>
                                         </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="emission_date">سنة الاصدار</label>
-                                    <input type="date" value="{{$study->emission_date}}" class="form-control" name="emission_date">
-                                    @if ($errors->has('emission_date'))
+                                    <label for="sign_img_company">تحميل الصورة</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file"value="{{asset('images/signsCompany/'.$company->sign_img_company)}}" class="custom-file-input" name="sign_img_company">
+                                            <label class="custom-file-label" for="sign_img_company"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                @php
+                                    $have = '';
+                                    $havenot = '';
+                                    if($company->have_category == 1)
+                                        $have = 'checked';
+                                    else
+                                        $havenot = 'checked';
+                                @endphp
+                                <div class="form-group">
+                                    <label for="">لديها مجموعة اصناف</label>
+                                    <div class="radiobox">
+                                        <div class="form-check">
+                                            <input class="form-check-input" @php echo $have; @endphp type="radio" value="1" name="have_category" checked>
+                                            <label class="form-check-label" >نعم</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" @php echo $havenot;  @endphp type="radio" name="have_category" value="0">
+                                            <label class="form-check-label">لا</label>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('have_category'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('emission_date') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('have_category') }}</small>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="supervisor_id" class="col-md-2 control-label">المشرف</label>
-                                            <select name="supervisor_id" class="form-control custom-select rounded-0">
+                                {{-- <div class="form-group">
+                                    <label class="col-md-2 control-label">المشرف عليها</label>
+                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
                                                 @foreach ($supervisors as $row)
                                                 <option value="{{$row->id}}" 
-                                                    @if($row->id == $study->supervisor_id) 
+                                                    @if($row->id == $company->supervisor_id) 
                                                         {{ 'selected' }}
                                                     @endif
                                                     >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
@@ -89,8 +115,7 @@
                                                 <strong>{{ $errors->first('supervisor_id') }}</strong>
                                             </span>
                                         @endif
-                                    {{-- </div> --}}
-                                </div>
+                                </div> --}}
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         تعديل <i class="fas fa-edit"></i>

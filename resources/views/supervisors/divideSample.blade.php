@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    الدراسات العلمية
+    ادارة العينات
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">قائمة الدراسات العلمية</span>
+            <span class="card-title" style="float: right">قائمة التوزيع</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -40,80 +40,74 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($studies->count() > 0)                    
+                  @if($sample->count() > 0)                    
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        عنوان الدراسة
+                        العينة
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الجهة المحكمة
+                        الكمية
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        سنة الاصدار
-                      </th>
-                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المشرف
+                        المندوب
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
                     </tr>
                   @else
-                    <div class="alert alert-success notify-success">
-                      {{ 'لم يتم اضافة اي دراسه علمية' }}
+                    <div class="alert alert-danger notify-danger">
+                      {{ 'لم يتم توزيع هذه العينة' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($studies as $row)
+                  @foreach ($sample as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{ $row->title }}</td>
-                      <td>{{ $row->source }}</td>
-                      <td>{{ $row->emission_date }}</td>
+                      <td>{{ $row->item->commercial_name }}</td>
+                      <td>{{ $row->count }}</td>
                       <td>
-                        {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
+                        {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
                       </td>
-                      <td class="" style="">
-                        <a href="/admin/editStudy/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/admin/studyStrengths/{{$row->id}}"><i class="fas fa-info"></i></a>
-                        <form action="/admin/deleteStudy/{{$row->id}}" method="post" style="float: right;">
+                      <td>
+                        <a href="/supervisor/divideSample/{{$row->id}}" class="btn btn-success">توزيع</a>
+                        {{-- <a href="/Su pervisor/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a> --}}
+                        {{-- <form action="/Supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
-                        </form>
-                        <i class="fas fa-eye"></i>
-
+                                <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
+                        </form> --}}
+                        {{-- <i class="fas fa-eye"></i> --}}
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/addStudy')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة دراسة علميه</a>
+                    {{-- <a href="{{url('/managerMarketing/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a> --}}
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
                         </div>
                     @endif
                     @if (session('error'))
-                              <div class="alert alert-success notify-error">
+                              <div class="alert alert-danger notify-danger">
                                   {{ session('error') }}
                               </div>
                     @endif
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($studies->count() > 0)                    
+                    @if($sample->count() > 0)                    
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">عنوان الدراسة</th>
-                        <th rowspan="1" colspan="1">الجهة المحكمة</th>
-                        <th rowspan="1" colspan="1">سنة الاصدار</th>
-                        <th rowspan="1" colspan="1">المشرف</th>
-                        <th rowspan="1" colspan="1" style="">العملية</th>
+                        <th rowspan="1" colspan="1">العينة</th>
+                        <th rowspan="1" colspan="1">الكمية</th>
+                        <th rowspan="1" colspan="1">المندوب</th>
+                        <th rowspan="1" colspan="1">العملية</th>
                       </tr>
                     @endif
                   </tfoot>

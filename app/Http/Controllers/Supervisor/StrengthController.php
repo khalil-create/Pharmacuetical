@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\Strengthspromotion;
 use App\Models\Study;
@@ -15,11 +15,11 @@ class StrengthController extends Controller
         if(!$study)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $strengths = $study->strengths;
-        return view('admin.strengthsStudy')->with('study',$study);
+        return view('supervisors.strengthsStudy')->with('study',$study);
     }
     public function addStrength($id)
     {
-        return view('admin.addStrength')->with('id',$id);
+        return view('supervisors.addStrength')->with('id',$id);
     }
     public function storeStrength(Request $request)
     {
@@ -33,7 +33,7 @@ class StrengthController extends Controller
             'strength' => $request->strength,
             'study_id' => $request->id,
         ]); 
-        return redirect('/admin/studyStrengths/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/supervisor/studyStrengths/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -68,7 +68,7 @@ class StrengthController extends Controller
     public function editStrength($id)
     {
         $strength = Strengthspromotion::find($id);
-        return view('admin.editStrength')->with('strength',$strength);
+        return view('supervisors.editStrength')->with('strength',$strength);
     }
     public function updateStrength(Request $request,$id)
     {
@@ -83,7 +83,7 @@ class StrengthController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->strength = $request->strength;
         $str->update();
-        return redirect('/admin/studyStrengths/'.$str->study_id)->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/supervisor/studyStrengths/'.$str->study_id)->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteStrength($id)
     {
@@ -91,6 +91,6 @@ class StrengthController extends Controller
         if(!$str)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->delete();
-        return redirect('/admin/studyStrengths/'.$str->study_id)->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/supervisor/studyStrengths/'.$str->study_id)->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

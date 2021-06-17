@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة نقطة ترويجية
+    اضافة استخدام
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">إضافة نقطة ترويجية</h3>
+                    <h3 class="card-title" style="float: right">إضافة استخدام</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,15 +42,15 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('admin/storeStrength') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('supervisor/storeUse') }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="strength">النقطة الترويجية</label>
-                                    <input type="text" name="strength" class="form-control">
-                                    @if ($errors->has('strength'))
+                                    <label for="use">الاستخدام</label>
+                                    <input type="text" name="use" class="form-control" id="use">
+                                    @if ($errors->has('use'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('strength') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('use') }}</small>
                                         </span>
                                     @endif
                                 </div>

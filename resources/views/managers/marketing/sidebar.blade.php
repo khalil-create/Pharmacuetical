@@ -47,7 +47,10 @@
         </li>
         @php
             $p = request()->path();
-            $index = strpos($p,'/');
+            $index = 4;
+            if($p != 'home'){
+                $index = strpos($p,'/',17);
+            }
             $path = substr($p,0,$index);
         @endphp
         <li class="nav-item">
@@ -149,6 +152,56 @@
                         <p>الاصناف</p>
                     </a>
                     </li>
+            </ul>
+        </li>
+        <li class="nav-item {{ $p == 'managerMarketing/manageMainAreas' || 
+                                $p == 'managerMarketing/addMainArea' || 
+                                $p == 'managerMarketing/manageSubAreas' ||
+                                $path == 'managerMarketing/addSubArea' || 
+                                $path == 'managerMarketing/editMainArea' ||
+                                $path == 'managerMarketing/supAreas' ||
+                                $path == 'managerMarketing/editSubArea' ||
+                                $path == 'managerMarketing/supAreas'? 'menu-open' : ''
+                            }}">
+            <a
+            class="nav-link {{  $p == 'managerMarketing/manageMainAreas' ||
+                                $p == 'managerMarketing/addMainArea' || 
+                                $p == 'managerMarketing/manageSubAreas' || 
+                                $path == 'managerMarketing/addSubArea' || 
+                                $path == 'managerMarketing/supAreas' || 
+                                $path == 'managerMarketing/editMainArea'||
+                                $path == 'managerMarketing/editSubArea' ||
+                                $path == 'managerMarketing/supAreas'? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                ادارة المناطق
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="{{url('managerMarketing/manageMainAreas')}}" 
+                class="nav-link {{  $p == 'managerMarketing/manageMainAreas' ||
+                                    $p == 'managerMarketing/addMainArea' ||
+                                    $path == 'managerMarketing/supAreas' || 
+                                    $path == 'managerMarketing/editMainArea' ||
+                                    $path == 'managerMarketing/supAreas'? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>المناطق الرئيسية</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{url('managerMarketing/manageSubAreas')}}" 
+                class="nav-link {{  $p == 'managerMarketing/manageSubAreas'||
+                                    $path == 'managerMarketing/addSubArea' ||  
+                                    $path == 'managerMarketing/editSubArea' ? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>المناطق الفرعية</p>
+                </a>
+                </li>
             </ul>
         </li>
         <li class="nav-item">

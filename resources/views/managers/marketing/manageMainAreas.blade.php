@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    ادارة المناديب
+    ادارة المناطق
 @endsection
 @section('content')
 <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title" style="float: right">قائمة المناديب</h3>
+            <h3 class="card-title" style="float: right">قائمة المناطق الرئيسية</h3>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -40,81 +40,68 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($rep->count() > 0)
+                  @if($mainareas->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        اسم المندوب
+                        اسم المنطقة
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الصفة الوظيفية
+                        اسم المشرف عليها
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المشرف
-                      </th> --}}
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الجنس
-                      </th>
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">
-                        البريد الالكتروني
-                      </th>
-                      <th class="sorting align-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">
                         العملية
                       </th>
                     </tr>
                   @else
                     <div class="alert alert-success notify-success">
-                      {{ 'لم يتم اضافة اي مندوب' }}
+                      {{ 'لم يتم اضافة اي منطقة رئيسية' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($rep as $row)
+                  @foreach ($mainareas as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>
-                        <img src="{{asset('images/users/'.$row->user->user_image)}}" class="img-users">
-                        {{$row->user->user_name_third}} {{$row->user->user_surname}}
-                      </td>
-                      <td class="sorting_1">{{$row->user->user_type}}</td>
-                      {{-- <td class="sorting_1">
+                      <td>{{$row->name_main_area}}</td>
+                      <td class="sorting_1">
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
-                      </td> --}}
-                      <td class="sorting_1">{{$row->user->sex}}</td>
-                      <td class="" style="">{{$row->user->email}}</td>
+                      </td>
                       <td class="" style="">
-                        <a href="/supervisor/editRepresentative/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <a href="/supervisor/showMainareas/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
+                        <a href="/managerMarketing/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <a href="/managerMarketing/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
+                        <form action="/managerMarketing/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
+                          {{csrf_field()}}
+                          {{method_field('DELETE')}}
+                          <button style="border: none;margin-left: -150px;"><i class="fas fa-trash"></i></button>
+                        </form>
                         <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/supervisor/addRepresentative')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مندوب</a>
+                    <a href="{{url('/managerMarketing/addMainArea')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة رئيسية</a>
                     @if (session('status'))
-                      <div class="alert alert-success notify-success">
-                          {{ session('status') }}
-                      </div>
+                        <div class="alert alert-success notify-success">
+                            {{ session('status') }}
+                        </div>
                     @endif
                     @if (session('error'))
-                      <div class="alert alert-danger notify-error">
-                          {{ session('error') }}
-                      </div>
+                              <div class="alert alert-danger notify-error">
+                                  {{ session('error') }}
+                              </div>
                     @endif
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($rep->count() > 0)
+                    @if($mainareas->count() > 0)
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">الاسم</th>
-                        <th rowspan="1" colspan="1">الصفة الوظيفية</th>
-                        {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
-                        <th rowspan="1" colspan="1">الجنس</th>
-                        <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
+                        <th rowspan="1" colspan="1">اسم المنطقة</th>
+                        <th rowspan="1" colspan="1">اسم المشرف عليها</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
                     @endif

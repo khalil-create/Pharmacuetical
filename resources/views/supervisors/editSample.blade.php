@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة منطقة فرعية
+    تعديل عينة
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">إضافة منطقة فرعية</h3>
+                    <h3 class="card-title" style="float: right">تعديل عينة</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,45 +42,57 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            @if(isset($mainarea))
-                                <form method="POST" action="/admin/storeSubArea/{{$mainarea->id}}"  enctype="multipart/form-data">
-                            @else
-                                <form method="POST" action="{{ url('admin/storeSubArea/0') }}"  enctype="multipart/form-data">
-                            @endif
+                            <form method="POST" action="/Supervisor/updateSample/{{$sample->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
+                            {{method_field('PUT')}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name_sub_area">اسم المنطقة الفرعية</label>
-                                    <input type="text" name="name_sub_area" class="form-control" id="name_sub_area">
-                                    @if ($errors->has('name_sub_area'))
+                                    <label for="item">العينة</label>
+                                    <select name="item" class="form-control custom-select rounded-0">
+                                        @foreach ($items as $row)
+                                                <option value="{{$row->id}}" 
+                                                    @if($row->id == $sample->item_id)
+                                                        {{'selected'}}
+                                                    @endif
+                                                    >{{ $row->commercial_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('item'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('name_sub_area') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('item') }}</small>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('name_main_area') ? ' has-error' : '' }}">
-                                    <label for="name_main_area" class="col-md-6 control-label">المنطقة الرئيسية التابعة لها</label>
-                                    {{-- <div class="col-md-8"> --}}
-                                        {{-- <input name="supervisor_name"  id="supervisor_name" list="usertype" > --}}
-                                            <select name="name_main_area" id="name_main_area" class="form-control custom-select rounded-0">
-                                                @if(isset($mainarea))
-                                                    <option>{{ $mainarea->name_main_area }}</option>
-                                                @else
-                                                    @foreach ($mainareas as $area)
-                                                        <option value="{{$area->name_main_area}}">{{ $area->name_main_area }}</option>
-                                                    @endforeach
-                                                @endif
+                                <div class="form-group">
+                                    <label for="count">الكمية</label>
+                                    <input value="{{$sample->count}}" type="text" name="count" class="form-control">
+                                    @if ($errors->has('count'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('count') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">المندوب</label>
+                                            <select name="rep_id" class="form-control custom-select rounded-0">
+                                                @foreach ($rep as $row)
+                                                <option value="{{$row->id}}" 
+                                                    @if($row->id == $sample->representative_id) 
+                                                        {{ 'selected' }}
+                                                    @endif
+                                                    >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
+                                                @endforeach
                                             </select>
-                                        @if ($errors->has('name_main_area'))
+                                        @if ($errors->has('rep_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('name_main_area') }}</strong>
+                                                <strong>{{ $errors->first('rep_id') }}</strong>
                                             </span>
                                         @endif
                                     {{-- </div> --}}
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                                        اضافة <i class="fas fa-plus"></i>
+                                        تعديل <i class="fas fa-edit"></i>
                                     </button>
                                 </div>
                             </div>

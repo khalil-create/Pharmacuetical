@@ -215,21 +215,6 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="{{url('admin/manageStudies')}}" 
-            class="nav-link {{  $p == 'admin/manageStudies' ||
-                                $p == 'admin/addStudy' ||
-                                $path == 'admin/studyStrengths' ||
-                                $path == 'admin/addStrength' ||
-                                $path == 'admin/addStrengthsExist' ||
-                                $path == 'admin/editStrength' ||
-                                $path == 'admin/editStudies' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tree"></i>
-                <p>
-                الدراسات العلمية
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="{{url('admin/manageSamples')}}" 
             class="nav-link {{  $p == 'admin/manageSamples' ||
                                 $p == 'admin/addSample' ||

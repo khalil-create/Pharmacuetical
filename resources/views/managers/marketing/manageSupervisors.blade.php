@@ -80,7 +80,7 @@
                         <form action="/managerMarketing/deleteSupervisor/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
+                            <button style="border: none;margin-left: -30px;"><i class="fas fa-trash"></i></button>
                           {{-- <button onclick="confirm('هل انت متأكد انك تريد حذف هذه البيانات؟')" style="border: none"><i class="fas fa-trash"></i></button> --}}
                         </form>
                         <a href="/managerMarketing/mainAreaSupervised/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
