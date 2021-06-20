@@ -48,7 +48,7 @@
         @php
             $p = request()->path();
             $index = 4;
-            if($p != 'home'){
+            if($p != 'home' && $p !='not-allowed'){
                 $index = strpos($p,'/',17);
             }
             $path = substr($p,0,$index);
@@ -102,7 +102,7 @@
                                 $path == 'managerMarketing/itemUses' ||
                                 $path == 'managerMarketing/editItems'? 'menu-open' : ''
                             }}">
-            <a
+            <a href="#"
             class="nav-link {{  $p == 'managerMarketing/manageCompanies' || 
                                 $p == 'managerMarketing/companyAdd' ||
                                 $p == 'managerMarketing/categoryAdd' ||
@@ -163,7 +163,7 @@
                                 $path == 'managerMarketing/editSubArea' ||
                                 $path == 'managerMarketing/supAreas'? 'menu-open' : ''
                             }}">
-            <a
+            <a href="#"
             class="nav-link {{  $p == 'managerMarketing/manageMainAreas' ||
                                 $p == 'managerMarketing/addMainArea' || 
                                 $p == 'managerMarketing/manageSubAreas' || 

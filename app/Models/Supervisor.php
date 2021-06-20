@@ -62,4 +62,8 @@ class Supervisor extends Model
     {
         return $this->hasMany('App\Models\TrainingCourse','supervisor_id','id');//(related,foriegn key,primary key)
     }
+    public function salesObjectives()
+    {
+        return $this->hasMany('App\Models\SalesObjective','supervisor_id','id');//(related,foriegn key,primary key)
+    }
 }

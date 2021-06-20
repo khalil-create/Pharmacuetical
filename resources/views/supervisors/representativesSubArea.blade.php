@@ -62,8 +62,8 @@
                       </th>
                     </tr>
                   @elseif($exist == 1)
-                    <div class="alert alert-success notify-success">
-                      {{ 'لايوجد مناطق رئيسية لهذا المشرف' }}                    
+                    <div class="alert alert-danger notify-success">
+                      {{ 'لايوجد مناديب لهذه المنطقة' }}                    
                     </div>
                   @endif
                   </thead>
@@ -76,7 +76,8 @@
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/admin/addMainAreaForSupervisor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
+                    <a href="{{url('/supervisor/addRepresentative')}}" class="btn btn-primary add">
+                      <i class="fas fa-plus"></i> اضافة مندوب</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}

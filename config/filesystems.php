@@ -47,6 +47,18 @@ return [
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
         ],
+        'report' => [
+            'driver' => 'local',
+            'root' => base_path().'public/reports/tasks/',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+        'courses' => [
+            'driver' => 'local',
+            'root' => base_path().'public/reports/courses/',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
         'signsCompany' => [
             'driver' => 'local',
             'root' => base_path().'public/images/signsCompany/',

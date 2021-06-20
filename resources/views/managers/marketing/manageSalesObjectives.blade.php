@@ -78,7 +78,7 @@
                           <form action="/managerMarketing/deleteSalesObjective/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -90px;"><i class="fas fa-trash"></i></button>
+                            <button style="border: none;margin-left: -60px;"><i class="fas fa-trash"></i></button>
                           </form>
                           <a href="/managerMarketing/distributeSalesObjective/{{$row->id}}" class="btn btn-success">توزيع</a>
                         </td>

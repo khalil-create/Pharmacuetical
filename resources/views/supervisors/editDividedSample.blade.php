@@ -27,7 +27,11 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">تعديل عينة</h3>
+                    <h3 class="card-title" style="float: right">
+                        تعديل الكمية (<b>{{$sample->count}}</b>) للعينة 
+                        (<b>{{$sample->item->commercial_name}}</b>)  
+                        للمندوب (<b>{{$sample->representative->user->user_name_third}} {{$sample->representative->user->user_surname}}</b>)
+                    </h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,11 +46,11 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/managerMarketing/updateSample/{{$sample->id}}">
+                            <form method="POST" action="/supervisor/updateDividedSample/{{$sample->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>العينة</label>
                                     <select name="item_id" class="form-control custom-select rounded-0">
                                         @foreach ($items as $row)
@@ -62,7 +66,7 @@
                                             <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
                                         </span>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="count">الكمية</label>
                                     <input value="{{$sample->count}}" type="text" name="count" class="form-control">
@@ -73,19 +77,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">المشرف</label>
-                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
-                                                @foreach ($supervisors as $row)
-                                                <option value="{{$row->id}}" 
-                                                    @if($row->id == $sample->supervisor_id) 
-                                                        {{ 'selected' }}
-                                                    @endif
-                                                    >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                @endforeach
+                                    <label class="col-md-2 control-label">المندوب</label>
+                                            <select  name="rep_id" class="form-control custom-select rounded-0">
+                                                <option>
+                                                    {{ $sample->representative->user->user_name_third }} {{$sample->representative->user->user_surname}}
+                                                </option>
                                             </select>
-                                        @if ($errors->has('supervisor_id'))
+                                        @if ($errors->has('rep_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                                <strong>{{ $errors->first('rep_id') }}</strong>
                                             </span>
                                         @endif
                                     {{-- </div> --}}

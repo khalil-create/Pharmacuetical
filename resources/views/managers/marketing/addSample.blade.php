@@ -46,15 +46,15 @@
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="item">العينة</label>
-                                    <select name="item" class="form-control custom-select rounded-0">
+                                    <label>العينة</label>
+                                    <select name="item_id" class="form-control custom-select rounded-0">
                                         @foreach ($items as $row)
                                                 <option value="{{$row->id}}">{{ $row->commercial_name }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('item'))
+                                    @if ($errors->has('item_id'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('item') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
                                         </span>
                                     @endif
                                 </div>

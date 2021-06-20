@@ -83,7 +83,7 @@
                   @endforeach
                   @endif
                   <div>
-                    <a href="/admin/addStrength/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقطة</a>
+                    <a href="/supervisor/addStrength/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقطة</a>
                     {{-- <a href="/addStrengthsExist/{{$study->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة نقاط موجودة</a> --}}
                     @if (session('status'))
                         <div class="alert alert-success notify-success">

@@ -81,4 +81,8 @@ class Representative extends Model
     {
         return $this->hasMany('App\Models\Sample','represntative_id','id');//(related,foriegn key,primary key)
     }
+    public function salesObjectives()
+    {
+        return $this->hasMany('App\Models\Salesobjective','representative_id','id');//(related,foriegn key,primary key)
+    }
 }

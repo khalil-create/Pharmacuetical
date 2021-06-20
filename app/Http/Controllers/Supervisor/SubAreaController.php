@@ -21,6 +21,8 @@ class SubAreaController extends Controller
     }
     public function addSubArea($id){
         $mainareas = Mainarea::all();
+        if($mainareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة منطقة فرعية قبل مايتم اضافة على الاقل منطقة رئيسية واحدة']);
         if(isset($id) && $id != 0){
             $mainarea = Mainarea::find($id);
             return view('supervisors.addSubArea')->with('mainarea',$mainarea);

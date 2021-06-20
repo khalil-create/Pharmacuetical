@@ -12,6 +12,8 @@ class Task extends Model
         'task_title',
         'description',
         'last_date',
+        'performed',
+        'report_task',
         'supervisor_id',
         'manager_id',
         'representative_id',

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    تعديل عينة
+    تعديل البرنامج التدريبي
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">تعديل عينة</h3>
+                    <h3 class="card-title" style="float: right">تعديل البرنامج التدريبي</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,53 +42,49 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/managerMarketing/updateSample/{{$sample->id}}">
+                            <form method="POST" action="/supervisor/updateCourse/{{$course->id}}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>العينة</label>
-                                    <select name="item_id" class="form-control custom-select rounded-0">
-                                        @foreach ($items as $row)
-                                                <option value="{{$row->id}}" 
-                                                    @if($row->id == $sample->item_id)
+                                    <label>عنوان البرنامج التدريبي</label>
+                                    <input value="{{$course->title}}" type="text" name="title" class="form-control">
+                                    @if ($errors->has('title'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('title') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">الصنف</label>
+                                        <select name="item_id" class="form-control custom-select rounded-0">
+                                            @foreach ($items as $i)
+                                                <option value="{{$i->id}}"
+                                                    @if ($course->item_id == $i->id)
                                                         {{'selected'}}
                                                     @endif
-                                                    >{{ $row->commercial_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('item_id'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="count">الكمية</label>
-                                    <input value="{{$sample->count}}" type="text" name="count" class="form-control">
-                                    @if ($errors->has('count'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('count') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">المشرف</label>
-                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
-                                                @foreach ($supervisors as $row)
-                                                <option value="{{$row->id}}" 
-                                                    @if($row->id == $sample->supervisor_id) 
-                                                        {{ 'selected' }}
-                                                    @endif
-                                                    >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('supervisor_id'))
+                                                    >{{$i->commercial_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('item_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                                <strong>{{ $errors->first('item_id') }}</strong>
                                             </span>
                                         @endif
-                                    {{-- </div> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label>أهم المحاور(تحميل ملف)</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input value="{{asset('reports/courses/'.$course->important_points)}}" type="file" class="custom-file-input" name="important_points">
+                                            <label class="custom-file-label"></label>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('important_points'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('important_points') }}</small>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">

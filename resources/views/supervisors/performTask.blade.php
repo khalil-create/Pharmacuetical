@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة منطقة رئيسية
+    ادارة المهام
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">إضافة منطقة رئيسية</h3>
+                    <h3 class="card-title" style="float: right">إضافة تقرير انجاز المهمة</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -42,34 +42,33 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            @if($supervisor->count() > 0)
-                                <form method="POST" action="{{ url('supervisor/storeMainArea') }}"  enctype="multipart/form-data">
+                            @if(isset($task))
+                                <form method="POST" action="/supervisor/storePerformTask/{{$task->id}}"  enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="card-body">
+                                        <small class="btn btn-danger form-text" style="margin-bottom: 15px">{{'يجب عليك تعبئة حقل واحد فقط، إما كتابة تقرير بشكل نصي او يمكنك تحميل ملف تقريرك اذا كان يشتمل على نص كبير'}}</small>
                                         <div class="form-group">
-                                            <label for="name_main_area">اسم المنطقة الرئيسية</label>
-                                            <input type="text" name="name_main_area" class="form-control" id="name_main_area">
-                                            @if ($errors->has('name_main_area'))
+                                            <label>تقرير انجاز المهمة</label>
+                                            <input type="text" name="report_task_text" class="form-control">
+                                            @if ($errors->has('report_task_text'))
                                                 <span class="help-block">
-                                                    <small class="form-text text-danger">{{ $errors->first('name_main_area') }}</small>
+                                                    <small class="form-text text-danger">{{ $errors->first('report_task_text') }}</small>
                                                 </span>
                                             @endif
                                         </div>
-                                        <div class="form-group{{ $errors->has('supervisor_name') ? ' has-error' : '' }}">
-                                            <label for="supervisor_name" class="col-md-2 control-label">المشرف عليها</label>
-                                            {{-- <div class="col-md-8"> --}}
-                                                {{-- <input name="supervisor_name"  id="supervisor_name" list="usertype" > --}}
-                                                    <select name="supervisor_name" id="supervisor_name" class="form-control custom-select rounded-0">
-                                                        @foreach ($supervisor as $sup)
-                                                        <option value="{{$sup->user_name_third}}">{{ $sup->user_name_third }} {{$sup->user_surname}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                @if ($errors->has('supervisor_name'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('supervisor_name') }}</strong>
-                                                    </span>
-                                                @endif
-                                            {{-- </div> --}}
+                                        <div class="form-group">
+                                            <label>تحميل الملف</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" name="report_task_file">
+                                                    <label class="custom-file-label"></label>
+                                                </div>
+                                            </div>
+                                            @if ($errors->has('report_task_file'))
+                                                <span class="help-block">
+                                                    <small class="form-text text-danger">{{ $errors->first('report_task_file') }}</small>
+                                                </span>
+                                            @endif
                                         </div>
                                         <div class="form-group" >
                                             <button type="submit" class="btn btn-primary font" style="margin: 10px">
@@ -84,10 +83,10 @@
                                     <!-- /.form-group -->
                                 </form>
                             @else
-                            <div class="alert alert-danger notify-error">
-                                {{ 'لايمكنك اضافة منطقة رئيسيه قبل مايتم اضافة على الاقل مشرف واحد' }}
-                            </div>
-                        @endif
+                                <div class="alert alert-danger notify-error">
+                                    {{ 'لايمكنك اضافة منطقة رئيسيه قبل مايتم اضافة على الاقل مشرف واحد' }}
+                                </div>
+                            @endif
                         <!-- /.form-group -->
                         </div>
                         <!-- /.col -->

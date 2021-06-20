@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
-use App\Models\Strengthspromotion;
+use App\Models\Strength;
 use App\Models\Study;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class StrengthController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        $strength = Strengthspromotion::create([
+        $strength = Strength::create([
             'strength' => $request->strength,
             'study_id' => $request->id,
         ]); 
@@ -67,7 +67,7 @@ class StrengthController extends Controller
     // }
     public function editStrength($id)
     {
-        $strength = Strengthspromotion::find($id);
+        $strength = Strength::find($id);
         return view('supervisors.editStrength')->with('strength',$strength);
     }
     public function updateStrength(Request $request,$id)
@@ -78,7 +78,7 @@ class StrengthController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        $str = Strengthspromotion::find($id);
+        $str = Strength::find($id);
         if($str->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->strength = $request->strength;
@@ -87,7 +87,7 @@ class StrengthController extends Controller
     }
     public function deleteStrength($id)
     {
-        $str = Strengthspromotion::find($id);
+        $str = Strength::find($id);
         if(!$str)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->delete();

@@ -22,6 +22,9 @@ class MainAreaController extends Controller
     public function addMainArea()
     {
         $supervisor = User::whereHas('supervisor')->get();
+        if($supervisor->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة منطقة رئيسية قبل مايتم اضافة على الاقل مشرف واحد']);
+
         return view('supervisors.addMainArea', compact('supervisor',$supervisor));
     }
 
@@ -80,8 +83,9 @@ class MainAreaController extends Controller
         
         if($mainArea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $sup = Supervisor::find($request->supervisor_id);
+        // $sup = Supervisor::find($request->supervisor_id);
         $mainArea->name_main_area = $request->Input('name_main_area');
+        $mainArea->supervisor_id = $request->Input('supervisor_id');
         $mainArea->update();
 
         return redirect('/supervisor/manageMainAreas')->with('status','تم تعديل البيانات بشكل ناجح');

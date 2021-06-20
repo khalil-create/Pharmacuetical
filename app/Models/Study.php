@@ -24,7 +24,7 @@ class Study extends Model
     }
     public function strengths()
     {
-        return $this->hasMany('App\Models\Strengthspromotion','study_id','id');//(related,foriegn key,primary key)
+        return $this->hasMany('App\Models\Strength','study_id','id');//(related,foriegn key,primary key)
     }
     public function representatives()
     {

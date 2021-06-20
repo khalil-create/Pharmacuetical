@@ -38,67 +38,87 @@ class SampleController extends Controller
         }
         // return $request->manager_id;
         Sample::create([
-            'item' => $request->item,
+            'item_id' => $request->item_id,
             'count' => $request->count,
-            'manager_id' => Auth::user()->manager->id,
-            'supervisor_id' => $request->supervisor_id,
+            'representative_id' => $request->rep_id,
+            'supervisor_id' => Auth::user()->supervisor->id,
         ]);
-        return redirect('/Supervisor/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/supervisor/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
         return $rules = [
-                'item' => 'required|string|max:255',
+                'item_id' => 'required',
                 'count' => 'required|numeric|max:255',
             ];
     }
     protected function getMessages()
     {
         return $messages = [
-            'item.required' => 'يجب عليك كتابة اسم العينة',
+            'item_id.required' => 'يجب عليك كتابة اسم العينة',
             'count.required' => 'يجب عليك كتابة الكمية',
-            'item.string' => 'يجب ان يكون هذا الحقل بشكل نصي',
             'count.numeric' => 'يجب ان يكون هذا الحقل عدداً',
         ];
     }
-    public function editSample($id)
+    public function editDividedSample($id)
     {
         $sample = Sample::find($id);
         if(!$sample)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         
-        $items = Item::get();
-        $supervisors = Supervisor::whereHas('user')->get();
-        return view('supervisors.editSample',compact('sample',$sample))->
-        with('items',$items)->with('supervisors',$supervisors);
+        return view('supervisors.editDividedSample',compact('sample',$sample));
     }
-    public function updateSample(Request $request,$id)
+    public function updateDividedSample(Request $request,$id)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
+        $rules = ['count' => 'required|numeric'];
+        $messages = [
+            'count.required' => 'يجب عليك كتابة الكمية',
+            'count.numeric' => 'يجب ان يكون هذا الحقل عدداً',
+        ];;
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
         $sample = Sample::find($id);
-        $sample->item = $request->item;
         $sample->count = $request->count;
-        $sample->manager_id = Auth::user()->manager->id;
-        $sample->supervisor_id = $request->supervisor_id;
         $sample->update();
 
-        return redirect('/Supervisor/manageSamples')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/supervisor/displaySampleReps/'.$sample->id)->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteSample($id)
     {
         $sample = Sample::find($id);
         $sample->delete();
-        return redirect('/Supervisor/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect('/supervisor/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function divideSample($id)
     {
-        // $sample = Sample::get()->where;
-        // // $rep = Representative::where('supervisor_id',Auth::user()->supervisor->id);
-        // return view('supervisors.divideSample',compact('sample',$sample));
+        $sample = Sample::find($id);
+        $rep = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
+        // return $rep;
+        return view('supervisors.divideSample',compact('sample',$sample))->with('rep',$rep);
+    }
+    public function storeDividedSample(Request $request)
+    {
+        $i = -1;
+        foreach($request->count as $s)
+        {
+            $i++;
+            Sample::create([
+                'item_id' => $request->item_id,
+                'count' => $request->count[$i],
+                'representative_id' => $request->representative[$i],
+                'supervisor_id' => Auth::user()->supervisor->id,
+            ]);
+        }
+        return redirect('/supervisor/manageSamples')->with('status','تم توزيع العينة بشكل ناجح');
+    }
+    public function displaySampleReps($id)
+    {
+        $sample = Sample::find($id); 
+        $samples = Sample::whereHas('supervisor')->where('manager_id',null)
+        ->where('item_id',$sample->item_id)->get();
+        // $item = Item::find($id);
+        return view('supervisors.displaySampleReps',compact('samples',$samples))->with('sample',$sample);
     }
 }

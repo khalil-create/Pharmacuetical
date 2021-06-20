@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    ادارة العينات
+    ادارة الأهداف البيعية
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">عيناتي</span>
+            <span class="card-title" style="float: right">أهدافي البيعية</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -40,16 +40,19 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($samples->count() > 0)                    
+                  @if($salesObjectives->count() > 0)                    
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        العينة
+                        الصنف
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                        الهدف
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الكمية
+                        الوصف
                       </th>
                       {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         المندوب
@@ -60,24 +63,25 @@
                     </tr>
                   @else
                     <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي عينة' }}
+                      {{ 'لم يتم اضافة اي هدف بيعي' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($samples as $row)
+                  @foreach ($salesObjectives as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{ $row->item->commercial_name }}</td>
-                      <td>{{ $row->count }}</td>
+                      <td>{{ $row->objective }}</td>
+                      <td>{{ $row->description }}</td>
                       {{-- <td>
                         {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
                       </td> --}}
                       <td>
-                        <a href="/supervisor/divideSample/{{$row->id}}" class="btn btn-success">توزيع</a>
-                        <a href="/supervisor/displaySampleReps/{{$row->id}}">
-                          <i class="fas fa-eye" title="عرض العينات الموزعة لكل مندوب"></i>
+                        <a href="/supervisor/divideSalesObjective/{{$row->id}}" class="btn btn-success">توزيع</a>
+                        <a href="/supervisor/displaySalesObjectiveReps/{{$row->id}}">
+                          <i class="fas fa-eye" title="عرض الاهداف الموزعة لكل مندوب"></i>
                         </a>
                         {{-- <a href="/Supervisor/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a> --}}
                         {{-- <form action="/Supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
@@ -90,7 +94,7 @@
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
+                    {{-- <a href="{{url('/supervisor/addsalesObjective')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a> --}}
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
@@ -104,11 +108,12 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($samples->count() > 0)                    
+                    @if($salesObjectives->count() > 0)                    
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">العينة</th>
-                        <th rowspan="1" colspan="1">الكمية</th>
+                        <th rowspan="1" colspan="1">الصنف</th>
+                        <th rowspan="1" colspan="1">الهدف</th>
+                        <th rowspan="1" colspan="1">الوصف</th>
                         {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>

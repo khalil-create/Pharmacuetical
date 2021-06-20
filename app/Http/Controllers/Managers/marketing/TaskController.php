@@ -34,6 +34,7 @@ class TaskController extends Controller
             'task_title' => $request->task_title,
             'description' => $request->description,
             'last_date' => $request->last_date,
+            'performed' => 0,
             'manager_id' => Auth::user()->manager->id,
             'supervisor_id' => $request->supervisor_id,
         ]);
@@ -76,6 +77,7 @@ class TaskController extends Controller
         $task->task_title = $request->task_title;
         $task->description = $request->description;
         $task->last_date = $request->last_date;
+        $task->performed = 0;
         $task->supervisor_id = $request->supervisor_id;
         $task->update();
 

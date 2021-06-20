@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Mainarea;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Manager;
 use App\Traits\userTrait;
 
@@ -136,7 +137,11 @@ class SupervisorController extends Controller
         
         if(!$user)
             return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
-        
+        $comp = Company::where('supervisor_id',$user->supervisor->id)->get();
+        foreach($comp as $c){
+            $c->supervisor_id = null;
+            $c->update();
+        }
         $user->delete();
 
         return redirect('/managerMarketing/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');        

@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">عيناتي</span>
+            <span class="card-title" style="float: right">قائمة العينات الموزعة على المندوبين للصنف (<b>{{$sample->item->commercial_name}}</b>)</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -51,46 +51,52 @@
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         الكمية
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         المندوب
-                      </th> --}}
+                      </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
                     </tr>
                   @else
                     <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي عينة' }}
+                      {{ 'لم يتم توزيع هذه عينة' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
-                  <?php $i=1?>
+                  <?php $i=1;$sum_count = 0; ?>
                   @foreach ($samples as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{ $row->item->commercial_name }}</td>
-                      <td>{{ $row->count }}</td>
-                      {{-- <td>
-                        {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
-                      </td> --}}
                       <td>
-                        <a href="/supervisor/divideSample/{{$row->id}}" class="btn btn-success">توزيع</a>
-                        <a href="/supervisor/displaySampleReps/{{$row->id}}">
-                          <i class="fas fa-eye" title="عرض العينات الموزعة لكل مندوب"></i>
-                        </a>
-                        {{-- <a href="/Supervisor/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a> --}}
-                        {{-- <form action="/Supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        @php
+                            $sum_count += $row->count;
+                        @endphp
+                        {{ $row->count }}
+                      </td>
+                      <td>
+                        {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
+                      </td>
+                      <td>
+                        <a href="/supervisor/editDividedSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                        <form action="/supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
+                            {{csrf_field()}}
+                            {{method_field('DELETE')}}
+                            <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
+                        </form>
                         {{-- <i class="fas fa-eye"></i> --}}
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
+                    @if(!($sample->count <= $sum_count))
+                        <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
+                    @endif
+                    <div style="margin-bottom: 10px">
+                      {{'الباقي من الكمية الموزعه : '}} <small class="text-danger">{{$sample->count - $sum_count}}</small>
+                    </div>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
@@ -109,7 +115,7 @@
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">العينة</th>
                         <th rowspan="1" colspan="1">الكمية</th>
-                        {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
+                        <th rowspan="1" colspan="1">المندوب</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
                     @endif

@@ -89,6 +89,11 @@
                         <a href="/supervisor/editRepresentative/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <a href="/supervisor/showMainareas/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
                         <i class="fas fa-eye"></i>
+                        <form action="/Supervisor/deleteRepresentative/{{$row->id}}" method="post" style="float: right;">
+                            {{csrf_field()}}
+                            {{method_field('DELETE')}}
+                            <button style="border: none;margin-left: -10px;"><i class="fas fa-trash"></i></button>
+                        </form>
                       </td>
                     </tr>
                   @endforeach

@@ -17,11 +17,10 @@ class SalesobjectiveController extends Controller
     }
     public function getAllSalesObjectives()
     {
-        $salesObjectives = Salesobjective::whereHas('manager')->get();
-        $supObj = Salesobjective::whereHas('supervisor')->get();
+        $salesObjectives = Salesobjective::whereHas('manager')->where('supervisor_id',null)->get();
+        // $supObj = Salesobjective::whereHas('supervisor')->get();
         // return $salesObjectives;
-        return view('managers.marketing.manageSalesObjectives',compact('salesObjectives',$salesObjectives))
-        ->with('supObj',$supObj);
+        return view('managers.marketing.manageSalesObjectives',compact('salesObjectives',$salesObjectives));
     }
     public function addSalesObjective()
     {
@@ -42,7 +41,7 @@ class SalesobjectiveController extends Controller
             'manager_id' => Auth::user()->manager->id,
             'item_id' => $request->item_id,
         ]);
-        return redirect('/manageSalesObjectives')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/managerMarketing/manageSalesObjectives')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -96,9 +95,12 @@ class SalesobjectiveController extends Controller
     public function distributeSalesObjective($id)
     {
         $salesObjective = Salesobjective::find($id);
+        // $salesObjectiveDistributed = Salesobjective::whereDosntHave('supervisor')
+        // ->where('item_id',$salesObjective->item_id)->get();
+        $supervisors = Supervisor::whereDoesntHave('salesObjectives')->get();
         if(!$salesObjective)
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
-        $supervisors = Supervisor::get();
+        // $supervisors = Supervisor::get();
         return view('managers.marketing.distributeSalesObjective',compact('salesObjective',$salesObjective))
         ->with('supervisors',$supervisors);
     }
@@ -108,10 +110,11 @@ class SalesobjectiveController extends Controller
         foreach($request->objective as $s)
         {
             $i++;
+
             Salesobjective::create([
                 'objective' => $s,
                 'description' => $request->description,
-                // 'manager_id' => Auth::user()->manager->id,
+                'manager_id' => Auth::user()->manager->id,
                 'supervisor_id' => $request->supervisor[$i],
                 'item_id' => $request->item_id,
             ]);

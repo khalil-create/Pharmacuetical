@@ -48,7 +48,10 @@
         </li>
         @php
             $p = request()->path();
-            $index = strpos($p,'/');
+            $index = 4;
+            if($p != 'home' && $p !='not-allowed'){
+                $index = strpos($p,'/',5);
+            }
             $path = substr($p,0,$index);
         @endphp
         <li class="nav-item">
@@ -112,7 +115,7 @@
                                 $path == 'admin/editSubArea' ||
                                 $path == 'admin/supAreas'? 'menu-open' : ''
                             }}">
-            <a
+            <a href="#"
             class="nav-link {{  $p == 'admin/manageMainAreas' ||
                                 $p == 'admin/addMainArea' || 
                                 $p == 'admin/addSubArea' || 
@@ -162,7 +165,7 @@
                                 $path == 'admin/itemUses' ||
                                 $path == 'admin/editItems'? 'menu-open' : ''
                             }}">
-            <a
+            <a href="#"
             class="nav-link {{  $p == 'admin/manageCompany' || 
                                 $p == 'admin/addCompany' ||
                                 $p == 'admin/addCategory' ||

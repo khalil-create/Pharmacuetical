@@ -35,7 +35,7 @@ class SampleController extends Controller
         }
         // return $request->manager_id;
         Sample::create([
-            'item' => $request->item,
+            'item_id' => $request->item_id,
             'count' => $request->count,
             'manager_id' => Auth::user()->manager->id,
             'supervisor_id' => $request->supervisor_id,
@@ -45,16 +45,15 @@ class SampleController extends Controller
     protected function getRules()
     {
         return $rules = [
-                'item' => 'required|string|max:255',
+                'item_id' => 'required',
                 'count' => 'required|numeric|max:255',
             ];
     }
     protected function getMessages()
     {
         return $messages = [
-            'item.required' => 'يجب عليك كتابة اسم العينة',
+            'item_id.required' => 'يجب عليك كتابة اسم العينة',
             'count.required' => 'يجب عليك كتابة الكمية',
-            'item.string' => 'يجب ان يكون هذا الحقل بشكل نصي',
             'count.numeric' => 'يجب ان يكون هذا الحقل عدداً',
         ];
     }
@@ -66,7 +65,7 @@ class SampleController extends Controller
         
         $items = Item::get();
         $supervisors = Supervisor::whereHas('user')->get();
-        return view('admin.editSample',compact('sample',$sample))->
+        return view('managers.marketing.editSample',compact('sample',$sample))->
         with('items',$items)->with('supervisors',$supervisors);
     }
     public function updateSample(Request $request,$id)
@@ -78,7 +77,7 @@ class SampleController extends Controller
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
         $sample = Sample::find($id);
-        $sample->item = $request->item;
+        $sample->item_id = $request->item_id;
         $sample->count = $request->count;
         $sample->manager_id = Auth::user()->manager->id;
         $sample->supervisor_id = $request->supervisor_id;

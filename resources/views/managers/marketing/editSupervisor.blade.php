@@ -166,24 +166,6 @@
                             <div class="col-md-6" style="margin-top:20px">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="email">البريد الإلكتروني</label>
-                                        <input type="email" class="form-control" value="{{$user->email}}" name="email">
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
-                                                <small class="form-text text-danger">{{ $errors->first('email') }}</small>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phonenumber">رقم الهاتف</label>
-                                        <input type="text" class="form-control" value="{{$user->phone_number}}" name="phonenumber">
-                                        @if ($errors->has('phonenumber'))
-                                            <span class="help-block">
-                                                <small class="form-text text-danger">{{ $errors->first('phonenumber') }}</small>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
                                         <label for="userimage">تحميل الصورة</label>
                                         <div class="input-group">
                                             <div class="custom-file">

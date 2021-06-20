@@ -49,7 +49,7 @@
         @php
             $p = request()->path();
             $index = 4;
-            if($p != 'home'){
+            if($p != 'home' && $p !='not-allowed'){
                 $index = strpos($p,'/',12);
             }
             $path = substr($p,0,$index);
@@ -80,7 +80,7 @@
                                 $path == 'supervisor/itemUses' ||
                                 $path == 'supervisor/itemEdit'? 'menu-open' : ''
                             }}">
-            <a
+            <a href="#"
             class="nav-link {{  $p == 'supervisor/manageCompanies' || 
                                 $p == 'supervisor/companyAdd' ||
                                 $p == 'supervisor/categoryAdd' ||
@@ -139,15 +139,17 @@
                                 $path == 'supervisor/editMainArea' ||
                                 $path == 'supervisor/supAreas' ||
                                 $path == 'supervisor/editSubArea' ||
+                                $path == 'supervisor/showRepresentatives' ||
                                 $path == 'supervisor/supAreas'? 'menu-open' : ''
                             }}">
-            <a
+            <a href="#"
             class="nav-link {{  $p == 'supervisor/manageMainAreas' ||
                                 $p == 'supervisor/addMainArea' || 
                                 $p == 'supervisor/manageSubAreas' || 
                                 $path == 'supervisor/addSubArea' || 
                                 $path == 'supervisor/supAreas' || 
                                 $path == 'supervisor/editMainArea'||
+                                $path == 'supervisor/showRepresentatives'||
                                 $path == 'supervisor/editSubArea' ||
                                 $path == 'supervisor/supAreas'? 'active' : ''
                             }}">
@@ -174,6 +176,7 @@
                 <a href="/supervisor/manageSubAreas" 
                 class="nav-link {{  $p == 'supervisor/manageSubAreas'||
                                     $path == 'supervisor/addSubArea' ||  
+                                    $path == 'supervisor/showRepresentatives' ||  
                                     $path == 'supervisor/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -182,14 +185,84 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item {{  $p == 'supervisor/manageChargedTasks' ||
+                                $p == 'supervisor/manageDistributedTasks' || 
+                                $p == 'supervisor/addDistributedTask' || 
+                                $path == 'supervisor/editDistributedTask' || 
+                                $path =='supervisor/performTask'? 'menu-open' : ''
+                            }}">
+            <a href="#"
+            class="nav-link {{  $p == 'supervisor/manageChargedTasks' || 
+                                $p == 'supervisor/manageDistributedTasks' ||
+                                $p == 'supervisor/addDistributedTask' ||
+                                $path == 'supervisor/editDistributedTask' ||
+                                $path =='supervisor/performTask'? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                ادارة المهام
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/supervisor/manageChargedTasks" 
+                class="nav-link {{  $p == 'supervisor/manageChargedTasks' || 
+                                    $p == 'supervisor/addTask' ||
+                                    $path =='supervisor/performTask'? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>المهام المكلفة</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="/supervisor/manageDistributedTasks" 
+                class="nav-link {{  $p == 'supervisor/manageDistributedTasks' || 
+                                    $p == 'supervisor/addDistributedTask' ||
+                                    $path == 'supervisor/editDistributedTask' ||
+                                    $path =='supervisor/editTask' ? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>المهام الموزعة</p>
+                </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="/supervisor/manageTrainingCourses"
+            class="nav-link {{  $p == 'supervisor/manageTrainingCourses' ||
+                                $p == 'supervisor/addCourse' ||
+                                $path == 'supervisor/editCourse' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                ادارة المواد التدريبية
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="/supervisor/manageSamples"
             class="nav-link {{  $p == 'supervisor/manageSamples' ||
                                 $p == 'supervisor/addSample' ||
+                                $path == 'supervisor/divideSample' ||
+                                $path == 'supervisor/displaySampleReps' ||
+                                $path == 'supervisor/editDividedSample' ||
                                 $path == 'supervisor/editSample' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
                 ادارة العينات
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('supervisor/manageSalesObjectives')}}" 
+            class="nav-link {{  $p == 'supervisor/manageSalesObjectives' ||
+                                $path == 'supervisor/divideSalesObjective' ||
+                                $path == 'supervisor/displaySalesObjectiveReps' ||
+                                $path == 'supervisor/addDividedSalesObjective' ||
+                                $path == 'supervisor/editDividedsalesObjective'? 'active' : ''  }}">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                ادارة الاهداف البيعية
                 </p>
             </a>
         </li>

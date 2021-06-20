@@ -80,7 +80,7 @@
                       </td> --}}
                       <td class="" style="">
                         <a href="/supervisor/editStudy/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/supervisor/studyStrengths/{{$row->id}}"><i class="fas fa-info"></i></a>
+                        <a href="/supervisor/studyStrengths/{{$row->id}}"><i class="fas fa-info" title="نقاط القوة"></i></a>
                         <form action="/supervisor/deleteStudy/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}

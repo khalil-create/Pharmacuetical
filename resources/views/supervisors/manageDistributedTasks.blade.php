@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    ادارة العينات
+    ادارة المهام
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">قائمة التوزيع</span>
+            <span class="card-title" style="float: right"> قائمة المهام الموزعة للمناديب</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -40,19 +40,25 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($sample->count() > 0)                    
+                  @if($tasks->count() > 0)                    
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        العينة
+                        المهمه
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الكمية
+                        الوصف
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         المندوب
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        اخر تأريخ للتنفيذ
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الحالة
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
@@ -60,53 +66,74 @@
                     </tr>
                   @else
                     <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم توزيع هذه العينة' }}
+                      {{ 'لم يتم توزيع اي مهمة للمناديب' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($sample as $row)
+                  @foreach ($tasks as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{ $row->item->commercial_name }}</td>
-                      <td>{{ $row->count }}</td>
+                      <td>{{ $row->task_title }}</td>
+                      <td>{{ $row->description }}</td>
                       <td>
                         {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
                       </td>
+                      <td>{{ $row->last_date }}</td>
                       <td>
-                        <a href="/supervisor/divideSample/{{$row->id}}" class="btn btn-success">توزيع</a>
-                        {{-- <a href="/Su pervisor/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a> --}}
-                        {{-- <form action="/Supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
-                        {{-- <i class="fas fa-eye"></i> --}}
+                        @if ($row->performed == 0)
+                            {{'لم يتم انجازها'}}
+                        @else
+                            {{'تم انجازها'}}
+                        @endif
+                      </td>
+                      <td>
+                        @if ($row->performed == 0)
+                          <a href="/supervisor/editDistributedTask/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                          <form action="/supervisor/deleteDistributedTask/{{$row->id}}" method="post" style="float: right;">
+                                  {{csrf_field()}}
+                                  {{method_field('DELETE')}}
+                                  <button style="border: none;margin-left: -20px;"><i class="fas fa-trash" title="حذف"></i></button>
+                          </form>
+                        @else
+                          @php
+                              $report = $row->report_task;
+                              $index = strpos($report,'.');
+                              $isFile = substr($report,$index + 1);
+                          @endphp
+                          @if($isFile == 'pdf' || $isFile == 'xlsx' || $isFile == 'docx')
+                            <a href="{{asset('reports/tasks/'.$row->report_task)}}"><i class="fas fa-eye" title="عرض التقرير"></i></a>
+                          @else
+                            {{$report}}
+                          @endif
+                        @endif
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    {{-- <a href="{{url('/managerMarketing/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a> --}}
+                    <a href="{{url('/supervisor/addDistributedTask')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مهمة</a>
                     @if (session('status'))
                         <div class="alert alert-success notify-success">
                             {{ session('status') }}
                         </div>
                     @endif
                     @if (session('error'))
-                              <div class="alert alert-danger notify-danger">
+                              <div class="alert alert-error notify-error">
                                   {{ session('error') }}
                               </div>
                     @endif
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($sample->count() > 0)                    
+                    @if($tasks->count() > 0)                    
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">العينة</th>
-                        <th rowspan="1" colspan="1">الكمية</th>
+                        <th rowspan="1" colspan="1">المهمه</th>
+                        <th rowspan="1" colspan="1">الوصف</th>
                         <th rowspan="1" colspan="1">المندوب</th>
+                        <th rowspan="1" colspan="1">اخر تأريخ للتنفيذ</th>
+                        <th rowspan="1" colspan="1">الحالة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
                     @endif

@@ -5,6 +5,9 @@
 .leftspace{
     margin-left: 10px;
 }
+.space{
+    margin-bottom: 20px;
+}
 .font{
     font-size: 18px;
     width: 60px;
@@ -31,5 +34,8 @@
 }
 .dataTables_wrapper .row .col-sm-12{
 	width: 66.66%;
+}
+.small-text{
+	font-size: 5pt;
 }
 

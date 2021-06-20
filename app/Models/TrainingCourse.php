@@ -10,7 +10,9 @@ class TrainingCourse extends Model
     use HasFactory;
     protected $fillable = [
         'title',
+        'important_points',
         'supervisor_id',
+        'item_id',
         'created_at',
         'updated_at',
     ];
@@ -23,6 +25,10 @@ class TrainingCourse extends Model
     public function supervisor()
     {
         return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
+    }
+    public function item()
+    {
+        return $this->belongsTo('App\Models\Item','item_id','id');//(related,foriegn key,primary key)
     }
     public function represntaitives()
     {

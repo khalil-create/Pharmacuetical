@@ -59,7 +59,7 @@
                       </th>
                     </tr>
                   @else
-                    <div class="alert alert-success notify-success">
+                    <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي مشرف' }}
                     </div>
                   @endif

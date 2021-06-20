@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-      توزيع الاهداف البيعية
+      توزيع الأهداف البيعية
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -25,8 +25,8 @@
         <div class="card card-default">
           <div class="card-header">
             <span class="card-title" style="float: right">
-              توزيع الهدف البيعي  (<b>{{$salesObjective->objective}}</b>)
-              للصنف (<b>{{$salesObjective->item->commercial_name}}</b>) على المشرفين
+              توزيع الهدف (<b>{{$salesObjective->objective}}</b>) 
+              للصنف (<b>{{$salesObjective->item->commercial_name}}</b>) على المندوبين
             </span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -40,16 +40,16 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row col-14">
-              <form style="width: 100%" method="POST" action="/managerMarketing/storeDistributedSalesObjForSup" enctype="multipart/form-data">
+              <form style="width: 100%" method="POST" action="/supervisor/storeDividedSalesObjectives" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 
                 <div class="col-sm-12">
-                  @if($supervisors->count() > 0)
+                  @if($representatives->count() > 0)
                     <table class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                      <thead>
+                      <thead style="background-color: #8eaab1;">
                         <tr role="row">
                           <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                            المشرف
+                            المندوب
                           </th>
                           <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                             الهدف
@@ -58,14 +58,14 @@
                       </thead>
                       <tbody>
                         <input name="item_id" value="{{$salesObjective->item_id}}" hidden>
-                        @foreach ($supervisors as $row)
+                        @foreach ($representatives as $row)
                         <tr>
                           <td>
-                            <input name="supervisor[]" value="{{$row->id}}" hidden>
+                            <input name="representative[]" value="{{$row->id}}" hidden>
                             <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                           </td>
                           <td>
-                            <input type="text" placeholder="الهدف البيعي لهذا المشرف" name="objective[]" class="form-control">
+                            <input type="text" placeholder="مقدار الهدف لهذا المندوب" name="objective[]" class="form-control">
                             @if ($errors->has('objective'))
                               <span class="help-block">
                                   <small class="form-text text-danger">{{ $errors->first('objective') }}</small>

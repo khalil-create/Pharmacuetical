@@ -42,19 +42,19 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('Supervisor/storeSample') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('supervisor/storeSample') }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="item">العينة</label>
-                                    <select name="item" class="form-control custom-select rounded-0">
+                                    <label for="item_id">العينة</label>
+                                    <select name="item_id" class="form-control custom-select rounded-0">
                                         @foreach ($items as $row)
                                                 <option value="{{$row->id}}">{{ $row->commercial_name }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('item'))
+                                    @if ($errors->has('item_id'))
                                         <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('item') }}</small>
+                                            <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
                                         </span>
                                     @endif
                                 </div>

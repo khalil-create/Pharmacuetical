@@ -55,6 +55,31 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group{{ $errors->has('supervisor_name') ? ' has-error' : '' }}">
+                                    <label for="supervisor_name" class="col-md-2 control-label">المشرف عليها</label>
+                                    {{-- <div class="col-md-8"> --}}
+                                        {{-- <input name="supervisor_name"  id="supervisor_name" list="usertype" > --}}
+                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
+                                                @php
+                                                    $selected = "selected";
+                                                @endphp
+                                                    
+                                                @foreach ($supervisors as $sup)
+                                                    <option value="{{ $sup->id }}" 
+                                                            @if ($supervisor->id == $sup->id)
+                                                                {{ $selected }}
+                                                            @endif    
+                                                        >{{ $sup->user->user_name_third }} {{ $sup->user->user_surname }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @if ($errors->has('supervisor_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    {{-- </div> --}}
+                                </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         تعديل <i class="fas fa-edit"></i>

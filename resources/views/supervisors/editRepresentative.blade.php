@@ -77,20 +77,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="usertype">الصفة الوظيفية </label>
-                                    <select name="usertype" class="custom-select rounded-0">
+                                    <select onchange="showListInRep()" id="usertype" name="usertype" class="custom-select rounded-0">
                                         <option value="مندوب علمي"
                                         @if ($rep->user->user_type == 'مندوب علمي')
                                             {{'selected'}}
                                         @endif
                                         >
                                             مندوب علمي
-                                        </option>
-                                        <option value="مندوب مبيعات"
-                                        @if ($rep->user->user_type == 'مندوب مبيعات')
-                                            {{'selected'}}
-                                        @endif
-                                        >
-                                            مندوب مبيعات
                                         </option>
                                         <option value="مدير فريق"
                                         @if ($rep->user->user_type == 'مدير فريق')
@@ -106,22 +99,40 @@
                                         </span>
                                     @endif
                             </div>
-                            <div class="form-group" id="teemLeadersList">
-                                <label class="col-md-4 control-label">مدير الفريق</label>
-                                        <select id="teamleader" name="teemleader_id" class="form-control custom-select rounded-0">
-                                            @foreach($rep2 as $row)
-                                                @if($row->user_type == 'مدير فريق')
-                                                    <option value="{{$row->representatives->id}}">
-                                                        {{ $row->user_name_third }} {{$row->user_surname}}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    @if ($errors->has('teemleader_id'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('teemleader_id') }}</strong>
-                                        </span>
-                                    @endif
+                            @if($teamLeader)
+                                <div class="form-group" id="teemLeadersList" hidden>
+                                    <label class="col-md-4 control-label">مدير الفريق</label>
+                                            <select id="teamleader" name="teemleader_id" class="form-control custom-select rounded-0">
+                                                @foreach($rep2 as $row)
+                                                    @if($row->user_type == 'مدير فريق')
+                                                        <option value="{{$row->representatives->id}}">
+                                                            {{ $row->user_name_third }} {{$row->user_surname}}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        @if ($errors->has('teemleader_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('teemleader_id') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
+                            @endif
+                            <div class="form-group">
+                                <label for="subareasIds" class="col-md-12 control-label">المناطق الفرعية <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من منطقة)</span></label>
+                                <select name="subareasIds[]" class="form-control custom-select rounded-0" multiple>
+                                    @php
+                                        $n = 1;
+                                    @endphp
+                                    @foreach ($subareas as $row)
+                                        <option value="{{$row->id}}">{{$n++}}{{'- '}} {{$row->name_sub_area}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('subareasIds'))
+                                    <span class="help-block">
+                                        <small class="form-text text-danger">{{ $errors->first('subareasIds') }}</small>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="">الجنس</label>

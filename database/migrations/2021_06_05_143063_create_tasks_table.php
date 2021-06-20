@@ -17,6 +17,9 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('task_title');
             $table->string('description');
+            //This column store tow things either Tasking by write text or upload file pdf(store just file name)   
+            $table->string('report_task',500)->nullable();
+            $table->tinyInteger('performed');// 1 For was performed this task and 0 not perform yet
             $table->date('last_date');
             $table->unsignedInteger('manager_id')->nullable();
             $table->foreign('manager_id')->references('id')->on('managers')->onDelete('cascade')->onUpdate('cascade');

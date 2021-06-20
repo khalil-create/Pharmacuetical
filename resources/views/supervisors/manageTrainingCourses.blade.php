@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    ادارة العينات
+    ادارة المواد التدريبية 
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">عيناتي</span>
+            <span class="card-title" style="float: right">قائمة المواد التدريبية</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -40,77 +40,81 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($samples->count() > 0)                    
+                  @if($courses->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        العينة
+                        عنوان المادة التدريبية
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الكمية
+                        الصنف
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المندوب
-                      </th> --}}
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        أهم المحاور
+                      </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
                     </tr>
                   @else
                     <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي عينة' }}
+                      {{ 'لم يتم اضافة اي برنامج تدريبي' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($samples as $row)
+                  @foreach ($courses as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{ $row->item->commercial_name }}</td>
-                      <td>{{ $row->count }}</td>
-                      {{-- <td>
-                        {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
-                      </td> --}}
-                      <td>
-                        <a href="/supervisor/divideSample/{{$row->id}}" class="btn btn-success">توزيع</a>
-                        <a href="/supervisor/displaySampleReps/{{$row->id}}">
-                          <i class="fas fa-eye" title="عرض العينات الموزعة لكل مندوب"></i>
-                        </a>
-                        {{-- <a href="/Supervisor/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a> --}}
-                        {{-- <form action="/Supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
-                        {{-- <i class="fas fa-eye"></i> --}}
+                      <td>{{$row->title}}</td>
+                      <td>{{$row->item->commercial_name}}</td>
+                      <td class="sorting_1">
+                        @php
+                              $file = $row->important_points;
+                              $isLink = substr($file,0,4);
+                          @endphp
+                          @if($isLink == 'https')
+                            <a href="{{$file}}" class="btn btn-success">فتح البرنامج</a>
+                          @else
+                            <a href="{{asset('reports/courses/'.$file)}}">فتح البرنامج</a>
+                          @endif
+                      </td>
+                      <td class="" style="">
+                        <a href="/supervisor/editCourse/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
+                        <form action="/supervisor/deleteCourse/{{$row->id}}" method="post" style="float: right;">
+                            {{csrf_field()}}
+                            {{method_field('DELETE')}}
+                            <button style="border: none;margin-left: -15px;"><i class="fas fa-trash" title="حذف"></i></button>
+                          </form>
+                          {{-- <a href="/supervisor/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a> --}}
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                              <div class="alert alert-danger notify-danger">
-                                  {{ session('error') }}
-                              </div>
-                    @endif
+                    <a href="{{url('/supervisor/addCourse')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة برنامج تدريبي</a>
+                        @if (session('status'))
+                            <div class="alert alert-success notify-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                                  <div class="alert alert-danger notify-error">
+                                      {{ session('error') }}
+                                  </div>
+                        @endif
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($samples->count() > 0)                    
+                    @if($courses->count() > 0)
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">العينة</th>
-                        <th rowspan="1" colspan="1">الكمية</th>
-                        {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
-                        <th rowspan="1" colspan="1">العملية</th>
+                        <th rowspan="1" colspan="1">عنوان المادة التدريبية</th>
+                        <th rowspan="1" colspan="1" style="">الصنف</th>
+                        <th rowspan="1" colspan="1" style="">أهم المحاور</th>
+                        <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
                     @endif
                   </tfoot>

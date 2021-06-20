@@ -187,10 +187,12 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::get('/manageSamples', 'SampleController@getAllSamples');
     Route::get('/addSample', 'SampleController@addSample');
     Route::post('/storeSample', 'SampleController@storeSample');
-    Route::get('/editSample/{id}', 'SampleController@editSample');
-    Route::put('/updateSample/{id}', 'SampleController@updateSample');
+    Route::get('/editDividedSample/{id}', 'SampleController@editDividedSample');
+    Route::put('/updateDividedSample/{id}', 'SampleController@updateDividedSample');
     Route::delete('/deleteSample/{id}', 'SampleController@deleteSample');
     Route::get('/divideSample/{id}', 'SampleController@divideSample');
+    Route::post('/storeDividedSample', 'SampleController@storeDividedSample');
+    Route::get('/displaySampleReps/{id}', 'SampleController@displaySampleReps');
 
     Route::get('/manageCompanies', 'CompanyController@getAllCompanies');
     Route::get('/companyAdd', 'CompanyController@addCompany');
@@ -236,6 +238,33 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
     Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
     Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
+
+    Route::get('/manageChargedTasks', 'TaskController@getAllChargedTasks');
+    Route::get('/performTask/{id}', 'TaskController@performTask');
+    Route::post('/storePerformTask/{id}', 'TaskController@storePerformTask');
+    Route::get('/manageDistributedTasks', 'TaskController@getAllDistributedTasks');
+    Route::get('/addDistributedTask', 'TaskController@addDistributedTask');
+    Route::post('/storeDistributedTask', 'TaskController@storeDistributedTask');
+    Route::get('/editDistributedTask/{id}', 'TaskController@editDistributedTask');
+    Route::put('/updateDistributedTask/{id}', 'TaskController@updateDistributedTask');
+    Route::delete('/deleteDistributedTask/{id}', 'TaskController@deleteDistributedTask');
+
+    Route::get('/manageTrainingCourses', 'TrainingCourseController@getAllCourses');
+    Route::get('/addCourse', 'TrainingCourseController@addCourse');
+    Route::post('/storeCourse/{id?}', 'TrainingCourseController@storeCourse');
+    Route::get('/editCourse/{id}', 'TrainingCourseController@editCourse');
+    Route::put('/updateCourse/{id}', 'TrainingCourseController@updateCourse');
+    Route::delete('/deleteCourse/{id}', 'TrainingCourseController@deleteCourse');
+
+    Route::get('/manageSalesObjectives', 'SalesobjectiveController@getAllSalesObjectives');
+    Route::get('/addDividedSalesObjective/{id}', 'SalesobjectiveController@addDividedSalesObjective');
+    Route::post('/storeDividedSalesObjective/{id}', 'SalesobjectiveController@storeDividedSalesObjective');
+    Route::get('/editDividedSalesObjective/{id}', 'SalesobjectiveController@editDividedSalesObjective');
+    Route::put('/updateDividedSalesObjective/{id}', 'SalesobjectiveController@updateDividedSalesObjective');
+    Route::delete('/deleteDividedSalesObjective/{id}', 'SalesobjectiveController@deleteDividedSalesObjective');
+    Route::get('/divideSalesObjective/{id}', 'SalesobjectiveController@divideSalesObjective');
+    Route::post('/storeDividedSalesObjectives', 'SalesobjectiveController@storeDividedSalesObjectives');
+    Route::get('/displaySalesObjectiveReps/{id}', 'SalesobjectiveController@displaySalesObjectiveReps');
 
     Route::get('/manageStudies', 'StudyController@getAllStudies');
     Route::get('/addStudy', 'StudyController@addStudy');

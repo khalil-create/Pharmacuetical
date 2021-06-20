@@ -67,9 +67,9 @@
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->name_main_area}}</td>
-                      {{-- <td class="sorting_1">
+                      <td class="sorting_1">
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
-                      </td> --}}
+                      </td>
                       <td class="" style="">
                         <a href="/supervisor/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <a href="/supervisor/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
@@ -101,7 +101,7 @@
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم المنطقة</th>
-                        {{-- <th rowspan="1" colspan="1">اسم المشرف عليها</th> --}}
+                        <th rowspan="1" colspan="1">اسم المشرف عليها</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
                     @endif

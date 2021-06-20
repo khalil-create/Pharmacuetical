@@ -58,6 +58,9 @@
                         اخر تأريخ للتنفيذ
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الحالة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
                     </tr>
@@ -79,13 +82,32 @@
                       </td>
                       <td>{{ $row->last_date }}</td>
                       <td>
-                        <a href="/managerMarketing/editTask/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/managerMarketing/deleteTask/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -25px;"><i class="fas fa-trash"></i></button>
-                        </form>
-                        <i class="fas fa-eye"></i>
+                        @if ($row->performed == 0)
+                            {{'لم يتم انجازها'}}
+                        @else
+                            {{'تم انجازها'}}
+                        @endif
+                      </td>
+                      <td>
+                        @if ($row->performed == 0)
+                          <a href="/managerMarketing/editTask/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
+                          <form action="/managerMarketing/deleteTask/{{$row->id}}" method="post" style="float: right;">
+                                  {{csrf_field()}}
+                                  {{method_field('DELETE')}}
+                                  <button style="border: none;margin-left: -20px;"><i class="fas fa-trash"></i></button>
+                          </form>
+                        @else
+                          @php
+                              $report = $row->report_task;
+                              $index = strpos($report,'.');
+                              $isFile = substr($report,$index + 1);
+                          @endphp
+                          @if($isFile == 'pdf' || $isFile == 'xlsx' || $isFile == 'docx')
+                            <a href="{{asset('reports/tasks/'.$row->report_task)}}"><i class="fas fa-eye" title="عرض التقرير"></i></a>
+                          @else
+                            {{$report}}
+                          @endif
+                        @endif
                       </td>
                     </tr>
                   @endforeach
@@ -111,6 +133,7 @@
                         <th rowspan="1" colspan="1">الوصف</th>
                         <th rowspan="1" colspan="1">المشرف</th>
                         <th rowspan="1" colspan="1">اخر تأريخ للتنفيذ</th>
+                        <th rowspan="1" colspan="1">الحالة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
                     @endif
