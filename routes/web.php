@@ -184,6 +184,20 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::post('/storeRepMainArea/{id}', 'RepresentativeController@storeRepMainArea');
     Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
 
+    Route::get('/manageTests', 'TestController@getAllTests');
+    Route::get('/addTest', 'TestController@addTest');
+    Route::post('/storeTest', 'TestController@storeTest');
+    Route::get('/editTest/{id}', 'TestController@editTest');
+    Route::put('/updateTest/{id}', 'TestController@updateTest');
+    Route::delete('/deleteTest/{id}', 'TestController@deleteTest');
+
+    Route::get('/manageQuestions/{id}', 'QuestionController@getAllQuestions');
+    Route::get('/addQuestion/{id}', 'QuestionController@addQuestion');
+    Route::post('/storeQuestion/{id}', 'QuestionController@storeQuestion');
+    Route::get('/editQuestion/{id}', 'QuestionController@editQuestion');
+    Route::put('/updateQuestion/{id}', 'QuestionController@updateQuestion');
+    Route::delete('/deleteQuestion/{id}', 'QuestionController@deleteQuestion');
+
     Route::get('/manageSamples', 'SampleController@getAllSamples');
     Route::get('/addSample', 'SampleController@addSample');
     Route::post('/storeSample', 'SampleController@storeSample');
@@ -281,6 +295,24 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::delete('/deleteStrength/{id}', 'StrengthController@deleteStrength');
     // Route::get('/addStrengthsExist/{id}', 'StrengthController@addStrengthsExist');
     // Route::post('/storeStrengthsExist', 'StrengthController@storeStrengthsExist');
+});
+
+Route::group(['prefix'=>'representative','namespace'=>'App\Http\Controllers\Representative','middleware'=>'auth','middleware'=>'repScience'],function(){
+    // Route::get('/home', 'RepresentativeController@home');
+    Route::get('/manageDoctors', 'DoctorController@getAllDoctors');
+    Route::get('/addDoctor', 'DoctorController@addDoctor');
+    Route::post('/storeDoctor', 'DoctorController@storeDoctor');
+    Route::get('/editDoctor/{id}', 'DoctorController@editDoctor');
+    Route::put('/updateDoctor/{id}', 'DoctorController@updateDoctor');
+    Route::delete('/deleteDoctor/{id}', 'DoctorController@deleteDoctor');
+
+    Route::get('/manageCustomers', 'CustomerController@getAllCustomers');
+    Route::get('/addCustomer', 'CustomerController@addCustomer');
+    Route::post('/storeCustomer', 'CustomerController@storeCustomer');
+    Route::get('/editCustomer/{id}', 'CustomerController@editCustomer');
+    Route::put('/updateCustomer/{id}', 'CustomerController@updateCustomer');
+    Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
+
 });
 Auth::routes();
 

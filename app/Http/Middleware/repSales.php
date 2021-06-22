@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class representative
+class repSales
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class representative
     {
         if(Auth::user()){
             $usertype = Auth::user()->user_type;
-            if($usertype != 'مدير فريق' || $usertype != 'مندوب علمي' || $usertype != 'مندوب مبيعات')
+            if($usertype != 'مندوب مبيعات')
             {
                 return redirect()->route('notAllowed');
             }

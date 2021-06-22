@@ -218,6 +218,7 @@ class UserController extends Controller
             $user->delete();
             if($request->hasfile('userimage'))
             {
+                $this->deleteFile($user->userimage,'images/users/');
                 $file_name = $this->saveImage($request->file('userimage'),'images/users/');
             }
             else{
@@ -360,6 +361,7 @@ class UserController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         
+        $this->deleteFile($user->userimage,'images/users/');
         $user->delete();
         // if($user->user_type == 'مشرف')
         // {

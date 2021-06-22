@@ -35,9 +35,6 @@ class TrainingCourseController extends Controller
         {
             $file_name = $this->saveImage($request->file('important_points'),'reports/courses/');
         }
-        else{
-            $file_name = 'file';
-        }
         TrainingCourse::create([
             'title' => $request->title,
             'important_points' => $file_name,
@@ -82,6 +79,7 @@ class TrainingCourseController extends Controller
         
         if($request->hasfile('important_points'))
         {
+            $this->deleteFile($course->important_points,'reports/courses/');
             $file_name = $this->saveImage($request->file('important_points'),'reports/courses/');
             $course->important_points = $file_name;
         }
@@ -97,6 +95,8 @@ class TrainingCourseController extends Controller
         $course = TrainingCourse::find($id);
         if($course->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        
+        $this->deleteFile($course->important_points,'reports/courses/');
         $course->delete();
         return redirect('/supervisor/manageTrainingCourses')->with('status','تم حذف البيانات بشكل ناجح');
     }

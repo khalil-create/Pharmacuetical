@@ -75,7 +75,7 @@
     @elseif($userType == 'مشرف')
         @include('supervisors.sidebar')
     @elseif($userType == 'مندوب فريق' || $userType == 'مندوب علمي')
-        @include('representatives.repSciences.side')
+        @include('representatives.repScience.sidebar')
     @elseif($userType == 'مندوب مبيعات')
         @include('representatives.repSales.side')
     @endif

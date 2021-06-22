@@ -124,6 +124,7 @@ class SupervisorController extends Controller
         $user->password = bcrypt($request->Input('password'));
         if($request->hasfile('userimage'))
         {
+            $this->deleteFile($user->userimage,'images/users/');
             $file_name = $this->saveImage($request->file('userimage'),'images/users/');
             $user->user_image = $file_name;
         }
@@ -137,6 +138,8 @@ class SupervisorController extends Controller
         
         if(!$user)
             return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
+
+        $this->deleteFile($user->userimage,'images/users/');
         $comp = Company::where('supervisor_id',$user->supervisor->id)->get();
         foreach($comp as $c){
             $c->supervisor_id = null;

@@ -70,8 +70,10 @@ class CompanyController extends Controller
         
         $file_name = $company->sign_img_company;
         if($request->hasfile('sign_img_company'))
+        {
+            $this->deleteFile($company->sign_img_company,'images/signsCompany/');
             $file_name = $this->saveImage($request->file('sign_img_company'),'images/signsCompany/');
-
+        }
         $company->name_company = $request->name_company;
         $company->country_manufacturing = $request->country_manufacturing;
         $company->have_category = $request->have_category;
@@ -85,17 +87,8 @@ class CompanyController extends Controller
         $company = Company::findOrfail($id);
         if(!$company)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        // $s = $company->categories()->get();
-        // foreach($s as $d)
-        // {            
-        //     $cc = Item::where('category_id',$d->id)->get();
-        //     foreach($cc as $c){
-        //         $dd = Item::find($c->id);
-        //         $dd->delete();
-        //     }
-        // }
-        // // $company->categories()->items()->delete();
-        // $company->categories()->delete();
+
+        $this->deleteFile($company->sign_img_company,'images/signsCompany/');
         $company->delete();
 
         return redirect('/admin/manageCompany')->with('status','تم حذف البيانات بشكل ناجح');

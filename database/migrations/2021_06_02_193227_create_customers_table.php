@@ -16,13 +16,13 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('type');
+            $table->tinyInteger('type');//0 For hospital, 1 For pharmacy
             $table->string('owner_name');
             $table->string('owner_phone');
             $table->string('owner_tel');
             $table->tinyInteger('size');//حجم العميل
             $table->tinyInteger('loyalty');//ولاء العميل
-            $table->string('name_sub_area');
+            $table->string('address');
             $table->boolean('statues');
             $table->string('contact_official_name');//اسم مسؤول الاتصال
             $table->string('contact_official_type');//الموقع الوظيفي لمسؤول الاتصال

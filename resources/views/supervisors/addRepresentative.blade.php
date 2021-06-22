@@ -229,13 +229,28 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-4">
-                                            <input type="text" name="birthplace" class="form-control" placeholder="المحافظة">
+                                                <input type="text" name="birthplace" class="form-control" placeholder="المحافظة">
+                                                @if ($errors->has('birthplace'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('birthplace') }}</small>
+                                                    </span>
+                                                @endif
                                             </div>
                                             <div class="col-4">
-                                            <input type="text" name="town" class="form-control" placeholder="المديرية">
+                                                <input type="text" name="town" class="form-control" placeholder="المديرية">
+                                                @if ($errors->has('town'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('town') }}</small>
+                                                    </span>
+                                                @endif
                                             </div>
                                             <div class="col-4">
-                                            <input type="text" name="village" class="form-control" placeholder="العزلة">
+                                                <input type="text" name="village" class="form-control" placeholder="العزلة">
+                                                @if ($errors->has('village'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('village') }}</small>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

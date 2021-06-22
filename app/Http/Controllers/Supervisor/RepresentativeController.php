@@ -57,12 +57,12 @@ class RepresentativeController extends Controller
                 return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب قبل مايتم اضافة مدير فريق']);
         }
 
-        // $rules = $this->getRules();
-        // $messages = $this->getMessages();
-        // $validator = Validator::make($request->all(),$rules,$messages);
-        // if($validator->fails()){
-        //     return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        // }
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
 
         if($request->hasfile('userimage'))
         {
@@ -178,6 +178,7 @@ class RepresentativeController extends Controller
         
             if($request->hasfile('userimage'))
             {
+                $this->deleteFile($user->userimage,'images/users/');
                 $file_name = $this->saveImage($request->file('userimage'),'images/users/');
             }
 

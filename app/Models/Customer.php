@@ -16,7 +16,7 @@ class Customer extends Model
         'owner_tel',
         'size',
         'loyalty',
-        'name_sub_area',
+        'address',
         'statues',
         'contact_official_name',
         'contact_official_type',

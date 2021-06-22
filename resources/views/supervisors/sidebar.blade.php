@@ -54,22 +54,66 @@
             }
             $path = substr($p,0,$index);
         @endphp
-        <li class="nav-item">
-            <a href="/supervisor/manageRepresentatives" 
-            class="nav-link {{  $p == 'supervisor/manageRepresentatives' || 
+        <li class="nav-item {{  $p == 'supervisor/manageRepresentatives' || 
                                 $p == 'supervisor/addRepresentative' ||
+                                $p == 'supervisor/manageTests'||
+                                $p == 'supervisor/addTest' ||
+                                $path == 'supervisor/editTest' ||
+                                $path == 'supervisor/manageQuestions' ||
+                                $path == 'supervisor/addQuestion' ||
+                                $path == 'supervisor/editQuestion' ||
                                 $path == 'supervisor/showMainareas' ||
                                 $path == 'supervisor/storeRepMainArea' ||
-                                $path =='supervisor/editRepresentative'? 'active' : '' 
+                                $path =='supervisor/editRepresentative'? 'menu-open' : '' 
                             }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                متابعة المناديب
-                <span class="badge badge-info right">6</span>
-                </p>
+            <a href="#"
+                class="nav-link {{  $p == 'supervisor/manageRepresentatives' || 
+                                    $p == 'supervisor/addRepresentative' ||
+                                    $p == 'supervisor/manageTests'||
+                                    $p == 'supervisor/addTest' ||
+                                    $path == 'supervisor/manageQuestions' ||
+                                    $path == 'supervisor/addQuestion' ||
+                                    $path == 'supervisor/editQuestion' ||
+                                    $path == 'supervisor/editTest' ||
+                                    $path == 'supervisor/showMainareas' ||
+                                    $path == 'supervisor/storeRepMainArea' ||
+                                    $path =='supervisor/editRepresentative'? 'active' : ''
+                                }}">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                    <p>
+                    ادارة المناديب
+                    <i class="right fas fa-angle-left"></i>
+                    </p>
             </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/supervisor/manageRepresentatives" 
+                    class="nav-link {{  $p == 'supervisor/manageRepresentatives' || 
+                                        $p == 'supervisor/addRepresentative' ||
+                                        $path == 'supervisor/showMainareas' ||
+                                        $path == 'supervisor/storeRepMainArea' ||
+                                        $path =='supervisor/editRepresentative'? 'active' : '' 
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>متابعة المناديب</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="/supervisor/manageTests" 
+                class="nav-link {{  $p == 'supervisor/manageTests'||
+                                    $p == 'supervisor/addTest' ||
+                                    $path == 'supervisor/manageQuestions' ||
+                                    $path == 'supervisor/addQuestion' ||
+                                    $path == 'supervisor/editQuestion' ||
+                                    $path == 'supervisor/editTest' ? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>الاختبارات</p>
+                </a>
+                </li>
+            </ul>
         </li>
-        <li class="nav-item {{ $p == 'supervisor/manageCompanies' || 
+        <li class="nav-item {{  $p == 'supervisor/manageCompanies' || 
                                 $p == 'supervisor/companyAdd' ||
                                 $p == 'supervisor/manageCategory' ||
                                 $p == 'supervisor/categoryAdd' ||
@@ -81,32 +125,32 @@
                                 $path == 'supervisor/itemEdit'? 'menu-open' : ''
                             }}">
             <a href="#"
-            class="nav-link {{  $p == 'supervisor/manageCompanies' || 
-                                $p == 'supervisor/companyAdd' ||
-                                $p == 'supervisor/categoryAdd' ||
-                                $p == 'supervisor/manageCategory' ||
-                                $p == 'supervisor/manageItem' ||
-                                $p == 'supervisor/itemAdd' ||
-                                $path == 'supervisor/companyEdit' ||
-                                $path == 'supervisor/categryEdit' ||
-                                $path == 'supervisor/itemUses' ||
-                                $path == 'supervisor/itemEdit'? 'active' : ''
-                            }}">
-                <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                ادارة الشركات
-                <i class="right fas fa-angle-left"></i>
-                </p>
+                class="nav-link {{  $p == 'supervisor/manageCompanies' || 
+                                    $p == 'supervisor/companyAdd' ||
+                                    $p == 'supervisor/categoryAdd' ||
+                                    $p == 'supervisor/manageCategory' ||
+                                    $p == 'supervisor/manageItem' ||
+                                    $p == 'supervisor/itemAdd' ||
+                                    $path == 'supervisor/companyEdit' ||
+                                    $path == 'supervisor/categryEdit' ||
+                                    $path == 'supervisor/itemUses' ||
+                                    $path == 'supervisor/itemEdit'? 'active' : ''
+                                }}">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                    <p>
+                    ادارة الشركات
+                    <i class="right fas fa-angle-left"></i>
+                    </p>
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
                 <a href="/supervisor/manageCompanies" 
-                class="nav-link {{  $p == 'supervisor/manageCompanies' ||
-                                    $p == 'supervisor/companyAdd' ||
-                                    $path == 'supervisor/companyEdit' ? 'active' : '' 
-                                }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>الشركات</p>
+                    class="nav-link {{  $p == 'supervisor/manageCompanies' ||
+                                        $p == 'supervisor/companyAdd' ||
+                                        $path == 'supervisor/companyEdit' ? 'active' : '' 
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الشركات</p>
                 </a>
                 </li>
                 <li class="nav-item">

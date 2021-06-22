@@ -9,8 +9,8 @@ class Test extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'question',
-        'answer',
+        'test_name',
+        'type',
         'supervisor_id',
         'created_at',
         'updated_at',
