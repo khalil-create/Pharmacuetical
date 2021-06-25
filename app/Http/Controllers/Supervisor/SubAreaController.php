@@ -56,7 +56,7 @@ class SubAreaController extends Controller
     {
         return $messages = [
             'name_sub_area.required' => 'يجب عليك كتابة المنطقة الفرعية',
-            'name_sub_area.unique' => 'هذه المنطقة موجوده مسبقاً',
+            'name_sub_area.unique' => 'هذه المنطقة موجوده مسبقاً، ادخل منطقة أخرى',
         ];
     }
     public function editSubArea($id)

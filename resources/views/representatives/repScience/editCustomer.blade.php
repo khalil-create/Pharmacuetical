@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <input value="{{$customer->owner_name}}" type="text" name="owner_name" class="form-control" placeholder="اسم المالك">
                                                 @if ($errors->has('owner_name'))
                                                     <span class="help-block">
@@ -98,7 +98,7 @@
                                                     </span>
                                                 @endif
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <input value="{{$customer->owner_phone}}" id="phonenumber" type="text" name="owner_phone" class="form-control" placeholder="رقم هاتف المالك">
                                                 <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
                                                 @if ($errors->has('owner_phone'))
@@ -107,7 +107,7 @@
                                                     </span>
                                                 @endif
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <input onkeyup="checkTelPhoneOwner()" value="{{$customer->owner_tel}}" id="Tel_phone_Owner" type="text" name="owner_tel" class="form-control" placeholder="تلفون المالك الأرضي">
                                                 <small id="invalidOwnerNo" class="form-text text-danger" hidden></small>
                                                 @if ($errors->has('owner_tel'))
@@ -213,7 +213,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <input value="{{$customer->contact_official_name}}" type="text" name="contact_official_name" class="form-control" placeholder="اسم مسؤول الاتصال">
                                                 @if ($errors->has('contact_official_name'))
                                                     <span class="help-block">
@@ -221,15 +221,24 @@
                                                     </span>
                                                 @endif
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <input value="{{$customer->contact_official_type}}" type="text" name="contact_official_type" class="form-control" placeholder="الموقع الوظيفي لمسؤول الاتصال">
                                                 @if ($errors->has('contact_official_type'))
                                                     <span class="help-block">
                                                         <small class="form-text text-danger">{{ $errors->first('contact_official_type') }}</small>
                                                     </span>
                                                 @endif
+                                            </div><br><br>
+                                            <div class="col-6">
+                                                <input value="{{$customer->contact_official_tel}}" onkeyup="checkTel()" id="Tel_Contact" type="text" name="contact_official_tel" class="form-control" placeholder="رقم الهاتف المحمول لمسؤول الاتصال">
+                                                <small id="invalidContactTel" class="form-text text-danger" hidden></small>
+                                                @if ($errors->has('contact_official_tel'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('contact_official_tel') }}</small>
+                                                    </span>
+                                                @endif
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <input onkeyup="checkTelPhoneContact()" value="{{$customer->contact_official_phone}}" id="Tel_phone_Contact" type="text" name="contact_official_phone" class="form-control" placeholder="رقم الهاتف الأرضي لمسؤول الاتصال">
                                                 <small id="invalidContactPhone" class="form-text text-danger" hidden></small>
                                                 @if ($errors->has('contact_official_phone'))

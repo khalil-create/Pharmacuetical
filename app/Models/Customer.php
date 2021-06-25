@@ -21,6 +21,7 @@ class Customer extends Model
         'contact_official_name',
         'contact_official_type',
         'contact_official_phone',
+        'contact_official_tel',
         'representative_id',
         'created_at',
         'updated_at',

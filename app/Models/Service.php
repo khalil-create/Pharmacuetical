@@ -12,6 +12,7 @@ class Service extends Model
         'type',//عيني او نقدي
         'name',//اذا كانت خدمة عينية تكتب اسمها
         'cost',
+        'statues',
         'representative_id',
         'created_at',
         'updated_at',

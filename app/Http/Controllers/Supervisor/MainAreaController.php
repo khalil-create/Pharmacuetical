@@ -49,13 +49,14 @@ class MainAreaController extends Controller
     protected function getRules()
     {
         return $rules = [
-                'name_main_area' => 'required|string|max:255',
+                'name_main_area' => 'required|string|max:255|unique:minareas',
             ];
     }
     protected function getMessages()
     {
         return $messages = [
             'name_main_area.required' => 'يجب عليك كتابة المنطقة الرئيسية',
+            'name_main_area.unique' => 'هذه المنطقة موجودة مسبقا، ادخل منطقة أخرى ',
         ];
     }
     public function editMainArea($areaid)

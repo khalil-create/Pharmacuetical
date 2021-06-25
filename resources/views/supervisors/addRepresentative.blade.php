@@ -149,7 +149,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
-                                            <input type="password" name="password" class="form-control" placeholder="كلمة السر">
+                                            <input id="password" type="password" name="password" class="form-control" placeholder="كلمة السر">
                                             @if ($errors->has('password'))
                                                 <span class="help-block">
                                                     <small class="form-text text-danger">{{ $errors->first('password') }}</small>
@@ -157,7 +157,8 @@
                                             @endif
                                         </div>
                                         <div class="col-6">
-                                            <input type="password" name="password_confirmation" class="form-control" placeholder="التأكيد">
+                                            <input onkeyup="checkPassword()" id="password_confirmation" type="password" name="password_confirmation" class="form-control" placeholder="التأكيد">
+                                            <small class="form-text text-danger" id="inalidPasswordConfirmation" hidden>{{'ليست متطابقه'}}</small>
                                             @if ($errors->has('password_confirmation'))
                                                 <span class="help-block">
                                                     <small class="form-text text-danger">{{ $errors->first('password_confirmation') }}</small>

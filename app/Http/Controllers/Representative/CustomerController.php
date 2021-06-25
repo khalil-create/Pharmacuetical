@@ -39,6 +39,7 @@ class CustomerController extends Controller
             'contact_official_name' => $request->contact_official_name,
             'contact_official_type' => $request->contact_official_type,
             'contact_official_phone' => $request->contact_official_phone,
+            'contact_official_tel' => $request->contact_official_tel,
             'size' => $request->size,
             'loyalty' => $request->loyalty,
             'address' => $request->address,
@@ -54,10 +55,11 @@ class CustomerController extends Controller
                 'name' => 'required|string|max:255|unique:customers',
                 'owner_name' => 'required|string|max:255',
                 'owner_phone' => 'required|numeric|max:799999999',
-                'owner_tel' => 'required|numeric|max:9999999',
+                'owner_tel' => 'required|numeric|max:99999999',
                 'contact_official_name' => 'required|string|max:255',
                 'contact_official_type' => 'required|string|max:255',
-                'contact_official_phone' => 'required|numeric|max:9999999',
+                'contact_official_tel' => 'required|numeric|max:799999999',
+                'contact_official_phone' => 'required|numeric|max:99999999',
                 'address' => 'required|string|max:255',
             ];
     }
@@ -79,7 +81,7 @@ class CustomerController extends Controller
 
             'owner_tel.required' => 'يجب عليك كتابة هذا الحل',
             'owner_tel.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'owner_tel.max' => 'يجب ان لايتجاوز عدد الارقام اكثر من 7',
+            'owner_tel.max' => 'يجب ان لايتجاوز عدد الارقام اكثر من 8',
 
             'contact_official_name.required' => 'يجب عليك كتابة هذا الحقل',
             'contact_official_name.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -88,7 +90,15 @@ class CustomerController extends Controller
             'contact_official_type.required' => 'يجب عليك كتابة هذا الحقل',
             'contact_official_type.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
             'contact_official_type.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-
+            
+            'contact_official_tel.required' => 'يجب عليك كتابة هذا الحقل',
+            'contact_official_tel.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            'contact_official_tel.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+        
+            'contact_official_phone.required' => 'يجب عليك كتابة هذا الحقل',
+            'contact_official_phone.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            'contact_official_phone.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 8',
+            
             'address.required' => 'يجب عليك كتابة هذا الحقل',
             'address.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
             'address.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
@@ -114,6 +124,7 @@ class CustomerController extends Controller
         $customer->contact_official_name = $request->contact_official_name;
         $customer->contact_official_type = $request->contact_official_type;
         $customer->contact_official_phone = $request->contact_official_phone;
+        $customer->contact_official_tel = $request->contact_official_tel;
         $customer->size = $request->size;
         $customer->loyalty = $request->loyalty;
         $customer->address = $request->address;

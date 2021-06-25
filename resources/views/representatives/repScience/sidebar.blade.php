@@ -49,7 +49,10 @@
         </li>
         @php
             $p = request()->path();
-            $index = strpos($p,'/');
+            $index = 4;
+            if($p != 'home' && $p !='not-allowed'){
+                $index = strpos($p,'/',16);
+            }
             $path = substr($p,0,$index);
         @endphp
         <li class="nav-item {{  $p == 'representative/manageDoctors' || 
@@ -95,6 +98,17 @@
                 </a>
                 </li>
             </ul>
+        </li>
+        <li class="nav-item">
+            <a href="/representative/manageServices"
+            class="nav-link {{  $p == 'representative/manageServices' ||
+                                $p == 'representative/addService' ||
+                                $path == 'representative/editService'? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                الخدمات
+                </p>
+            </a>
         </li>
     </nav>
     <!-- /.sidebar-menu -->

@@ -27,6 +27,7 @@ class CreateCustomersTable extends Migration
             $table->string('contact_official_name');//اسم مسؤول الاتصال
             $table->string('contact_official_type');//الموقع الوظيفي لمسؤول الاتصال
             $table->string('contact_official_phone');//رقم الهاتف لمسؤول الاتصال
+            $table->string('contact_official_tel');//رقم الهاتف الارضي لمسؤول الاتصال
             $table->unsignedInteger('representative_id')->unsigned();
             $table->foreign('representative_id')->references('id')->on('representatives')->onUpdate('cascade');
             $table->timestamps();

@@ -70,7 +70,7 @@
                       {{-- <td class="sorting_1">
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td> --}}
-                      <td class="" style="">
+                      <td>
                         <a href="/supervisor/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <a href="/supervisor/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
                         <form action="/supervisor/deleteMainArea/{{$row->id}}" method="post" style="float: right;">

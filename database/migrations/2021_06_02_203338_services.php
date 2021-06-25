@@ -15,9 +15,10 @@ class Services extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('type');
-            $table->string('name')->nullable();
+            $table->tinyInteger('type');//type of service, is money or physical (0 ==> money,1 ==> physical)
+            $table->string('name')->nullable();//if the type is physical what her name?
             $table->string('cost');
+            $table->boolean('statues');
 
             $table->unsignedInteger('representative_id')->unsigned();
             $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');

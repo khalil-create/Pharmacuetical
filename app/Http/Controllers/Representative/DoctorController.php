@@ -50,7 +50,7 @@ class DoctorController extends Controller
         return $rules = [
                 'name' => 'required|string|max:255',
                 'mobile_phone' => 'required|numeric|max:799999999',
-                'clinic_phone' => 'required|numeric|max:9999999',
+                'clinic_phone' => 'required|numeric|max:99999999',
                 'workplace_am' => 'required|string|max:255',
                 'workplace_pm' => 'required|string|max:255',
                 'rank' => 'required|string|max:255',
@@ -70,7 +70,7 @@ class DoctorController extends Controller
 
             'clinic_phone.required' => 'يجب عليك كتابة رقم العيادة',
             'clinic_phone.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'clinic_phone.max' => 'يجب ان لايتجاوز عدد الارقام اكثر من 7',
+            'clinic_phone.max' => 'يجب ان لايتجاوز عدد الارقام اكثر من 8',
 
             'workplace_am.required' => 'يجب عليك كتابة هذا الحقل',
             'workplace_am.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',

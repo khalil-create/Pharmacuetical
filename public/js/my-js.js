@@ -1,3 +1,25 @@
+///////////////////////// start check password ///////////////////////////////////////////
+
+function checkPassword()
+{
+    var password = document.getElementById("password");
+    var password_confirmation = document.getElementById("password_confirmation");
+    var masgError = document.getElementById("inalidPasswordConfirmation");
+
+    if(password.value == password_confirmation.value)
+    {
+        masgError.hidden = true;
+        password_confirmation.style.border = "1px solid #007bff";
+    }
+    else
+    {
+        masgError.hidden = false;
+        password_confirmation.style.border = "1px solid #dc3545";
+    }
+}
+
+///////////////////////// End check password /////////////////////////////////////////////
+
 ///////////////////////// start //////////////////////////////////////////////////////
 function showList(){
     var usertype = document.getElementById("usertype").value;
@@ -147,19 +169,19 @@ function showListInRep(){
     clinic_phone.onkeyup = function()
     {
         messege.hidden = true;
-        if(clinic_phone.value >= 1000000 && clinic_phone.value <= 9999999){
+        if(clinic_phone.value >= 10000000 && clinic_phone.value <= 99999999){
             messege.hidden = true;
             clinic_phone.style.border = "1px solid #007bff";
 
         }
-        else if(clinic_phone.value > 9999999){
-            messege.textContent = "يجب ان لا يتجاوز العدد لأكثر من 7 ارقام";
+        else if(clinic_phone.value > 999999999){
+            messege.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
             clinic_phone.style.border = "1px solid #dc3545";
             messege.hidden = false;
         }
         else{
             clinic_phone.style.border = "1px solid #dc3545";
-            messege.textContent = "ادخل 7 ارقام";
+            messege.textContent = "ادخل 8 ارقام";
             messege.hidden = false;
         }
     }
@@ -173,19 +195,19 @@ function showListInRep(){
     {
         console.log('lll');
         invalidOwnerNo.hidden = true;
-        if(Tel_phone_Owner.value >= 1000000 && Tel_phone_Owner.value <= 9999999){
+        if(Tel_phone_Owner.value >= 10000000 && Tel_phone_Owner.value <= 99999999){
             invalidOwnerNo.hidden = true;
             Tel_phone_Owner.style.border = "1px solid #007bff";
 
         }
-        else if(Tel_phone_Owner.value > 9999999){
-            invalidOwnerNo.textContent = "يجب ان لا يتجاوز العدد لأكثر من 7 ارقام";
+        else if(Tel_phone_Owner.value > 99999999){
+            invalidOwnerNo.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
             Tel_phone_Owner.style.border = "1px solid #dc3545";
             invalidOwnerNo.hidden = false;
         }
         else{
             Tel_phone_Owner.style.border = "1px solid #dc3545";
-            invalidOwnerNo.textContent = "ادخل 7 ارقام";
+            invalidOwnerNo.textContent = "ادخل 8 ارقام";
             invalidOwnerNo.hidden = false;
         }
     }
@@ -198,21 +220,94 @@ function showListInRep(){
     function checkTelPhoneContact()
     {
         invalidContactPhone.hidden = true;
-        if(Tel_phone_Contact.value >= 1000000 && Tel_phone_Contact.value <= 9999999){
+        if(Tel_phone_Contact.value >= 10000000 && Tel_phone_Contact.value <= 99999999){
             invalidContactPhone.hidden = true;
             Tel_phone_Contact.style.border = "1px solid #007bff";
 
         }
-        else if(Tel_phone_Contact.value > 9999999){
-            invalidContactPhone.textContent = "يجب ان لا يتجاوز العدد لأكثر من 7 ارقام";
+        else if(Tel_phone_Contact.value > 99999999){
+            invalidContactPhone.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
             Tel_phone_Contact.style.border = "1px solid #dc3545";
             invalidContactPhone.hidden = false;
         }
         else{
             Tel_phone_Contact.style.border = "1px solid #dc3545";
-            invalidContactPhone.textContent = "ادخل 7 ارقام";
+            invalidContactPhone.textContent = "ادخل 8 ارقام";
             invalidContactPhone.hidden = false;
         }
     }
 ///////////////////////// end phone_Contact //////////////////////////////////////////////////////
 
+///////////////////////// start //////////////////////////////////////////////////////
+function checkTel()
+{
+    var TelPhone_Contact = document.getElementById("Tel_Contact");
+    var invalidContactTel = document.getElementById("invalidContactTel");
+
+    let seven = TelPhone_Contact.value;
+    // $seven = Math.trunc($seven);
+    let ss = num => Number(num);
+    let intArr = Array.from(String(seven),ss);
+    invalidContactTel.hidden = true;
+    if(TelPhone_Contact.value >= 700000000 && TelPhone_Contact.value <= 799999999)
+    {
+        invalidContactTel.hidden = true;
+        TelPhone_Contact.style.border = "1px solid #007bff";
+
+    }
+    else if(TelPhone_Contact.value > 799999999)
+    {
+        if(intArr[0] != 7)
+        invalidContactTel.textContent = "يجب ان يبدأ برقم 7";
+        else
+            invalidContactTel.textContent = "يجب ان لا يتجاوز العدد لأكثر من 9 ارقام ";
+        TelPhone_Contact.style.border = "1px solid #dc3545";
+        invalidContactTel.hidden = false;
+    }
+    else{
+        if(intArr[0] != 7)
+            invalidContactTel.textContent = "يجب ان يبدأ برقم 7";
+        else
+            invalidContactTel.textContent = "ادخل 9 ارقام";
+        TelPhone_Contact.style.border = "1px solid #dc3545";
+        invalidContactTel.hidden = false;
+    }
+}
+//////////////////////////// Start check service name /////////////////////////
+service_type = document.getElementById("service_type");
+service_name = document.getElementById("service_name");
+function showServiceName(){
+    s_name = document.getElementById("name");
+    if(service_type.value == 1){
+        service_name.hidden = false;
+        s_name.value = '';
+    }
+    else{
+        service_name.hidden = true;
+        s_name.value = 'write service name';
+    }
+}
+
+//////////////////////////// end check service name /////////////////////////
+
+//////////////////////////// start check customer type /////////////////////////
+
+function showCustType(){
+    var cust_type = document.getElementById("cust_type").value;
+    if(cust_type == 1)
+    {
+        document.getElementById("cust_name").hidden = true;
+        document.getElementById("doctor_name").hidden = false;
+    }
+    else if(cust_type == 0)
+    {
+        document.getElementById("cust_name").hidden = false;
+        document.getElementById("doctor_name").hidden = true;
+    }
+    else
+    {
+        document.getElementById("doctor_name").hidden = true; 
+        document.getElementById("doctor_name").hidden = true;       
+    }
+}
+//////////////////////////// end check customer type /////////////////////////

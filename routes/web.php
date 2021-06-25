@@ -313,6 +313,13 @@ Route::group(['prefix'=>'representative','namespace'=>'App\Http\Controllers\Repr
     Route::put('/updateCustomer/{id}', 'CustomerController@updateCustomer');
     Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
 
+    Route::get('/manageServices', 'ServiceController@getAllServices');
+    Route::get('/addService', 'ServiceController@addService');
+    Route::post('/storeService', 'ServiceController@storeService');
+    Route::get('/editService/{id}', 'ServiceController@editService');
+    Route::put('/updateService/{id}', 'ServiceController@updateService');
+    Route::delete('/deleteService/{id}', 'ServiceController@deleteService');
+
 });
 Auth::routes();
 
