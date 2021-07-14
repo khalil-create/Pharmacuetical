@@ -46,6 +46,10 @@ class Item extends Model
     {
         return $this->belongsToMany('App\Models\Company','companies_items');
     }
+    public function representatives()
+    {
+        return $this->belongsToMany('App\Models\Representative','representatives_items');
+    }
     public function trainingCourses()
     {
         return $this->hasMany('App\Models\TrainingCourse','item_id','id');

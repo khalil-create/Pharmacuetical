@@ -43,6 +43,16 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success notify-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error notify-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12">
                 <div class="form-group">

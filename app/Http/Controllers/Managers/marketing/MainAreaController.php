@@ -45,7 +45,7 @@ class MainAreaController extends Controller
     protected function getRules()
     {
         return $rules = [
-                'name_main_area' => 'required|string|max:255',
+                'name_main_area' => 'required|string|max:255|unique:mainareas',
             ];
     }
     protected function getMessages()

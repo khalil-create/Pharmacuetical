@@ -7,17 +7,20 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
     public function getAllCategories()
     {
-        $cat = Category::with('companies')->get();
-        return view('supervisors.manageCategories',compact('cat',$cat));
+        $companies = Company::where('supervisor_id',Auth::user()->supervisor->id)->get();
+        
+        // $cat = Category::with('companies')->where('company.supervisor_id',Auth::user()->supervisor->id)->get();
+        return view('supervisors.manageCategories',compact('companies',$companies));
     }
     public function addCategory()
     {
-        $company = Company::all();
+        $company = Company::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.addCategory', compact('company',$company));
     }
     public function storeCategory(Request $request)
@@ -54,7 +57,7 @@ class CategoryController extends Controller
         $category = Category::find($id); 
         if($category->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $companies = Company::all();
+        $companies = Company::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.editCategory', compact('category',$category))->with('companies',$companies);
     }
     public function UpdateCategory(Request $request,$id)

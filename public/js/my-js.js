@@ -311,3 +311,110 @@ function showCustType(){
     }
 }
 //////////////////////////// end check customer type /////////////////////////
+
+//////////////////////////// start check visit type /////////////////////////
+
+visit_type = document.getElementById("visit_type");
+item = document.getElementById("item");
+scientific_mission = document.getElementById("scientific_mission");
+service_name = document.getElementById("service_name");
+description = document.getElementById("description");
+function checkVisitType(){
+    desc = document.getElementById("desc");
+    mission = document.getElementById("mission");
+    if(visit_type.value == 1){
+        item.hidden = false;
+        scientific_mission.hidden = false;
+        service_name.hidden = true;
+        description.hidden = true;
+        mission.value = '';
+        desc.value = 'description';
+    }
+    else if(visit_type.value == 2){
+        item.hidden = true;
+        scientific_mission.hidden = true;
+        service_name.hidden = false;
+        description.hidden = true;
+        mission.value = 'mission';
+        desc.value = 'description';
+    }
+    else{
+        item.hidden = true;
+        scientific_mission.hidden = true;
+        service_name.hidden = true;
+        description.hidden = false;
+        mission.value = 'mission';
+        desc.value = '';
+    }
+}
+
+
+//////////////////////////// end check visit type /////////////////////////
+
+
+//////////////////////////// start check have items /////////////////////////
+haveItem = document.getElementById("haveItem");
+table = document.getElementById("table");
+error = document.getElementById("error");
+if(haveItem.value == 0){
+    table.hidden = true;
+    error.hidden = false;
+}
+
+//////////////////////////// end check have items /////////////////////////
+
+
+//////////////////////////// start check points type for training courses /////////////////////////
+
+function pointsType(){
+    var points_type = document.getElementById("points_type");
+    var link = document.getElementById("link");
+    var file_points = document.getElementById("file_points");
+
+    var imp_file = document.getElementById("imp_file");
+    var imp_link = document.getElementById("imp_link");
+    if(points_type.value == 1){
+        file_points.hidden = false;
+        link.hidden = true;
+        imp_file.value = '';
+        imp_link.value = 'link';
+    }
+    else if(points_type.value == 2){
+        file_points.hidden = true;
+        link.hidden = false;
+        imp_link.value = '';
+        imp_file.value = 'file';
+    }
+    else{
+        file_points.hidden = true;
+        link.hidden = true;
+    }
+}
+
+//////////////////////////// end check points type for training courses /////////////////////////
+
+
+//////////////////////////// start check validation /////////////////////////
+// clicked = document.getElementById("count_q");
+// function increased(){
+
+//     clicked.value++;
+//     var count = document.getElementById("count_q");
+//     var not = document.getElementById("not_completed");
+//     var btn = document.getElementById("send_btn");
+//     // console.log(clicked);
+//     if(clicked.value >= count.value){
+//         btn.hidden = false;
+//         not.hidden = true;
+//     }
+// }
+function Validation()
+{
+    var count = document.getElementById("count_q");
+    var bol2 = $('form input[type=radio]:checked').length;
+    if(bol2 < count.value){
+        alert("لم يتم اكمال جميع الاسئلة الرجاء منك الاجابة على الاسئلة كامل");
+        return false;
+    }
+}
+//////////////////////////// end  set value to answered_choice /////////////////////////

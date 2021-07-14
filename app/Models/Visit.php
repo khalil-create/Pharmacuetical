@@ -25,7 +25,7 @@ class Visit extends Model
         'updated_at',
     ];
     public $timestamps = true; //the default is true
-    public function represntaitive()
+    public function representative()
     {
         return $this->belongsTo('App\Models\Representative','representative_id');
     }
@@ -36,5 +36,17 @@ class Visit extends Model
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer','customer_id','id');//(related,foriegn key,primary key)
+    }
+    public function composition()
+    {
+        return $this->hasOne('App\Models\VisitComposition','visit_id','id');//(related,foriegn key,primary key)
+    }
+    public function serviceOffer()
+    {
+        return $this->hasOne('App\Models\OfferService','visit_id','id');//(related,foriegn key,primary key)
+    }
+    public function solveProblem()
+    {
+        return $this->hasOne('App\Models\ProblemsSolve','visit_id','id');//(related,foriegn key,primary key)
     }
 }

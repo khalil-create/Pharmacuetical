@@ -14,18 +14,18 @@ class MainAreaController extends Controller
 {
     public function getAllAreas()
     {
-        $mainareas = Mainarea::whereHas('supervisor')->get();
+        $mainareas = Mainarea::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.manageMainAreas',compact('mainareas',$mainareas));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public function addMainArea()
     {
-        $supervisor = User::whereHas('supervisor')->get();
-        if($supervisor->count() < 1)
-            return redirect()->back()->with(['error' => 'لايمكنك اضافة منطقة رئيسية قبل مايتم اضافة على الاقل مشرف واحد']);
+        // $supervisor = User::whereHas('supervisor')->get();
+        // if($supervisor->count() < 1)
+        //     return redirect()->back()->with(['error' => 'لايمكنك اضافة منطقة رئيسية قبل مايتم اضافة على الاقل مشرف واحد']);
 
-        return view('supervisors.addMainArea', compact('supervisor',$supervisor));
+        return view('supervisors.addMainArea');
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,8 +37,8 @@ class MainAreaController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        $user = User::where('user_name_third',$request->supervisor_name)->first();
-        $supervisor = Supervisor::where('user_id',$user->id)->first();
+        // $user = User::where('user_name_third',$request->supervisor_name)->first();
+        // $supervisor = Supervisor::where('user_id',$user->id)->first();
         Mainarea::create([
             'name_main_area' => $request->name_main_area,
             'supervisor_id' => Auth::user()->supervisor->id,
@@ -49,7 +49,7 @@ class MainAreaController extends Controller
     protected function getRules()
     {
         return $rules = [
-                'name_main_area' => 'required|string|max:255|unique:minareas',
+                'name_main_area' => 'required|string|max:255|unique:mainareas',
             ];
     }
     protected function getMessages()
@@ -64,12 +64,11 @@ class MainAreaController extends Controller
         $area = Mainarea::find($areaid); 
         if($area->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $supervisor = Supervisor::findOrfail($area->supervisor_id);
+        // $supervisor = Supervisor::findOrfail($area->supervisor_id);
         // $supervisor = $sup1->user()->get();
-        $supervisors = Supervisor::whereHas('user')->get();
+        // $supervisors = Supervisor::whereHas('user')->get();
         // return $supervisors;
-        return view('supervisors.editMainArea', compact('supervisor',$supervisor))->with('supervisors',$supervisors)
-        ->with('area',$area);
+        return view('supervisors.editMainArea', compact('area'));
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function UpdateMainArea(Request $request,$areaid)
@@ -86,7 +85,7 @@ class MainAreaController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         // $sup = Supervisor::find($request->supervisor_id);
         $mainArea->name_main_area = $request->Input('name_main_area');
-        $mainArea->supervisor_id = $request->Input('supervisor_id');
+        $mainArea->supervisor_id = Auth::user()->supervisor->id;
         $mainArea->update();
 
         return redirect('/supervisor/manageMainAreas')->with('status','تم تعديل البيانات بشكل ناجح');

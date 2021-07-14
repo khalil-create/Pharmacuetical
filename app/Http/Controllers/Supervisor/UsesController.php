@@ -71,10 +71,13 @@ class UsesController extends Controller
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
         $use = Uses::find($id);
-        
+        if($use->items->first()->category_id != null)
+            $have_category = 1;
+        else
+            $have_category = 0;
         $use->use = $request->use;
         $use->update();
-        return redirect('/supervisor/manageItems')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/supervisor/manageItem/'.$have_category)->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteUse($id)
     {

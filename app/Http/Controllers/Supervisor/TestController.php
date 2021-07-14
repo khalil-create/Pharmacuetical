@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Supervisor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\Representative;
 use App\Models\Test;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ class TestController extends Controller
 {
     public function getAllTests()
     {
-        $tests = Test::where('supervisor_id',Auth::user()->supervisor->id)->get();
+        $tests = Test::where('supervisor_id',Auth::user()->supervisor->id)
+        ->whereNull('type_id')->get();
         return view('supervisors.manageTests',compact('tests'));
     }
     public function addTest()
@@ -28,7 +30,7 @@ class TestController extends Controller
         }
         Test::create([
             'test_name' => $request->test_name,
-            'type' => $request->type,
+            // 'type' => $request->type,
             'supervisor_id' => Auth::user()->supervisor->id,
         ]);
         
@@ -61,7 +63,7 @@ class TestController extends Controller
         if($test->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $test->test_name = $request->test_name;
-        $test->type = $request->type;
+        // $test->type = $request->type;
         $test->update();
         
         return redirect('/supervisor/manageTests')->with('status','تم تعديل البيانات بشكل ناجح');
@@ -75,5 +77,50 @@ class TestController extends Controller
         $test->delete();
 
         return redirect('/supervisor/manageTests')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function getAllTestTypes($id)
+    {
+        $test = Test::findOrfail($id);
+        if($test->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+
+        return view('supervisors.manageTestTypes', compact('test'));
+    }
+    public function getAllTestReps($id)
+    {
+        $test = Test::findOrfail($id);
+        if($test->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+
+        return view('supervisors.manageTestReps', compact('test'));
+    }
+    public function addTestReps($id)
+    {
+        $test = Test::findOrfail($id);
+        if($test->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+
+        $reps = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
+        return view('supervisors.addTestReps', compact('test'))->with('reps',$reps);
+    }
+    public function storeTestReps(Request $request,$id)
+    {
+        $rules = [
+            'repIds' => 'required',
+        ];
+        $messages = [
+            'repIds.required' => 'يجب عليك اختيار على الاقل مندوب واحد ',
+        ];
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
+
+        $test = Test::findOrfail($id);
+        if($test->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+
+        $test->representatives()->sync($request->repIds);
+        return redirect('/supervisor/manageTestReps/'.$test->id)->with('status','تم إضافة البيانات بشكل ناجح');
     }
 }

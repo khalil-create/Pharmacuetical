@@ -66,4 +66,8 @@ class Supervisor extends Model
     {
         return $this->hasMany('App\Models\SalesObjective','supervisor_id','id');//(related,foriegn key,primary key)
     }
+    // public function categories()
+    // {
+    //     return $this->hasManyThrough('App\Models\Category','App\Models\Compny','App\Models\Company','categories_companies');//(related,foriegn key,primary key)
+    // }
 }

@@ -10,36 +10,67 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function getAllQuestions($id)
+    public function getAllQuestions(Request $request)
     {
-        $test = Test::findOrfail($id);
-        $questions = Question::where('test_id',$id)->get();
-        return view('supervisors.manageQuestions',compact('questions'))->with('test',$test);
+        $id = $request->get('id');
+        $type = $request->get('type');
+        $test1 = Test::findOrfail($id);
+        $test11 = $test1->type()->get();
+        $arr = $test11->all();
+        $empty = collect();
+        $questions = $empty;
+        if($arr != null){
+            $test2 = Test::where('type_id',$arr[0]->type_id)->
+            where('type',$type)->with('type')->get();
+            $arr2 = $test2->all();
+            if($arr2 != null)
+                $questions = Question::where('test_id',$arr2[0]->id)->get();
+        }
+        return view('supervisors.manageQuestions',compact('questions'))
+        ->with('test',$test1)->with('type',$type);
     }
-    public function addQuestion($id)
+    public function addQuestion(Request $request)
     {
+        $id = $request->get('id');
+        $type = $request->get('type');
         $test = Test::findOrfail($id);
-        return view('supervisors.addQuestion',compact('id'))->with('test',$test);
+        return view('supervisors.addQuestion',compact('id'))
+        ->with('test',$test)->with('type',$type);
     }
     public function storeQuestion(Request $request,$id)
     {
-        $test = Test::findOrfail($id);
+        $type = $request->type;
+        $testt = Test::findOrfail($id);
+        // return $testt->id;
         $answer = $request->right_answer;
         $choice1 = $request->choice1;
         $choice2 = $request->choice2;
         $choice3 = $request->choice3;
         $choice4 = $request->choice4;
-        if($test->type == 1 && !($answer == $choice1 || $answer == $choice2 || $answer == $choice3 || $answer == $choice4))
+        if($type == 1 && !($answer == $choice1 || $answer == $choice2 || $answer == $choice3 || $answer == $choice4))
             return redirect()->back()->with(['error' => 'يجب ان تكون الاجابه من احدى الاختيارات ']);
         
-        if($test->type == 0)
+        $tests = Test::where('supervisor_id',Auth::user()->supervisor->id)
+        ->where('type_id',$id)->where('type',$type)->get();
+        if($type == 0)
         {
             $rules = $this->getRules2();
             $messages = $this->getMessages2();
             $validator = Validator::make($request->all(),$rules,$messages);
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator)->withInputs($request->all());
-            }    
+            }   
+            if($tests->count() == 0){ 
+                $test = Test::create([
+                    'test_name' => $testt->test_name,
+                    'type' => $type,
+                    'type_id' => $testt->id,
+                    'supervisor_id' => Auth::user()->supervisor->id,
+                ]);
+            }
+            else{
+                $test = $tests->first();
+            }
             Question::create([
                 'question' => $request->question,
                 'right_answer' => $answer,
@@ -55,7 +86,17 @@ class QuestionController extends Controller
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator)->withInputs($request->all());
             }
-
+            if($tests->count() == 0){ 
+                $test = Test::create([
+                    'test_name' => $testt->test_name,
+                    'type' => $type,
+                    'type_id' => $testt->id,
+                    'supervisor_id' => Auth::user()->supervisor->id,
+                ]);
+            }
+            else{
+                $test = $tests->first();
+            }
             Question::create([
                 'question' => $request->question,
                 'choices' => $choice1.'++'.$choice2.'++'.$choice3.'++'.$choice4,
@@ -64,8 +105,7 @@ class QuestionController extends Controller
             ]);
         }
         
-        
-        return redirect('/supervisor/manageQuestions/'.$test->id)->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect(route('manageQuestions',['id' => $testt->id,'type' => $type]))->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -125,15 +165,21 @@ class QuestionController extends Controller
             'right_answer.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
         ];
     }
-    public function editQuestion($id)
+    public function editQuestion(Request $request)
     {
+        $id = $request->get('id');
+        $type = $request->get('type');
+        $test_id = $request->get('test_id');
         $question = Question::find($id);
         if($question->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        return view('supervisors.editQuestion', compact('question'));
+        return view('supervisors.editQuestion', compact('question'))
+        ->with('test_id',$test_id)->with('type',$type);
     }
     public function updateQuestion(Request $request,$id)
     {
+        $type = $request->type;
+        $test_id = $request->test_id;
         $question = Question::find($id);
         if($question->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
@@ -142,10 +188,10 @@ class QuestionController extends Controller
         $choice2 = $request->choice2;
         $choice3 = $request->choice3;
         $choice4 = $request->choice4;
-        if($question->test->type == 1 && !($answer == $choice1 || $answer == $choice2 || $answer == $choice3 || $answer == $choice4))
+        if($type == 1 && !($answer == $choice1 || $answer == $choice2 || $answer == $choice3 || $answer == $choice4))
             return redirect()->back()->with(['error' => 'يجب ان تكون الاجابه من احدى الاختيارات ']);
         
-        if($question->test->type == 0)
+        if($type == 0)
         {
             $rules = $this->getRules2();
             $messages = $this->getMessages2();
@@ -156,7 +202,7 @@ class QuestionController extends Controller
             $question->question = $request->question;
             $question->choices = 'صح++خطأ';
             $question->right_answer = $answer;
-            $question->test_id = $question->test->id;
+            // $question->test_id = $question->test->id;
             $question->update();
         }
         else{
@@ -169,19 +215,22 @@ class QuestionController extends Controller
             $question->question = $request->question;
             $question->choices = $choice1.'++'.$choice2.'++'.$choice3.'++'.$choice4;
             $question->right_answer = $answer;
-            $question->test_id = $question->test->id;
+            // $question->test_id = $question->test->id;
             $question->update();
         }
-        return redirect('/supervisor/manageQuestions/'.$question->test->id)->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect(route('manageQuestions',['id' => $test_id,'type' => $type]))->with('status','تم تعديل البيانات بشكل ناجح');
     }
-    public function deleteQuestion($id)
+    public function deleteQuestion(Request $request)
     {
+        $id = $request->id;
+        $type = $request->type;
+        $test_id = $request->test_id;
         $question = Question::findOrfail($id);
         if($question->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
         $question->delete();
 
-        return redirect('/supervisor/manageQuestions/'.$question->test->id)->with('status','تم حذف البيانات بشكل ناجح');
+        return redirect(route('manageQuestions',['id' => $test_id,'type' => $type]))->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

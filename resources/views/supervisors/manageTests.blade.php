@@ -36,6 +36,16 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success notify-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error notify-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -48,9 +58,9 @@
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم الاختبار
                       </th>
-                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         النوع
-                      </th>
+                      </th> --}}
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
@@ -67,37 +77,28 @@
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->test_name}}</td>
-                      <td>
+                      {{-- <td>
                         @if ($row->type == 0)
                             {{'صواب/خطأ'}}
                         @else
                             {{'اختيار متعدد'}}
                         @endif
-                      </td>
+                      </td> --}}
                       <td>
                         <a href="/supervisor/manageQuestions/{{$row->id}}"><i class="nav-icon fas fa-plus kkk" title="الأسئلة"></i></a>
+                        <a href="/supervisor/manageTestTypes/{{$row->id}}"><i class="nav-icon fas fa-plus kkk" title="الأسئلة"></i></a>
                         <a href="/supervisor/editTest/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
                         <form action="/supervisor/deleteTest/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;margin-left: -15px;"><i class="fas fa-trash" title="حذف"></i></button>
                           </form>
-                          <a href="/supervisor/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                          <a href="/supervisor/manageTestReps/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
                       </td>
                     </tr>
                   @endforeach
                   <div>
                     <a href="{{url('/supervisor/addTest')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة اختبار</a>
-                        @if (session('status'))
-                            <div class="alert alert-success notify-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        @if (session('error'))
-                                  <div class="alert alert-danger notify-error">
-                                      {{ session('error') }}
-                                  </div>
-                        @endif
                   </div>
                   </tbody>
                   <tfoot>
@@ -105,7 +106,7 @@
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1" style="">اسم الاختبار</th>
-                        <th rowspan="1" colspan="1" style="">النوع</th>
+                        {{-- <th rowspan="1" colspan="1" style="">النوع</th> --}}
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
                     @endif

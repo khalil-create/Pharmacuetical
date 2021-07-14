@@ -57,18 +57,24 @@
         @endphp
         <li class="nav-item {{  $p == 'representative/manageDoctors' || 
                                 $p == 'representative/manageCustomers' ||
+                                $p == 'representative/manageOrders' ||
                                 $p == 'representative/addDoctor' ||
                                 $p == 'representative/addCustomer' ||
+                                $p == 'representative/addOrder' ||
                                 $path == 'representative/editDoctor' ||
-                                $path == 'representative/editCustomer'? 'menu-open' : ''
+                                $path == 'representative/editCustomer'||
+                                $path == 'representative/editOrder'? 'menu-open' : ''
                             }}">
             <a href="#"
             class="nav-link {{  $p == 'representative/manageDoctors' || 
                                 $p == 'representative/manageCustomers' ||
+                                $p == 'representative/manageOrders' ||
                                 $p == 'representative/addDoctor' ||
                                 $p == 'representative/addCustomer' ||
+                                $p == 'representative/addOrder' ||
                                 $path == 'representative/editDoctor' ||
-                                $path == 'representative/editCustomer'? 'active' : ''
+                                $path == 'representative/editCustomer'||
+                                $path == 'representative/editOrder'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
@@ -97,6 +103,17 @@
                         <p>العملاء</p>
                 </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/representative/manageOrders"
+                    class="nav-link {{  $p == 'representative/manageOrders' ||
+                                        $p == 'representative/addOrder' ||
+                                        $path == 'representative/editOrder'? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                        الطلبيات
+                        </p>
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="nav-item">
@@ -110,6 +127,52 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="/representative/manageVisits"
+            class="nav-link {{  $p == 'representative/manageVisits' ||
+                                $p == 'representative/addVisit' ||
+                                $path == 'representative/editVisit'? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                الزيارات
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/representative/manageCourses"
+            class="nav-link {{  $p == 'representative/manageCourses' ||
+                                $p == 'representative/addVisit' ||
+                                $path == 'representative/editVisit'? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                المواد التدريبية
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/representative/manageTests"
+            class="nav-link {{  $p == 'representative/manageTests' ||
+                                $path == 'representative/repTests' ||
+                                $path == 'representative/storeRepTest' ||
+                                $path == 'representative/editVisit'? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                الاختبارات
+                </p>
+            </a>
+        </li>
+        {{-- <li class="nav-item">
+            <a href="/representative/showStudies"
+            class="nav-link {{  $p == 'representative/showStudies' ||
+                                $path == 'representative/repTests' ||
+                                $path == 'representative/storeRepTest' ||
+                                $path == 'representative/editVisit'? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                الدراسات العلمية
+                </p>
+            </a>
+        </li> --}}
     </nav>
     <!-- /.sidebar-menu -->
     </div>

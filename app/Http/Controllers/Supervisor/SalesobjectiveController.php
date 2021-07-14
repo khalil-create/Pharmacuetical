@@ -19,7 +19,7 @@ class SalesobjectiveController extends Controller
     public function getAllSalesObjectives()
     {
         $salesObjectives = Salesobjective::whereHas('supervisor')
-        ->where('supervisor_id',Auth::user()->supervisor->id)->where('manager_id','!=',null)->get();
+        ->where('supervisor_id',Auth::user()->supervisor->id)->whereNotNull('manager_id')->get();
         return view('supervisors.manageSalesObjectives',compact('salesObjectives',$salesObjectives));
     }
     public function addDividedSalesObjective($id)

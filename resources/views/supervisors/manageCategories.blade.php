@@ -36,11 +36,21 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success notify-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error notify-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($cat->count() > 0)
+                  @if($companies->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -63,15 +73,15 @@
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($cat as $row)
-                    @foreach($row->companies as $comp)                    
+                  @foreach ($companies as $comp)
+                    @foreach($comp->categories as $cat)                    
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{$row->name_cat}}</td>
+                      <td>{{$cat->name_cat}}</td>
                       <td>{{$comp->name_company}}</td>
                       <td>
-                        <a href="/supervisor/categoryEdit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <form action="/supervisor/categoryDelete/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/supervisor/categoryEdit/{{$cat->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
+                        <form action="/supervisor/categoryDelete/{{$cat->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;margin-left: -160px;"><i class="fas fa-trash"></i></button>
@@ -83,20 +93,10 @@
                   @endforeach
                   <div>
                     <a href="{{url('/supervisor/categoryAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مجموعة اصناف</a>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                              <div class="alert alert-success notify-error">
-                                  {{ session('error') }}
-                              </div>
-                    @endif
                   </div>
                   </tbody>
                   <tfoot>
-                  @if($cat->count() > 0)
+                  @if($companies->count() > 0)
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">اسم المجموعة</th>

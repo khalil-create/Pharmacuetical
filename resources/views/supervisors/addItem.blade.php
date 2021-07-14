@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('supervisor/itemStore') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('supervisor/itemStore',$have_category) }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
@@ -93,19 +93,37 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('category_name') ? ' has-error' : '' }}">
-                                    <label class="col-md-2 control-label">اسم المجموعة</label>
-                                        <select name="category_id" id="category_id" class="form-control custom-select rounded-0">
-                                            @foreach ($category as $cat)
-                                                <option value="{{$cat->id}}">{{$cat->name_cat}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('category_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('category_id') }}</strong>
-                                            </span>
-                                        @endif
-                                </div>
+                                @if($have_category)
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">اسم المجموعة</label>
+                                            <select name="category_id" id="category_id" class="form-control custom-select rounded-0">
+                                                @foreach ($companies as $comp)
+                                                    @foreach ($comp->categories as $cat)
+                                                        <option value="{{$cat->id}}">{{$cat->name_cat}}</option>
+                                                    @endforeach
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('category_id'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('category_id') }}</strong>
+                                                </span>
+                                            @endif
+                                    </div>
+                                @else
+                                    <div class="form-group">
+                                        <label class="col-md- control-label">اسم الشركة <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من شركة)</span></label>
+                                            <select name="company_ids[]" id="category_id" class="form-control custom-select rounded-0" multiple>
+                                                @foreach ($companies as $comp)
+                                                    <option value="{{$comp->id}}">{{$comp->name_company}}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('company_ids'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('company_ids') }}</strong>
+                                                </span>
+                                            @endif
+                                    </div>
+                                @endif
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         اضافة <i class="fas fa-plus"></i>

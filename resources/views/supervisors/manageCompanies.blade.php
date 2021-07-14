@@ -36,6 +36,16 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success notify-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error notify-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -51,9 +61,9 @@
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         بلد التصنيع
                       </th>
-                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         اسم المشرف عليها
-                      </th>
+                      </th> --}}
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
@@ -74,9 +84,9 @@
                             {{ $row->name_company }} 
                       </td>
                       <td>{{ $row->country_manufacturing }}</td>
-                      <td>
+                      {{-- <td>
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
-                      </td>
+                      </td> --}}
                       <td class="" style="">
                         <a href="/supervisor/companyEdit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <form action="/supervisor/companyDelete/{{$row->id}}" method="post" style="float: right;">
@@ -91,16 +101,6 @@
                   @endforeach
                   <div>
                     <a href="{{url('/supervisor/companyAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة شركة</a>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                              <div class="alert alert-success notify-error">
-                                  {{ session('error') }}
-                              </div>
-                    @endif
                   </div>
                   </tbody>
                   <tfoot>
@@ -109,7 +109,7 @@
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم الشركة</th>
                         <th rowspan="1" colspan="1">بلد التصنيع</th>
-                        <th rowspan="1" colspan="1">اسم المشرف عليها</th>
+                        {{-- <th rowspan="1" colspan="1">اسم المشرف عليها</th> --}}
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
                     @endif

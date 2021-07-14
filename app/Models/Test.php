@@ -11,6 +11,7 @@ class Test extends Model
     protected $fillable = [
         'test_name',
         'type',
+        'type_id',
         'supervisor_id',
         'created_at',
         'updated_at',
@@ -18,15 +19,22 @@ class Test extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'pivot',
     ];
     public $timestamps = true; //the default is true
     public function supervisor()
     {
         return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
     }
-    public function represntaitives()
+    public function representatives()
     {
         return $this->belongsToMany('App\Models\Representative','representatives_tests');
+    }
+    public function questions()
+    {
+        return $this->hasMany('App\Models\Question','test_id','id');
+    }
+    public function type()
+    {
+        return $this->hasMany('App\Models\Test','type_id','id');
     }
 }

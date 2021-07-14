@@ -15,7 +15,7 @@ class SampleController extends Controller
 {
     public function getAllSamples()
     {
-        $samples = Sample::whereHas('supervisor')->where('manager_id','!=',null)->with(['supervisor' => function($q){
+        $samples = Sample::whereHas('supervisor')->whereNotNull('manager_id')->with(['supervisor' => function($q){
             $q->where('id',Auth::user()->supervisor->id);
         }])->get();
         return view('supervisors.manageSamples',compact('samples',$samples));

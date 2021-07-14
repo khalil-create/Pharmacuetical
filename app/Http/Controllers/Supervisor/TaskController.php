@@ -15,7 +15,7 @@ class TaskController extends Controller
     use userTrait;
     public function getAllChargedTasks()
     {
-        $tasks = Task::whereHas('supervisor')->where('manager_id','!=',null)->get();
+        $tasks = Task::whereHas('supervisor')->whereNotNull('manager_id')->get();
         return view('supervisors.manageChargedTasks',compact('tasks',$tasks));
     }
     public function performTask($id)

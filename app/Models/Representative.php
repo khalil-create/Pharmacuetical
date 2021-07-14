@@ -63,7 +63,7 @@ class Representative extends Model
     }
     public function tests()
     {
-        return $this->belongsToMany('App\Models\Test','representarives_tests');
+        return $this->belongsToMany('App\Models\Test','representatives_tests');
     }
     public function visits()
     {
@@ -84,5 +84,13 @@ class Representative extends Model
     public function salesObjectives()
     {
         return $this->hasMany('App\Models\Salesobjective','representative_id','id');//(related,foriegn key,primary key)
+    }
+    public function services()
+    {
+        return $this->hasMany('App\Models\Service','representative_id','id');//(related,foriegn key,primary key)
+    }
+    public function items()
+    {
+        return $this->belongsToMany('App\Models\Item','representatives_items');
     }
 }

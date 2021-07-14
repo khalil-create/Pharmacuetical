@@ -40,6 +40,16 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success notify-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error notify-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -83,17 +93,9 @@
                   @endforeach
                   @endif
                   <div>
-                    <a href="/admin/addUse/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
-                    <a href="/admin/addUseExist/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدامات موجودة</a>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-success notify-error">
-                            {{ session('error') }}
-                        </div>
+                    <a href="/supervisor/addUse/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
+                    @if($item->uses->count() > 0)
+                      <a href="/supervisor/addUseExist/{{$item->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدامات موجودة</a>
                     @endif
                   </div>
                   </tbody>

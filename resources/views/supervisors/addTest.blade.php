@@ -54,7 +54,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label class="col-md-2 control-label">نوع الاختبار</label>
                                         <select name="type" class="form-control custom-select rounded-0">
                                             <option value="0">{{'صواب/خطأ'}}</option>
@@ -65,7 +65,7 @@
                                                 <strong>{{ $errors->first('type') }}</strong>
                                             </span>
                                         @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         اضافة <i class="fas fa-plus"></i>

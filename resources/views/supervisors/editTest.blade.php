@@ -55,7 +55,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                @php
+                                {{-- @php
                                     $TorF = '';
                                     $Choices = '';
                                     if($test->type == 0)
@@ -74,7 +74,7 @@
                                                 <strong>{{ $errors->first('type') }}</strong>
                                             </span>
                                         @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         تعديل <i class="fas fa-edit"></i>

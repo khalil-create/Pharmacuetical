@@ -36,6 +36,16 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            @if (session('status'))
+                <div class="alert alert-success notify-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error notify-error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -86,16 +96,6 @@
                   @endif
                   <div>
                     <a href="{{url('/supervisor/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                              <div class="alert alert-danger notify-error">
-                                  {{ session('error') }}
-                              </div>
-                    @endif
                   </div>
                   </tbody>
                   <tfoot>

@@ -59,7 +59,8 @@
                                         </span>
                                     @endif
                                 </div>
-                                @if($test->type == 1)
+                                <input name="type" type="text" value="{{$type}}" hidden>
+                                @if($type == 1)
                                     <div class="form-group">
                                         <div class="khalil col-md-12">
                                             <div class="card-header">

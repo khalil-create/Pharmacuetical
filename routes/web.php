@@ -184,6 +184,13 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::post('/storeRepMainArea/{id}', 'RepresentativeController@storeRepMainArea');
     Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
 
+    Route::get('/manageRepItems', 'RepItemController@getAllRepItems');
+    // Route::get('/addRepItem', 'RepItemController@addRepItem');
+    // Route::post('/storeRepItem', 'RepItemController@storeRepItem');
+    Route::get('/editRepItems/{id}', 'RepItemController@editRepItems');
+    Route::put('/updateRepItems/{id}', 'RepItemController@updateRepItem');
+    // Route::delete('/deleteRepItem/{id}', 'RepItemController@deleteRepItem');
+
     Route::get('/manageTests', 'TestController@getAllTests');
     Route::get('/addTest', 'TestController@addTest');
     Route::post('/storeTest', 'TestController@storeTest');
@@ -191,12 +198,20 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::put('/updateTest/{id}', 'TestController@updateTest');
     Route::delete('/deleteTest/{id}', 'TestController@deleteTest');
 
-    Route::get('/manageQuestions/{id}', 'QuestionController@getAllQuestions');
-    Route::get('/addQuestion/{id}', 'QuestionController@addQuestion');
+    Route::get('/manageTestReps/{id}', 'TestController@getAllTestReps');
+    Route::get('/manageTestTypes/{id}', 'TestController@getAllTestTypes');
+    Route::get('/addTestReps/{id}', 'TestController@addTestReps');
+    Route::post('/storeTestReps/{id}', 'TestController@storeTestReps');
+    Route::get('/editTest/{id}', 'TestController@editTest');
+    Route::put('/updateTest/{id}', 'TestController@updateTest');
+    Route::delete('/deleteTest/{id}', 'TestController@deleteTest');
+
+    Route::get('/manageQuestions', 'QuestionController@getAllQuestions')->name('manageQuestions');
+    Route::get('/addQuestion', 'QuestionController@addQuestion')->name('addQuestion');
     Route::post('/storeQuestion/{id}', 'QuestionController@storeQuestion');
-    Route::get('/editQuestion/{id}', 'QuestionController@editQuestion');
+    Route::get('/editQuestion', 'QuestionController@editQuestion')->name('editQuestion');
     Route::put('/updateQuestion/{id}', 'QuestionController@updateQuestion');
-    Route::delete('/deleteQuestion/{id}', 'QuestionController@deleteQuestion');
+    Route::delete('/deleteQuestion', 'QuestionController@deleteQuestion')->name('deleteQuestion');
 
     Route::get('/manageSamples', 'SampleController@getAllSamples');
     Route::get('/addSample', 'SampleController@addSample');
@@ -222,14 +237,17 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::put('/categoryUpdate/{id}', 'CategoryController@UpdateCategory');
     Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
 
-    Route::get('/manageItem', 'ItemController@getAllItems');
-    Route::get('/itemAdd', 'ItemController@addItem');
-    Route::post('/itemStore', 'ItemController@storeItem');
+    Route::get('/manageItem/{have_category}', 'ItemController@getAllItems');
+    Route::get('/itemAdd/{have_category}', 'ItemController@addItem');
+    Route::post('/itemStore/{have_category}', 'ItemController@storeItem');
     Route::get('/itemEdit/{id}', 'ItemController@editItem');
+    Route::get('/itemEditNoCat/{id}', 'ItemController@editItem');
+    Route::get('/itemEditNoCat/{id}', 'ItemController@editItem');
     Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
     Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
 
     Route::get('/itemUses/{id}', 'UsesController@getItemUses');
+    Route::get('/itemUsesNoCat/{id}', 'UsesController@getItemUses');    
     Route::get('/addUse/{id}', 'UsesController@addUse');
     Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
     Route::post('/storeUse', 'UsesController@storeUse');
@@ -319,6 +337,31 @@ Route::group(['prefix'=>'representative','namespace'=>'App\Http\Controllers\Repr
     Route::get('/editService/{id}', 'ServiceController@editService');
     Route::put('/updateService/{id}', 'ServiceController@updateService');
     Route::delete('/deleteService/{id}', 'ServiceController@deleteService');
+    
+    Route::get('/manageOrders', 'OrderController@getAllOrders');
+    Route::get('/addOrder', 'OrderController@addOrder');
+    Route::post('/storeOrder', 'OrderController@storeOrder');
+    Route::get('/editOrder/{id}', 'OrderController@editOrder');
+    Route::put('/updateOrder/{id}', 'OrderController@updateOrder');
+    Route::delete('/deleteOrder/{id}', 'OrderController@deleteOrder');
+    
+    Route::get('/manageVisits', 'VisitController@getAllVisits');
+    Route::get('/addVisit', 'VisitController@addVisit');
+    Route::post('/storeVisit', 'VisitController@storeVisit');
+    Route::get('/editVisit/{id}', 'VisitController@editVisit');
+    Route::put('/updateVisit/{id}', 'VisitController@updateVisit');
+    Route::delete('/deleteVisit/{id}', 'VisitController@deleteVisit');
+    
+    Route::get('/manageCourses', 'TrainingCourseController@getAllCourses');
+    
+    Route::get('/manageTests', 'TestController@getAllTests');
+    Route::get('/repTests/{id}', 'TestController@getRepTests');
+    Route::post('/storeRepTest/{id}', 'TestController@storeRepTest');
+    Route::get('/editVisit/{id}', 'VisitController@editVisit');
+    Route::put('/updateVisit/{id}', 'VisitController@updateVisit');
+    Route::delete('/deleteVisit/{id}', 'VisitController@deleteVisit');
+
+    Route::get('/showStudies', 'StudyController@getAllStudies');
 
 });
 Auth::routes();
