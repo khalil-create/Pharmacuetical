@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة العينات</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">العينات</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,16 +36,6 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -99,9 +89,9 @@
                       </td>
                     </tr>
                   @endforeach
-                  <div>
+                  {{-- <div>
                     <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
-                  </div>
+                  </div> --}}
                   </tbody>
                   <tfoot>
                     @if($samples->count() > 0)                    

@@ -9,11 +9,18 @@ use App\Models\Subarea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\Representative;
+use App\Models\RepresentativeTest;
+use App\Traits\userTrait;
 
 class MainAreaController extends Controller
 {
-    public function getAllAreas()
+    use userTrait;
+    public function getAllAreas(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $mainareas = Mainarea::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.manageMainAreas',compact('mainareas',$mainareas));
     }
@@ -97,7 +104,8 @@ class MainAreaController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $mainarea->delete();
 
-        return redirect('/supervisor/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getSupAreasForMainArea($id)
     {

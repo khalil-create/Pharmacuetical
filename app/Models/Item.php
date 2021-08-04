@@ -54,4 +54,8 @@ class Item extends Model
     {
         return $this->hasMany('App\Models\TrainingCourse','item_id','id');
     }
+    public function saleObjective()
+    {
+        return $this->hasMany('App\Models\Salesobjective','item_id','id');
+    }
 }

@@ -11,8 +11,11 @@ use App\Traits\userTrait;
 class TrainingCourseController extends Controller
 {
     use userTrait;
-    public function getAllCourses()
+    public function getAllCourses(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $courses = TrainingCourse::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.manageTrainingCourses',compact('courses'));
     }
@@ -132,8 +135,12 @@ class TrainingCourseController extends Controller
         if($course->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
-        $this->deleteFile($course->important_points,'reports/courses/');
+        $points = $course->important_points;
+        $isFile = substr($points,0,5) == 'https' ? false:true;
+        if($isFile)
+            $this->deleteFile($course->important_points,'reports/courses/');
         $course->delete();
-        return redirect('/supervisor/manageTrainingCourses')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageTrainingCourses')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

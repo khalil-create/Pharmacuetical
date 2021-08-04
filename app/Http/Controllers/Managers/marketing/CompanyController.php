@@ -14,8 +14,11 @@ class CompanyController extends Controller
 {
     use userTrait;//for save images
 
-    public function getAllCompanies()
+    public function getAllCompanies(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $company = Company::whereHas('supervisor')->get();
         return view('managers.marketing.manageCompanies',compact('company',$company));
     }
@@ -90,6 +93,7 @@ class CompanyController extends Controller
         
         $this->deleteFile($company->sign_img_company,'images/signsCompany/');
         $company->delete();
-        return redirect('/managerMarketing/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

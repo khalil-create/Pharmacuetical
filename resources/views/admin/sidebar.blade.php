@@ -9,12 +9,12 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image"><?php  ?>
+            <div class="image"><?php $username = explode(' ',Auth::user()->user_name_third); ?>
             <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-            <a href="#" class="d-block">
-                {{Auth::user()->user_name_third}} {{Auth::user()->user_surname}} 
+            <a href="/admin/profile/{{Auth::user()->id}}" class="d-block">
+                {{$username[0]}} {{Auth::user()->user_surname}} 
                 <br>
                 <b> {{Auth::user()->user_type}} </b>
             </a>
@@ -49,7 +49,8 @@
         @php
             $p = request()->path();
             $index = 4;
-            if($p != 'home' && $p !='not-allowed'){
+            $profile = substr($p,0,7);
+            if($p != 'home' && $p !='not-allowed' && $profile != 'profile'){
                 $index = strpos($p,'/',5);
             }
             $path = substr($p,0,$index);
@@ -66,18 +67,6 @@
                 </p>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a href="{{url('manageManagers')}}" 
-            class="nav-link {{  $p == 'manageManagers' || 
-                                $p =='addManager' ||
-                                $path =='editManager' ? 'active' : '' 
-                            }}">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                ادارة مدراء الشركة
-                </p>
-            </a>
-        </li> --}}
         {{-- <li class="nav-item">
             <a href="{{url('manageSupervisors')}}" 
             class="nav-link {{  $p == 'manageSupervisors' || 
@@ -250,6 +239,17 @@
                 </p>
             </a>
         </li> --}}
+        <li class="nav-item">
+            <a href="{{url('admin/managePlanTypes')}}" 
+            class="nav-link {{  $p == 'admin/managePlanTypes' ||
+                                $p == 'admin/addPlanType' ||
+                                $path == 'admin/editPlanType' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                ادارة الخطط
+                </p>
+            </a>
+        </li>
     </nav>
     <!-- /.sidebar-menu -->
     </div>

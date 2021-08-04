@@ -91,6 +91,7 @@ class StrengthController extends Controller
         if(!$str)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $str->delete();
-        return redirect('/supervisor/studyStrengths/'.$str->study_id)->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/studyStrengths/'.$str->study_id)->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

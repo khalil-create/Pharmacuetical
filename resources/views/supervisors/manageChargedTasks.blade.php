@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة المهام</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">المهام</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,16 +36,6 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-success notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -81,44 +71,29 @@
                   @endif
                   </thead>
                   <tbody>
-                  <?php $i=1?>
-                  @foreach ($tasks as $row)
-                    <tr class="odd">
-                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{ $row->task_title }}</td>
-                      <td>{{ $row->description }}</td>
-                      {{-- <td>
-                        {{ $row->supervisor->user->user_name_third }} {{ $row->supervisor->user->user_surname }}
-                      </td> --}}
-                      <td>{{ $row->last_date }}</td>
-                      <td>
-                        @if ($row->performed == 0)
-                            {{'لم يتم انجازها'}}
-                        @else
-                            {{'تم انجازها'}}
-                        @endif
-                      </td>
-                      <td>
-                        @if ($row->performed == 0)
-                            <a href="/supervisor/performTask/{{$row->id}}" class="btn btn-success">تنفيذ المهمة</a>
-                        @else
-                            <a href="/supervisor/performTask/{{$row->id}}" class="btn btn-success">تعديل تنفيذ المهمة</a>
-                        @endif
-                      </td>
-                    </tr>
-                  @endforeach
-                  <div>
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                              <div class="alert alert-error notify-error">
-                                  {{ session('error') }}
-                              </div>
-                    @endif
-                  </div>
+                    <?php $i=1?>
+                    @foreach ($tasks as $row)
+                      <tr class="odd">
+                        <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                        <td>{{ $row->task_title }}</td>
+                        <td>{{ $row->description }}</td>
+                        <td>{{ $row->last_date }}</td>
+                        <td>
+                          @if ($row->performed == 0)
+                              <b class="text-danger">{{'لم يتم انجازها'}}</b>
+                          @else
+                              <b class="text-success">{{'تم انجازها'}}</b>
+                          @endif
+                        </td>
+                        <td>
+                          @if ($row->performed == 0)
+                              <a href="/supervisor/performTask/{{$row->id}}"><i class="fas fa-play" title="تنفيذ المهمة"></i></a>
+                          @else
+                              <a href="/supervisor/performTask/{{$row->id}}"><i class="fas fa-edit" title="تعديل تنفيذ المهمة"></i></a>
+                          @endif
+                        </td>
+                      </tr>
+                    @endforeach
                   </tbody>
                   <tfoot>
                     @if($tasks->count() > 0)                    

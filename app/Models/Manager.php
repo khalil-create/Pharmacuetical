@@ -40,4 +40,8 @@ class Manager extends Model
     {
         return $this->hasMany('App\Models\Salesobjective','manager_id','id');//(related,foriegn key,primary key)
     }
+    public function services()
+    {
+        return $this->hasManyThrough('App\Models\Service','App\Models\Representative','manager_id','representative_id');//(related,foriegn key,primary key)
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-      توزيع الاهداف البيعية
+      ادارة الاهداف البيعية
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة الاهداف البيعية</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">الاهداف البيعية</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -40,13 +40,13 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row col-14">
-              <form style="width: 100%" method="POST" action="/managerMarketing/storeDistributedSalesObjForSup" enctype="multipart/form-data">
+              <form style="width: 100%" method="POST" action="/managerMarketing/storeDistributedSalesObjForSup" onsubmit="return ValidationDistributed()" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 
                 <div class="col-sm-12">
                   @if($supervisors->count() > 0)
                     <table class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                      <thead>
+                      <thead style="background-color: #8eaab1;">
                         <tr role="row">
                           <th tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                             المشرف
@@ -58,6 +58,8 @@
                       </thead>
                       <tbody>
                         <input name="item_id" value="{{$salesObjective->item_id}}" hidden>
+                        <input id="total_objective" value="{{$salesObjective->objective}}" hidden>
+                        @php $i=0; @endphp
                         @foreach ($supervisors as $row)
                         <tr>
                           <td>
@@ -65,7 +67,7 @@
                             <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                           </td>
                           <td>
-                            <input type="text" placeholder="الهدف البيعي لهذا المشرف" name="objective[]" class="form-control">
+                            <input value="@if(sizeof($sales) > $i && sizeof($sales) != 0){{$sales[$i]["objective"]}} @endif" type="text" placeholder="الهدف البيعي لهذا المشرف" name="objective[]" class="form-control">
                             @if ($errors->has('objective'))
                               <span class="help-block">
                                   <small class="form-text text-danger">{{ $errors->first('objective') }}</small>
@@ -73,6 +75,7 @@
                             @endif
                           </td>
                         </tr>
+                        @php $i++; @endphp
                         @endforeach
                         <tr rowspan="2">
                           <label>الوصف</label>
@@ -85,7 +88,7 @@
                     </button>
                   @else
                     <div class="alert alert-danger notify-danger">
-                      {{ 'كل المشرفين قد تم اضافة هدف بيعي لهم' }}
+                      {{ 'لم يتم اضافة اي مشرف' }}
                     </div>
                   @endif
                 </div>

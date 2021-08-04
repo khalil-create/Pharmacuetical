@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة الاصناف</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">الاصناف</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,21 +36,19 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
+            <div id="error" hidden>
+                <div  class="alert alert-danger notify-error">
+                {{'لم يتم اضافة اي صنف'}}
                 </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error notify-error">
-                    {{ session('error') }}
+                <div>
+                  <a href="{{url('/managerMarketing/itemAdd/1')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
                 </div>
-            @endif
+            </div>
             <div class="row">
-              <div class="col-sm-12">
+              <div id="table" class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($items->count() > 0)
+                  @if($companies->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -78,40 +76,49 @@
                       </th>
                     </tr>
                   @else
-                    <div class="alert alert-success notify-success">
+                    <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي صنف' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
-                  <?php $i=1?>
-                  @foreach ($items as $row)
-                    <tr class="odd">
-                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{$row->commercial_name}}</td>
-                      <td>{{$row->science_name}}</td>
-                      <td>{{$row->price}}</td>
-                      <td class="sorting_1">{{$row->bonus}}</td>
-                      <td class="sorting_1">{{$row->unit}}</td>
-                      <td class="sorting_1">{{$row->category->name_cat}}</td>
-                      <td class="" style="">
-                        <a href="/managerMarketing/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk"></i></a>
-                        <a href="/managerMarketing/itemUses/{{$row->id}}"><i class="fas fa-info"></i></a>
-                        <form action="/managerMarketing/itemDelete/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -25px;"><i class="fas fa-trash"></i></button>
-                          </form>
-                          <a href="/managerMarketing/showDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
-                      </td>
-                    </tr>
+                  <?php $i=1;$haveItem = false?>
+                  @foreach ($companies as $comp)
+                    @foreach ($comp->categories as $cat)
+                      @foreach ($cat->items as $row)
+                          @php
+                            if($row->count() > 0)$haveItem = true;
+                        @endphp
+                        <tr class="odd">
+                          <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                          <td>{{$row->commercial_name}}</td>
+                          <td>{{$row->science_name}}</td>
+                          <td>{{$row->price}}</td>
+                          <td class="sorting_1">{{$row->bonus}}</td>
+                          <td class="sorting_1">{{$row->unit}}</td>
+                          <td class="sorting_1">{{$cat->name_cat}}</td>
+                          <td>
+                            <a href="/managerMarketing/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
+                            <a href="/managerMarketing/itemUses/{{$row->id}}"><i class="fas fa-info" title="الاستخدامات"></i></a>
+                            {{-- <form action="/supervisor/itemDelete/{{$row->id}}" method="post" style="float: right;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                                <button style="border: none;margin-left: -15px;"><i class="fas fa-trash"></i></button>
+                              </form> --}}
+                              <input type="hidden" class="id" value="{{$row->id}}">
+                            <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                            <a href="/managerMarketing/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                          </td>
+                        </tr>
+                      @endforeach
+                    @endforeach
                   @endforeach
                   <div>
-                    <a href="{{url('/managerMarketing/itemAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
+                    <a href="{{url('/managerMarketing/itemAdd/1')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($items->count() > 0)
+                    @if($companies->count() > 0)
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">الاسم التجاري</th>
@@ -125,7 +132,21 @@
                     @endif
                   </tfoot>
                 </table>
+                @if ($haveItem)
+                    <input id="haveItem" value="1" hidden>
+                @else
+                  <input id="haveItem" value="0" hidden>
+                @endif
               </div>
+              <script>
+                var haveItem = document.getElementById("haveItem");
+                var table = document.getElementById("table");
+                var error = document.getElementById("error");
+                if(haveItem.value == 0){
+                  table.hidden = true;
+                  error.hidden = false;
+                }
+              </script>
             </div>
           </div>
           <!-- /.card-body -->
@@ -135,4 +156,50 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/managerMarketing/itemDelete/'+id,
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

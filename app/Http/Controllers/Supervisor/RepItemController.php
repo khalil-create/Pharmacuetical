@@ -61,6 +61,7 @@ class RepItemController extends Controller
         if($RepItem->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $RepItem->delete();
-        return redirect('/supervisor/manageRepItem')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageRepItem')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

@@ -19,7 +19,7 @@ class CreateTestsTable extends Migration
             $table->tinyInteger('type')->nullable();//0 for T Or F quastions, 1 for Multi Choise Quastions 
             
             $table->unsignedInteger('type_id')->nullable();
-            $table->foreign('type_id')->references('id')->on('tests');
+            $table->foreign('type_id')->references('id')->on('tests')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedInteger('supervisor_id');
             $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');

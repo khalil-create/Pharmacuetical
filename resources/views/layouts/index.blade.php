@@ -74,10 +74,10 @@
         @include('managers.sales.sidebar')
     @elseif($userType == 'مشرف')
         @include('supervisors.sidebar')
-    @elseif($userType == 'مندوب فريق' || $userType == 'مندوب علمي')
+    @elseif($userType == 'مدير فريق' || $userType == 'مندوب علمي')
         @include('representatives.repScience.sidebar')
     @elseif($userType == 'مندوب مبيعات')
-        @include('representatives.repSales.side')
+        @include('representatives.repSales.sidebar')
     @endif
 
         @yield('content')
@@ -90,9 +90,10 @@
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+    
 <!-- my javascript -->
 <script src="{{asset('js/my-js.js')}}"></script>
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
 <!-- my javascript -->
 
 <!-- jQuery -->
@@ -104,7 +105,8 @@
     $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+{{-- <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
+<script src="{{asset('plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
@@ -145,6 +147,7 @@
 <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+@include('sweetalert::alert')
 <script>
     $(function () {
       $("#example1").DataTable({
@@ -152,8 +155,9 @@
         "buttons": ["copy", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
-    
-    
     </script>
+    @yield('script');
+    @include('swal-msg');
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
 </body>
 </html>

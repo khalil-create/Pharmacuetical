@@ -169,12 +169,12 @@ function showListInRep(){
     clinic_phone.onkeyup = function()
     {
         messege.hidden = true;
-        if(clinic_phone.value >= 10000000 && clinic_phone.value <= 99999999){
+        if(clinic_phone.value >= 01000000 && clinic_phone.value <= 09999999){
             messege.hidden = true;
             clinic_phone.style.border = "1px solid #007bff";
 
         }
-        else if(clinic_phone.value > 999999999){
+        else if(clinic_phone.value > 099999999){
             messege.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
             clinic_phone.style.border = "1px solid #dc3545";
             messege.hidden = false;
@@ -193,21 +193,28 @@ function showListInRep(){
     // Tel_phone_Owner.onkeyup = function()
     function checkTelPhoneOwner()
     {
-        console.log('lll');
+        let number = Tel_phone_Owner.value;
+        let ss = num => Number(num);
+        let intArr = Array.from(String(number),ss);
         invalidOwnerNo.hidden = true;
-        if(Tel_phone_Owner.value >= 10000000 && Tel_phone_Owner.value <= 99999999){
+        if(Tel_phone_Owner.value >= 01000000 && Tel_phone_Owner.value <= 09999999 && intArr[0] == 0){
             invalidOwnerNo.hidden = true;
             Tel_phone_Owner.style.border = "1px solid #007bff";
-
         }
-        else if(Tel_phone_Owner.value > 99999999){
-            invalidOwnerNo.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
+        else if(Tel_phone_Owner.value > 099999999){
+            if(intArr[0] != 0)
+                invalidOwnerNo.textContent = "يجب ان يبدأ برقم 0";
+            else
+                invalidOwnerNo.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
             Tel_phone_Owner.style.border = "1px solid #dc3545";
             invalidOwnerNo.hidden = false;
         }
         else{
+            if(intArr[0] != 0)
+                invalidOwnerNo.textContent = "يجب ان يبدأ برقم 0";
+            else
+                invalidOwnerNo.textContent = "ادخل 8 ارقام";
             Tel_phone_Owner.style.border = "1px solid #dc3545";
-            invalidOwnerNo.textContent = "ادخل 8 ارقام";
             invalidOwnerNo.hidden = false;
         }
     }
@@ -219,20 +226,29 @@ function showListInRep(){
     // Tel_phone_Contact.onkeyup = function()
     function checkTelPhoneContact()
     {
+        let number = Tel_phone_Contact.value;
+        let ss = num => Number(num);
+        let intArr = Array.from(String(number),ss);
         invalidContactPhone.hidden = true;
-        if(Tel_phone_Contact.value >= 10000000 && Tel_phone_Contact.value <= 99999999){
+        if(Tel_phone_Contact.value >= 01000000 && Tel_phone_Contact.value <= 09999999 && intArr[0] == 0){
             invalidContactPhone.hidden = true;
             Tel_phone_Contact.style.border = "1px solid #007bff";
 
         }
-        else if(Tel_phone_Contact.value > 99999999){
-            invalidContactPhone.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
+        else if(Tel_phone_Contact.value > 09999999){
+            if(intArr[0] != 0)
+                invalidContactPhone.textContent = "يجب ان يبدأ الرقم بـ 0";
+            else
+                invalidContactPhone.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
             Tel_phone_Contact.style.border = "1px solid #dc3545";
             invalidContactPhone.hidden = false;
         }
         else{
+            if(intArr[0] != 0)
+                invalidContactPhone.textContent = "يجب ان يبدأ الرقم بـ0";
+            else
+                invalidContactPhone.textContent = "ادخل 8 ارقام";
             Tel_phone_Contact.style.border = "1px solid #dc3545";
-            invalidContactPhone.textContent = "ادخل 8 ارقام";
             invalidContactPhone.hidden = false;
         }
     }
@@ -342,7 +358,7 @@ function checkVisitType(){
         item.hidden = true;
         scientific_mission.hidden = true;
         service_name.hidden = true;
-        description.hidden = false;
+        description.hidden = true;
         mission.value = 'mission';
         desc.value = '';
     }
@@ -393,21 +409,7 @@ function pointsType(){
 
 //////////////////////////// end check points type for training courses /////////////////////////
 
-
-//////////////////////////// start check validation /////////////////////////
-// clicked = document.getElementById("count_q");
-// function increased(){
-
-//     clicked.value++;
-//     var count = document.getElementById("count_q");
-//     var not = document.getElementById("not_completed");
-//     var btn = document.getElementById("send_btn");
-//     // console.log(clicked);
-//     if(clicked.value >= count.value){
-//         btn.hidden = false;
-//         not.hidden = true;
-//     }
-// }
+//////////////////////////// start check validation completed all questions /////////////////////////
 function Validation()
 {
     var count = document.getElementById("count_q");
@@ -417,4 +419,85 @@ function Validation()
         return false;
     }
 }
-//////////////////////////// end  set value to answered_choice /////////////////////////
+//////////////////////////// end  check validation completed all questions /////////////////////////
+
+//////////////////////////// start check validation distribute all sales objectives/////////////////////////
+function ValidationDistributed()
+{
+    var inps = document.getElementsByName('objective[]');
+    var total_objective = document.getElementById('total_objective');
+    var sum = 0;
+    for(var i =0; i<inps.length; i++){
+        var inp = inps[i];
+        sum = Number(sum) + Number(inps[i].value);
+    }
+    var total = total_objective.value;
+    if(sum < total){
+        swal({
+            title: "خطأ!",
+            text: "يجب ان يتم توزيع الهدف البيعي كامل....مقدار الاهداف الموزعة = "+sum+"/"+total+" = "+sum*100/total+"%",
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+    else if(sum > total){   
+        swal({
+            title: "خطأ!",
+            text: "يجب ان يكون مجموع الاهداف البيعية تساوي الهدف البيعي المعطى ----- "+sum+" لايساوي "+total,
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+}
+//////////////////////////// end  check validation distribute all sales objectives /////////////////////////
+
+//////////////////////////// start check validation distribute all samples /////////////////////////
+function ValidationCheckSample()
+{
+    var count_input = document.getElementsByName('count[]');
+    var total = document.getElementById('count');
+    var sum = 0;
+    for(var i =0; i<count_input.length; i++){
+        var inp = count_input[i];
+        sum = Number(sum) + Number(count_input[i].value);
+    }
+    var total = total.value;
+    if(sum > total){   
+        swal({
+            title: "خطأ ادخال!",
+            text:'يجب ان يكون مجموع العينات الموزعة اقل او تساوي من كمية العينات المعطاه ----- '+sum+' > '+total,
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+}
+//////////////////////////// end  check validation distribute all samples /////////////////////////
+
+//////////////////////////// start check validation plan /////////////////////////
+function checkPlan()
+{
+    var plan_month = document.getElementById('plan_month');
+    var plan_type = document.getElementById('plan_type');
+    if(plan_month.value == -1){   
+        swal({
+            title: "خطأ!",
+            text: "يجب عليك اختيار شهر الخطة",
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+    if(plan_type.value == -1){   
+        swal({
+            title: "خطأ!",
+            text: "يجب عليك اختيار نوع الخطة",
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+}
+//////////////////////////// end  check validation plan /////////////////////////

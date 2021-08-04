@@ -5,14 +5,19 @@ use App\Models\Task;
 use App\Models\Manager;
 use App\Models\Supervisor;
 use App\Http\Controllers\Controller;
+use App\Traits\userTrait;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function getAllTasks()
+    use userTrait;
+    public function getAllTasks(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $tasks = Task::whereHas('manager')->get();
         return view('managers.marketing.manageTasks',compact('tasks',$tasks));
     }
@@ -38,6 +43,9 @@ class TaskController extends Controller
             'manager_id' => Auth::user()->manager->id,
             'supervisor_id' => $request->supervisor_id,
         ]);
+        //////////////// Notify user //////////////////////////
+        $sup = Supervisor::findOrfail($request->supervisor_id);
+        $this->notifyUser('مهام','لديك مهمة جديده',$sup->user->id);
         return redirect('/managerMarketing/manageTasks')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
@@ -87,6 +95,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->delete();
-        return redirect('/managerMarketing/manageTasks')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageTasks')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

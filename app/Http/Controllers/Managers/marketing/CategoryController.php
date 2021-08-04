@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use App\Models\Company;
+use App\Traits\userTrait;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function getAllCategories()
+    use userTrait;
+    public function getAllCategories(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $cat = Category::with('companies')->get();
         return view('managers.marketing.manageCategories',compact('cat',$cat));
     }
@@ -78,6 +83,7 @@ class CategoryController extends Controller
         
         $category->delete();
 
-        return redirect('/managerMarketing/manageCategory')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageCategory')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

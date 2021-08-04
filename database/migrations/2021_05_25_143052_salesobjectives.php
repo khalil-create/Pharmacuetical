@@ -25,7 +25,7 @@ class Salesobjectives extends Migration
             $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('representative_id')->nullable();
-            $table->foreign('representative_id')->references('id')->on('representatives')->onUpdate('cascade');
+            $table->foreign('representative_id')->references('id')->on('representatives')->onDelete('cascade')->onUpdate('cascade');
             
             $table->unsignedInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');

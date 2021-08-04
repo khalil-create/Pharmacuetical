@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    تعديل الصنف
+    ادارة الاصناف
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">ادارة الاصناف</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
+                    <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                    <li class="breadcrumb-item active">الاصناف</li>
                 </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -96,23 +96,40 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="form-group{{ $errors->has('category_name') ? ' has-error' : '' }}">
-                                        <label class="col-md-2 control-label">اسم المجموعة</label>
-                                        <select name="category_id" id="category_id" class="form-control custom-select rounded-0">
-                                            @foreach ($categories as $cats)
-                                                <option value="{{$cats->id}}"
-                                                    @if($cats->id == $item->category->id)
-                                                        {{'selected'}}
-                                                    @endif
-                                                    >{{$cats->name_cat}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('category_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('category_id') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
+                                    @if($have_category)
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">اسم المجموعة</label>
+                                                <select name="category_id" id="category_id" class="form-control custom-select rounded-0">
+                                                    @foreach ($companies as $comp)
+                                                        @foreach ($comp->categories as $cat)
+                                                            <option value="{{$cat->id}}"
+                                                                @if ($cat->id == $item->category_id)
+                                                                    {{'selected'}}
+                                                                @endif>{{$cat->name_cat}}</option>
+                                                        @endforeach
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('category_id'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('category_id') }}</strong>
+                                                    </span>
+                                                @endif
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label class="col-md- control-label">اسم الشركة <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من شركة)</span></label>
+                                                <select name="company_ids[]" id="category_id" class="form-control custom-select rounded-0" multiple>
+                                                    @foreach ($companies as $comp)
+                                                        <option value="{{$comp->id}}">{{$comp->name_company}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('company_ids'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('company_ids') }}</strong>
+                                                    </span>
+                                                @endif
+                                        </div>
+                                    @endif
                                     <div class="form-group" >
                                         <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                             تعديل <i class="fas fa-edit"></i>

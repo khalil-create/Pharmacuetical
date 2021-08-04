@@ -9,10 +9,16 @@ use App\Models\Supervisor;
 use App\Models\Mainarea;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Traits\userTrait;
 
 class SubAreaController extends Controller
 {
-    public function getAllSubArea(){
+    use userTrait;
+    public function getAllSubArea(Request $request)
+    {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $subArea = Subarea::with('mainarea')->get();
 
         if(!($subArea->count() > 0))
@@ -91,6 +97,7 @@ class SubAreaController extends Controller
         if($subarea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $subarea->delete();
-        return redirect('/managerMarketing/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

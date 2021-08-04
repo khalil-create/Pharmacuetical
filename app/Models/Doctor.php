@@ -39,4 +39,8 @@ class Doctor extends Model
     {
         return $this->belongsToMany('App\Models\Service','services_doctors');//(related,foriegn key,primary key)
     }
+    public function plans()
+    {
+        return $this->belongsToMany('App\Models\Plan','plans_customers');
+    }
 }

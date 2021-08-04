@@ -231,6 +231,7 @@ class QuestionController extends Controller
         
         $question->delete();
 
-        return redirect(route('manageQuestions',['id' => $test_id,'type' => $type]))->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect(route('manageQuestions',['id' => $test_id,'type' => $type]))->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

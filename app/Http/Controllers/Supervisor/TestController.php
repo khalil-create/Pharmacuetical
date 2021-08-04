@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Supervisor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Representative;
+use App\Models\RepresentativeTest;
 use App\Models\Test;
+use App\Traits\userTrait;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function getAllTests()
+    use userTrait;
+    public function getAllTests(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $tests = Test::where('supervisor_id',Auth::user()->supervisor->id)
         ->whereNull('type_id')->get();
         return view('supervisors.manageTests',compact('tests'));
@@ -76,7 +82,8 @@ class TestController extends Controller
         
         $test->delete();
 
-        return redirect('/supervisor/manageTests')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageTests')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getAllTestTypes($id)
     {
@@ -121,6 +128,20 @@ class TestController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
 
         $test->representatives()->sync($request->repIds);
+        foreach($request->repIds as $id){
+        ////////////// Notify user //////////////////////
+        $rep = Representative::findOrfail($id);
+        $this->notifyUser('اختبارات','لديك اختبار جديد',$rep->user->id);
+        }
         return redirect('/supervisor/manageTestReps/'.$test->id)->with('status','تم إضافة البيانات بشكل ناجح');
+    }
+    public function deleteTestRep(Request $request)
+    {
+        $rep_id = $request->get('rep_id');
+        $test_id = $request->get('test_id');
+        $repTest = RepresentativeTest::where('representative_id',$rep_id)->where('test_id',$test_id)->first();
+        $repTest->delete();
+
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
     }
 }

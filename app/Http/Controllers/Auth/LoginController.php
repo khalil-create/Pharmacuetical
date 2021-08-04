@@ -35,6 +35,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        alert('مرحبا بك في نظام ادارة المكتب العلمي!')->autoclose(3000);
         $this->middleware('guest')->except('logout');
     }
 }

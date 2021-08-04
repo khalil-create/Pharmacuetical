@@ -15,8 +15,11 @@ class CompanyController extends Controller
 {
     use userTrait;//for save images
 
-    public function getAllCompanies()
+    public function getAllCompanies(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $company = Company::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.manageCompanies',compact('company',$company));
     }
@@ -27,6 +30,12 @@ class CompanyController extends Controller
     }
     public function storeCompany(Request $request)
     {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $file_name = null;
         if($request->hasfile('sign_img_company'))
                 $file_name = $this->saveImage($request->file('sign_img_company'),'images/signsCompany/');
@@ -44,7 +53,7 @@ class CompanyController extends Controller
         return $rules = [
                 'name_company' => 'required|string|max:255',
                 'country_manufacturing' => 'required|string|max:255',
-                'sign_img_company' => 'required|string|max:255',
+                'sign_img_company' => 'required',
             ];
     }
     protected function getMessages()
@@ -90,6 +99,8 @@ class CompanyController extends Controller
         
         $this->deleteFile($company->sign_img_company,'images/signsCompany/');
         $company->delete();
-        return redirect('/supervisor/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
+
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

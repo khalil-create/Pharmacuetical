@@ -51,7 +51,7 @@ class Representative extends Model
     }
     public function customers()
     {
-        return $this->hasMany('App\Models\Customer','representative_id','id');
+        return $this->belongsToMany('App\Models\Customer','representatives_customers');
     }
     public function orders()
     {
@@ -79,7 +79,7 @@ class Representative extends Model
     }
     public function samples()
     {
-        return $this->hasMany('App\Models\Sample','represntative_id','id');//(related,foriegn key,primary key)
+        return $this->hasMany('App\Models\Sample','representative_id','id');//(related,foriegn key,primary key)
     }
     public function salesObjectives()
     {

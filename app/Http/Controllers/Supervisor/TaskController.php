@@ -5,17 +5,23 @@ use App\Models\Task;
 use App\Models\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\Representative;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\userTrait;
+use App\Notifications\UserNotification;
+use Illuminate\Notifications\Notification;
 
 class TaskController extends Controller
 {
     use userTrait;
-    public function getAllChargedTasks()
+    public function getAllChargedTasks(Request $request)
     {
-        $tasks = Task::whereHas('supervisor')->whereNotNull('manager_id')->get();
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
+        $tasks = Task::where('supervisor_id', Auth::user()->supervisor->id)->whereNotNull('manager_id')->get();
         return view('supervisors.manageChargedTasks',compact('tasks',$tasks));
     }
     public function performTask($id)
@@ -26,22 +32,55 @@ class TaskController extends Controller
     public function storePerformTask(Request $request,$id)
     {
         $task = Task::findOrfail($id);
-        if($request->hasfile('report_task_file'))
-        {
-            $file_name = $this->saveImage($request->file('report_task_file'),'reports/tasks/');
-            $task->report_task = $file_name;
+        if($task->report_task){
+            $report = $task->report_task;
+            $index = strpos($report,'.');
+            $isFile = substr($report,$index + 1);
+            if($isFile == 'pdf' || $isFile == 'xlsx' || $isFile == 'docx')
+                $File = true;
+            else 
+                $File = false;
         }
-        else{
-            $task->report_task = $request->report_task_text;
+        if($task->report_task == null)  //add file or text report
+        {
+            if($request->hasfile('report_task_file')){
+                $file_name = $this->saveImage($request->file('report_task_file'),'reports/tasks/');
+                $task->report_task = $file_name;
+            }
+            else
+                $task->report_task = $request->report_task_text;
+        }
+        else{   //delete file or update file
+            if($request->hasfile('report_task_file') && $File){
+                $this->deleteFile($task->report_task,'reports/tasks/');//delete old file
+                $file_name = $this->saveImage($request->file('report_task_file'),'reports/tasks/');//upload new file
+                $task->report_task = $file_name;//save name file in DB
+            }
+            else if($request->hasfile('report_task_file') && !$File){
+                //no old file to delete
+                $file_name = $this->saveImage($request->file('report_task_file'),'reports/tasks/');//upload new file
+                $task->report_task = $file_name;//save name file in DB
+            }
+            else if(!$request->hasfile('report_task_file') && $File){
+                $this->deleteFile($task->report_task,'reports/tasks/');//delete old file
+                $task->report_task = $request->report_task_text;//save text report rather old file
+            }
+            else{   //no old file and no new file
+                $task->report_task = $request->report_task_text;//save text report rather old text report
+            }
         }
         $task->performed = 1;
         $task->update();
+
+        ////////////////////// Notify user ///////////////////////////
+        $user_id = Auth::user()->supervisor->manager->user->id;
+        $this->notifyUser('مهام','تم انجاز مهمة',$user_id);
 
         return redirect('/supervisor/manageChargedTasks')->with('status','تم اضافة تقرير انجاز المهمة بشكل ناجح');
     }
     public function getAllDistributedTasks()
     {
-        $tasks = Task::whereHas('supervisor')->where('representative_id','!=',null)->get();
+        $tasks = Task::where('supervisor_id', Auth::user()->supervisor->id)->where('representative_id','!=',null)->get();
         return view('supervisors.manageDistributedTasks',compact('tasks',$tasks));
     }
     public function addDistributedTask()
@@ -60,14 +99,18 @@ class TaskController extends Controller
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
         // return $request->manager_id;
+        $rep_id = $request->representative_id;
         Task::create([
             'task_title' => $request->task_title,
             'description' => $request->description,
             'last_date' => $request->last_date,
             'performed' => 0,
             'supervisor_id' => Auth::user()->supervisor->id,
-            'representative_id' => $request->representative_id,
+            'representative_id' => $rep_id,
         ]);
+        ////////////// Notify user //////////////////////
+        $rep = Representative::findOrfail($rep_id);
+        $this->notifyUser('مهام','لديك مهمة جديدة',$rep->user->id);
         return redirect('/supervisor/manageDistributedTasks')->with('status','تم إضافة المهمة بشكل ناجح');
     }
     protected function getRules()
@@ -116,6 +159,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->delete();
-        return redirect('/supervisor/manageDistributedTasks')->with('status','تم حذف المهمة بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageDistributedTasks')->with('status','تم حذف المهمة بشكل ناجح');
     }
 }

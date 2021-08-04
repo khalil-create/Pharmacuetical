@@ -150,11 +150,11 @@ class UserController extends Controller
         $usertype = $request->Input('usertype');
         $managerMarketing = User::where('user_type','مدير تسويق')->first();
         $managerSales = User::where('user_type','مدير مبيعات')->first();
-        if($usertype == 'مدير تسويق' && $managerMarketing->count() > 0 )
+        if($usertype == 'مدير تسويق' && $managerMarketing->count() > 0 && $managerMarketing->id != $id)
         {
                 return redirect()->back()->with(['error' => 'لايمكنك اضافة مدير التسويق فهناك يوجد مدير تسويق بالفعل ولا يمكنك اضافة اكثر من مدير تسويق واحد']);
         }
-        else if($usertype == 'مدير مبيعات' && $managerSales->count() > 0)
+        else if($usertype == 'مدير مبيعات' && $managerSales->count() > 0 && $managerSales->id != $id)
         {
                 return redirect()->back()->with(['error' => 'لايمكنك اضافة مدير التسويق فهناك يوجد مدير مبيعات بالفعل ولا يمكنك اضافة اكثر من مدير مبيعات واحد']);
         }
@@ -186,34 +186,34 @@ class UserController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
             
-        // if($user->user_type == $usertype)
-        // {
-        // //$user->update($request->all());
-        //     $user->user_name_third = $request->Input('usernamethird');
-        //     $user->user_surname = $request->Input('usersurname');
-        //     $user->user_type = $request->Input('usertype');
-        //     $user->sex = $request->Input('sex');
-        //     $user->birthdate = $request->Input('birthdate');
-        //     $user->birthplace = $request->Input('birthplace');
-        //     $user->town = $request->Input('town');
-        //     $user->village = $request->Input('village');
-        //     $user->email = $request->Input('email');
-        //     $user->phone_number = $request->Input('phonenumber');
-        //     $user->identity_type = $request->Input('identitytype');
-        //     $user->identity_number = $request->Input('identitynumber');
-        //     $user->password = bcrypt($request->Input('password'));
-        //     if($request->hasfile('userimage'))
-        //     {
-        //         $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-        //         $user->user_image = $file_name;
-        //     }
-        //     else{
-        //         $user->user_image = $user->user_image;
-        //     }
-        //     $user->update();
-        // }
-        // else
-        // {
+        if($user->user_type == $usertype)
+        {
+            $user->user_name_third = $request->Input('usernamethird');
+            $user->user_surname = $request->Input('usersurname');
+            $user->user_type = $request->Input('usertype');
+            $user->sex = $request->Input('sex');
+            $user->birthdate = $request->Input('birthdate');
+            $user->birthplace = $request->Input('birthplace');
+            $user->town = $request->Input('town');
+            $user->village = $request->Input('village');
+            $user->email = $request->Input('email');
+            $user->phone_number = $request->Input('phonenumber');
+            $user->identity_type = $request->Input('identitytype');
+            $user->identity_number = $request->Input('identitynumber');
+            $user->password = bcrypt($request->Input('password'));
+            if($request->hasfile('userimage'))
+            {
+                $this->deleteFile($user->userimage,'images/users/');
+                $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+                $user->user_image = $file_name;
+            }
+            else{
+                $user->user_image = $user->user_image;
+            }
+            $user->update();
+        }
+        else
+        {
             $userTemp = $user;
             $user->delete();
             if($request->hasfile('userimage'))
@@ -274,7 +274,7 @@ class UserController extends Controller
                     'manager_id' => $managerSales->id,//لأنه مندوب مبيعات فإن المشرف الذي يتبعه هو مدير المبيعات
                 ]);
             }
-        // }
+        }
         // $prevSupervisor = FALSE;
         // $supervisorID = 0;
         // $sup = Supervisor::get();

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة دكتور
+    ادارة الاطباء
 @endsection
 
 @section('content')
@@ -9,12 +9,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6" >
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">ادارة الاطباء</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item active">الاطباء</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
-                        <form method="POST" action="/representative/storeDoctor"  enctype="multipart/form-data">
+                        <form method="POST" action="/repScience/storeDoctor"  enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="card-body">
                             <div class="form-group">
@@ -117,6 +117,34 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label>الرتبة</label>
+                                <select name="rank" class="custom-select rounded-0">
+                                    <option value="1">
+                                        A+
+                                    </option>
+                                    <option value="2">
+                                        A
+                                    </option>
+                                    <option value="3">
+                                        B+
+                                    </option>
+                                    <option value="4">
+                                        B
+                                    </option>
+                                    <option value="5" selected>
+                                        C
+                                    </option>
+                                    <option value="6">
+                                        Z
+                                    </option>
+                                </select>
+                                @if ($errors->has('rank'))
+                                    <span class="help-block">
+                                        <small class="form-text text-danger">{{ $errors->first('rank') }}</small>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label>الولاء للمؤسسة </label>
                                     <select name="loyalty" class="custom-select rounded-0">
                                         <option value="1">
@@ -134,21 +162,15 @@
                                         <option value="5" selected>
                                             C
                                         </option>
+                                        <option value="6">
+                                            Z
+                                        </option>
                                     </select>
                                     @if ($errors->has('loyalty'))
                                         <span class="help-block">
                                             <small class="form-text text-danger">{{ $errors->first('loyalty') }}</small>
                                         </span>
                                     @endif
-                            </div>
-                            <div class="form-group">
-                                <label>الرتبة</label>
-                                <input type="text" name="rank" class="form-control">
-                                @if ($errors->has('rank'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('rank') }}</small>
-                                    </span>
-                                @endif
                             </div>
                             <div class="form-group">
                                 <label>العنوان</label>
@@ -161,7 +183,7 @@
                             </div>
                             <div class="form-group" >
                                 <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                    اضافة <i class="fas fa-plus"></i>
+                                    حفظ<i class="fas fa-plus"></i>
                                 </button>
                             </div>
                         </div>

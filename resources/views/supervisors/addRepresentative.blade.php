@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة مندوب
+    ادارة المنوبين العلميين
 @endsection
 
 @section('content')
@@ -9,21 +9,20 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6" >
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">ادارة المنوبين العلميين</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item active">المنوبين العلميين</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 
 <!-- /.content-header -->
-<div>
-    <section class="content" >
-            <div class="container-fluid">
+    <div class="content" >
+        <div class="container-fluid">
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
@@ -169,11 +168,6 @@
                                 </div>
                                 <!-- /.card-body -->
                             </div>
-                            <div class="form-group" >
-                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                    اضافة <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
                         </div>
                         </div>
                         </div>
@@ -216,11 +210,6 @@
                                         <label class="custom-file-label" for="userimage"></label>
                                     </div>
                                 </div>
-                                @if ($errors->has('userimage'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('userimage') }}</small>
-                                    </span>
-                                @endif
                             </div>
                             <div class="form-group">
                                 <div class="khalil">
@@ -268,14 +257,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label for="identitytype">نوع الهوية</label>
-                                    <input type="text" class="form-control" name="identitytype">
-                                </div>
-                                <div class="form-group">
-                                    <label for="identitynumber">رقم الهوية</label>
-                                    <input type="text" class="form-control" name="identitynumber">
-                                </div> --}}
                                 <div class="form-group">
                                     <div class="khalil">
                                         <div class="card-header">
@@ -306,6 +287,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group" >
+                                <button type="submit" class="btn btn-primary font" style="margin: 0px 20px;">
+                                    حفظ<i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
                         <!-- /.form-group -->
                     </form>
                     <!-- /.form-group -->
@@ -324,8 +312,7 @@
             <!-- /.card -->
             </div>
         <!-- /.container-fluid -->
-    </section>
-</div>
+        </div>
 </div>
 @endsection
 @section('scripts')

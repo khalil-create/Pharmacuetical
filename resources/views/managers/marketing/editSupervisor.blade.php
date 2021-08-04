@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    تعديل المشرف
+    ادارة المشرفين
 @endsection
 
 @section('content')
@@ -8,12 +8,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">ادارة المشرفين</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item active">المشرفين</li>
             </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -78,24 +78,19 @@
                                 <div class="form-group">
                                     <label for="">الجنس</label>
                                     <?php
-                                        $sex = 'checked';
+                                        $male = '';
+                                        $female = '';
+                                        if($user->sex == 'ذكر') $male = 'checked';
+                                        else $female = 'checked';
                                     ?>
                                     <div class="radiobox">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="ذكر" name="sex" checked>
-                                            <label class="form-check-label" 
-                                            @if ($user->sex=='ذكر')
-                                                {{$sex}}
-                                            @endif
-                                            >ذكر</label>
+                                            <input class="form-check-input" type="radio" {{$male}} value="ذكر" name="sex">
+                                            <label class="form-check-label">ذكر</label>
                                         </div>
                                         <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sex" value="انثى">
-                                        <label class="form-check-label"
-                                        @if ($user->sex=='انثى')
-                                            {{$sex}}
-                                        @endif
-                                        >انثى</label>
+                                        <input class="form-check-input" type="radio" {{$female}} name="sex" value="انثى">
+                                        <label class="form-check-label"> {{$female}}انثى</label>
                                         </div>
                                     </div>
                                 </div>
@@ -154,11 +149,6 @@
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
-                                </div>
-                                <div class="form-group" >
-                                    <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                                        تعديل <i class="fas fa-edit"></i>
-                                    </button>
                                 </div>
                             </div>
                             </div>
@@ -220,23 +210,6 @@
                                             <!-- /.card-body -->
                                         </div>
                                     </div>
-                                    {{-- <div class="form-group">
-                                    <label for="town">المديريه</label>
-                                    <input type="text" class="form-control" value="{{$user->town}}" name="town">
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="village">العزلة</label>
-                                    <input type="text" class="form-control" value="{{$user->village}}" name="village">
-                                    </div> --}}
-                                    {{-- <div class="form-group margin-top">
-                                    <label for="identitytype">نوع الهوية</label>
-                                    <input type="text" class="form-control" value="{{$user->identity_type}}" name="identitytype">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="identitynumber">رقم الهوية</label>
-                                        <input type="text" class="form-control" value="{{$user->identity_number}}" name="identitynumber">
-                                    </div>
-                                </div> --}}
                                 <div class="form-group">
                                     <div class="khalil">
                                         <div class="card-header">
@@ -264,6 +237,13 @@
                                         </div>
                                         <!-- /.card-body -->
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" >
+                                    <button type="submit" class="btn btn-primary font" style="margin: 0px 20px;">
+                                        تعديل <i class="fas fa-edit"></i>
+                                    </button>
                                 </div>
                             </div>
                             <!-- /.form-group -->

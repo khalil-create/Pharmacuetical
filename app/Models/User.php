@@ -36,6 +36,14 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Manager','user_id','id');//(related,foriegn key,primary key)
     }
+    public function customers()
+    {
+        return $this->hasManyThrough('App\Models\Customer','App\Models\Representative','user_id','representative_id');//(related,foriegn key,primary key)
+    }
+    public function doctors()
+    {
+        return $this->hasManyThrough('App\Models\Doctor','App\Models\Representative','user_id','representative_id');//(related,foriegn key,primary key)
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

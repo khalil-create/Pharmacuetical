@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    المواد التدريبية 
+    ادارة المواد التدريبية
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة المواد التدريبية</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">المواد التدريبية</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,16 +36,6 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -93,7 +83,7 @@
                           @endif
                       </td>
                       {{-- <td class="" style="">
-                        <a href="/representative/editCourse/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
+                        <a href="/repScience/editCourse/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
                         <form action="/supervisor/deleteCourse/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}

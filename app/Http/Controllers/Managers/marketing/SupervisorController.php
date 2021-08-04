@@ -68,8 +68,8 @@ class SupervisorController extends Controller
                 'email' => 'required|string|email|max:255|unique:users',
                 'phonenumber' => 'numeric|required|max:999999999',
                 'identitytype' => 'required|string|max:255',
-                'identitynumber' => 'required|numeric||max:20',
-                'userimage' => 'required|string',
+                'identitynumber' => 'required|numeric',
+                'userimage' => 'required',
                 'password' => 'required|min:6|confirmed',
                 'password_confirmation' => 'required_with:password|same:password|min:6',
             ];
@@ -116,7 +116,7 @@ class SupervisorController extends Controller
 
             'identitynumber.required' => 'يجب عليك كتابة هذا الحقل',
             'identitynumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
+            // 'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
 
             'userimage.required' => 'يجب عليك كتابة هذا الحقل',
 
@@ -128,8 +128,11 @@ class SupervisorController extends Controller
             'password_confirmation.min' => 'الحد الادنى لكلمة السر هي 6 احرف',            
         ];
     }
-    public function getAllSupervisor()
+    public function getAllSupervisor(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $supervisor = User::whereHas('supervisor')->get();
         return view('managers.marketing.manageSupervisors', compact('supervisor',$supervisor));
     }
@@ -142,6 +145,8 @@ class SupervisorController extends Controller
     public function editSupervisor($id)
     {
         $user = User::findOrfail($id);
+        if(!$user)
+            return redirect()->back()->with(['error' => 'لا توجد بيانات']);
         return view('managers.marketing.editSupervisor')->with('user',$user );
     }
     public function updateSupervisor(Request $request,$id)
@@ -180,7 +185,7 @@ class SupervisorController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
 
-        $this->deleteFile($user->userimage,'images/users/');
+        $this->deleteFile($user->user_image,'images/users/');
         $comp = Company::where('supervisor_id',$user->supervisor->id)->get();
         foreach($comp as $c){
             $c->supervisor_id = null;
@@ -188,7 +193,8 @@ class SupervisorController extends Controller
         }
         $user->delete();
 
-        return redirect('/managerMarketing/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');        
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');        
     }
     public function getSupervisorAreas($id)
     {

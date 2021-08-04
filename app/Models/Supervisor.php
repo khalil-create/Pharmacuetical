@@ -26,6 +26,26 @@ class Supervisor extends Model
     {
         return $this->hasManyThrough('App\Models\Subarea','App\Models\MainArea','supervisor_id','mainarea_id');//(related,foriegn key,primary key)
     }
+    public function doctors()
+    {
+        return $this->hasManyThrough('App\Models\Doctor','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
+    }
+    // public function customers()
+    // {
+    //     return $this->hasManyThrough('App\Models\Customer','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
+    // }
+    public function orders()
+    {
+        return $this->hasManyThrough('App\Models\Order','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
+    }
+    public function services()
+    {
+        return $this->hasManyThrough('App\Models\Service','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
+    }
+    public function visits()
+    {
+        return $this->hasManyThrough('App\Models\Visit','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
+    }
     public function representatives()
     {
         return $this->hasMany('App\Models\Representative','supervisor_id','id');//(related,foriegn key,primary key)
@@ -48,7 +68,7 @@ class Supervisor extends Model
     }
     public function samples()
     {
-        return $this->belongsToMany('App\Models\Sample','supervisors_samples');//(related,foriegn key,primary key)
+        return $this->hasMany('App\Models\Sample','supervisor_id','id');//(related,foriegn key,primary key)
     }
     public function tasks()
     {

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة عميل
+    ادارة العملاء
 @endsection
 
 @section('content')
@@ -9,12 +9,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6" >
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">ادارة العملاء</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item active">العملاء</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -47,18 +47,9 @@
                 <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
-                        <form method="POST" action="/representative/storeCustomer"  enctype="multipart/form-data">
+                        <form method="POST" action="/repScience/storeCustomer"  enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>اسم العميل</label>
-                                <input type="text" name="name" class="form-control">
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('name') }}</small>
-                                    </span>
-                                @endif
-                            </div>
                             <div class="form-group">
                                 <label>نوع العميل</label>
                                     <select name="type" class="custom-select rounded-0">
@@ -76,6 +67,15 @@
                                     @endif
                             </div>
                             <div class="form-group">
+                                <label>اسم العميل</label>
+                                <input type="text" name="name" class="form-control">
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
+                                        <small class="form-text text-danger">{{ $errors->first('name') }}</small>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <div class="khalil">
                                     <div class="card-header">
                                         <h3 class="card-title" style="float: right">معلومات المالك</h3>
@@ -91,7 +91,8 @@
                                                 @endif
                                             </div>
                                             <div class="col-4">
-                                                <input id="phonenumber" type="text" name="owner_phone" class="form-control" placeholder="رقم هاتف المالك">
+                                                
+                                                <input id="phonenumber" type="text" name="owner_phone" class="form-control" placeholder="رقم هاتف المالك" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                                                 <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
                                                 @if ($errors->has('owner_phone'))
                                                     <span class="help-block">
@@ -220,7 +221,7 @@
                             </div>
                             <div class="form-group" >
                                 <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                    اضافة <i class="fas fa-plus"></i>
+                                    حفظ<i class="fas fa-plus"></i>
                                 </button>
                             </div>
                         </div>

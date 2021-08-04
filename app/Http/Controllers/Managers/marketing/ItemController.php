@@ -1,31 +1,61 @@
 <?php
 
 namespace App\Http\Controllers\Managers\marketing;
-use App\Models\Category;
+use App\Models\Company;
 use App\Models\Item;
 use App\Http\Controllers\Controller;
+use App\Traits\userTrait;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    public function getAllItems()
+    use userTrait;
+    public function getAllItems($have_category,Request $request)
     {
-        $items = Item::whereHas('category')->get();
-        return view('managers.marketing.manageItems',compact('items',$items));
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
+        if($have_category){
+            $companies = Company::with('categories')->with('categories.items')
+            ->where('have_category',1)->get();
+            return view('Managers.marketing.manageItems',compact('companies'));
+        }
+        else{
+            $companies = Company::with('items')
+            ->where('have_category',0)->get();
+            return view('Managers.marketing.manageItemsNoCat',compact('companies'));
+        }
     }
-    public function addItem()
+    public function addItem($have_category)
     {
-        $category = Category::all();
-        return view('managers.marketing.addItem', compact('category',$category));
+        if($have_category){
+            $companies = Company::where('have_category',1)->get();
+            if($companies->count() < 1)
+                return redirect()->back()->with(['error' => 'لايمكنك الاضافة لانه لاتوجد شركة لديها مجموعة اصناف']);
+        }
+        else{
+            $companies = Company::where('have_category',0)->get();
+            if($companies->count() < 1)
+                return redirect()->back()->with(['error' => 'لايمكنك الاضافة لانه لاتوجد شركة ليس لديها مجموعة اصناف']);
+        }
+        return view('Managers.marketing.addItem', compact('companies'))
+            ->with('have_category',$have_category);
     }
-    public function storeItem(Request $request)
+    public function storeItem(Request $request,$have_category)
     {
         $rules = $this->getRules();
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
+        if($have_category){
+            $category_id = $request->category_id;
+        }
+        else{
+            $category_id = null;
         }
         $item = Item::create([
             'commercial_name' => $request->commercial_name,
@@ -35,7 +65,10 @@ class ItemController extends Controller
             'unit' => $request->unit,
             'category_id' =>$request->category_id,
         ]);
-        return redirect('/managerMarketing/manageItem')->with('status','تم إضافة البيانات بشكل ناجح');
+        if(!$have_category){
+            $item->companies()->attach($request->company_ids);
+        }
+        return redirect('/managerMarketing/manageItem/'.$have_category)->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -61,8 +94,16 @@ class ItemController extends Controller
         $item = Item::find($id); 
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $categories = Category::all();
-        return view('managers.marketing.editItem', compact('item',$item))->with('categories',$categories);
+        if($item->category){
+            $companies = Company::where('have_category',1)->get();
+            $have_category = 1;
+        }
+        else{
+            $companies = Company::where('have_category',0)->get();
+            $have_category = 0;
+        }
+        return view('Managers.marketing.editItem', compact('item',$item))
+        ->with('companies',$companies)->with('have_category',$have_category);
     }
     public function UpdateItem(Request $request,$id)
     {
@@ -76,7 +117,13 @@ class ItemController extends Controller
         
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        
+        if($item->category){   
+            $categoru_id = $request->category_id;
+            $have_category = 1;
+        }else{
+            $categoru_id = null;
+            $have_category = 0;
+        }
         $item->commercial_name = $request->Input('commercial_name');
         $item->science_name = $request->Input('science_name');
         $item->price = $request->Input('price');
@@ -85,14 +132,24 @@ class ItemController extends Controller
         $item->category_id = $request->category_id;
         $item->update();
 
-        return redirect('/managerMarketing/manageItem')->with('status','تم تعديل البيانات بشكل ناجح');
+        if(!$have_category){
+            $item->companies()->sync($request->company_ids);
+        }
+
+        return redirect('/managerMarketing/manageItem/'.$have_category)->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteItem($id)
     {
         $item = Item::find($id);
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        if($item->category_id != null)
+            $have_category = 1;
+        else
+            $have_category = 0;
         $item->delete();
-        return redirect('/managerMarketing/manageItem')->with('status','تم حذف البيانات بشكل ناجح');
+        
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageItem/'.$have_category)->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

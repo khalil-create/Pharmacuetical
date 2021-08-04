@@ -38,4 +38,6 @@
 .small-text{
 	font-size: 5pt;
 }
-
+.btn-float,.btn-float form{
+	float: right;
+}

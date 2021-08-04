@@ -1,106 +1,92 @@
 @extends('layouts.index')
 @section('title')
-    اضافة مناطق فرعية للمندوب
+    ادارة المندوبيين العلميين
 @endsection
-
 @section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
-                </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+<!-- Content Header (Page header) -->
+<div class="content-header content-wrapper">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1 class="m-0">ادارة المندوبيين العلميين</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item active">المندوبين العلميين</li>
+            </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
     <!-- /.content-header -->
-    <section class="content" >
+    <div>
+        <div class="content">
         <div class="container-fluid">
-            <!-- SELECT2 EXAMPLE -->
-            <div class="card card-default" style="margin-left: 20px;">
-                <div class="card-header">
-                    <span class="card-title" style="float: right">اضافة مناطق فرعية للمندوب :-
-                    <h5>
-                        @if (isset($rep))
-                            {{$rep->user->user_name_third}} {{$rep->user->user_surname}}
-                        @endif
-                    </h5>
-                    التابعه للمشرف :- 
-                    <h5>{{$rep->supervisor->user->user_name_third}} {{$rep->supervisor->user->user_surname}}</h5> 
-                    </span>
-                    <div class="card-tools float-right">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+            <div class="card card-default">
+            <div class="card-header">
+                <span class="card-title" style="float: right"> قائمة المناطق الفرعية للمندوب :-  <h5>
+                {{$rep->user->user_name_third}} {{$rep->user->user_surname}}
+                </h5></span>
+                <div class="card-tools float-right">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+                </button>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                    <thead>
+                    @if($subareas->count() > 0)
+                        <tr role="row">
+                        <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                            #
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                            اسم المنطقة الفرعية
+                        </th>
+                        </tr>
+                    @else
+                        <div class="alert alert-danger notify-success">
+                            {{ 'لايوجد مناطق لهذا المندوب' }}                    
                         </div>
                     @endif
-                    @if (session('error'))
-                        <div class="alert alert-error notify-error">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @if($subareas->count() > 0)
-                                    <form method="POST" action="/supervisor/storeRepSubareas/{{$rep->id}}"  enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="usesIds" class="col-md-6 control-label">اختر المناطق الفرعية</label>
-                                                <select name="subareasids[]" id="exist_uses" class="form-control custom-select rounded-0" multiple>
-                                                    @foreach ($subareas as $sub)
-                                                        <option value="{{$sub->id}}">{{$sub->name_sub_area}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('subareasids'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('subareasids') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group" >
-                                                <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                                                    اضافة <i class="fas fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        <!-- /.form-group -->
-                                    </form>
-                                @else
-                                    <div class="alert alert-danger notify-danger">
-                                        {{ 'لم يتم اضافة اي منطقة فرعية لهذه المنطقة الرئيسية الرجاء اضافة المناطق الفرعية من ادارة المناطق' }}               
-                                    </div>
-                                @endif
-                            </div>
-                            <!-- / form-group -->
-                        </div>
-                        <!-- /.col -->
+                    </thead>
+                    <tbody>
+                    <?php $i=1?>
+                    @foreach ($subareas as $row)                  
+                        <tr class="odd">
+                        <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                        <td>{{$row->name_sub_area}}</td>
+                        </tr>
+                    @endforeach
+                    <div>
+                        <a href="{{url('/supervisor/addRepSubareas',$rep->id)}}" class="btn btn-primary add">
+                        <i class="fas fa-plus"></i> اضافة مناطق</a>
                     </div>
-                    <!-- /.row -->
+                    </tbody>
+                    <tfoot>
+                    @if($subareas->count() > 0)
+                        <tr>
+                        <th rowspan="1" colspan="1">#</th>
+                        <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>
+                        </tr>
+                    @endif
+                    </tfoot>
+                    </table>
                 </div>
-                <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
-        <!-- /.container-fluid -->
-    </section>
+        </div>
+    </div>
 </div>
 @endsection

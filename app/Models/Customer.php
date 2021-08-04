@@ -22,7 +22,7 @@ class Customer extends Model
         'contact_official_type',
         'contact_official_phone',
         'contact_official_tel',
-        'representative_id',
+        // 'representative_id',
         'created_at',
         'updated_at',
     ];
@@ -32,7 +32,7 @@ class Customer extends Model
     ];
     public function representative()
     {
-        return $this->belongsTo('App\Models\Representative','representative_id','id');//(related,foriegn key,primary key)
+        return $this->belongsToMany('App\Models\Representative','representatives_customers');
     }
     public function services()
     {
@@ -42,5 +42,8 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\Order','customer_id','id');//(related,foriegn key,primary key)
     }
-
+    public function plans()
+    {
+        return $this->belongsToMany('App\Models\Plan','plans_customers');
+    }
 }

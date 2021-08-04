@@ -19,8 +19,11 @@ class RepresentativeController extends Controller
     {
         return view('supervisors.home');
     }
-    public function getAllRepresentatives()
+    public function getAllRepresentatives(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $rep = Representative::with(['user','supervisor'])
         ->where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.manageRepresentatives', compact('rep',$rep));
@@ -58,19 +61,19 @@ class RepresentativeController extends Controller
         }
 
         $rules = $this->getRules();
+        $rules+=['userimage' => 'required',];
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-
+        
+        $file_name = null;
         if($request->hasfile('userimage'))
         {
             $file_name = $this->saveImage($request->file('userimage'),'images/users/');
         }
-        else{
-            $file_name = null;
-        }
+
         $user = User::create([
             'user_name_third' => $request->usernamethird,
             'user_surname' => $request->usersurname,
@@ -117,11 +120,10 @@ class RepresentativeController extends Controller
                 'birthplace' => 'required|string|max:255',
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
                 'phonenumber' => 'numeric|required|max:999999999',
+                'email' => 'required|string|email|max:255|unique:users',
                 'identitytype' => 'required|string|max:255',
-                'identitynumber' => 'required|numeric||max:20',
-                'userimage' => 'required|string',
+                'identitynumber' => 'required|numeric',
                 'password' => 'required|min:6|confirmed',
                 'password_confirmation' => 'required_with:password|same:password|min:6',
             ];
@@ -168,7 +170,7 @@ class RepresentativeController extends Controller
 
             'identitynumber.required' => 'يجب عليك كتابة هذا الحقل',
             'identitynumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
+            // 'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
 
             'userimage.required' => 'يجب عليك كتابة هذا الحقل',
 
@@ -200,6 +202,12 @@ class RepresentativeController extends Controller
     }
     public function updateRepresentative(Request $request,$id)
     {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $user = User::find($id);
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
@@ -244,31 +252,49 @@ class RepresentativeController extends Controller
     public function showRepresentatives($id)
     {
         $subarea = Subarea::find($id);
-        $rep = $subarea->mainarea->supervisor->representatives;
+        $rep = $subarea->representatives;
         return view('supervisors.representativesSubArea', compact('subarea',$subarea))->with('rep',$rep);
     }
-    public function showMainareas($id)
+    public function showSubareas($id)
     {
         $rep = Representative::with('user')->find($id);
-        $mainareas = $rep->supervisor->mainareas;
-        return view('supervisors.showMainareas',compact('mainareas',$mainareas))->with('rep',$rep);
+        $subareas = $rep->subareas;
+        return view('supervisors.showSubareas',compact('subareas'))->with('rep',$rep);
     }
-    public function storeRepMainArea(Request $request,$id)
+    public function addRepSubareas($id)
     {
-        $mainarea = Mainarea::find($request->main_area_id);
-        $subareas = $mainarea->subareas;
-        $mainarea->representative_id = $id;
-        $mainarea->update();
-        $rep = Representative::find($id);
-        return view('supervisors.showSubareas',compact('subareas',$subareas))->with('rep',$rep);
+        $rep = Representative::with('user')->find($id);
+        $sup = Supervisor::find(Auth::user()->supervisor->id);
+        $subareas = $sup->subareas;
+        return view('supervisors.addRepSubareas',compact('subareas'))->with('rep',$rep);
     }
+    // public function storeRepMainArea(Request $request,$id)
+    // {
+    //     $mainarea = Mainarea::find($request->main_area_id);
+    //     $subareas = $mainarea->subareas;
+    //     $mainarea->representative_id = $id;
+    //     $mainarea->update();
+    //     $rep = Representative::find($id);
+    //     return view('supervisors.showSubareas',compact('subareas',$subareas))->with('rep',$rep);
+    // }
     public function storeRepSubareas(Request $request,$id)
+    {
+        $rep = Representative::find($id);
+        // return $request->sub_area_ids;
+        if($rep->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        $rep->subareas()->syncWithoutDetaching($request->sub_area_ids);
+
+        return redirect('/supervisor/showSubareas/'.$id)->with('stat    us','تم اضافة المناطق للمندوب بشكل ناجح');
+    }
+    public function deleteRepresentative($id)
     {
         $rep = Representative::find($id);
         if($rep->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $rep->subareas()->syncWithoutDetaching($request->subareasids);
-
-        return redirect('/supervisor/manageRepresentatives')->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
+        $user = User::findOrfail($rep->user_id);
+        $user->delete();
+        
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
     }
 }

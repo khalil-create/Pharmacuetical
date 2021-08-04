@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    أسئلة الاختبار
+    ادارة الاسئلة
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة الاسئلة</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">اسئلة الاختيار</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -47,16 +47,6 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -91,16 +81,18 @@
                     @foreach ($questions as $row)
                       <tr class="odd">
                         <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                        <td>{{$row->question}}</td>
-                        <td>
+                        <td class="text-right">{{$row->question}}</td>
+                        <td class="text-right">
                           @if ($type == 0)
                               {{'صواب/خطأ'}}
                           @else
                               @php
                                   $choices = $row->choices;
                                   $choices_arr = explode("++",$choices);
+                                  $no = 0;
                               @endphp
                               @foreach ($choices_arr as $r)
+                                  {{++$no.'- '}}
                                   @if ($r == $row->right_answer)
                                       <b style="color:#0bab30">{{$r}}</b>
                                   @else
@@ -110,15 +102,19 @@
                               @endforeach
                           @endif
                         </td>
-                        <td style="color:#0bab30"><b>{{$row->right_answer}}</b></td>
+                        <td class="text-right" style="color:#0bab30"><b>{{$row->right_answer}}</b></td>
                         <td>
                           <a href="{{route('editQuestion',['id' => $row->id,'type' => $type,'test_id' => $test->id])}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
-                          <form action="{{route('deleteQuestion',['id' => $row->id,'type' => $type,'test_id' => $test->id])}}" method="post" style="float: right;">
+                          {{-- <form action="{{route('deleteQuestion',['id' => $row->id,'type' => $type,'test_id' => $test->id])}}" method="post" style="float: right;">
                               {{csrf_field()}}
                               {{method_field('DELETE')}}
                               <button style="border: none;margin-left: -15px;"><i class="fas fa-trash" title="حذف"></i></button>
-                            </form>
-                            <a href="/supervisor/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                          </form> --}}
+                          <input type="hidden" class="id" value="{{$row->id}}">
+                          <input type="hidden" class="type" value="{{$type}}">
+                          <input type="hidden" class="test_id" value="{{$test->id}}">
+                          <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                          <a href="/supervisor/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
                         </td>
                       </tr>
                     @endforeach
@@ -150,4 +146,54 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            var type = $(this).closest("tr").find('.type').val();
+            var test_id = $(this).closest("tr").find('.test_id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                        "type": type,
+                        "test_id": test_id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/supervisor/deleteQuestion',
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

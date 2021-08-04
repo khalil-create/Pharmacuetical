@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    اضافة خدمة
+    ادارة الخدمات
 @endsection
 
 @section('content')
@@ -9,12 +9,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6" >
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">ادارة الخدمات</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item active">الخدمات</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
-                        <form method="POST" action="/representative/storeService"  enctype="multipart/form-data">
+                        <form method="POST" action="/repScience/storeService"  enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="card-body">
                             <div class="form-group">
@@ -119,7 +119,7 @@
                             </div>
                             <div class="form-group" >
                                 <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                    اضافة <i class="fas fa-plus"></i>
+                                    حفظ<i class="fas fa-plus"></i>
                                 </button>
                             </div>
                         </div>

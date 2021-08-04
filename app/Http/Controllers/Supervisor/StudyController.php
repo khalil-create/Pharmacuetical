@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 
 class StudyController extends Controller
 {
-    public function getAllStudies()
+    public function getAllStudies(Request $request)
     {
-        $studies = Study::whereHas('supervisor')->get();
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
+        $studies = Study::where('supervisor_id',Auth::user()->supervisor->id)->get();
         // if($studies->count() < 1 )
         //     return view('admin.manageStudies');
         return view('supervisors.manageStudies',compact('studies',$studies));
@@ -82,7 +85,8 @@ class StudyController extends Controller
         $study->strengths()->delete();
         $study->delete();
 
-        return redirect('/supervisor/manageStudies')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageStudies')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getStudyStrengths($id)
     {

@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة الاهداف البيعية</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">الاهداف البيعة</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,20 +36,9 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
-            <div class="row">
-              <div class="col-sm-12">
-                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
+            <div class="col-sm-12">
+              <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                <thead>
                   @if(isset($salesObjectives) && $salesObjectives->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
@@ -70,11 +59,11 @@
                     </tr>
                   @else
                     <div class="alert alert-danger notify-danger">
-                    {{ 'لم يتم اضافة اي هدف بيعي' }}
+                      {{ 'لم يتم اضافة اي هدف بيعي' }}
                     </div>
                   @endif
-                  </thead>
-                  <tbody>
+                </thead>
+                <tbody>
                   <?php $i=1?>
                   @if(isset($salesObjectives))
                     @foreach ($salesObjectives as $row)
@@ -84,13 +73,15 @@
                         <td>{{$row->objective}}</td>
                         <td class="sorting_1">{{$row->description}}</td>
                         <td>
-                          <a href="/managerMarketing/editSalesObjective/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                          <form action="/managerMarketing/deleteSalesObjective/{{$row->id}}" method="post" style="float: right;">
+                          <a href="/managerMarketing/editSalesObjective/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
+                          {{-- <form action="/managerMarketing/deleteSalesObjective/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -60px;"><i class="fas fa-trash"></i></button>
-                          </form>
-                          <a href="/managerMarketing/distributeSalesObjective/{{$row->id}}" class="btn btn-success">توزيع</a>
+                            <button style="border: none;"><i class="fas fa-trash"></i></button>
+                          </form> --}}
+                          <input type="hidden" class="id" value="{{$row->id}}">
+                          <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                          <a href="/managerMarketing/distributeSalesObjective/{{$row->id}}"><i class="nav-icon fas fa-share" title="توزيع الهدف البيعي على المشرفين"></i></a>
                         </td>
                       </tr>
                     @endforeach
@@ -98,20 +89,19 @@
                   <div>
                     <a href="{{url('/managerMarketing/addSalesObjective')}}" class="btn btn-primary add"><i class="fas fa-plus"></i>اضافة هدف بيعي</a>
                   </div>
-                  </tbody>
-                  <tfoot>
-                    @if(isset($salesObjectives) && $salesObjectives->count() > 0)
-                      <tr>
-                        <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">الهدف</th>
-                        <th rowspan="1" colspan="1">الصنف</th>
-                        <th rowspan="1" colspan="1">الوصف</th>
-                        <th rowspan="1" colspan="1">العملية</th>
-                      </tr>
-                    @endif
-                  </tfoot>
-                </table>
-              </div>
+                </tbody>
+                <tfoot>
+                  @if(isset($salesObjectives) && $salesObjectives->count() > 0)
+                    <tr>
+                      <th rowspan="1" colspan="1">#</th>
+                      <th rowspan="1" colspan="1">الهدف</th>
+                      <th rowspan="1" colspan="1">الصنف</th>
+                      <th rowspan="1" colspan="1">الوصف</th>
+                      <th rowspan="1" colspan="1">العملية</th>
+                    </tr>
+                  @endif
+                </tfoot>
+              </table>
             </div>
           </div>
           <!-- /.card-body -->
@@ -121,4 +111,50 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/managerMarketing/deleteSalesObjective/'+id,
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Supervisor;
-use App\Models\Category;
 use App\Models\Item;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Traits\userTrait;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    public function getAllItems($have_category)
+    use userTrait;
+    public function getAllItems($have_category,Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         if($have_category){
             $companies = Company::with('categories')->with('categories.items')
             ->where('supervisor_id',Auth::user()->supervisor->id)->where('have_category',1)->get();
@@ -147,6 +151,8 @@ class ItemController extends Controller
         else
             $have_category = 0;
         $item->delete();
-        return redirect('/supervisor/manageItem/'.$have_category)->with('status','تم حذف البيانات بشكل ناجح');
+        
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageItem/'.$have_category)->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

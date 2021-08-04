@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة الزيارات</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">الزيارات</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -36,16 +36,6 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
@@ -72,7 +62,7 @@
                       </th>
                     </tr>
                   @else
-                    <div class="alert alert-success notify-success">
+                    <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي زيارة' }}
                     </div>
                   @endif
@@ -105,18 +95,20 @@
                         {{$row->result}}
                       </td>
                       <td>
-                        <a href="/representative/editVisit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
+                        <a href="/repScience/editVisit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <i class="fas fa-eye"></i>
-                        <form action="/representative/deleteVisit/{{$row->id}}" method="post" style="float: right;">
+                        {{-- <form action="/repScience/deleteVisit/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;margin-left: -10px;"><i class="fas fa-trash"></i></button>
-                        </form>
+                        </form> --}}
+                        <input type="hidden" class="id" value="{{$row->id}}">
+                        <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/representative/addVisit')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة زيارة</a>
+                    <a href="{{url('/repScience/addVisit')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة زيارة</a>
                   </div>
                   </tbody>
                   <tfoot>
@@ -142,4 +134,50 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/repScience/deleteVisit/'+id,
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

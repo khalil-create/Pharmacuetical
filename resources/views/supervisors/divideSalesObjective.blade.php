@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-      توزيع الأهداف البيعية
+      ادارة الأهداف البيعية
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
   <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
+          <h1 class="m-0">ادارة الأهداف البيعية</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item active">توزيع الأهداف البيعية</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -40,7 +40,7 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row col-14">
-              <form style="width: 100%" method="POST" action="/supervisor/storeDividedSalesObjectives" enctype="multipart/form-data">
+              <form style="width: 100%" method="POST" action="/supervisor/storeDividedSalesObjectives" onsubmit="return ValidationDistributed()" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 
                 <div class="col-sm-12">
@@ -58,6 +58,8 @@
                       </thead>
                       <tbody>
                         <input name="item_id" value="{{$salesObjective->item_id}}" hidden>
+                        <input id="total_objective" value="{{$salesObjective->objective}}" hidden>
+                        @php $i=0; @endphp
                         @foreach ($representatives as $row)
                         <tr>
                           <td>
@@ -65,7 +67,7 @@
                             <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                           </td>
                           <td>
-                            <input type="text" placeholder="مقدار الهدف لهذا المندوب" name="objective[]" class="form-control">
+                            <input value="@if(sizeof($sales) > $i && sizeof($sales) != 0 && $sales[$i]['representative_id']==$row->id){{$sales[$i]["objective"]}} @else @php $i--; @endphp @endif"  type="text" placeholder="مقدار الهدف لهذا المندوب" name="objective[]" class="form-control">
                             @if ($errors->has('objective'))
                               <span class="help-block">
                                   <small class="form-text text-danger">{{ $errors->first('objective') }}</small>
@@ -73,6 +75,7 @@
                             @endif
                           </td>
                         </tr>
+                        @php $i++; @endphp
                         @endforeach
                         <tr rowspan="2">
                           <label>الوصف</label>
@@ -85,7 +88,7 @@
                     </button>
                   @else
                     <div class="alert alert-danger notify-danger">
-                      {{ 'كل المشرفين قد تم اضافة هدف بيعي لهم' }}
+                      {{ 'لم يتم اضافة اي مندوب' }}
                     </div>
                   @endif
                 </div>

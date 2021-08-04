@@ -8,11 +8,16 @@ use App\Models\Subarea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Traits\userTrait;
 
 class MainAreaController extends Controller
 {
-    public function getAllAreas()
+    use userTrait;
+    public function getAllAreas(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $mainareas = Mainarea::whereHas('supervisor')->get();
         return view('Managers.marketing.manageMainAreas',compact('mainareas',$mainareas));
     }
@@ -52,6 +57,9 @@ class MainAreaController extends Controller
     {
         return $messages = [
             'name_main_area.required' => 'يجب عليك كتابة المنطقة الرئيسية',
+            'name_main_area.string' => 'يجب عليك كتابة هذا الحقل بشكل نصي',
+            'name_main_area.max' => 'يجب ان لاتتجاوز عدد الأحرف لأكثر من 255 حرفاً',
+            'name_main_area.unique' => 'هذه المنطقة قد تم اضافتها مسبقاً',
         ];
     }
     public function editMainArea($areaid)
@@ -93,7 +101,8 @@ class MainAreaController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $mainarea->delete();
 
-        return redirect('/managerMarketing/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/managerMarketing/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getSupAreasForMainArea($id)
     {
