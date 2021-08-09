@@ -84,11 +84,11 @@
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td> --}}
                       <td class="sorting_1">{{$row->user->sex}}</td>
-                      <td class="" style="">{{$row->user->email}}</td>
-                      <td class="" style="">
+                      <td>{{$row->user->email}}</td>
+                      <td>
                         <a href="/supervisor/editRepresentative/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <a href="/supervisor/showSubareas/{{$row->id}}" ><i class="fas fa-tasks"></i></a>
-                        <i class="fas fa-eye"></i>
+                        <a href="/supervisor/showSubareas/{{$row->id}}" title="مناطق هذا المندوب"><i class="fas fa-tasks"></i></a>
+                        <a href="/supervisor/showRepDetails/{{$row->id}}" ><i class="fas fa-eye" title="تفاصيل اكثر"></i></a>
                         {{-- <form action="/supervisor/deleteRepresentative/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}

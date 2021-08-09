@@ -67,25 +67,13 @@
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->test_name}}</td>
-                      {{-- <td>
-                        @if ($row->type == 0)
-                            {{'صواب/خطأ'}}
-                        @else
-                            {{'اختيار متعدد'}}
-                        @endif
-                      </td> --}}
                       <td>
-                        {{-- <a href="/supervisor/manageQuestions/{{$row->id}}"><i class="nav-icon fas fa-plus kkk" title="الأسئلة"></i></a> --}}
                         <a href="/supervisor/manageTestTypes/{{$row->id}}"><i class="nav-icon fas fa-plus kkk" title="فئات الاختبار"></i></a>
                         <a href="/supervisor/editTest/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
-                        {{-- <form action="/supervisor/deleteTest/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -15px;"><i class="fas fa-trash" title="حذف"></i></button>
-                        </form> --}}
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        <a href="/supervisor/manageTestReps/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                        <a href="/supervisor/manageTestReps/{{$row->id}}"><i class="fas fa-user" title="المندوبيين العلميين"></i></a>
+                        <a href="/supervisor/manageTestRepsResults/{{$row->id}}"><i class="fas fa-eye" title="نتائج المندوبيين"></i></a>
                       </td>
                     </tr>
                   @endforeach

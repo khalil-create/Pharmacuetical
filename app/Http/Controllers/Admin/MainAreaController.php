@@ -93,7 +93,8 @@ class MainAreaController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $mainarea->delete();
 
-        return redirect('/admin/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/manageMainAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getSupAreasForMainArea($id)
     {

@@ -93,6 +93,7 @@ class ItemController extends Controller
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $item->delete();
-        return redirect('/admin/manageItems')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/manageItems')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

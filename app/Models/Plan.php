@@ -23,7 +23,7 @@ class Plan extends Model
         'updated_at',
     ];
     public $timestamps = true; //the default is true
-    public function represntaitives()
+    public function represnetatives()
     {
         return $this->belongsTo('App\Models\Representative','representative_id','id');
     }

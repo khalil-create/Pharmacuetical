@@ -192,4 +192,11 @@ class CustomerController extends Controller
         $this->notifyUser('عملاء','تم إالغاء تفعيل العميل',$rep->user->id);
         return redirect('/supervisor/manageCustomers')->with('status','تم إالغاء تفعيل العميل');
     }
+    public function showCustomerDetails($id)
+    {
+        $customer = Customer::with(['orders','services'])->findOrfail($id);
+        if($customer->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showCustomerDetails',compact('customer'));
+    }
 }

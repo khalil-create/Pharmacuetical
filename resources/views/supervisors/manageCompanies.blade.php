@@ -77,17 +77,11 @@
                       {{-- <td>
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td> --}}
-                      <td class="" style="">
+                      <td>
                         <a href="/supervisor/companyEdit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        {{-- <form action="/supervisor/companyDelete/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/supervisor/showCompanyDetails/{{$row->id}}"><i class="fas fa-eye" title="تفاصيل"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        <i class="fas fa-eye"></i>
-
                       </td>
                     </tr>
                   @endforeach

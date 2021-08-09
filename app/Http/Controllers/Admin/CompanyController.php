@@ -91,6 +91,7 @@ class CompanyController extends Controller
         $this->deleteFile($company->sign_img_company,'images/signsCompany/');
         $company->delete();
 
-        return redirect('/admin/manageCompany')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/manageCompany')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

@@ -91,12 +91,7 @@
                       <td>{{$row->note}}</td>
                       <td>
                         <a href="/supervisor/editOrder/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <i class="fas fa-eye"></i>
-                        {{-- <form action="/supervisor/deleteOrder/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/supervisor/showOrderDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>

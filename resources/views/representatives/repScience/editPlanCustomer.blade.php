@@ -19,7 +19,7 @@
       </div><!-- /.row -->
   </div><!-- /.container-fluid -->
   <!-- /.content-header -->
-  <div class="content">
+  <section class="content">
     <div class="container-fluid">
       <div class="card card-default">
         <div class="card-header">
@@ -46,7 +46,7 @@
               </div>
           @endif
           <div class="form-group">
-            <form method="POST" action="/repScience/updatePlanCustomer/{{$planCust->id}}"  enctype="multipart/form-data">
+            <form method="POST" action="/repScience/updatePlanCustomer/{{$planCust->id}}" onsubmit="return checkDataPlan()" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <div class="card-body">
@@ -56,31 +56,18 @@
                         <h3 class="card-title" style="float: right">تعديل خطة</h3>
                     </div>
                     <div class="card-body">
-                        <div class="row text-center">
+                        <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="date">تأريخ الزيارة</label>
-                                <input value="{{$planCust->visit_date}}" type="date" class="form-control" name="date">
+                                <input value="{{$planCust->visit_date}}" type="date" class="form-control" name="date" id="month_entered">
                                 @if ($errors->has('date'))
                                     <span class="help-block">
                                         <small class="form-text text-danger">{{ $errors->first('date') }}</small>
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-group">
-                              @php
-                                  $AM = '';$PM = '';
-                                  if($planCust->period == 'AM') $AM = 'selected';
-                                  else $PM = 'selected';
-                              @endphp
-                              <label for="date">الفترة</label>
-                              <select name="period" class="form-control custom-select rounded-0">
-                                  <option value="AM" {{$AM}}>صباحية</option>
-                                  <option value="PM" {{$PM}}>مسائية</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
+                            <input type="hidden" id="month_plan" value="{{$planCust->plan->plan_month}}">
                             <div class="form-group">
                               <label for="date">العميل</label>
                               <select name="customer_name" class="form-control custom-select rounded-0">
@@ -96,6 +83,20 @@
                                   @endforeach
                               </select>
                             </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              @php
+                                  $AM = '';$PM = '';
+                                  if($planCust->period == 'AM') $AM = 'selected';
+                                  else $PM = 'selected';
+                              @endphp
+                              <label for="date">الفترة</label>
+                              <select name="period" class="form-control custom-select rounded-0">
+                                  <option value="AM" {{$AM}}>صباحية</option>
+                                  <option value="PM" {{$PM}}>مسائية</option>
+                              </select>
+                            </div>
                             <div class="cform-group">
                               <label for="date">ملاحظه</label>
                                 <textarea name="note" id="form" rows="1" class="form-control">{{$planCust->note}}</textarea>
@@ -107,13 +108,13 @@
                                 @endif
                           </div>
                         </div>
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12"> --}}
                           <div class="form-group" >
-                            <button type="submit" class="btn btn-primary font" style="margin: 10px 6px -19px;">
+                            <button type="submit" class="btn btn-primary font" style="margin: 10px 15px -19px;">
                                 تعديل <i class="fas fa-edit"></i>
                             </button>
                           </div>
-                        </div>
+                        {{-- </div> --}}
                       </div>
                     <!-- /.card-body -->
                 </div>

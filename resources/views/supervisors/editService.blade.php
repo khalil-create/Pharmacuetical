@@ -2,7 +2,6 @@
 @section('title')
     ادارة الخدمات
 @endsection
-
 @section('content')
 <!-- Content Header (Page header) -->
 <div class="content-header content-wrapper">
@@ -134,35 +133,37 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">المندوب</label>
+                                <select name="rep_id" class="form-control custom-select rounded-0">
+                                    @foreach ($reps as $rep)
+                                        <option value="{{$rep->id}}"
+                                            @if ($service->representative_id == $rep->id)
+                                                {{'selected'}}
+                                            @endif
+                                            >{{$rep->user->user_name_third}} {{$rep->user->user_surname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group" >
                                 <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
                                     تعديل <i class="fas fa-edit"></i>
                                 </button>
                             </div>
                         </div>
-                        </div>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                    <!-- /.form-group -->
                     </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                the plugin.
-                </div>
-            </div>
-            <!-- /.card -->
-            </div>
-        <!-- /.container-fluid -->
-    </section>
+                </form><!-- /.form -->
+            </div><!-- /.form-group -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.card-body -->
+</div><!-- /.card -->
+</div><!-- /.container-fluid -->
+</section>
+<div class="card-footer">
+Footer
 </div>
-</div>
+</div><!-- /.content-header -->
 @endsection
 @section('scripts')
     

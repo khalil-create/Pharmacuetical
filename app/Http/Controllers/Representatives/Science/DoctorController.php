@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Representatives\Science;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
+use App\Models\Specialist;
 use App\Models\representative;
 use App\Models\User;
 use App\Models\SubArea;
@@ -23,7 +24,8 @@ class DoctorController extends Controller
     }
     public function addDoctor()
     {
-        return view('representatives.repScience.addDoctor');
+        $specialists = Specialist::all();
+        return view('representatives.repScience.addDoctor',compact('specialists'));
     }
     public function storeDoctor(Request $request)
     {
@@ -33,7 +35,7 @@ class DoctorController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        Doctor::create([
+        $doctor = Doctor::create([
             'name' => $request->name,
             'mobile_phone' => $request->mobile_phone,
             'clinic_phone' => $request->clinic_phone,
@@ -45,7 +47,7 @@ class DoctorController extends Controller
             'statues' => False,
             'representative_id' => Auth::user()->representatives->id,
         ]);
-        
+        $doctor->specialists()->attach($request->specialist_ids);
         return redirect('/repScience/manageDoctors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
@@ -98,7 +100,9 @@ class DoctorController extends Controller
         $doctor = Doctor::find($id); 
         if($doctor->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        return view('representatives.repScience.editDoctor', compact('doctor'));
+        
+        $specialists = Specialist::all();
+        return view('representatives.repScience.editDoctor', compact('doctor'))->with('specialists',$specialists);
     }
     public function updateDoctor(Request $request,$id)
     {
@@ -115,7 +119,7 @@ class DoctorController extends Controller
         $doctor->address = $request->address;
         $doctor->representative_id = Auth::user()->representatives->id;
         $doctor->update();
-        
+        $doctor->specialists()->attach($request->specialist_ids);
         return redirect('/repScience/manageDoctors')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteDoctor($id)

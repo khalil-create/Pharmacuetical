@@ -93,11 +93,12 @@
                         {{$row->cost}} 
                       </td>
                       <td>
-                        @if($row->doctors->count() > 0)
+                        @if($row->doctors()->count() > 0)
                             @foreach ($row->doctors as $d)
                                 {{'د. '.$d->name}}<br>
                             @endforeach
-                        @elseif($row->customers->count() > 0)
+                        @endif
+                        @if($row->customers()->count() > 0)
                             @foreach ($row->customers as $cust)
                                 {{$cust->name}}<br>
                             @endforeach
@@ -111,18 +112,20 @@
                         @endif
                       </td>
                       <td>
-                        {{-- <a href="/representative/editService/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a> --}}
-                        <i class="fas fa-eye" style="float: right;"></i>
-                        {{-- <form action="/representative/deleteService/{{$row->id}}" method="post" style="float: right;">
+                        <a href="/supervisor/editService/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
+                        <i class="fas fa-eye"></i>
+                        {{-- <form action="/supervisor/deleteService/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button style="border: none;"><i class="fas fa-trash"></i></button>
                         </form> --}}
+                        <input type="hidden" class="id" value="{{$row->id}}">
+                        <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
                     </tr>
                   @endforeach
-                  {{-- <div>
-                    <a href="{{url('/representative/addService')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة خدمة</a> --}}
+                  <div>
+                    <a href="{{url('/supervisor/addService')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة خدمة</a>
                   </div>
                   </tbody>
                   <tfoot>
@@ -149,4 +152,50 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/supervisor/deleteService/'+id,
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     use userTrait;
+    ///////////////////////////////////////////////////////////////// Start Test ////////////////////////////////////////////////////////////
     public function getAllTests(Request $request)
     {
         if($request->get('id')){
@@ -93,12 +94,41 @@ class TestController extends Controller
 
         return view('supervisors.manageTestTypes', compact('test'));
     }
+    ///////////////////////////////////////////////////////////////// End Test ////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////// Start Test Representatives Results  ////////////////////////////////////////////////////////////
+    public function getTestRepsResults($test_id)
+    {
+        $test = Test::findOrfail($test_id);
+        if($test->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+
+        return view('supervisors.manageTestRepsResults', compact('test'));
+    }
+    public function deleteTestRepResult($id)
+    {
+        $repResult = RepresentativeTest::findOrfail($id);
+        return $repResult;
+        if($repResult->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        
+        $repResult->delete();
+
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/supervisor/manageTests')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    ///////////////////////////////////////////////////////////////// End Test Representatives Results ////////////////////////////////////////////////////////////
+    
+    ///////////////////////////////////////////////////////////////// Start Test Representative ////////////////////////////////////////////////////////////
     public function getAllTestReps($id)
     {
         $test = Test::findOrfail($id);
         if($test->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-
+        // foreach($test->representatives as $rep){
+        //     return $rep->repTests;
+        // }
+        // return $test->representatives;
         return view('supervisors.manageTestReps', compact('test'));
     }
     public function addTestReps($id)
@@ -106,7 +136,7 @@ class TestController extends Controller
         $test = Test::findOrfail($id);
         if($test->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-
+        
         $reps = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
         return view('supervisors.addTestReps', compact('test'))->with('reps',$reps);
     }
@@ -127,11 +157,11 @@ class TestController extends Controller
         if($test->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
 
-        $test->representatives()->sync($request->repIds);
+        $test->representatives()->attach($request->repIds);
         foreach($request->repIds as $id){
-        ////////////// Notify user //////////////////////
-        $rep = Representative::findOrfail($id);
-        $this->notifyUser('اختبارات','لديك اختبار جديد',$rep->user->id);
+            ////////////// Notify user //////////////////////
+            $rep = Representative::findOrfail($id);
+            $this->notifyUser('اختبارات','لديك اختبار جديد',$rep->user->id);
         }
         return redirect('/supervisor/manageTestReps/'.$test->id)->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -144,4 +174,15 @@ class TestController extends Controller
 
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
     }
+    public function showRepsTest(Request $request)
+    {
+        $rep_id = $request->get('rep_id');
+        $test_id = $request->get('test_id');
+        $repResult = RepresentativeTest::where('representative_id',$rep_id)->where('test_id',$test_id)->first();
+        if($repResult->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        
+        return view('supervisors.representativeResult',compact('repResult'));
+    }  
+    ///////////////////////////////////////////////////////////////// End Test Representative ////////////////////////////////////////////////////////////
 }

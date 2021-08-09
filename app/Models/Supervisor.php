@@ -46,6 +46,10 @@ class Supervisor extends Model
     {
         return $this->hasManyThrough('App\Models\Visit','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
     }
+    public function plans()
+    {
+        return $this->hasManyThrough('App\Models\Plan','App\Models\Representative','supervisor_id','representative_id');//(related,foriegn key,primary key)
+    }
     public function representatives()
     {
         return $this->hasMany('App\Models\Representative','supervisor_id','id');//(related,foriegn key,primary key)

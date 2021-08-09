@@ -9,6 +9,7 @@ class Service extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'type',//عيني او نقدي
         'name',//اذا كانت خدمة عينية تكتب اسمها
         'cost',

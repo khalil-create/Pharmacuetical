@@ -108,4 +108,11 @@ class OrderController extends Controller
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/supervisor/manageOrders')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    public function showOrderDetails($id)
+    {
+        $order = Order::with('customer')->findOrfail($id);
+        if($order->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showOrderDetails',compact('order'));
+    }
 }

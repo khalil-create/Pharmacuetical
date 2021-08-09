@@ -135,7 +135,7 @@
             class="nav-link {{  $p == 'managerSales/manageOrders' ||
                                 $p == 'managerSales/addOrder' ||
                                 $path == 'managerSales/editOrder'? 'active' : '' }}">
-                <i class="fab fa-first-order nav-icon"></i>
+                <i class="fas fa-inbox nav-icon"></i>
                 <p>ادارة الطلبيات</p>
             </a>
         </li>

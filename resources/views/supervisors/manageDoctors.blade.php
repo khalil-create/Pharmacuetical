@@ -40,92 +40,86 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($supervisor->doctors->count() > 0)
-                    <tr role="row">
-                      <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
-                        #
-                      </th>
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        الإسم
-                      </th>
-                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المندوب
-                      </th>
-                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الرتبة
-                      </th>
-                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">
-                        الحالة
-                      </th>
-                      <th class="sorting align-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">
-                        العملية
-                      </th>
-                    </tr>
-                  @else
-                    <div class="alert alert-danger notify-error">
-                      {{ 'لم يتم اضافة اي دكتور' }}
-                    </div>
-                  @endif
-                  </thead>
-                  <tbody>
-                  <?php $i=1?>
-                  @foreach ($supervisor->doctors as $row)
-                    <tr class="odd">
-                      <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{$row->name}}</td>
-                      <td>{{$row->representative->user->user_name_third}} {{$row->representative->user->user_surname}}</td>
-                      <td>
-                        @if ($row->rank == 1)
-                            {{'A+'}}
-                        @elseif($row->rank == 2)
-                            {{'A'}}
-                        @elseif($row->rank == 3)
-                            {{'B+'}}
-                        @elseif($row->rank == 4)
-                            {{'B'}}
-                        @elseif($row->rank == 5)
-                            {{'C'}}
-                        @elseif($row->rank == 6)
-                            {{'Z'}}
-                        @endif
-                      </td>
-                      <td>
-                        @if ($row->statues)
-                          <a href="/supervisor/notActivateDoctor/{{$row->id}}" title="إلغاء التفعيل"><b style="color:#0bab30">{{'مفعل'}}</b></a>
-                        @else
-                          <a href="/supervisor/activateDoctor/{{$row->id}}" title="تفعيل"><b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b></a>
-                        @endif
-                      </td>
-                      <td>
-                        <a href="/supervisor/editDoctor/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        {{-- <a href="/supervisor/showMainareas/{{$row->id}}" ><i class="fas fa-tasks"></i></a> --}}
-                        <i class="fas fa-eye"></i>
-                        {{-- <form action="/supervisor/deleteDoctor/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash" style="float: right;"></i></button>
-                        </form> --}}
-                        <input type="hidden" class="id" value="{{$row->id}}">
-                        <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                      </td>
-                    </tr>
-                  @endforeach
-                  <div>
-                    <a href="{{url('/supervisor/addDoctor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة دكتور</a>
-                  </div>
-                  </tbody>
-                  <tfoot>
                     @if($supervisor->doctors->count() > 0)
-                      <tr>
-                        <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">الاسم</th>
-                        <th rowspan="1" colspan="1">المندوب</th>
-                        <th rowspan="1" colspan="1">الرتبة</th>
-                        <th rowspan="1" colspan="1">الحالة</th>
-                        <th rowspan="1" colspan="1">العملية</th>
-                      </tr>
-                    @endif
-                  </tfoot>
+                      <tr role="row">
+                          <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
+                          #
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                          الإسم
+                          </th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                            المندوب
+                          </th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                          الرتبة
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">
+                          الحالة
+                          </th>
+                          <th class="sorting align-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">
+                          العملية
+                          </th>
+                        </tr>
+                      @else
+                        <div class="alert alert-danger notify-error">
+                          {{ 'لم يتم اضافة اي دكتور' }}
+                        </div>
+                      @endif
+                    </thead>
+                    <tbody>
+                      <?php $i=1?>
+                      @foreach ($supervisor->doctors as $row)
+                        <tr class="odd">
+                          <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                          <td>{{$row->name}}</td>
+                          <td>{{$row->representative->user->user_name_third}} {{$row->representative->user->user_surname}}</td>
+                          <td>
+                            @if ($row->rank == 1)
+                                {{'A+'}}
+                            @elseif($row->rank == 2)
+                                {{'A'}}
+                            @elseif($row->rank == 3)
+                                {{'B+'}}
+                            @elseif($row->rank == 4)
+                                {{'B'}}
+                            @elseif($row->rank == 5)
+                                {{'C'}}
+                            @elseif($row->rank == 6)
+                                {{'Z'}}
+                            @endif
+                          </td>
+                          <td>
+                              @if ($row->statues)
+                                <a href="/supervisor/notActivateDoctor/{{$row->id}}" title="إلغاء التفعيل"><b style="color:#0bab30">{{'مفعل'}}</b></a>
+                              @else
+                                <a href="/supervisor/activateDoctor/{{$row->id}}" title="تفعيل"><b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b></a>
+                              @endif
+                          </td>
+                          <td>
+                            <a href="/supervisor/editDoctor/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
+                            <a href="/supervisor/showDoctorDetails/{{$row->id}}"><i class="fas fa-eye" title="تفاصيل اكثر"></i></a>
+                            <input type="hidden" class="id" value="{{$row->id}}">
+                            <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                          </td>
+                        </tr>
+                      @endforeach
+                      <div>
+                          <a href="{{url('/supervisor/addDoctor')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة طبيب</a>
+                      </div>
+                    </tbody>
+                    <tfoot>
+                      @if($supervisor->doctors->count() > 0)
+                        <tr>
+                          <th rowspan="1" colspan="1">#</th>
+                          <th rowspan="1" colspan="1">الاسم</th>
+                          <th rowspan="1" colspan="1">المندوب</th>
+                          <th rowspan="1" colspan="1">الرتبة</th>
+                          <th rowspan="1" colspan="1">الحالة</th>
+                          <th rowspan="1" colspan="1">العملية</th>
+                        </tr>
+                      @endif
+                    </tfoot>
                 </table>
               </div>
             </div>

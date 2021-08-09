@@ -9,10 +9,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="index3.html" class="nav-link">الصفحة الرئيسية</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="" class="nav-link">Contact</a>
+        <a href="" class="nav-link">تواصل معنا</a>
       </li>
     </ul>
 
@@ -170,10 +170,15 @@
             @endif
           </span>
           <div class="dropdown-divider"></div>
+          @php $count = 0; @endphp
           @foreach (Auth::user()->unreadnotifications as $notify)
+            @if($count > 5)
+              @break
+            @endif
               @php
                   $route = userTrait::getRouteReadNotification($notify->data['title']);
                   $since = userTrait::getSinceTimePast($notify->updated_at);
+                  $count++;
               @endphp
               <a href="{{route($route,['id' => $notify->id])}}" class="dropdown-item">
                 <i class="fas fa-envelope mr-2"></i>
@@ -182,21 +187,8 @@
                 {{-- <span class="float-right text-muted text-sm"></span> --}}
               </a>
           @endforeach
-          {{-- <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a> --}}
-          <div class="dropdown-divider"></div>
+          <a href="/showAllUnReadNotifications" class="dropdown-item dropdown-footer">رؤية كل الاشعارات</a>
           <a href="#" class="dropdown-item dropdown-footer">Mark all notifications as read</a>
         </div>
       </li>

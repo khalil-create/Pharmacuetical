@@ -37,4 +37,8 @@ class Test extends Model
     {
         return $this->hasMany('App\Models\Test','type_id','id');
     }
+    public function testResults()
+    {
+        return $this->hasMany('App\Models\RepresentativeTest','test_id','id');
+    }
 }

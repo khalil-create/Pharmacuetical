@@ -80,17 +80,13 @@
                           {{$row->user->user_name_third}} {{$row->user->user_surname}}
                         </td>
                         <td>
-                          {{-- <a href="/supervisor/manageQuestions/{{$row->id}}"><i class="nav-icon fas fa-plus kkk" title="الأسئلة"></i></a> --}}
-                          {{-- <a href="/supervisor/editTest/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a> --}}
-                          {{-- <form action="/supervisor/deleteTest/{{$row->id}}" method="post" style="float: right;">
-                              {{csrf_field()}}
-                              {{method_field('DELETE')}}
-                              <button style="border: none;margin-left: -15px;"><i class="fas fa-trash" title="حذف"></i></button>
-                          </form> --}}
                           <input type="hidden" class="test_id" value="{{$test->id}}">
                           <input type="hidden" class="rep_id" value="{{$row->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                          <a href="/supervisor/showDetialsTest/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                          @if($row->repResults->where('test_id',$test->id)->first()->result != null)
+                            {{-- <a href="/supervisor/showDetialsTest/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a> --}}
+                            <a href="{{route('showRepsTest',['rep_id' => $row->id,'test_id' => $test->id])}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                          @endif
                         </td>
                       </tr>
                     @endforeach

@@ -27,7 +27,7 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                <h3 class="card-title" style="float: right">تعديل دكتور</h3>
+                <h3 class="card-title" style="float: right">تعديل طبيب</h3>
                 <div class="card-tools float-right">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -52,11 +52,24 @@
                         {{ method_field('PUT') }}
                         <div class="card-body">
                             <div class="form-group">
-                                <label>اسم الدكتور</label>
+                                <label>اسم الطبيب</label>
                                 <input value="{{$doctor->name}}" type="text" name="name" class="form-control">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <small class="form-text text-danger">{{ $errors->first('name') }}</small>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>تخصص الطبيب <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من تخصص)</span></label>
+                                <select name="specialist_ids[]" class="custom-select rounded-0" multiple>
+                                    @foreach ($specialists as $specialist)
+                                        <option value="{{$specialist->id}}">{{$specialist->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('specialist_ids'))
+                                    <span class="help-block">
+                                        <small class="form-text text-danger">{{ $errors->first('specialist_ids') }}</small>
                                     </span>
                                 @endif
                             </div>
@@ -168,7 +181,7 @@
                                     @endif
                             </div>
                             @php
-                                $AA='';$A='';$BB='';$B='';$C='',$Z;
+                                $AA='';$A='';$BB='';$B='';$C='';$Z='';
                                 if($doctor->rank == 1)
                                     $AA = 'selected';
                                 else if($doctor->rank == 2)
@@ -225,29 +238,19 @@
                                 </button>
                             </div>
                         </div>
-                        </div>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                    <!-- /.form-group -->
                     </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                the plugin.
-                </div>
-            </div>
-            <!-- /.card -->
-            </div>
-        <!-- /.container-fluid -->
-    </section>
+                </form><!-- /.form -->
+            </div><!-- /.form-group -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.card-body -->
+</div><!-- /.card -->
+</div><!-- /.container-fluid -->
+</section>
+<div class="card-footer">
+Footer
 </div>
-</div>
+</div><!-- /.content-header -->
 @endsection
 @section('scripts')
     

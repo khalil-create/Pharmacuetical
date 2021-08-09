@@ -89,11 +89,13 @@
                       </td>
                       <td class="" style="">
                         <a href="/admin/editCompany/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <form action="/admin/deleteCompany/{{$row->id}}" method="post" style="float: right;">
+                        {{-- <form action="/admin/deleteCompany/{{$row->id}}" method="post" style="float: right;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                                 <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
-                        </form>
+                        </form> --}}
+                        <input type="hidden" class="id" value="{{$row->id}}">
+                        <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                         <i class="fas fa-eye"></i>
 
                       </td>
@@ -125,4 +127,51 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/admin/deleteCompany/'+id,
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

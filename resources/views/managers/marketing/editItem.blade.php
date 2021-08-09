@@ -131,34 +131,24 @@
                                         </div>
                                     @endif
                                     <div class="form-group" >
-                                        <button type="submit" class="btn btn-primary font" style="margin: 10px">
+                                        <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
                                             تعديل <i class="fas fa-edit"></i>
                                         </button>
                                     </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    <!-- /.col -->
-                                
-                                <!-- /.form-group -->
-                                </form>
-                            <!-- /.form-group -->
+                                </div>
                             </div>
-                        <!-- /.col -->
-                    </div>
-                <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                the plugin.
-                </div>
-            </div>
-            <!-- /.card -->
+                        </form><!-- /.form -->
+                    </div><!-- /.form-group -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.card-body -->
+        </div><!-- /.card -->
+        </div><!-- /.container-fluid -->
+        </section>
+        <div class="card-footer">
+        Footer
         </div>
-        <!-- /.container-fluid -->
-    </section>
-</div>
+        </div><!-- /.content-header -->
 @endsection
 @section('scripts')
 

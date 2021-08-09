@@ -74,7 +74,9 @@ class PlanCustController extends Controller
         $planCust = PlansCustomer::find($id);
         if($planCust->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $customers = Customer::where('representative_id',Auth::user()->representatives->id)->where('statues',1)->select('id','name')->get();
+        $rep = Representative::findOrfail(Auth::user()->representatives->id);
+        $customers = $rep->customers->where('statues',1);
+        // $customers = Customer::where('representative_id',Auth::user()->representatives->id)->where('statues',1)->select('id','name')->get();
         $doctors = Doctor::where('representative_id',Auth::user()->representatives->id)->where('statues',1)->select('id','name')->get();
 
         return view('representatives.repScience.editPlanCustomer', compact('planCust'))

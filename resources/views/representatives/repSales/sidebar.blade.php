@@ -71,7 +71,7 @@
             class="nav-link {{  $p == 'repSales/manageOrders' ||
                                 $p == 'repSales/addOrder' ||
                                 $path == 'repSales/editOrder'? 'active' : '' }}">
-                <i class="fab fa-first-order nav-icon"></i>
+                <i class="fas fa-inbox nav-icon"></i>
                 <p>ادارة الطلبيات</p>
             </a>
         </li>

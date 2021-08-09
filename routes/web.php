@@ -97,6 +97,13 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middl
     Route::put('/updatePlanType/{id}', 'PlanTypeController@updatePlanType');
     Route::delete('/deletePlanType/{id}', 'PlanTypeController@deletePlanType');
 
+    Route::get('/manageSpecialistsDoctors', 'SpecialistController@getAllSpecialists');
+    Route::get('/addSpecialist', 'SpecialistController@addSpecialist');
+    Route::post('/storeSpecialist', 'SpecialistController@storeSpecialist');
+    Route::get('/editSpecialist/{id}', 'SpecialistController@editSpecialist');
+    Route::put('/updateSpecialist/{id}', 'SpecialistController@updateSpecialist');
+    Route::delete('/deleteSpecialist/{id}', 'SpecialistController@deleteSpecialist');
+
 });
 Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Managers\marketing','middleware'=>'auth','middleware'=>'managerMarketing'],function(){
     Route::get('/profile/{id}', 'ProfileController@profile');
@@ -271,6 +278,7 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::get('/addRepSubareas/{id}', 'RepresentativeController@addRepSubareas');
     Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
     // Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
+    Route::get('/showRepDetails/{id}', 'RepresentativeController@showRepDetails');
     Route::delete('/deleteRepresentative/{id}', 'RepresentativeController@deleteRepresentative');
 
     Route::get('/manageRepItems', 'RepItemController@getAllRepItems');
@@ -286,11 +294,14 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::get('/editTest/{id}', 'TestController@editTest');
     Route::put('/updateTest/{id}', 'TestController@updateTest');
     Route::delete('/deleteTest/{id}', 'TestController@deleteTest');
-
+    
+    Route::get('/manageTestRepsResults/{id}', 'TestController@getTestRepsResults');
+    
     Route::get('/manageTestReps/{id}', 'TestController@getAllTestReps');
     Route::get('/manageTestTypes/{id}', 'TestController@getAllTestTypes');
     Route::get('/addTestReps/{id}', 'TestController@addTestReps');
     Route::post('/storeTestReps/{id}', 'TestController@storeTestReps');
+    Route::get('/showRepsTest', 'TestController@showRepsTest')->name('showRepsTest');
     Route::delete('/deleteTestRep', 'TestController@deleteTestRep');
 
     Route::get('/manageQuestions', 'QuestionController@getAllQuestions')->name('manageQuestions');
@@ -307,6 +318,7 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::put('/updateDoctor/{id}', 'DoctorController@updateDoctor');
     Route::get('/activateDoctor/{id}', 'DoctorController@activateDoctor');
     Route::get('/notActivateDoctor/{id}', 'DoctorController@notActivateDoctor');
+    Route::get('/showDoctorDetails/{id}', 'DoctorController@showDoctorDetails');
     Route::delete('/deleteDoctor/{id}', 'DoctorController@deleteDoctor');
 
     Route::get('/manageCustomers', 'CustomerController@getAllCustomers');
@@ -316,6 +328,7 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::put('/updateCustomer/{id}', 'CustomerController@updateCustomer');
     Route::get('/activateCustomer/{id}', 'CustomerController@activateCustomer');
     Route::get('/notActivateCustomer/{id}', 'CustomerController@notActivateCustomer');
+    Route::get('/showCustomerDetails/{id}', 'CustomerController@showCustomerDetails');
     Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
     
     Route::get('/manageOrders', 'OrderController@getAllOrders');
@@ -323,14 +336,8 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::post('/storeOrder', 'OrderController@storeOrder');
     Route::get('/editOrder/{id}', 'OrderController@editOrder');
     Route::put('/updateOrder/{id}', 'OrderController@updateOrder');
+    Route::get('/showOrderDetails/{id}', 'OrderController@showOrderDetails');
     Route::delete('/deleteOrder/{id}', 'OrderController@deleteOrder');
-    
-    Route::get('/managePlanTypes', 'PlanTypeController@getAllPlanTypes');
-    Route::get('/addPlanType', 'PlanTypeController@addPlanType');
-    Route::post('/storePlanType', 'PlanTypeController@storePlanType');
-    Route::get('/editPlanType/{id}', 'PlanTypeController@editPlanType');
-    Route::put('/updatePlanType/{id}', 'PlanTypeController@updatePlanType');
-    Route::delete('/deletePlanType/{id}', 'PlanTypeController@deletePlanType');
     
     Route::get('/manageSamples', 'SampleController@getAllSamples');
     Route::get('/addSample', 'SampleController@addSample');
@@ -347,6 +354,7 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::post('/companyStore', 'CompanyController@storeCompany');
     Route::get('/companyEdit/{id}', 'CompanyController@editCompany');
     Route::put('/companyUpdate/{id}', 'CompanyController@UpdateCompany');
+    Route::get('/showCompanyDetails/{id}', 'CompanyController@showCompanyDetails');
     Route::delete('/companyDelete/{id}', 'CompanyController@deleteCompany');
 
     Route::get('/manageCategory', 'CategoryController@getAllCategories');
@@ -398,13 +406,28 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::get('/editDistributedTask/{id}', 'TaskController@editDistributedTask');
     Route::put('/updateDistributedTask/{id}', 'TaskController@updateDistributedTask');
     Route::delete('/deleteDistributedTask/{id}', 'TaskController@deleteDistributedTask');
-    
+        
     Route::get('/managePlanTypes', 'PlanTypeController@getAllPlanTypes');
     Route::get('/addPlanType', 'PlanTypeController@addPlanType');
     Route::post('/storePlanType', 'PlanTypeController@storePlanType');
     Route::get('/editPlanType/{id}', 'PlanTypeController@editPlanType');
     Route::put('/updatePlanType/{id}', 'PlanTypeController@updatePlanType');
     Route::delete('/deletePlanType/{id}', 'PlanTypeController@deletePlanType');
+    
+    Route::get('/manageRepsPlans', 'RepPlanController@getRepsPlans');
+    Route::get('/addRepPlan', 'RepPlanController@addRepPlan');
+    Route::post('/storeRepPlan', 'RepPlanController@storeRepPlan');
+    Route::get('/editRepPlan/{id}', 'RepPlanController@editRepPlan');
+    Route::put('/updateRepPlan/{id}', 'RepPlanController@updateRepPlan');
+    Route::get('/activateRepPlan/{id}', 'RepPlanController@activateRepPlan');
+    Route::get('/notActivateRepPlan/{id}', 'RepPlanController@notActivateRepPlan');
+    Route::delete('/deleteRepPlan/{id}', 'RepPlanController@deleteRepPlan');
+
+    Route::get('/planDetials/{id}', 'PlanCustController@planDetials');
+    Route::post('/storePlanCustomer/{id}', 'PlanCustController@storePlanCustomer');
+    Route::get('/editPlanCustomer', 'PlanCustController@editPlanCustomer')->name('editPlanCustomer');
+    Route::put('/updatePlanCustomer/{id}', 'PlanCustController@updatePlanCustomer');
+    Route::delete('/deletePlanCustomer/{id}', 'PlanCustController@deletePlanCustomer');
 
     Route::get('/manageServices', 'ServiceController@getAllServices');
     Route::get('/addService', 'ServiceController@addService');
@@ -534,9 +557,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::get('/manageTests', 'TestController@getAllTests')->name('show.tests');
     Route::get('/repTests/{id}', 'TestController@getRepTests');
     Route::post('/storeRepTest/{id}', 'TestController@storeRepTest');
-    Route::get('/editVisit/{id}', 'VisitController@editVisit');
-    Route::put('/updateVisit/{id}', 'VisitController@updateVisit');
-    Route::delete('/deleteVisit/{id}', 'VisitController@deleteVisit');
+    Route::get('/showTestResult/{id}', 'TestController@showTestResult');
 
     Route::get('/showStudies', 'StudyController@getAllStudies')->name('show.studies');
 
@@ -580,6 +601,9 @@ Route::group(['prefix'=>'repSales','namespace'=>'App\Http\Controllers\Representa
     Route::get('/notActivateService/{id}', 'ServiceController@notActivateService');
     Route::delete('/deleteService/{id}', 'ServiceController@deleteService');
 
+});
+Route::group(['namespace'=>'App\Http\Controllers\Notifications','middleware'=>'auth'],function(){
+    Route::get('/showAllUnReadNotifications','NotificationController@getAllUnReadNotifications');
 });
 Auth::routes();
 

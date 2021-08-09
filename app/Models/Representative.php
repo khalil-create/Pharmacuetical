@@ -65,6 +65,10 @@ class Representative extends Model
     {
         return $this->belongsToMany('App\Models\Test','representatives_tests');
     }
+    public function repResults()
+    {
+        return $this->hasMany('App\Models\RepresentativeTest','representative_id','id');
+    }
     public function visits()
     {
         return $this->hasMany('App\Models\Visit','representative_id','id');

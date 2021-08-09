@@ -297,4 +297,11 @@ class RepresentativeController extends Controller
         
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
     }
+    public function showRepDetails($id)
+    {
+        $rep = Representative::with(['customers','doctors','subareas'])->findOrfail($id);
+        if($rep->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showRepDetails',compact('rep'));   
+    }
 }

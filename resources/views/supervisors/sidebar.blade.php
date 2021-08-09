@@ -72,7 +72,9 @@
                                 $path2 == 'supervisor/manageQu' ||
                                 $path2 == 'supervisor/addTest' ||
                                 $path2 == 'supervisor/editTest' ||
+                                $path2 == 'supervisor/showReps' ||
                                 $path == 'supervisor/showSubareas' ||
+                                $path == 'supervisor/showRepDetails' ||
                                 $path == 'supervisor/addRepSubareas' ||
                                 $path =='supervisor/editRepresentative'? 'menu-open' : '' 
                             }}">
@@ -90,15 +92,17 @@
                                     $path2 == 'supervisor/manageQu' ||
                                     $path2 == 'supervisor/addTest' ||
                                     $path2 == 'supervisor/editTest' ||
+                                    $path2 == 'supervisor/showReps' ||
                                     $path == 'supervisor/editTest' ||
                                     $path == 'supervisor/showSubareas' ||
                                     $path == 'supervisor/addRepSubareas' ||
+                                    $path == 'supervisor/showRepDetails' ||
                                     $path == 'supervisor/storeRepMainArea' ||
                                     $path =='supervisor/editRepresentative'? 'active' : ''
                                 }}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
-                    ادارة المناديب
+                    ادارة المندوبيين
                     <i class="right fas fa-angle-left"></i>
                     </p>
             </a>
@@ -110,10 +114,11 @@
                                         $path == 'supervisor/showMainareas' ||
                                         $path == 'supervisor/showSubareas' ||
                                         $path == 'supervisor/addRepSubareas' ||
+                                        $path == 'supervisor/showRepDetails' ||
                                         $path =='supervisor/editRepresentative'? 'active' : '' 
                                     }}" class="nav-link">
                         <i class="far fa-user nav-icon"></i>
-                        <p>متابعة المناديب</p>
+                        <p>معلومات المندوبيين</p>
                 </a>
                 </li>
                 <li class="nav-item">
@@ -127,6 +132,7 @@
                                         $path2 == 'supervisor/manageQu' ||
                                         $path2 == 'supervisor/addTest' ||
                                         $path2 == 'supervisor/editTest' ||
+                                        $path2 == 'supervisor/showReps' ||
                                         $path == 'supervisor/editTest' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -142,7 +148,7 @@
                                         $path == 'supervisor/editRepItems' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>اصناف المناديب</p>
+                        <p>اصناف المندوبيين</p>
                     </a>
                 </li>
             </ul>
@@ -155,6 +161,9 @@
                                 $p == 'supervisor/addOrder' ||
                                 $path == 'supervisor/editDoctor' ||
                                 $path == 'supervisor/editCustomer'||
+                                $path == 'supervisor/showDoctorDetails'||
+                                $path == 'supervisor/showCustomerDetails'||
+                                $path == 'supervisor/showOrderDetails'||
                                 $path == 'supervisor/editOrder'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -166,6 +175,9 @@
                                 $p == 'supervisor/addOrder' ||
                                 $path == 'supervisor/editDoctor' ||
                                 $path == 'supervisor/editCustomer'||
+                                $path == 'supervisor/showDoctorDetails'||
+                                $path == 'supervisor/showCustomerDetails'||
+                                $path == 'supervisor/showOrderDetails'||
                                 $path == 'supervisor/editOrder'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-users"></i>
@@ -179,16 +191,18 @@
                 <a href="/supervisor/manageDoctors"
                     class="nav-link {{  $p == 'supervisor/manageDoctors' || 
                                         $p == 'supervisor/addDoctor' ||
+                                        $path == 'supervisor/showDoctorDetails'||
                                         $path == 'supervisor/editDoctor'? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-user nav-icon"></i>
-                        <p>الدكاتره</p>
+                        <p>الاطباء</p>
                 </a>
                 </li>
                 <li class="nav-item">
                     <a href="/supervisor/manageCustomers"
                         class="nav-link {{  $p == 'supervisor/manageCustomers' ||
                                             $p == 'supervisor/addCustomer' ||
+                                            $path == 'supervisor/showCustomerDetails'||
                                             $path == 'supervisor/editCustomer'? 'active' : ''
                                         }}" class="nav-link">
                             <i class="far fa-user nav-icon"></i>
@@ -199,11 +213,10 @@
                     <a href="/supervisor/manageOrders"
                     class="nav-link {{  $p == 'supervisor/manageOrders' ||
                                         $p == 'supervisor/addOrder' ||
+                                        $path == 'supervisor/showOrderDetails'||
                                         $path == 'supervisor/editOrder'? 'active' : '' }}">
-                        <i class="fab fa-first-order nav-icon"></i>
-                        <p>
-                        الطلبيات
-                        </p>
+                        <i class="fas fa-inbox nav-icon"></i>
+                        <p>الطلبيات</p>
                     </a>
                 </li>
             </ul>
@@ -225,6 +238,7 @@
                                 $path == 'supervisor/itemEdit' ||
                                 $path == 'supervisor/editUse' ||
                                 $path == 'supervisor/editUseNoCat' ||
+                                $path == 'supervisor/showCompanyDetails' ||
                                 $path == 'supervisor/itemEditNoCat'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -243,6 +257,7 @@
                                     $path == 'supervisor/itemEdit'||
                                     $path == 'supervisor/editUse' ||
                                     $path == 'supervisor/editUseNoCat' ||
+                                    $path == 'supervisor/showCompanyDetails' ||
                                     $path == 'supervisor/itemEditNoCat'? 'active' : ''
                                 }}">
                     <i class="nav-icon far fa-building"></i>
@@ -256,6 +271,7 @@
                 <a href="/supervisor/manageCompanies" 
                     class="nav-link {{  $p == 'supervisor/manageCompanies' ||
                                         $p == 'supervisor/companyAdd' ||
+                                        $path == 'supervisor/showCompanyDetails'||
                                         $path == 'supervisor/companyEdit' ? 'active' : '' 
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -396,16 +412,55 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item">
-            <a href="{{url('supervisor/managePlanTypes')}}" 
-            class="nav-link {{  $p == 'supervisor/managePlanTypes' ||
-                                $p == 'supervisor/addPlanType' ||
-                                $path == 'supervisor/editPlanType' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tree"></i>
+        <li class="nav-item {{  $p == 'supervisor/managePlanTypes' ||
+                                $p == 'supervisor/manageRepsPlans' || 
+                                $p == 'supervisor/addPlanType' || 
+                                $p == 'supervisor/addRepPlan' || 
+                                $path == 'supervisor/planDetials' || 
+                                $path == 'supervisor/editRepPlan'|| 
+                                $path2 == 'supervisor/editPlan' ||
+                                $path == 'supervisor/editPlanType' ? 'menu-open' : ''
+                            }}">
+            <a href="#"
+            class="nav-link {{  $p == 'supervisor/managePlanTypes' || 
+                                $p == 'supervisor/manageRepsPlans' || 
+                                $p == 'supervisor/addPlanType' || 
+                                $p == 'supervisor/addRepPlan' || 
+                                $path == 'supervisor/planDetials' || 
+                                $path == 'supervisor/editRepPlan'|| 
+                                $path2 == 'supervisor/editPlan' ||
+                                $path == 'supervisor/editPlanType' ? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
                 ادارة الخطط
+                <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/supervisor/managePlanTypes" 
+                class="nav-link {{  $p == 'supervisor/managePlanTypes' ||
+                                    $p == 'supervisor/addPlanType' || 
+                                    $p == 'supervisor/editPlanType'? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>انواع الخطط</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="/supervisor/manageRepsPlans" 
+                class="nav-link {{  $p == 'supervisor/manageRepsPlans' ||
+                                    $p == 'supervisor/addRepPlan' ||
+                                    $path == 'supervisor/planDetials' || 
+                                    $path2 == 'supervisor/editPlan' ||
+                                    $path == 'supervisor/editRepPlan'? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>خطط المندوبين</p>
+                </a>
+                </li>
+            </ul>
         </li>
         <li class="nav-item">
             <a href="/supervisor/manageServices"

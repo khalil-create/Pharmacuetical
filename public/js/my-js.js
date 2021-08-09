@@ -1,3 +1,11 @@
+//////////////////////////// start calculate count items /////////////////////////
+count_items =  document.getElementById("count_items");
+counter_items =  document.getElementById("counter_items");
+if(count_items.textContent < 1){
+    count_items.textContent = counter_items.value;
+}
+//////////////////////////// end calculate count items /////////////////////////
+
 ///////////////////////// start check password ///////////////////////////////////////////
 
 function checkPassword()
@@ -501,3 +509,21 @@ function checkPlan()
     }
 }
 //////////////////////////// end  check validation plan /////////////////////////
+
+//////////////////////////// start check plan data /////////////////////////
+function checkDataPlan()
+{
+    var month_entered = document.getElementById('month_entered');
+    var month_plan = document.getElementById('month_plan');
+    const arr_date = month_entered.value.split("-",3);
+    if(arr_date[1] != month_plan.value){
+        swal({
+            title: "خطأ!",
+            text: "يجب ان يكون التأريخ في شهر "+month_plan.value,
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+}
+//////////////////////////// end check plan data ///////////////////////////

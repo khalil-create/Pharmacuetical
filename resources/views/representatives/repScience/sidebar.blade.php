@@ -109,7 +109,7 @@
                     class="nav-link {{  $p == 'repScience/manageOrders' ||
                                         $p == 'repScience/addOrder' ||
                                         $path == 'repScience/editOrder'? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
+                        <i class="fas fa-inbox nav-icon"></i>
                         <p>
                         الطلبيات
                         </p>
@@ -227,19 +227,14 @@
             class="nav-link {{  $p == 'repScience/manageTests' ||
                                 $path == 'repScience/repTests' ||
                                 $path == 'repScience/storeRepTest' ||
-                                $path == 'repScience/editVisit'? 'active' : '' }}">
+                                $path == 'repScience/showTestResult'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                الاختبارات
-                </p>
+                <p>الاختبارات</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="/repScience/showStudies"
-            class="nav-link {{  $p == 'repScience/showStudies' ||
-                                $path == 'repScience/repTests' ||
-                                $path == 'repScience/storeRepTest' ||
-                                $path == 'repScience/editVisit'? 'active' : '' }}">
+            class="nav-link {{  $p == 'repScience/showStudies'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
                 الدراسات العلمية

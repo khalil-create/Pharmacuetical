@@ -117,7 +117,6 @@
                             </div>
                             <div class="form-group">
                                 <label>ملاحظة</label>
-                                {{-- <input type="text" name="note"  class="form-control"> --}}
                                 <textarea name="note" id="form" cols="30" rows="4" class="form-control">{{$order->note}}</textarea>
                                 @if ($errors->has('note'))
                                     <span class="help-block">
@@ -131,29 +130,19 @@
                                 </button>
                             </div>
                         </div>
-                        </div>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                    <!-- /.form-group -->
                     </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                the plugin.
-                </div>
-            </div>
-            <!-- /.card -->
-            </div>
-        <!-- /.container-fluid -->
-    </section>
+                </form><!-- /.form -->
+            </div><!-- /.form-group -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.card-body -->
+</div><!-- /.card -->
+</div><!-- /.container-fluid -->
+</section>
+<div class="card-footer">
+Footer
 </div>
-</div>
+</div><!-- /.content-header -->
 @endsection
 @section('scripts')
     

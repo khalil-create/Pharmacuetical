@@ -51,11 +51,24 @@
                         {{ csrf_field() }}
                         <div class="card-body">
                             <div class="form-group">
-                                <label>اسم الدكتور</label>
+                                <label>اسم الطبيب</label>
                                 <input type="text" name="name" class="form-control">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <small class="form-text text-danger">{{ $errors->first('name') }}</small>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>تخصص الطبيب <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من تخصص)</span></label>
+                                <select name="specialist_ids[]" class="custom-select rounded-0" multiple>
+                                    @foreach ($specialists as $specialist)
+                                        <option value="{{$specialist->id}}">{{$specialist->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('specialist_ids'))
+                                    <span class="help-block">
+                                        <small class="form-text text-danger">{{ $errors->first('specialist_ids') }}</small>
                                     </span>
                                 @endif
                             </div>
@@ -182,34 +195,23 @@
                                 @endif
                             </div>
                             <div class="form-group" >
-                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                    حفظ<i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        </div>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                    <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                the plugin.
-                </div>
-            </div>
-            <!-- /.card -->
-            </div>
-        <!-- /.container-fluid -->
+                                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
+                                                    حفظ<i class="fas fa-save"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form><!-- /.form -->
+                                </div><!-- /.form-group -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.card-body -->
+                </div><!-- /.card -->
+            </div><!-- /.container-fluid -->
     </section>
-</div>
-</div>
+    <div class="card-footer">
+        Footer
+    </div>
+</div><!-- /.content-header -->
 @endsection
 @section('scripts')
     

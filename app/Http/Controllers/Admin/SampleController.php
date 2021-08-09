@@ -91,6 +91,7 @@ class SampleController extends Controller
     {
         $sample = Sample::find($id);
         $sample->delete();
-        return redirect('/admin/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

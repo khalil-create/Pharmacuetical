@@ -60,11 +60,19 @@
                                             <label class="col-md-6 control-label">
                                                 المندوبين <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من مندوب)</span></label>
                                             <select name="repIds[]" class="form-control custom-select rounded-0" multiple>
-                                                @php
-                                                    $n = 1;
-                                                @endphp
+                                                @php $n = 1; @endphp
                                                 @foreach ($reps as $rep)
-                                                    <option value="{{$rep->id}}">{{$n++}}{{'- '}} {{$rep->user->user_name_third}} {{$rep->user->user_surname}}</option>
+                                                    @php $registered = false; @endphp
+                                                    @foreach ($test->representatives as $testRep)<!-- res => result -->
+                                                        @if ($testRep->id == $rep->id)
+                                                            @php $registered = true; @endphp
+                                                            {{-- <option disabled value="{{$rep->id}}">{{$n++}}{{'- '}} {{$rep->user->user_name_third}} {{$rep->user->user_surname}}</option> --}}
+                                                            @break;
+                                                        @endif
+                                                    @endforeach
+                                                    @if (!$registered)
+                                                        <option value="{{$rep->id}}">{{$n++}}{{'- '}} {{$rep->user->user_name_third}} {{$rep->user->user_surname}}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('repIds'))
@@ -75,7 +83,7 @@
                                         </div>
                                         <div class="form-group" >
                                             <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                                                حفظ<i class="fas fa-plus"></i>
+                                                حفظ<i class="fas fa-save"></i>
                                             </button>
                                         </div>
                                     <!-- /.form-group -->

@@ -21,76 +21,12 @@ class RepresentativeTest extends Model
         'updated_at',
     ];
     public $timestamps = true; //the default is true
-    public function user()
+    public function test()
     {
-        return $this->belongsTo('App\Models\User','user_id','id');//(related,foriegn key,primary key)
+        return $this->belongsTo('App\Models\Test','test_id','id');
     }
-    public function supervisor()
+    public function representative()
     {
-        return $this->belongsTo('App\Models\Supervisor','supervisor_id','id');//(related,foriegn key,primary key)
-    }
-    public function manager()
-    {
-        return $this->belongsTo('App\Models\Manager','manager_id','id');//(related,foriegn key,primary key)
-    }
-    public function mainarea()
-    {
-        return $this->belongsTo('App\Models\Mainarea','mainarea_id','id');//(related,foriegn key,primary key)
-    }
-    public function subareas()
-    {
-        return $this->belongsToMany('App\Models\Subarea','representatives_subareas');
-    }
-    public function tasks()
-    {
-        return $this->hasMany('App\Models\Task','representative_id','id');
-    }
-    public function plans()
-    {
-        return $this->hasMany('App\Models\Plan','representative_id','id');
-    }
-    public function customers()
-    {
-        return $this->hasMany('App\Models\Customer','representative_id','id');
-    }
-    public function orders()
-    {
-        return $this->hasMany('App\Models\Order','representative_id','id');
-    }
-    public function doctors()
-    {
-        return $this->hasMany('App\Models\Doctor','representative_id','id');
-    }
-    public function tests()
-    {
-        return $this->belongsToMany('App\Models\Test','representatives_tests');
-    }
-    public function visits()
-    {
-        return $this->hasMany('App\Models\Visit','representative_id','id');
-    }
-    public function trainingCourses()
-    {
-        return $this->belongsToMany('App\Models\TrainingCourse','representatives_training_courses');
-    }
-    public function studies()
-    {
-        return $this->belongsToMany('App\Models\Study','representatives_studies');
-    }
-    public function samples()
-    {
-        return $this->hasMany('App\Models\Sample','represntative_id','id');//(related,foriegn key,primary key)
-    }
-    public function salesObjectives()
-    {
-        return $this->hasMany('App\Models\Salesobjective','representative_id','id');//(related,foriegn key,primary key)
-    }
-    public function services()
-    {
-        return $this->hasMany('App\Models\Service','representative_id','id');//(related,foriegn key,primary key)
-    }
-    public function items()
-    {
-        return $this->belongsToMany('App\Models\Item','representatives_items');
+        return $this->belongsTo('App\Models\Representative','representative_id','id');
     }
 }

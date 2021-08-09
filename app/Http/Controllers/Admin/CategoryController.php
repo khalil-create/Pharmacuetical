@@ -80,7 +80,8 @@ class CategoryController extends Controller
         $category->companies()->detach();
         $category->items()->delete();
         $category->delete();
-
-        return redirect('.admin/manageCategories')->with('status','تم حذف البيانات بشكل ناجح');
+        
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('.admin/manageCategories')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

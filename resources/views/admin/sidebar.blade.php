@@ -250,6 +250,17 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{url('admin/manageSpecialistsDoctors')}}" 
+            class="nav-link {{  $p == 'admin/manageSpecialistsDoctors' ||
+                                $p == 'admin/addSpecialist' ||
+                                $path == 'admin/editSpecialist' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                ادارة التخصصات
+                </p>
+            </a>
+        </li>
     </nav>
     <!-- /.sidebar-menu -->
     </div>

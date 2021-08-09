@@ -30,4 +30,8 @@ class PlansCustomer extends Model
     {
         return $this->belongsTo('App\Models\Doctor','doctor_id','id');
     }
+    public function plan()
+    {
+        return $this->belongsTo('App\Models\Plan','plan_id','id');
+    }
 }

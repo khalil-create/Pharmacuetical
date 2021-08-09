@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Models\Representative;
+use App\Models\Specialist;
 use App\Models\Supervisor;
 use App\Models\User;
 use App\Models\SubArea;
@@ -28,7 +29,9 @@ class DoctorController extends Controller
         $reps = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
         if($reps->count() < 1)
             return redirect()->back()->with(['error' => 'لايمكنك اضافة عميل ولم يتم اضافة على الاقل مندوب واحد']);
-        return view('supervisors.addDoctor')->with('reps',$reps);
+        
+        $specialists = Specialist::all();
+        return view('supervisors.addDoctor')->with('reps',$reps)->with('specialists',$specialists);
     }
     public function storeDoctor(Request $request)
     {
@@ -38,7 +41,7 @@ class DoctorController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        Doctor::create([
+        $doctor = Doctor::create([
             'name' => $request->name,
             'mobile_phone' => $request->mobile_phone,
             'clinic_phone' => $request->clinic_phone,
@@ -50,7 +53,7 @@ class DoctorController extends Controller
             'statues' => True,
             'representative_id' => $request->rep_id,
         ]);
-        
+        $doctor->specialists()->attach($request->specialist_ids);
         return redirect('/supervisor/manageDoctors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
@@ -103,7 +106,8 @@ class DoctorController extends Controller
         if($doctor->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $reps = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
-        return view('supervisors.editDoctor', compact('doctor'))->with('reps',$reps);
+        $specialists = Specialist::all();
+        return view('supervisors.editDoctor', compact('doctor'))->with('reps',$reps)->with('specialists',$specialists);
     }
     public function updateDoctor(Request $request,$id)
     {
@@ -120,7 +124,7 @@ class DoctorController extends Controller
         $doctor->address = $request->address;
         $doctor->representative_id = $request->rep_id;
         $doctor->update();
-        
+        $doctor->specialists()->attach($request->specialist_ids);
         return redirect('/supervisor/manageDoctors')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteDoctor($id)
@@ -159,5 +163,12 @@ class DoctorController extends Controller
         $user_id = $doctor->representative->user->id;
         $this->notifyUser('اطباء','تم إالغاء تفعيل الطبيب',$user_id);
         return redirect('/supervisor/manageDoctors')->with('status','تم إالغاء تفعيل الدكتور');
+    }
+    public function showDoctorDetails($id)
+    {
+        $doctor = Doctor::with(['specialists','services'])->findOrfail($id);
+        if($doctor->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showDoctorDetails',compact('doctor'));
     }
 }

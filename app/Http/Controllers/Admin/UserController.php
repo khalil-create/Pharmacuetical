@@ -407,6 +407,7 @@ class UserController extends Controller
         //     $user->representatives()->delete();
         //     $user->delete();
         // }
-        return redirect('/admin/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

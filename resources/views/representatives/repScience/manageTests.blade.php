@@ -75,8 +75,8 @@
                         @endif
                       </td> --}}
                       <td>
-                        <a href="/repScience/repTests/{{$row->id}}"><i class="nav-icon fas fa-question kkk" title="الأسئلة"></i></a>
-                        <a href="/repScience/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                        <a href="/repScience/repTests/{{$row->id}}"><i class="nav-icon fas fa-question" title="الأسئلة"></i></a>
+                        <a href="/repScience/showTestResult/{{$row->id}}"><i class="nav-icon fas fa-eye" title="نتيجة الاختبار"></i></a>
                       </td>
                     </tr>
                   @endforeach

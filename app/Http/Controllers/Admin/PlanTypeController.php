@@ -79,6 +79,7 @@ class PlanTypeController extends Controller
         if($planType->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $planType->delete();
-        return redirect('/admin/managePlanTypes')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/managePlanTypes')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

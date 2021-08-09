@@ -101,6 +101,12 @@ class CompanyController extends Controller
         $company->delete();
 
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/supervisor/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showCompanyDetails($id)
+    {
+        $company = Company::with(['categories','items'])->findOrfail($id);
+        if($company->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showCompanyDetails',compact('company'));
     }
 }

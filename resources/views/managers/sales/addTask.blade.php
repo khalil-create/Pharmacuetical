@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
-                                        حفظ<i class="fas fa-plus"></i>
+                                        حفظ<i class="fas fa-save"></i>
                                     </button>
                                 </div>
                             </div>

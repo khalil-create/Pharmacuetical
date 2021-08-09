@@ -12,14 +12,16 @@ use App\Http\Controllers\Controller;
 
 class SubAreaController extends Controller
 {
-    public function getAllSubArea(){
+    public function getAllSubArea()
+    {
         $subArea = Subarea::with('mainarea')->get();
 
         if(!($subArea->count() > 0))
             return view('admin.manageSubAreas')->with('status','لايوجد مناطق فرعية الرجاء اضافة منطقة فرعية');
         return view('admin.manageSubAreas')->with('subArea',$subArea);
     }
-    public function addSubArea($id){
+    public function addSubArea($id)
+    {
         $mainareas = Mainarea::all();
         if(isset($id) && $id != 0){
             $mainarea = Mainarea::find($id);
@@ -91,6 +93,7 @@ class SubAreaController extends Controller
         if($subarea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $subarea->delete();
-        return redirect('/admin/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect('/admin/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

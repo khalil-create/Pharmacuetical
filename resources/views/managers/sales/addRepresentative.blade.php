@@ -260,7 +260,7 @@
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <button type="submit" class="btn btn-primary font" style="margin: 0px 20px;">
-                                    حفظ<i class="fas fa-plus"></i>
+                                    حفظ<i class="fas fa-save"></i>
                                 </button>
                             </div>
                         </div>

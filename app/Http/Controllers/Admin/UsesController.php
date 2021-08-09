@@ -83,7 +83,7 @@ class UsesController extends Controller
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
         $use->items()->detach();
-
-        return redirect()->back()->with('status','تم حذف البيانات بشكل ناجح');
+        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+        // return redirect()->back()->with('status','تم حذف البيانات بشكل ناجح');
     }
 }
