@@ -21,19 +21,13 @@ class TrainingCourseController extends Controller
     }
     public function addCourse()
     {
-        $items = Item::all();
+        $items = $this->getSupervisorItems(Auth::user());
         if($items->count() < 1)
             return redirect()->back()->with('error','لايمكنك اضافة برنامج تدريبي ولم يتم اضافة على الأقل صنف واحد');
         return view('supervisors.addCourse', compact('items'));
     }
     public function storeCourse(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
         if($request->type == 1){
             if(!$request->hasfile('important_points_file'))
                 return redirect()->back()->with('error','يجب عليك تحميل الملف');
@@ -47,6 +41,12 @@ class TrainingCourseController extends Controller
         else{
             $points = '';
             return redirect()->back()->with('error','يجب عليك اختيار نوع أهم المحاور إما ملف او رابط');
+        }
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
         TrainingCourse::create([
             'title' => $request->title,
@@ -76,7 +76,7 @@ class TrainingCourseController extends Controller
         if($course->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
-        $items = Item::all();
+        $items = $this->getSupervisorItems(Auth::user());
         return view('supervisors.editCourse', compact('course'))->with('items',$items);
     }
     public function updateCourse(Request $request,$id)

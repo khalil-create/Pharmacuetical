@@ -1,8 +1,8 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+     <a href="/home" class="brand-link">
+        <img src="{{asset('designImages/ab.jpg')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">التسويق الدوائي</span>
     </a>
 
@@ -17,7 +17,7 @@
             <a href="/managerSales/profile/{{Auth::user()->id}}" class="d-block">
                 {{$username[0]}} {{Auth::user()->user_surname}} 
                 <br>
-                <b> {{Auth::user()->user_type}} </b>
+                <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p>
             </a>
             </div>
         </div>
@@ -32,7 +32,6 @@
             </div>
             </div>
     </div>
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -64,7 +63,7 @@
                                     $path =='managerSales/editRepresentative'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-user nav-icon"></i>
-                    <p>متابعة المناديب</p>
+                    <p>مندوبيين المبيعات</p>
             </a>
         </li>
         <li class="nav-item {{ $p == 'managerSales/manageMainAreas' || 
@@ -74,7 +73,7 @@
                                 $path == 'managerSales/editMainArea' ||
                                 $path == 'managerSales/supAreas' ||
                                 $path == 'managerSales/editSubArea' ||
-                                $path == 'managerSales/showRepresentatives' ||
+                                $path == 'managerSales/showSubareaReps' ||
                                 $path == 'managerSales/supAreas'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -84,7 +83,8 @@
                                 $path == 'managerSales/addSubArea' || 
                                 $path == 'managerSales/supAreas' || 
                                 $path == 'managerSales/editMainArea'||
-                                $path == 'managerSales/showRepresentatives'||
+                                $path == 'managerSales/showSubareaReps'||
+                                $path == 'managerSales/addSubareaReps'||
                                 $path == 'managerSales/editSubArea' ||
                                 $path == 'managerSales/supAreas'? 'active' : ''
                             }}">
@@ -111,7 +111,8 @@
                 <a href="/managerSales/manageSubAreas" 
                 class="nav-link {{  $p == 'managerSales/manageSubAreas'||
                                     $path == 'managerSales/addSubArea' ||  
-                                    $path == 'managerSales/showRepresentatives' ||  
+                                    $path == 'managerSales/showSubareaReps'||
+                                    $path == 'managerSales/addSubareaReps'|| 
                                     $path == 'managerSales/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>

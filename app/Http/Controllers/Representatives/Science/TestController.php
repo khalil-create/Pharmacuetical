@@ -29,12 +29,14 @@ class TestController extends Controller
         $test = $rep->tests()->whereNull('result')->where('test_id',$id)->get();
         $test1 = Test::findOrfail($id);
         
-        // return $tests;
-        // return $test1;
-        // $tests = $test1->representatives()->whereNull('result')->get();
-        // return $tests;
-        if($test->count() < 1)
-            return redirect()->back()->with(['error' => 'لقد تم اختبار هذا البرنامج']);
+        /* 
+            /////////////////////////////// this used when we want to one test for every rep at one test////////////////////////
+        
+                if($test->count() < 1)
+                    return redirect()->back()->with(['error' => 'لقد تم اختبار هذا البرنامج']);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+        */
         
         $tests = $test1->type()->with('questions')->get();
         return view('representatives.repScience.repTest',compact('tests'))
@@ -82,10 +84,14 @@ class TestController extends Controller
                 // }
             }
         }
-        $result = $grade*100/$a;
+        $current_result = $grade*100/$a;
         $repTest = RepresentativeTest::where('test_id',$id)
         ->where('representative_id',Auth::user()->representatives->id)->first();
-        $repTest->result = $result;
+        $prev_result = $repTest->result; //نتيجة الاختبار السابق اذا كان قد اختبر هذا البرنامج من قبل
+        if($prev_result)    // only first test this condition will be false and other tests after first(2,3,4,5,6.....n) will be true
+            $repTest->result = $current_result.'+'.$prev_result;
+        else    //only first time is true and other is will be true
+            $repTest->result = $current_result.'+';
         $repTest->update();
 
         // $isRight_arr = $isRight->toArray();

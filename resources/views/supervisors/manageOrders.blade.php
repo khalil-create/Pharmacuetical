@@ -91,7 +91,7 @@
                       <td>{{$row->note}}</td>
                       <td>
                         <a href="/supervisor/editOrder/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <a href="/supervisor/showOrderDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
+                        <a href="/supervisor/showOrderDetails/{{$row->id}}"><i class="fas fa-eye" title="تفاصيل"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
@@ -108,7 +108,7 @@
                         <th rowspan="1" colspan="1">العميل</th>
                         <th rowspan="1" colspan="1">الصنف</th>
                         <th rowspan="1" colspan="1">الكمية</th>
-                        <th rowspan="1" colspan="1">البونص</th>
+                        <th rowspan="1" colspan="1">البونص ( % )</th>
                         <th rowspan="1" colspan="1">الملاحظة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
@@ -159,6 +159,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

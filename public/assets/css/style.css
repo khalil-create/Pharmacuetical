@@ -79,8 +79,11 @@ table tr td,tr th{
     font-size: 20px;
 }
 .khalil{
-    border:1px solid rgb(214 216 217);
+    border:1px solid rgb(214, 216, 217);
     border-radius: 10px;
+    margin-bottom: 1rem;
+    /* border:1px solid rgb(21, 24, 182);
+    border-radius: 10px; */ */
 }
 .khalil .card-body .imp-points{
     margin-top: 20px;

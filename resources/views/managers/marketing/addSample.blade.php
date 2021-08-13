@@ -28,7 +28,10 @@
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
                     <h3 class="card-title" style="float: right">
-                        إضافة عينة للمشرف <b>{{$supervisor->user->user_name_third}} {{$supervisor->user->user_surname}}</b>
+                        إضافة عينة
+                        @isset($supervisor)
+                            للمشرف <b>{{$supervisor->user->user_name_third}} {{$supervisor->user->user_surname}}</b>
+                        @endisset
                     </h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -44,24 +47,18 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('managerMarketing/storeSupervisorSample',$supervisor->id) }}"  enctype="multipart/form-data">
+                            @if(isset($supervisor))
+                                <form method="POST" action="{{ url('managerMarketing/storeSupervisorSample',$supervisor->id) }}"  enctype="multipart/form-data">
+                            @else
+                                <form method="POST" action="{{ url('managerMarketing/storeSample',0)}}"  enctype="multipart/form-data">
+                            @endif
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>العينة</label>
                                     <select name="item_id" class="form-control custom-select rounded-0">
-                                        @foreach ($supervisor->company as $comp)
-                                                @if ($comp->have_category == 1)
-                                                    @foreach ($comp->categories as $cat)
-                                                        @foreach ($cat->items as $item)
-                                                            <option value="{{$item->id}}">{{$item->commercial_name}}</option>
-                                                        @endforeach
-                                                    @endforeach
-                                                @else
-                                                    @foreach ($comp->items as $item)
-                                                        <option value="{{$item->id}}">{{$item->commercial_name}}</option>
-                                                    @endforeach
-                                                @endif
+                                        @foreach ($items as $item)  
+                                            <option value="{{$item->id}}">{{$item->commercial_name}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('item_id'))
@@ -79,19 +76,21 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label for="supervisor_id" class="col-md-2 control-label">المشرف</label>
-                                            <select name="supervisor_id" class="form-control custom-select rounded-0">
-                                                @foreach ($supervisors as $row)
-                                                    <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                @endforeach
-                                            </select>
+                                @if(isset($supervisors))
+                                    <div class="form-group">
+                                        <label>المشرف</label>
+                                        <select name="supervisor_id" class="form-control custom-select rounded-0">
+                                            @foreach ($supervisors as $sup)  
+                                                <option value="{{$sup->id}}">{{$sup->user->user_name_third}} {{$sup->user->user_surname}}</option>
+                                            @endforeach
+                                        </select>
                                         @if ($errors->has('supervisor_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
+                                                <small class="form-text text-danger">{{ $errors->first('supervisor_id') }}</small>
                                             </span>
                                         @endif
-                                </div> --}}
+                                    </div>
+                                @endif
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         حفظ<i class="fas fa-save"></i>

@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right">قائمة العينات</span>
+            <span class="card-title" style="float: right">عيناتي</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -77,7 +77,7 @@
                             <td>
                               @foreach ($samples as $sample)
                                 @if ($sample->supervisor_id == $sup->id)
-                                  <p>{{ $sample->item->commercial_name }} ({{ $sample->count }})</p>
+                                  <span>{{ $sample->item->commercial_name }} ({{ $sample->count }})</span><br>
                                 @endif
                               @endforeach
                             </td>
@@ -86,22 +86,16 @@
                           @endif
                           <td>
                             <a href="/managerMarketing/supervisorSamples/{{$sup->id}}"><i class="nav-icon fas fa-eye"></i></a>
-                            {{-- <form action="/managerMarketing/deleteSupervisorSamples/{{$sup->id}}" method="post" style="float: right;">
-                                    {{csrf_field()}}
-                                    {{method_field('DELETE')}}
-                                    <button style="border: none;"><i class="fas fa-trash"></i></button>
-                            </form> --}}
                             <input type="hidden" class="id" value="{{$sup->id}}">
                             <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                            {{-- <i class="fas fa-eye" style="float: right;"></i> --}}
                           </td>
                         </tr>
                       {{-- @endforeach --}}
                     @endforeach
                   @endif
-                  {{-- <div>
-                    <a href="{{url('/managerMarketing/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
-                  </div> --}}
+                  <div>
+                    <a href="{{url('/managerMarketing/addSample',0)}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
+                  </div>
                   </tbody>
                   <tfoot>
                     @if($supervisors->count() > 0)                    
@@ -159,6 +153,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

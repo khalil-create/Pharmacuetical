@@ -89,4 +89,11 @@ class CategoryController extends Controller
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/supervisor/manageCategory')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    public function showCategoryDetails($id)
+    {
+        $category = Category::with('items')->findOrfail($id);
+        if($category->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showCategoryDetails',compact('category'));
+    }
 }

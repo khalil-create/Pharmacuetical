@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+     <a href="/home" class="brand-link">
+        <img src="{{asset('designImages/ab.jpg')}}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">التسويق الدوائي</span>
     </a>
 
@@ -10,13 +10,17 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image"><?php $username = explode(' ',Auth::user()->user_name_third); ?>
-            <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
+                @if (Auth::user()->user_image)
+                    <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
+                @else
+                    <img src="{{asset('designImages/user.png')}}" class="img-circle elevation-2" alt="User Image">
+                @endif
             </div>
             <div class="info">
             <a href="/admin/profile/{{Auth::user()->id}}" class="d-block">
                 {{$username[0]}} {{Auth::user()->user_surname}} 
                 <br>
-                <b> {{Auth::user()->user_type}} </b>
+                <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p>
             </a>
             </div>
         </div>

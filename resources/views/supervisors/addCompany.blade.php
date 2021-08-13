@@ -64,7 +64,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="sign_img_company">تحميل الصورة</label>
+                                    <label for="sign_img_company">تحميل شعار الشركة</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="sign_img_company">
@@ -90,19 +90,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label class="col-md-2 control-label">المشرف عليها</label>
-                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
-                                                @foreach ($supervisor as $row)
-                                                <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('supervisor_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
-                                            </span>
-                                        @endif
-                                </div> --}}
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         حفظ<i class="fas fa-save"></i>

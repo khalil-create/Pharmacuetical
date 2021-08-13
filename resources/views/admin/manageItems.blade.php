@@ -119,7 +119,7 @@
                         <th rowspan="1" colspan="1">الاسم التجاري</th>
                         <th rowspan="1" colspan="1">الاسم العلمي</th>
                         <th rowspan="1" colspan="1">السعر</th>
-                        <th rowspan="1" colspan="1">البونص</th>
+                        <th rowspan="1" colspan="1">البونص ( % )</th>
                         <th rowspan="1" colspan="1">الوحدة</th>
                         <th rowspan="1" colspan="1">اسم المجموعة</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
@@ -172,6 +172,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

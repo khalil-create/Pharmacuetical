@@ -72,12 +72,7 @@
                       </td>
                       <td class="" style="">
                         <a href="/managerMarketing/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/managerMarketing/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
-                        {{-- <form action="/managerMarketing/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
-                          {{csrf_field()}}
-                          {{method_field('DELETE')}}
-                          <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/managerMarketing/supAreas/{{$row->id}}"><i class="fas fa-map" title="المناطق الفرعية"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                         <i class="fas fa-eye"></i>
@@ -143,6 +138,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

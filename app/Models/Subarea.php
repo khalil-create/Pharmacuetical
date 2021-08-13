@@ -26,4 +26,8 @@ class Subarea extends Model
     {
         return $this->belongsToMany('App\Models\Representative','representatives_subareas');
     }
+    public function supervisor()
+    {
+        return $this->belongsTo('App\Models\Supervisor','_id','id');//(related,foriegn key,primary key)
+    }
 }

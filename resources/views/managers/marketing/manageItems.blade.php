@@ -36,13 +36,8 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <div id="error" hidden>
-                <div  class="alert alert-danger notify-error">
-                {{'لم يتم اضافة اي صنف'}}
-                </div>
-                <div>
-                  <a href="{{url('/managerMarketing/itemAdd/1')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
-                </div>
+            <div>
+              <a href="{{url('/managerMarketing/itemAdd')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
             </div>
             <div class="row">
               <div id="table" class="col-sm-12">
@@ -82,40 +77,50 @@
                   @endif
                   </thead>
                   <tbody>
-                  <?php $i=1;$haveItem = false?>
-                  @foreach ($companies as $comp)
-                    @foreach ($comp->categories as $cat)
-                      @foreach ($cat->items as $row)
-                          @php
-                            if($row->count() > 0)$haveItem = true;
-                        @endphp
-                        <tr class="odd">
-                          <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                          <td>{{$row->commercial_name}}</td>
-                          <td>{{$row->science_name}}</td>
-                          <td>{{$row->price}}</td>
-                          <td class="sorting_1">{{$row->bonus}}</td>
-                          <td class="sorting_1">{{$row->unit}}</td>
-                          <td class="sorting_1">{{$cat->name_cat}}</td>
-                          <td>
-                            <a href="/managerMarketing/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
-                            <a href="/managerMarketing/itemUses/{{$row->id}}"><i class="fas fa-info" title="الاستخدامات"></i></a>
-                            {{-- <form action="/supervisor/itemDelete/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -15px;"><i class="fas fa-trash"></i></button>
-                              </form> --}}
-                              <input type="hidden" class="id" value="{{$row->id}}">
-                            <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                            <a href="/managerMarketing/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
-                          </td>
-                        </tr>
-                      @endforeach
+                    <?php $i=1;$haveItem = false?>
+                    @foreach ($companies as $comp)
+                      @if($comp->items->count() > 0)
+                        @foreach ($comp->items as $row)
+                          <tr class="odd">
+                            <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                            <td>{{$row->commercial_name}}</td>
+                            <td>{{$row->science_name}}</td>
+                            <td>{{$row->price}}</td>
+                            <td class="sorting_1">{{$row->bonus}}</td>
+                            <td class="sorting_1">{{$row->unit}}</td>
+                            <td class="sorting_1">{{'----'}}</td><!-- meant have not category -->
+                            <td>
+                              <a href="/managerMarketing/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
+                              <a href="/managerMarketing/itemUses/{{$row->id}}"><i class="fas fa-info" title="الاستخدامات"></i></a>
+                                <input type="hidden" class="id" value="{{$row->id}}">
+                              <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                              <a href="/managerMarketing/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                            </td>
+                          </tr>
+                        @endforeach
+                      @else
+                        @foreach ($comp->categories as $cat)
+                          @foreach ($cat->items as $row)
+                            <tr class="odd">
+                              <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                              <td>{{$row->commercial_name}}</td>
+                              <td>{{$row->science_name}}</td>
+                              <td>{{$row->price}}</td>
+                              <td class="sorting_1">{{$row->bonus}}</td>
+                              <td class="sorting_1">{{$row->unit}}</td>
+                              <td class="sorting_1">{{$cat->name_cat}}</td>
+                              <td>
+                                <a href="/managerMarketing/itemEdit/{{$row->id}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
+                                <a href="/managerMarketing/itemUses/{{$row->id}}"><i class="fas fa-info" title="الاستخدامات"></i></a>
+                                  <input type="hidden" class="id" value="{{$row->id}}">
+                                <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                                <a href="/managerMarketing/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                              </td>
+                            </tr>
+                          @endforeach
+                        @endforeach
+                      @endif
                     @endforeach
-                  @endforeach
-                  <div>
-                    <a href="{{url('/managerMarketing/itemAdd/1')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة صنف</a>
-                  </div>
                   </tbody>
                   <tfoot>
                     @if($companies->count() > 0)
@@ -124,7 +129,7 @@
                         <th rowspan="1" colspan="1">الاسم التجاري</th>
                         <th rowspan="1" colspan="1">الاسم العلمي</th>
                         <th rowspan="1" colspan="1">السعر</th>
-                        <th rowspan="1" colspan="1">البونص</th>
+                        <th rowspan="1" colspan="1">البونص ( % )</th>
                         <th rowspan="1" colspan="1">الوحدة</th>
                         <th rowspan="1" colspan="1">اسم المجموعة</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
@@ -132,21 +137,6 @@
                     @endif
                   </tfoot>
                 </table>
-                @if ($haveItem)
-                    <input id="haveItem" value="1" hidden>
-                @else
-                  <input id="haveItem" value="0" hidden>
-                @endif
-              </div>
-              <script>
-                var haveItem = document.getElementById("haveItem");
-                var table = document.getElementById("table");
-                var error = document.getElementById("error");
-                if(haveItem.value == 0){
-                  table.hidden = true;
-                  error.hidden = false;
-                }
-              </script>
             </div>
           </div>
           <!-- /.card-body -->
@@ -190,6 +180,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

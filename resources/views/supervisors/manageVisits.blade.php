@@ -83,6 +83,9 @@
                         @endif
                       </td>
                       <td>
+                        {{$row->representative->user->user_name_third}} {{$row->representative->user->user_surname}}
+                      </td>
+                      <td>
                         @if ($row->type == 1)
                             {{'مصحوبة مع المشرف/علمية'}}
                         @elseif($row->type == 2)
@@ -91,7 +94,6 @@
                             {{'حل مشكلة'}}
                         @endif
                       </td>
-                      <td>{{$row->representative->user->user_name_third}} {{$row->representative->user->user_surname}}</td>
                       <td>
                         {{$row->date}}
                       </td>
@@ -99,13 +101,8 @@
                         {{$row->result}}
                       </td>
                       <td>
-                        {{-- <a href="/representative/editVisit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a> --}}
-                        {{-- <i class="fas fa-eye"></i> --}}
-                        {{-- <form action="/representative/deleteVisit/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -10px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        {{-- <a href="/supervisor/editVisit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a> --}}
+                        <a href="/supervisor/showVisitDetails/{{$row->id}}" title="التفاصيل"><i class="fas fa-eye"></i></a>
                       </td>
                     </tr>
                   @endforeach

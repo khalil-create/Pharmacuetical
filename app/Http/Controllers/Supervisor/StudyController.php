@@ -96,4 +96,11 @@ class StudyController extends Controller
         $strengths = $study->strengths;
         return view('supervisors.strengthsStudy')->with('study',$study);
     }
+    public function showStudyDetails($id)
+    {
+        $study = Study::with('strengths')->findOrfail($id);
+        if($study->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showStudyDetails',compact('study'));
+    }
 }

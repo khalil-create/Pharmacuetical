@@ -39,15 +39,10 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    @if (session('error'))
-                        <div class="alert alert-danger notify-error">
-                            {{ session('error') }}
-                        </div>
-                    @endif
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="{{ url('supervisor/storeCourse') }}"  enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('supervisor/storeCourse') }}" onsubmit="return checkPointsType()" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
@@ -59,13 +54,13 @@
                                         </select>
                                         @if ($errors->has('item_id'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('item_id') }}</strong>
+                                                <small>{{ $errors->first('item_id') }}</small>
                                             </span>
                                         @endif
                                 </div>
                                 <div class="form-group">
                                     <label>عنوان البرنامج التدريبي</label>
-                                    <input type="text" name="title" class="form-control">
+                                    <input type="text" id="title" name="title" class="form-control">
                                     @if ($errors->has('title'))
                                         <span class="help-block">
                                             <small class="form-text text-danger">{{ $errors->first('title') }}</small>
@@ -92,15 +87,10 @@
                                                             كتابة الرابط
                                                         </option>
                                                     </select>
-                                                    @if ($errors->has('important_points_file'))
-                                                        <span class="help-block">
-                                                            <small class="form-text text-danger">{{ 'يجب عليك اختيار نوع أهم المحاور إما ملف او رابط' }}</small>
-                                                        </span>
-                                                    @endif
                                                 </div>
                                                 <div class="col-12 imp-points" id="link" hidden>
                                                     <label>رابط الفيديو</label>
-                                                    <input type="text" id="imp_link" name="important_points_link" class="form-control">
+                                                    <input type="text" placeholder="https://you.bu/" id="imp_link" name="important_points_link" class="form-control">
                                                     @if ($errors->has('important_points_link'))
                                                         <span class="help-block">
                                                             <small class="form-text text-danger">{{ $errors->first('important_points_link') }}</small>

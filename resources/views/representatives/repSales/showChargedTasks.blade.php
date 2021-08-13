@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right"> قائمة المهام المكلفة</span>
+            <span class="card-title" style="float: right"> قائمة مهام مطلوبه</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>

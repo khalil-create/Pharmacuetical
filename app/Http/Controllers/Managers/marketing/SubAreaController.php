@@ -9,7 +9,9 @@ use App\Models\Supervisor;
 use App\Models\Mainarea;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\Representative;
 use App\Traits\userTrait;
+use Illuminate\Support\Facades\Auth;
 
 class SubAreaController extends Controller
 {
@@ -99,5 +101,34 @@ class SubAreaController extends Controller
         $subarea->delete();
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/managerMarketing/manageSubAreas')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showSubareaReps($id)
+    {
+        $subarea = Subarea::find($id);
+        $reps = $subarea->representatives;
+        return view('managers.marketing.showSubareaReps', compact('subarea',$subarea))->with('reps',$reps);
+    }
+    public function addSubareaReps($id)
+    {
+        $subarea = Subarea::find($id);
+        $reps = Representative::all();
+        if($reps->count() < 1)
+            return redirect()->back()->with(['error' => 'لايوجد مندوبيين لـ إضافتهم، الرجاء قم بإضافة على الاقل مندوب واحد']);
+        return view('managers.marketing.addSubareaReps', compact('subarea',$subarea))->with('reps',$reps);
+    }
+    public function storeSubareaReps(Request $request,$id)
+    {
+        $rules = ['rep_ids' => 'required'];
+        $messages = ['rep_ids.required' => 'يجب ان تختار على الاقل مندوب واحد'];
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
+        $subarea = Subarea::findOrfail($id);
+        if($subarea->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        $subarea->representatives()->sync($request->rep_ids);
+
+        return redirect('/managerMarketing/showSubareaReps/'.$id)->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
     }
 }

@@ -117,8 +117,8 @@
                                             </div>
                                         @endforeach
                                     @endforeach
-                                    {{-- <input type="text" value="{{$i}}" id="count_q" hidden>
-                                    <input type="text" value="0" id="clicked" hidden> --}}
+                                    <input type="text" value="{{$i}}" id="count_q" hidden>
+                                    {{-- <input type="text" value="0" id="clicked" hidden> --}}
                                     <div class="form-group" id="send_btn">
                                         <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                             ارسال <i class="fas fa-send"></i>

@@ -1,8 +1,8 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="/home" class="brand-link">
+        <img src="{{asset('designImages/ab.jpg')}}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">التسويق الدوائي</span>
     </a>
 
@@ -11,13 +11,17 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image"><?php $username = explode(' ',Auth::user()->user_name_third); ?>
-            <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
+            @if (Auth::user()->user_image)
+                <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
+            @else
+                <img src="{{asset('designImages/user.png')}}" class="img-circle elevation-2" alt="User Image">
+            @endif
             </div>
             <div class="info">
             <a href="/repScience/profile/{{Auth::user()->id}}" class="d-block">
                 {{$username[0]}} {{Auth::user()->user_surname}}
                 <br>
-                <b> {{Auth::user()->user_type}} </b>
+                <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p>
             </a>
             </div>
         </div>
@@ -64,6 +68,7 @@
                                 $p == 'repScience/addOrder' ||
                                 $path == 'repScience/editDoctor' ||
                                 $path == 'repScience/editCustomer'||
+                                $path == 'repScience/showDoctorDetails'||
                                 $path == 'repScience/editOrder'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -75,6 +80,7 @@
                                 $p == 'repScience/addOrder' ||
                                 $path == 'repScience/editDoctor' ||
                                 $path == 'repScience/editCustomer'||
+                                $path == 'repScience/showDoctorDetails'||
                                 $path == 'repScience/editOrder'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -88,10 +94,11 @@
                 <a href="/repScience/manageDoctors"
                     class="nav-link {{  $p == 'repScience/manageDoctors' || 
                                         $p == 'repScience/addDoctor' ||
+                                        $path == 'repScience/showDoctorDetails'||
                                         $path == 'repScience/editDoctor'? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>الدكاتره</p>
+                        <p>الاطباء</p>
                 </a>
                 </li>
                 <li class="nav-item">
@@ -113,6 +120,55 @@
                         <p>
                         الطلبيات
                         </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item {{  $p == 'repScience/manageTests' ||
+                                $p == 'repScience/manageCourses' ||
+                                $p == 'repScience/showStudies' ||
+                                $path == 'repScience/repTests' ||
+                                $path == 'repScience/storeRepTest' ||
+                                $path == 'repScience/showTestResult'? 'menu-open' : ''
+                            }}">
+            <a href="#"
+            class="nav-link {{  $p == 'repScience/manageTests' ||
+                                $p == 'repScience/manageCourses' ||
+                                $p == 'repScience/showStudies' ||
+                                $path == 'repScience/repTests' ||
+                                $path == 'repScience/storeRepTest' ||
+                                $path == 'repScience/showTestResult' ? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                ادارة بناء القدرات
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/repScience/manageTests"
+                    class="nav-link {{  $p == 'repScience/manageTests' ||
+                                        $path == 'repScience/repTests' ||
+                                        $path == 'repScience/storeRepTest' ||
+                                        $path == 'repScience/showTestResult'? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الاختبارات</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/repScience/manageCourses"
+                        class="nav-link {{  $p == 'repScience/manageCourses'? 'active' : ''}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>المواد التدريبية</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/repScience/showStudies"
+                        class="nav-link {{  $p == 'repScience/showStudies'? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الدراسات العلمية</p>
                     </a>
                 </li>
             </ul>
@@ -213,7 +269,7 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/repScience/manageCourses"
             class="nav-link {{  $p == 'repScience/manageCourses'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
@@ -240,14 +296,12 @@
                 الدراسات العلمية
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="/repScience/showSalesObjectives"
             class="nav-link {{  $p == 'repScience/showSalesObjectives'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                الاهداف البيعية
-                </p>
+                <p>الاهداف البيعية</p>
             </a>
         </li>
         <li class="nav-item">
@@ -256,9 +310,19 @@
                                 $p == 'repScience/showChargedTasks' ||
                                 $path == 'repScience/performTask' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                المهام المكلفة
-                </p>
+                <p>مهام مطلوبه</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/repScience/manageSamples"
+            class="nav-link {{  $p == 'repScience/manageSamples' ||
+                                $p == 'repScience/addSample' ||
+                                $path == 'repScience/divideSample' ||
+                                $path == 'repScience/displaySampleReps' ||
+                                $path == 'repScience/editDividedSample' ||
+                                $path == 'repScience/editSample' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p> ادارة العينات</p>
             </a>
         </li>
     </nav>

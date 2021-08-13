@@ -66,11 +66,21 @@
                                     <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
                                         <label for="unit" class="col-md-2 control-label">الوحده</label>
                                         <select name="unit" id="unit" class="form-control custom-select rounded-0">
-                                                <option value="باكت"
-                                                    @if($item->unit == 'باكت')
-                                                        {{'selected'}}
-                                                    @endif >باكت
-                                                </option>
+                                            <option value="باكت"
+                                            @if($item->unit == 'باكت')
+                                                {{'selected'}}
+                                            @endif >باكت
+                                            </option>
+                                            <option value="شريط"
+                                                @if($item->unit == 'شريط')
+                                                    {{'selected'}}
+                                                @endif >شريط
+                                            </option>
+                                            <option value="قارورة"
+                                                @if($item->unit == 'قارورة')
+                                                    {{'selected'}}
+                                                @endif >قارورة
+                                            </option>
                                         </select>
                                         @if ($errors->has('unit'))
                                             <span class="help-block">
@@ -88,7 +98,7 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="bonus">البونص</label>
+                                        <label for="bonus">البونص ( % )</label>
                                         <input type="text" value="{{$item->bonus}}" name="bonus" class="form-control" id="bonus">
                                         @if ($errors->has('bonus'))
                                             <span class="help-block">

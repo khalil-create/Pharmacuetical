@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="/repScience/manageTests">الصفحة الرئيسية</a></li>
                     <li class="breadcrumb-item active">نتيجة الاختبار</li>
                 </ol>
                 </div><!-- /.col -->
@@ -40,6 +40,7 @@
                     <div class="result">
                         <p>النقاط الكلية: <span class="text-danger">{{ $grade }}</span> نقاط  من اصل <span class="text-danger">{{sizeof($question)}}</span> نقاط </p>
                         <p>النتيجة: <span class="text-danger">{{$grade*100/sizeof($question).'%'}}</span> </p>
+                        <p>الحالة: @if($grade*100/sizeof($question) >= 50) <span class="text-success">{{'ناجح'}}</span> @else <span class="text-danger">{{'راسب'}}</span> @endif</span> </p>
                     </div>
 
                     {{-- <a href="" class="btn btn-primary">GET DETAILS IN PDF BY EMAIL</a> --}}

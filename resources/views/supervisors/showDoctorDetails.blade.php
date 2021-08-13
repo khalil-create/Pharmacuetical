@@ -83,7 +83,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">الولاء للمؤسسة</span>
@@ -105,7 +105,7 @@
                                 </div> <!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">الرتبة</span>
@@ -132,6 +132,20 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">العنوان</span>
                                     <span class="info-box-number">{{$doctor->address}}</span>
+                                </div><!-- /.info-box-content -->
+                            </div><!-- /.info-box -->
+                        </div><!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-2">
+                            <div class="info-box mb-3">
+                                <div class="info-box-content">
+                                    <span class="info-box-text">الحالة</span>
+                                    <span class="info-box-number">
+                                        @if ($doctor->statues)
+                                            <a href="/supervisor/notActivateDoctor/{{$doctor->id}}" title="إلغاء التفعيل"><span class="info-box-number text-success">{{'مفعل'}}</span></a>
+                                        @else
+                                            <a href="/supervisor/activateDoctor/{{$doctor->id}}" title="تفعيل"><span class="info-box-number text-danger">{{'غير مفعل'}}</span></a>
+                                        @endif
+                                    </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
@@ -212,8 +226,8 @@
                                 @if($doctor->services->count() > 0)
                                     @foreach ($doctor->services as $row)
                                         <a href="/supervisor/showServiceDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                            <div class="col-12" style="margin:1px -8px 38px 5px">
-                                                <div class="col-md-12" style="float:right">
+                                            {{-- <div class="col-12" style="margin:1px -8px 38px 5px"> --}}
+                                                <div class="col-md-12 align-right" style="margin:15px -8px 15px">
                                                     <small>
                                                         @if ($row->type)
                                                             {{'خدمة مادية '}}
@@ -223,7 +237,7 @@
                                                         {{$row->name}} {{' تكلفتها '.$row->cost}}
                                                     </small>
                                                 </div>
-                                            </div>
+                                            {{-- </div> --}}
                                         </a>
                                     @endforeach
                                 @else
@@ -237,11 +251,11 @@
                                     <div class="row">
                                         @foreach ($doctor->specialists as $row)
                                             <a href="/supervisor/showspecialistDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                                <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                    <div class="col-md-12">
-                                                        <h6 style="float:right">{{$row->name}}</h6>
+                                                {{-- <div class="col-12" style="margin:12px -8px 38px 5px"> --}}
+                                                    <div class="col-md-12 align-right" style="margin:15px -8px 15px">
+                                                        <h6>{{$row->name}}</h6>
                                                     </div>
-                                                </div>
+                                                {{-- </div> --}}
                                             </a>
                                         @endforeach
                                     </div>

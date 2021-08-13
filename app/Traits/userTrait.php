@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use App\Notifications\UserNotification;
 use Illuminate\Notifications\Notification;
 trait userTrait
-{
+{   
     function saveImage($file,$folder)
     {
             $extention =$file->getClientOriginalExtension();
@@ -21,6 +21,29 @@ trait userTrait
     function deleteFile($file_old,$file_path)
     {
         unlink(public_path($file_path.$file_old));
+    }
+    function getSupervisorItems($user)
+    {
+        $items = collect();
+        foreach($user->supervisor->companies as $comp){
+            if($comp->have_category){
+                foreach($comp->categories as $cat){
+                        $items = $items->concat($cat->items);
+                }
+            }
+            else{
+                    $items = $items->concat($comp->items);
+            }
+        }
+        return $items;
+    }
+    function getManagerMarketingId(){
+        $id = User::where('user_type','مدير تسويق')->manager()->first()->id;
+        return $id;
+    }
+    function getManagerSalesId(){
+        $id = User::where('user_type','مدير مبيعات')->manager()->first()->id;
+        return $id;
     }
     static function getSinceTimePast($updated_at)
     {
@@ -94,6 +117,8 @@ trait userTrait
             $route = 'show.tasks';
         elseif($title == 'اطباء')
             $route = 'show.doctors';
+        elseif($title == 'عينات')
+            $route = 'show.samples';
         elseif($title == 'عملاء')
             $route = 'show.customers';
         elseif($title == 'خطط')
@@ -106,10 +131,29 @@ trait userTrait
             $route = 'show.studies';
         elseif($title == 'خدمات')
             $route = 'show.services';
+        elseif($title == 'طلبيات')
+            $route = 'show.orders';
         elseif($title == 'مواد')
             $route = 'show.courses';
 
         return $route;
+    }
+    static function getUserType()
+    {
+        $type = '.';
+        if(Auth::user()->user_type == 'أدمن')
+            $type = 'admin.';
+        else if(Auth::user()->user_type == 'مدير تسويق')
+            $type = 'managerMarketing.';
+        else if(Auth::user()->user_type == 'مدير مبيعات')
+            $type = 'managerSales.';
+        else if(Auth::user()->user_type == 'مشرف')
+            $type = 'supervisor.';
+        else if(Auth::user()->user_type == 'مندوب علمي' || Auth::user()->user_type == 'مدير فريق')
+            $type = 'repScience.';
+        else if(Auth::user()->user_type == 'مندوب مبيعات')
+            $type = 'repSales.';
+        return $type;
     }
     function unreadNotify($id)
     {
@@ -118,7 +162,7 @@ trait userTrait
                                 ->where('id',$id)
                                 ->first();
             if($unreadNotify)
-                $unreadNotify->markAsRead();
+                $unreadNotify->delete(); // or $unreadNotify->markAsRead();
     }
     function notifyUser($title,$content,$id)
     {

@@ -23,7 +23,7 @@ class Service extends Model
         'updated_at',
     ];
     public $timestamps = true; //the default is true
-    public function represntaitives()
+    public function representatives()
     {
         return $this->belongsTo('App\Models\Representative','representative_id','id');
     }
@@ -34,5 +34,13 @@ class Service extends Model
     public function doctors()
     {
         return $this->belongsToMany('App\Models\Doctor','services_doctors');
+    }
+    public function serviceDoctors()
+    {
+        return $this->hasMany('App\Models\ServiceDoctor','service_id','id');
+    }
+    public function serviceCustomers()
+    {
+        return $this->hasMany('App\Models\ServiceCustomer','service_id','id');
     }
 }

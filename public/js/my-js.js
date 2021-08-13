@@ -1,8 +1,10 @@
 //////////////////////////// start calculate count items /////////////////////////
 count_items =  document.getElementById("count_items");
 counter_items =  document.getElementById("counter_items");
-if(count_items.textContent < 1){
-    count_items.textContent = counter_items.value;
+if(count_items){
+    if(count_items.textContent < 1){
+        count_items.textContent = counter_items.value;
+    }
 }
 //////////////////////////// end calculate count items /////////////////////////
 
@@ -78,37 +80,37 @@ function showListInRep(){
 
 
 ///////////////////////// start //////////////////////////////////////////////////////
+function checkPhoneNumber()
+{
     var phone_number = document.getElementById("phonenumber");
     var ee = document.getElementById("invalidPhoneNo");
-    phone_number.onkeyup = function()
-    {
-        let seven = phone_number.value;
-        // $seven = Math.trunc($seven);
-        let ss = num => Number(num);
-        let intArr = Array.from(String(seven),ss);
+    let seven = phone_number.value;
+    // $seven = Math.trunc($seven);
+    let ss = num => Number(num);
+    let intArr = Array.from(String(seven),ss);
+    ee.hidden = true;
+    if(phone_number.value >= 700000000 && phone_number.value <= 799999999){
         ee.hidden = true;
-        if(phone_number.value >= 700000000 && phone_number.value <= 799999999){
-            ee.hidden = true;
-            phone_number.style.border = "1px solid #007bff";
+        phone_number.style.border = "1px solid #007bff";
 
-        }
-        else if(phone_number.value > 799999999){
-            if(intArr[0] != 7)
-                ee.textContent = "يجب ان يبدأ برقم 7";
-            else
-                ee.textContent = "يجب ان لا يتجاوز العدد لأكثر من 9 ارقام ";
-            phone_number.style.border = "1px solid #dc3545";
-            ee.hidden = false;
-        }
-        else{
-            if(intArr[0] != 7)
-                ee.textContent = "يجب ان يبدأ برقم 7";
-            else
-                ee.textContent = "ادخل 9 ارقام";
-            phone_number.style.border = "1px solid #dc3545";
-            ee.hidden = false;
-        }
     }
+    else if(phone_number.value > 799999999){
+        if(intArr[0] != 7)
+            ee.textContent = "يجب ان يبدأ برقم 7";
+        else
+            ee.textContent = "يجب ان لا يتجاوز العدد لأكثر من 9 ارقام ";
+        phone_number.style.border = "1px solid #dc3545";
+        ee.hidden = false;
+    }
+    else{
+        if(intArr[0] != 7)
+            ee.textContent = "يجب ان يبدأ برقم 7";
+        else
+            ee.textContent = "ادخل 9 ارقام";
+        phone_number.style.border = "1px solid #dc3545";
+        ee.hidden = false;
+    }
+}
 ////////////////////////// end //////////////////////////////////////////////////////
 
 ///////////////////////// start //////////////////////////////////////////////////////
@@ -174,6 +176,7 @@ function showListInRep(){
 ///////////////////////// start Tel_phone_doctor //////////////////////////////////////////////////////
     var clinic_phone = document.getElementById("Tel_phone");
     var messege = document.getElementById("invalidClinicNo");
+if(clinic_phone){
     clinic_phone.onkeyup = function()
     {
         messege.hidden = true;
@@ -193,6 +196,7 @@ function showListInRep(){
             messege.hidden = false;
         }
     }
+}
 ///////////////////////// end Tel_phone_doctor //////////////////////////////////////////////////////
 
 ///////////////////////// start phone_Owner //////////////////////////////////////////////////////
@@ -380,9 +384,11 @@ function checkVisitType(){
 haveItem = document.getElementById("haveItem");
 table = document.getElementById("table");
 error = document.getElementById("error");
-if(haveItem.value == 0){
-    table.hidden = true;
-    error.hidden = false;
+if(haveItem){
+    if(haveItem.value == 0){
+        table.hidden = true;
+        error.hidden = false;
+    }
 }
 
 //////////////////////////// end check have items /////////////////////////
@@ -414,6 +420,54 @@ function pointsType(){
         link.hidden = true;
     }
 }
+function checkPointsType(){
+    var points_type = document.getElementById("points_type");
+    var imp_link = document.getElementById("imp_link");
+    // var link = document.getElementById("link");
+    // var file_points = document.getElementById("file_points");
+    var title = document.getElementById("title");
+    if(title.value == ''){
+        swal({
+            title: "خطأ!",
+            text: "يجب عليك كتابة عنوان البرنامج التدريبي",
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+    // var imp_file = document.getElementById("imp_file");
+    if(points_type.value == -1){
+        file_points.hidden = true;
+        link.hidden = true;
+        swal({
+            title: "خطأ!",
+            text: "يجب عليك اختيار نوع أهم المحاور إما ملف او رابط",
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+    else if(points_type.value == 2){
+        if(imp_link.value == ''){
+            swal({
+                title: "خطأ!",
+                text: "يجب عليك كتابة رابط الفيديو",
+                icon: "error",
+                button: "حسناً!",
+            });
+            return false;
+        }
+        else if(imp_link.value.substring(0,14) != "https://you.bu"){
+            swal({
+                title: "خطأ!",
+                text: "يجب ان يبدأ رابط الفيديو بـ https://you.bu",
+                icon: "error",
+                button: "حسناً!",
+            });
+            return false;
+        }
+    }
+}
 
 //////////////////////////// end check points type for training courses /////////////////////////
 
@@ -422,8 +476,15 @@ function Validation()
 {
     var count = document.getElementById("count_q");
     var bol2 = $('form input[type=radio]:checked').length;
+    // alert(bol2);
     if(bol2 < count.value){
-        alert("لم يتم اكمال جميع الاسئلة الرجاء منك الاجابة على الاسئلة كامل");
+        // alert("لم يتم اكمال جميع الاسئلة الرجاء منك الاجابة على الاسئلة كامل");
+        swal({
+            title: "خطأ!",
+            text: "لم يتم اكمال جميع الاسئلة الرجاء منك الاجابة على الاسئلة كامل",
+            icon: "error",
+            button: "حسناً!",
+        });
         return false;
     }
 }
@@ -527,3 +588,55 @@ function checkDataPlan()
     }
 }
 //////////////////////////// end check plan data ///////////////////////////
+
+//////////////////////////// start check if item have category or not ///////////////////////////
+function haveCategory()
+{
+    var have_cat = document.getElementById('have_cat');
+    var have_not_cat = document.getElementById('have_not_cat');
+    var category = document.getElementById('category');
+    var company = document.getElementById('company');
+    if(have_cat.checked){
+        category.hidden = false;
+        company.hidden = true;
+    }
+    else if(have_not_cat.checked){
+        company.hidden = false;
+        category.hidden = true;
+    }
+}
+//////////////////////////// end check if item have category or not /////////////////////////////
+
+//////////////////////////// start check have company that havn't category or not /////////////////////////////
+function checkHaveCompany()
+{
+    var have_cat = document.getElementById('have_cat');
+    var category = document.getElementById('category');
+    var company = document.getElementById('company');
+    var have_company = document.getElementById('have_company');
+    if(have_company.value == 0){
+        have_cat.checked = true;
+        category.hidden = false;
+        company.hidden = true;
+        swal({
+            title: "خطأ!",
+            text: "لاتوجد شركات ليس لديها مجموعة اصناف اذا اردت اضافة هذا الصنف وليس لديه مجموعة اصناف فـ عليك اولا بإضافة هذه الشركة ",
+            icon: "error",
+            button: "حسناً!",
+        });
+        return false;
+    }
+}
+//////////////////////////// end check have company that havn't category or not /////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+

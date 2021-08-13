@@ -93,7 +93,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <input id="phonenumber" value="{{$doctor->mobile_phone}}" type="text" name="mobile_phone" class="form-control" placeholder="رقم الهاتف">
+                                                <input id="phonenumber"  onkeyup="checkPhoneNumber()" value="{{$doctor->mobile_phone}}" type="text" name="mobile_phone" class="form-control" placeholder="رقم الهاتف">
                                                 <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
                                                 @if ($errors->has('mobile_phone'))
                                                     <span class="help-block">

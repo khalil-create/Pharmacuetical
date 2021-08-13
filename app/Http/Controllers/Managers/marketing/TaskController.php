@@ -18,7 +18,8 @@ class TaskController extends Controller
         if($request->get('id')){
             $this->unreadNotify($request->get('id'));
         }
-        $tasks = Task::whereHas('manager')->get();
+        $tasks = Task::whereNotNull(['supervisor_id','manager_id'])->get();
+        // return $tasks;
         return view('managers.marketing.manageTasks',compact('tasks',$tasks));
     }
     public function addTask()

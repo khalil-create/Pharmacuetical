@@ -94,7 +94,7 @@
                               @foreach ($choices_arr as $r)
                                   {{++$no.'- '}}
                                   @if ($r == $row->right_answer)
-                                      <b style="color:#0bab30">{{$r}}</b>
+                                      <b class="text-success">{{$r}}</b>
                                   @else
                                       {{$r}}
                                   @endif
@@ -102,7 +102,7 @@
                               @endforeach
                           @endif
                         </td>
-                        <td class="text-right" style="color:#0bab30"><b>{{$row->right_answer}}</b></td>
+                        <td class="text-right text-success"><b>{{$row->right_answer}}</b></td>
                         <td>
                           <a href="{{route('editQuestion',['id' => $row->id,'type' => $type,'test_id' => $test->id])}}"><i class="nav-icon fas fa-edit kkk" title="تعديل"></i></a>
                           {{-- <form action="{{route('deleteQuestion',['id' => $row->id,'type' => $type,'test_id' => $test->id])}}" method="post" style="float: right;">
@@ -114,7 +114,7 @@
                           <input type="hidden" class="type" value="{{$type}}">
                           <input type="hidden" class="test_id" value="{{$test->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                          <a href="/supervisor/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                          {{-- <a href="/supervisor/showDetails/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a> --}}
                         </td>
                       </tr>
                     @endforeach
@@ -184,6 +184,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

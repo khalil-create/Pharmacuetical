@@ -67,20 +67,12 @@
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{$row->name_main_area}}</td>
-                      {{-- <td class="sorting_1">
-                        {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
-                      </td> --}}
                       <td>
                         <a href="/supervisor/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <a href="/supervisor/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
-                        {{-- <form action="/supervisor/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
-                          {{csrf_field()}}
-                          {{method_field('DELETE')}}
-                          <button style="border: none;margin-left: -150px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/supervisor/supAreas/{{$row->id}}"><i class="nav-icon fas fa-map" title="مناطقها الفرعية"></i></a>
+                        <a href="/supervisor/showMainareaDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        <i class="fas fa-eye"></i>
                       </td>
                     </tr>
                   @endforeach
@@ -143,6 +135,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

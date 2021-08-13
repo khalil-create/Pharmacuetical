@@ -54,9 +54,9 @@
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         الكمية
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        الكمية
-                      </th> --}}
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الذي اضافها
+                      </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
@@ -76,12 +76,14 @@
                           <td>{{ $row->item->commercial_name }}</td>
                           <td>{{ $row->count }}</td>
                           <td>
+                            @if ($row->manager_id != null)
+                                {{'انت'}}
+                            @else
+                                {{'المشرف'}}
+                            @endif
+                          </td>
+                          <td>
                             <a href="/managerMarketing/editSupervisorSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                            {{-- <form action="/managerMarketing/deleteSupervisorSample/{{$row->id}}" method="post" style="float: right;">
-                                    {{csrf_field()}}
-                                    {{method_field('DELETE')}}
-                                    <button style="border: none;"><i class="fas fa-trash"></i></button>
-                            </form> --}}
                             <input type="hidden" class="id" value="{{$row->id}}">
                             <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                             {{-- <i class="fas fa-eye"></i> --}}
@@ -100,6 +102,7 @@
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">العينة</th>
                         <th rowspan="1" colspan="1">الكمية</th>
+                        <th rowspan="1" colspan="1">الذي اضافها</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
                     @endif
@@ -149,6 +152,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

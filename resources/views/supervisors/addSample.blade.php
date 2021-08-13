@@ -67,19 +67,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="rep_id" class="col-md-2 control-label">المندوب</label>
-                                            <select name="rep_id" class="form-control custom-select rounded-0">
-                                                @foreach ($rep as $row)
-                                                    <option value="{{$row->id}}">{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('rep_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('rep_id') }}</strong>
-                                            </span>
-                                        @endif
-                                </div>
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin: 10px">
                                         حفظ<i class="fas fa-save"></i>

@@ -58,7 +58,6 @@
                     <tbody>
                       <input name="item_id" value="{{$sample->item_id}}" hidden>
                       <input id="count" value="{{$sample->count}}" hidden>
-                      @php $i=0; @endphp
                       @foreach ($rep as $row)
                       <tr>
                         <td>
@@ -66,7 +65,17 @@
                           <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                         </td>
                         <td>
-                          <input value="@if(sizeof($samples) > $i && sizeof($samples) != 0 && $samples[$i]['representative_id']==$row->id){{$samples[$i]["count"]}} @else @php $i--; @endphp @endif" type="text" placeholder="مقدار العينة لهذا المندوب" name="count[]" class="form-control">
+                          @php $found = false; @endphp
+                          @foreach($samples as $sample)
+                            @if($sample->representative_id == $row->id)
+                              @php $found = true; @endphp
+                              <input value="{{$sample->count}}" type="text" placeholder="مقدار العينة لهذا المندوب" name="count[]" class="form-control">
+                              @break
+                            @endif
+                          @endforeach
+                          @if(!$found)
+                            <input type="text" placeholder="مقدار العينة لهذا المندوب" name="count[]" class="form-control">
+                          @endif
                           @if ($errors->has('count'))
                             <span class="help-block">
                                 <small class="form-text text-danger">{{ $errors->first('count') }}</small>
@@ -74,7 +83,6 @@
                           @endif
                         </td>
                       </tr>
-                      @php $i++; @endphp
                       @endforeach
                     </tbody>
                   </table>

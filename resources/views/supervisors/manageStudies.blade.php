@@ -54,9 +54,6 @@
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         سنة الاصدار
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المشرف
-                      </th> --}}
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
@@ -75,20 +72,12 @@
                       <td>{{ $row->title }}</td>
                       <td>{{ $row->source }}</td>
                       <td>{{ $row->emission_date }}</td>
-                      {{-- <td>
-                        {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
-                      </td> --}}
                       <td class="" style="">
                         <a href="/supervisor/editStudy/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
                         <a href="/supervisor/studyStrengths/{{$row->id}}"><i class="fas fa-info" title="نقاط القوة"></i></a>
-                        {{-- <form action="/supervisor/deleteStudy/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -50px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        <i class="fas fa-eye"></i>
+                        <a href="/supervisor/showStudyDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
                       </td>
                     </tr>
                   @endforeach
@@ -153,6 +142,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

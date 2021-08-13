@@ -51,26 +51,12 @@
                                 <div class="form-group">
                                     <label>العينة</label>
                                     <select name="item_id" class="form-control custom-select rounded-0">
-                                        @foreach ($supervisor->company as $comp)
-                                                @if ($comp->have_category == 1)
-                                                    @foreach ($comp->categories as $cat)
-                                                        @foreach ($cat->items as $item)
-                                                            <option value="{{$item->id}}"
-                                                                @if ($sample->item_id == $item->id)
-                                                                    {{"selected"}}
-                                                                @endif
-                                                                >{{$item->commercial_name}}</option>
-                                                        @endforeach
-                                                    @endforeach
-                                                @else
-                                                    @foreach ($comp->items as $item)
-                                                        <option value="{{$item->id}}"
-                                                            @if ($sample->item_id == $item->id)
-                                                                    {{"selected"}}
-                                                            @endif
-                                                            >{{$item->commercial_name}}</option>
-                                                    @endforeach
+                                        @foreach ($items as $item)
+                                            <option value="{{$item->id}}"
+                                                @if ($sample->item_id == $item->id)
+                                                    {{"selected"}}
                                                 @endif
+                                                >{{$item->commercial_name}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('item_id'))
@@ -88,23 +74,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label class="col-md-2 control-label">المشرف</label>
-                                            <select name="supervisor_id" id="supervisor_id" class="form-control custom-select rounded-0">
-                                                @foreach ($supervisors as $row)
-                                                <option value="{{$row->id}}" 
-                                                    @if($row->id == $sample->supervisor_id) 
-                                                        {{ 'selected' }}
-                                                    @endif
-                                                    >{{ $row->user->user_name_third }} {{$row->user->user_surname}}</option>
-                                                @endforeach
-                                            </select>
-                                        @if ($errors->has('supervisor_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('supervisor_id') }}</strong>
-                                            </span>
-                                        @endif
-                                </div> --}}
                                 <div class="form-group" >
                                     <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
                                         تعديل <i class="fas fa-edit"></i>

@@ -47,8 +47,10 @@
                             @php
                                 $route = userTrait::getRouteReadNotification($notify->data['title']);
                                 $since = userTrait::getSinceTimePast($notify->updated_at);
+                                $userType = userTrait::getUserType();
+                                $route = $userType.$route;
                             @endphp
-                            <a href="{{route($route,['id' => $notify->id])}}" title="رؤية المزيد" class="btn btn-block btn-default btn-lg col-md-12">
+                            <a href="{{route($route,['id' => $notify->id])}}" title="التفاصيل" class="btn btn-block btn-default btn-lg col-md-12">
                                 <div class="col-12" style="margin-bottom: 2px">
                                     <div class="col-md-12">
                                         <h6 style="float:right;margin-bottom: 2px">{{$notify->data['content']}}</h6><br>

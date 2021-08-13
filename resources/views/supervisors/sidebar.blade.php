@@ -1,8 +1,9 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="/home" class="brand-link">
+        <img src="{{asset('designImages/ab.jpg')}}" class="brand-image img-circle elevation-3" style="opacity: .8">
+        {{-- <imgsrc="{{asset('designImages/ab.jpg')}}" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
         <span class="brand-text font-weight-light">التسويق الدوائي</span>
     </a>
 
@@ -17,7 +18,7 @@
             <a href="/supervisor/profile/{{Auth::user()->id}}" class="d-block">
                 {{$username[0]}} {{Auth::user()->user_surname}} 
                 <br>
-                <b> {{Auth::user()->user_type}} </b>
+                <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p>
             </a>
             </div>
         </div>
@@ -60,40 +61,19 @@
         @endphp
         <li class="nav-item {{  $p == 'supervisor/manageRepresentatives' || 
                                 $p == 'supervisor/addRepresentative' ||
-                                $p == 'supervisor/manageTests'||
-                                $p == 'supervisor/addTest' ||
                                 $p == 'supervisor/manageRepItems' ||
-                                $path == 'supervisor/manageTestReps' ||
-                                $path == 'supervisor/addTestReps' ||
-                                $path == 'supervisor/editTestReps' ||
                                 $path == 'supervisor/editRepItems' ||
-                                $path == 'supervisor/editTest' ||
-                                $path2 == 'supervisor/manageTe' ||
-                                $path2 == 'supervisor/manageQu' ||
-                                $path2 == 'supervisor/addTest' ||
-                                $path2 == 'supervisor/editTest' ||
-                                $path2 == 'supervisor/showReps' ||
                                 $path == 'supervisor/showSubareas' ||
-                                $path == 'supervisor/showRepDetails' ||
                                 $path == 'supervisor/addRepSubareas' ||
+                                $path == 'supervisor/showRepDetails' ||
+                                $path == 'supervisor/storeRepMainArea' ||
                                 $path =='supervisor/editRepresentative'? 'menu-open' : '' 
                             }}">
             <a href="#"
                 class="nav-link {{  $p == 'supervisor/manageRepresentatives' || 
                                     $p == 'supervisor/addRepresentative' ||
-                                    $p == 'supervisor/manageTests'||
-                                    $p == 'supervisor/addTest' ||
                                     $p == 'supervisor/manageRepItems' ||
-                                    $path == 'supervisor/manageTestReps' ||
-                                    $path == 'supervisor/addTestReps' ||
-                                    $path == 'supervisor/editTestReps' ||
                                     $path == 'supervisor/editRepItems' ||
-                                    $path2 == 'supervisor/manageTe' ||
-                                    $path2 == 'supervisor/manageQu' ||
-                                    $path2 == 'supervisor/addTest' ||
-                                    $path2 == 'supervisor/editTest' ||
-                                    $path2 == 'supervisor/showReps' ||
-                                    $path == 'supervisor/editTest' ||
                                     $path == 'supervisor/showSubareas' ||
                                     $path == 'supervisor/addRepSubareas' ||
                                     $path == 'supervisor/showRepDetails' ||
@@ -108,35 +88,17 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="/supervisor/manageRepresentatives" 
-                    class="nav-link {{  $p == 'supervisor/manageRepresentatives' || 
-                                        $p == 'supervisor/addRepresentative' ||
-                                        $path == 'supervisor/showMainareas' ||
-                                        $path == 'supervisor/showSubareas' ||
-                                        $path == 'supervisor/addRepSubareas' ||
-                                        $path == 'supervisor/showRepDetails' ||
-                                        $path =='supervisor/editRepresentative'? 'active' : '' 
-                                    }}" class="nav-link">
-                        <i class="far fa-user nav-icon"></i>
-                        <p>معلومات المندوبيين</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/supervisor/manageTests" 
-                    class="nav-link {{  $p == 'supervisor/manageTests'||
-                                        $p == 'supervisor/addTest' ||
-                                        $path == 'supervisor/manageTestReps' ||
-                                        $path == 'supervisor/addTestReps' ||
-                                        $path == 'supervisor/editTestReps' ||
-                                        $path2 == 'supervisor/manageTe' ||
-                                        $path2 == 'supervisor/manageQu' ||
-                                        $path2 == 'supervisor/addTest' ||
-                                        $path2 == 'supervisor/editTest' ||
-                                        $path2 == 'supervisor/showReps' ||
-                                        $path == 'supervisor/editTest' ? 'active' : ''
-                                    }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>الاختبارات</p>
+                    <a href="/supervisor/manageRepresentatives" 
+                        class="nav-link {{  $p == 'supervisor/manageRepresentatives' || 
+                                            $p == 'supervisor/addRepresentative' ||
+                                            $path == 'supervisor/showMainareas' ||
+                                            $path == 'supervisor/showSubareas' ||
+                                            $path == 'supervisor/addRepSubareas' ||
+                                            $path == 'supervisor/showRepDetails' ||
+                                            $path =='supervisor/editRepresentative'? 'active' : '' 
+                                        }}" class="nav-link">
+                            <i class="far fa-user nav-icon"></i>
+                            <p>المندوبيين العلميين</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -225,10 +187,8 @@
                                 $p == 'supervisor/companyAdd' ||
                                 $p == 'supervisor/manageCategory' ||
                                 $p == 'supervisor/categoryAdd' ||
-                                $p == 'supervisor/manageItem/1' ||
-                                $p == 'supervisor/manageItem/0' ||
-                                $p == 'supervisor/itemAdd/1' ||
-                                $p == 'supervisor/itemAdd/0' ||
+                                $p == 'supervisor/manageItem' ||
+                                $p == 'supervisor/itemAdd' ||
                                 $path == 'supervisor/companyEdit' ||
                                 $path == 'supervisor/categryEdit' ||
                                 $path == 'supervisor/itemUses' ||
@@ -239,6 +199,8 @@
                                 $path == 'supervisor/editUse' ||
                                 $path == 'supervisor/editUseNoCat' ||
                                 $path == 'supervisor/showCompanyDetails' ||
+                                $path == 'supervisor/showCategoryDetails' ||
+                                $path == 'supervisor/showItemDetails' ||
                                 $path == 'supervisor/itemEditNoCat'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -246,8 +208,8 @@
                                     $p == 'supervisor/companyAdd' ||
                                     $p == 'supervisor/categoryAdd' ||
                                     $p == 'supervisor/manageCategory' ||
-                                    $path == 'supervisor/manageItem' ||
-                                    $path == 'supervisor/itemAdd' ||
+                                    $p == 'supervisor/manageItem' ||
+                                    $p == 'supervisor/itemAdd' ||
                                     $path == 'supervisor/companyEdit' ||
                                     $path == 'supervisor/categryEdit' ||
                                     $path == 'supervisor/itemUses' ||
@@ -258,6 +220,8 @@
                                     $path == 'supervisor/editUse' ||
                                     $path == 'supervisor/editUseNoCat' ||
                                     $path == 'supervisor/showCompanyDetails' ||
+                                    $path == 'supervisor/showCategoryDetails' ||
+                                    $path == 'supervisor/showItemDetails' ||
                                     $path == 'supervisor/itemEditNoCat'? 'active' : ''
                                 }}">
                     <i class="nav-icon far fa-building"></i>
@@ -282,6 +246,7 @@
                 <a href="/supervisor/manageCategory" 
                 class="nav-link {{  $p == 'supervisor/manageCategory'||
                                     $p == 'supervisor/categoryAdd' ||
+                                    $path == 'supervisor/showCategoryDetails' ||
                                     $path == 'supervisor/categoryEdit' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -289,29 +254,17 @@
                 </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/supervisor/manageItem/1" 
-                    class="nav-link {{  $p == 'supervisor/manageItem/1'||
-                                        $p == 'supervisor/itemAdd/1' ||
+                    <a href="/supervisor/manageItem" 
+                    class="nav-link {{  $p == 'supervisor/manageItem'||
+                                        $p == 'supervisor/itemAdd' ||
                                         $path == 'supervisor/itemUses' ||
                                         $path == 'supervisor/addUseExist' ||
                                         $path == 'supervisor/editUse' ||
+                                        $path == 'supervisor/showItemDetails' ||
                                         $path == 'supervisor/itemEdit' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>اصناف لديها فئات</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/supervisor/manageItem/0" 
-                    class="nav-link {{  $p == 'supervisor/manageItem/0'||
-                                        $p == 'supervisor/itemAdd/0' ||
-                                        $path == 'supervisor/itemUsesNoCat' ||
-                                        $path == 'supervisor/addUseNoCat' ||
-                                        $path == 'supervisor/editUseNoCat' ||
-                                        $path == 'supervisor/itemEditNoCat' ? 'active' : ''
-                                    }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>اصناف ليس لديها فئات</p>
+                        <p>الاصناف</p>
                     </a>
                 </li>
             </ul>
@@ -323,7 +276,10 @@
                                 $path == 'supervisor/editMainArea' ||
                                 $path == 'supervisor/supAreas' ||
                                 $path == 'supervisor/editSubArea' ||
-                                $path == 'supervisor/showRepresentatives' ||
+                                $path == 'supervisor/showSubareaReps'||
+                                $path == 'supervisor/addSubareaReps'|| 
+                                $path == 'supervisor/showMainareaDetails' ||
+                                $path == 'supervisor/showSubareaDetails' ||
                                 $path == 'supervisor/supAreas'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -333,8 +289,11 @@
                                 $path == 'supervisor/addSubArea' || 
                                 $path == 'supervisor/supAreas' || 
                                 $path == 'supervisor/editMainArea'||
-                                $path == 'supervisor/showRepresentatives'||
+                                $path == 'supervisor/showSubareaReps'||
+                                $path == 'supervisor/addSubareaReps'|| 
                                 $path == 'supervisor/editSubArea' ||
+                                $path == 'supervisor/showMainareaDetails' ||
+                                $path == 'supervisor/showSubareaDetails' ||
                                 $path == 'supervisor/supAreas'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -350,6 +309,7 @@
                                     $p == 'supervisor/addMainArea' ||
                                     $path == 'supervisor/supAreas' || 
                                     $path == 'supervisor/editMainArea' ||
+                                    $path == 'supervisor/showMainareaDetails' ||
                                     $path == 'supervisor/supAreas'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -359,8 +319,10 @@
                 <li class="nav-item">
                 <a href="/supervisor/manageSubAreas" 
                 class="nav-link {{  $p == 'supervisor/manageSubAreas'||
-                                    $path == 'supervisor/addSubArea' ||  
-                                    $path == 'supervisor/showRepresentatives' ||  
+                                    $path == 'supervisor/addSubArea' ||
+                                    $path == 'supervisor/showSubareaReps'||
+                                    $path == 'supervisor/addSubareaReps'|| 
+                                    $path == 'supervisor/showSubareaDetails' ||
                                     $path == 'supervisor/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -396,7 +358,7 @@
                                     $path =='supervisor/performTask'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>المهام المكلفة</p>
+                    <p>مهام مطلوبه</p>
                 </a>
                 </li>
                 <li class="nav-item">
@@ -407,7 +369,7 @@
                                     $path =='supervisor/editTask' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>المهام الموزعة</p>
+                    <p>تكاليف</p>
                 </a>
                 </li>
             </ul>
@@ -462,28 +424,128 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item {{  $p == 'supervisor/manageTrainingCourses' ||
+                                $p == 'supervisor/addCourse' ||
+                                $p == 'supervisor/manageStudies' ||
+                                $p == 'supervisor/addStudy' ||
+                                $p == 'supervisor/manageTests'||
+                                $p == 'supervisor/addTest' ||
+                                $path == 'supervisor/editCourse'||
+                                $path == 'supervisor/studyStrengths' ||
+                                $path == 'supervisor/addStrength' ||
+                                $path == 'supervisor/addStrengthsExist' ||
+                                $path == 'supervisor/editStrength' ||
+                                $path == 'supervisor/editStudies' ||
+                                $path == 'supervisor/manageTestReps' ||
+                                $path == 'supervisor/addTestReps' ||
+                                $path == 'supervisor/editTestReps' ||
+                                $path == 'supervisor/showStudyDetails' ||
+                                $path2 == 'supervisor/manageTe' ||
+                                $path2 == 'supervisor/manageQu' ||
+                                $path2 == 'supervisor/addTest' ||
+                                $path2 == 'supervisor/editQues' ||
+                                $path2 == 'supervisor/editTest' ||
+                                $path2 == 'supervisor/showReps' ||
+                                $path == 'supervisor/editTest'? 'menu-open' : ''
+                            }}">
+            <a href="#"
+            class="nav-link {{  $p == 'supervisor/manageTrainingCourses' ||
+                                $p == 'supervisor/addCourse' ||
+                                $p == 'supervisor/manageStudies' ||
+                                $p == 'supervisor/addStudy' ||
+                                $p == 'supervisor/manageTests'||
+                                $p == 'supervisor/addTest' ||
+                                $path == 'supervisor/studyStrengths' ||
+                                $path == 'supervisor/editCourse'||
+                                $path == 'supervisor/addStrength' ||
+                                $path == 'supervisor/addStrengthsExist' ||
+                                $path == 'supervisor/editStrength' ||
+                                $path == 'supervisor/editStudies' ||
+                                $path == 'supervisor/manageTestReps' ||
+                                $path == 'supervisor/addTestReps' ||
+                                $path == 'supervisor/editTestReps' ||
+                                $path == 'supervisor/showStudyDetails' ||
+                                $path2 == 'supervisor/manageTe' ||
+                                $path2 == 'supervisor/manageQu' ||
+                                $path2 == 'supervisor/addTest' ||
+                                $path2 == 'supervisor/editQues' ||
+                                $path2 == 'supervisor/editTest' ||
+                                $path2 == 'supervisor/showReps' ||
+                                $path == 'supervisor/editTest'? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                ادارة بناء القدرات
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/supervisor/manageTests" 
+                class="nav-link {{  $p == 'supervisor/manageTests'||
+                                    $p == 'supervisor/addTest' ||
+                                    $path == 'supervisor/manageTestReps' ||
+                                    $path == 'supervisor/addTestReps' ||
+                                    $path == 'supervisor/editTestReps' ||
+                                    $path2 == 'supervisor/manageTe' ||
+                                    $path2 == 'supervisor/manageQu' ||
+                                    $path2 == 'supervisor/addTest' ||
+                                    $path2 == 'supervisor/editTest' ||
+                                    $path2 == 'supervisor/editQues' ||
+                                    $path2 == 'supervisor/showReps' ||
+                                    $path == 'supervisor/editTest'? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>الاختبارات</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/supervisor/manageStudies" 
+                    class="nav-link {{  $p == 'supervisor/manageStudies' ||
+                                        $p == 'supervisor/addStudy' ||
+                                        $path == 'supervisor/studyStrengths' ||
+                                        $path == 'supervisor/addStrength' ||
+                                        $path == 'supervisor/addStrengthsExist' ||
+                                        $path == 'supervisor/editStrength' ||
+                                        $path == 'supervisor/showStudyDetails' ||
+                                        $path == 'supervisor/editStudies' ? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الدراسات العلمية</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/supervisor/manageTrainingCourses" 
+                    class="nav-link {{  $p == 'supervisor/manageTrainingCourses' ||
+                                        $p == 'supervisor/addCourse' ||
+                                        $path == 'supervisor/editCourse' ? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>المواد التدريبية</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="nav-item">
             <a href="/supervisor/manageServices"
             class="nav-link {{  $p == 'supervisor/manageServices' ||
                                 $p == 'supervisor/addService' ||
+                                $path == 'supervisor/showServiceDetails' ||
                                 $path == 'supervisor/editService'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                الخدمات
-                </p>
+                <p>الخدمات</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="/supervisor/manageVisits"
             class="nav-link {{  $p == 'supervisor/manageVisits' ||
                                 $p == 'supervisor/addVisit' ||
+                                $path == 'supervisor/showVisitDetails'||
                                 $path == 'supervisor/editVisit'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                الزيارات
-                </p>
+                <p> الزيارات</p>
             </a>
-        </li>
+        {{-- </li>
         <li class="nav-item">
             <a href="/supervisor/manageTrainingCourses"
             class="nav-link {{  $p == 'supervisor/manageTrainingCourses' ||
@@ -494,7 +556,7 @@
                 ادارة المواد التدريبية
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="/supervisor/manageSamples"
             class="nav-link {{  $p == 'supervisor/manageSamples' ||
@@ -504,9 +566,7 @@
                                 $path == 'supervisor/editDividedSample' ||
                                 $path == 'supervisor/editSample' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                ادارة العينات
-                </p>
+                <p> ادارة العينات</p>
             </a>
         </li>
         <li class="nav-item">
@@ -517,11 +577,9 @@
                                 $path == 'supervisor/addDividedSalesObjective' ||
                                 $path == 'supervisor/editDividedsalesObjective'? 'active' : ''  }}">
                 <i class="nav-icon fas fa-edit"></i>
-                <p>
-                ادارة الاهداف البيعية
-                </p>
+                <p>ادارة الاهداف البيعية</p>
             </a>
-        </li>
+        {{-- </li>
         <li class="nav-item">
             <a href="/supervisor/manageStudies" 
             class="nav-link {{  $p == 'supervisor/manageStudies' ||
@@ -536,7 +594,7 @@
                 الدراسات العلمية
                 </p>
             </a>
-        </li>
+        </li> --}}
 
         {{-- <li class="nav-item">
             <a href="{{url('manageCustomers')}}"

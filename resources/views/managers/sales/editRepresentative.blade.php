@@ -76,18 +76,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="subareasIds" class="col-md-12 control-label">المناطق الفرعية <span class="text-danger" style="font-size: 9pt">(يمكنك اختيار اكثر من منطقة)</span></label>
-                                <select name="subareasIds[]" class="form-control custom-select rounded-0" multiple>
-                                    @php
-                                        $n = 1;
-                                    @endphp
-                                    @foreach ($subareas as $row)
-                                        <option value="{{$row->id}}">{{$n++}}{{'- '}} {{$row->name_sub_area}}</option>
+                                <label class="col-md-12 control-label">اختر منطقته الرئيسية</label>
+                                <select name="mainarea_id" class="form-control custom-select rounded-0">
+                                    @foreach ($mainareas as $row)
+                                        <option value="{{$row->id}}"
+                                            @if ($row->id == $rep->mainarea_id)
+                                                {{'selected'}}
+                                            @endif
+                                            >{{$row->name_main_area}}</option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('subareasIds'))
+                                @if ($errors->has('mainarea_id'))
                                     <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('subareasIds') }}</small>
+                                        <small class="form-text text-danger">{{ $errors->first('mainarea_id') }}</small>
                                     </span>
                                 @endif
                             </div>
@@ -111,6 +112,20 @@
                                         <label class="form-check-label">انثى</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userimage">تحميل الصورة</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" value="{{asset('images/users/'.$rep->user->user_image)}}" class="custom-file-input" name="userimage">
+                                        <label class="custom-file-label" for="userimage"></label>
+                                    </div>
+                                </div>
+                                @if ($errors->has('userimage'))
+                                    <span class="help-block">
+                                        <small class="form-text text-danger">{{ $errors->first('userimage') }}</small>
+                                    </span>
+                                @endif
                             </div>
                             <div class="khalil">
                                 <div class="card-header">
@@ -165,7 +180,7 @@
                                                 @endisset
                                             </div>
                                             <div class="col-5">
-                                                <input id="phonenumber" value="{{$rep->user->phone_number}}" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
+                                                <input id="phonenumber"  onkeyup="checkPhoneNumber()" value="{{$rep->user->phone_number}}" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
                                                 <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
                                                 @if ($errors->has('phonenumber'))
                                                     <span class="help-block">
@@ -177,20 +192,6 @@
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="userimage">تحميل الصورة</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" value="{{asset('images/users/'.$rep->user->user_image)}}" class="custom-file-input" name="userimage">
-                                        <label class="custom-file-label" for="userimage"></label>
-                                    </div>
-                                </div>
-                                @if ($errors->has('userimage'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('userimage') }}</small>
-                                    </span>
-                                @endif
                             </div>
                             <div class="form-group">
                                 <div class="khalil">
@@ -254,31 +255,24 @@
                             </div>
                         </div>
                         <div class="form-group" >
-                            <button type="submit" class="btn btn-primary font" style="margin: 0px 30px;">
+                            <button type="submit" class="btn btn-primary font" style="margin: -10px 35px 0px 0px;">
                                 تعديل <i class="fas fa-edit"></i>
                             </button>
                         </div>
-                        <!-- /.form-group -->
-                    </form>
-                    <!-- /.form-group -->
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
-                <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-                the plugin.
-                </div>
-            </div>
-            <!-- /.card -->
-            </div>
-        <!-- /.container-fluid -->
-    </section>
+            </form><!-- /.form -->
+        </div><!-- /.form-group -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.card-body -->
+</div><!-- /.card -->
+</div><!-- /.container-fluid -->
+</section>
+<div class="card-footer">
+Footer
 </div>
-</div>
+</div><!-- /.content-header -->
 @endsection
 @section('scripts')
     

@@ -79,6 +79,7 @@
                       <td>{{ $row->description }}</td>
                       <td>
                         {{ $row->supervisor->user->user_name_third }} {{ $row->supervisor->user->user_surname }}
+                        {{-- {{$row->supervisor_id}} --}}
                       </td>
                       <td>{{ $row->last_date }}</td>
                       <td>
@@ -175,6 +176,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

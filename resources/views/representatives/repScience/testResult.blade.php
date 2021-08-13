@@ -14,7 +14,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/repScience/manageTests">الصفحة الرئيسية</a></li>
                         <li class="breadcrumb-item active">درجة الاختبار</li>
                     </ol>
                 </div><!-- /.col -->
@@ -45,13 +45,28 @@
                 <div class="card-body">
                     <!-- Info boxes -->
                     <div class="row">
-                        <a title="درجة الاختبار" class="btn btn-block btn-default btn-lg col-md-2"  style="height: 70px;margin:10px">
-                            <div class="col-12" style="margin:12px 30px 8px 5px">
-                                <div class="col-md-12">
-                                    <h6 style="float:right">{{$repResult->result}}</h6>
+                        @php
+                            $results = $repResult->result;
+                            $results_arr = explode("+",$results);
+                            $i = 0;
+                        @endphp
+                        @foreach ($results_arr as $result)
+                            <div class="col-12 col-sm-6 col-md-2">
+                                <div class="info-box mb-3">
+                                    <div class="info-box-content @if($result >= 50) {{'alert-success'}} @else {{'alert-danger'}} @endif">
+                                        <span class="info-box-text">درجة الاختبار رقم {{++$i}}</span>
+                                        <span class="info-box-number">{{$result}}%</span>
+                                    </div><!-- /.info-box-content -->
                                 </div>
                             </div>
-                        </a>
+                        @endforeach
+                        <div class="col-12 col-sm-6 col-md-2" style="height: 100%;width:100%">
+                            <a href="/repScience/repTests/{{$repResult->test->id}}" title="تفاصيل" class="btn alert-success btn-lg col-12" style="height: 85px">
+                                <div class="col-md-12 align-center" style="margin-top: 20px">
+                                    <h6>اعادة الاختبار</h6>
+                                </div>
+                            </a>
+                        </div>
                     </div><!-- /.row -->
                 </div><!-- /.card-body -->
             </div><!-- /.card -->

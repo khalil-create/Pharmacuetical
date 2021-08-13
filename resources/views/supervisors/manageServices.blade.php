@@ -106,19 +106,14 @@
                       </td>
                       <td>
                         @if ($row->statues)
-                          <a href="/supervisor/notActivateService/{{$row->id}}" title="إلغاء التفعيل"><b style="color:#0bab30">{{'مفعل'}}</b></a>
+                          <a href="/supervisor/notActivateService/{{$row->id}}" title="إلغاء التفعيل"><b class="text-success">{{'مفعل'}}</b></a>
                         @else
-                          <a href="/supervisor/activateService/{{$row->id}}" title="تفعيل"><b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b></a>
+                          <a href="/supervisor/activateService/{{$row->id}}" title="تفعيل"><b class="text-danger">{{'غير مفعل'}}</b></a>
                         @endif
                       </td>
                       <td>
                         <a href="/supervisor/editService/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <i class="fas fa-eye"></i>
-                        {{-- <form action="/supervisor/deleteService/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/supervisor/showServiceDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
@@ -186,6 +181,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

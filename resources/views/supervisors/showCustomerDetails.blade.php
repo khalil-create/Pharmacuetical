@@ -238,24 +238,24 @@
                             <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"><!-- Services -->
                                 @if($customer->services->count() > 0)
                                     @foreach ($customer->services as $row)
-                                        <a href="/supervisor/showServiceDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                            <div class="col-12" style="margin:1px -8px 38px 5px">
-                                                <div class="col-md-12" style="float:right">
-                                                    <small>
+                                        <a href="/supervisor/showServiceDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-4"  style="height: 70px;margin:10px">
+                                            {{-- <div class="col-12"> --}}
+                                                <div class="col-md-12" style="margin:15px -8px 15px">
+                                                    <h6 class="align-right">
                                                         @if ($row->type)
                                                             {{'خدمة مادية '}}
                                                         @else
                                                             {{'خدمة عينية '}}
                                                         @endif
-                                                        {{$row->name}} {{' تكلفتها '.$row->cost}}
-                                                    </small>
+                                                        {{'( '.$row->name}} {{' تكلفتها '.$row->cost.' )'}}
+                                                    </h6>
                                                 </div>
-                                            </div>
+                                            {{-- </div> --}}
                                         </a>
                                     @endforeach
                                 @else
                                     <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذا المندوب عملاء' }}
+                                        {{ 'لايوجد لدى هذه الخدمة عملاء' }}
                                     </div>
                                 @endif
                             </div>
@@ -263,12 +263,12 @@
                                 @if($customer->orders->count() > 0)
                                     <div class="row">
                                         @foreach ($customer->orders as $row)
-                                            <a href="/supervisor/showSpecialistDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                                <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                    <div class="col-md-12">
-                                                        <h6 style="float:right">{{$row->item->commercial_name}}   {{$row->count}}</h6>
+                                            <a href="/supervisor/showOrderDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
+                                                {{-- <div class="col-12" style="margin:12px -8px 38px 5px"> --}}
+                                                    <div class="col-md-12" style="margin:15px -8px 15px">
+                                                        <span sclass="align-right">{{$row->item->commercial_name}}   {{$row->count}}</span>
                                                     </div>
-                                                </div>
+                                                {{-- </div> --}}
                                             </a>
                                         @endforeach
                                     </div>

@@ -105,9 +105,9 @@
                       </td>
                       <td>
                         @if ($row->statues)
-                        <b style="color:#0bab30">{{'مفعل'}}</b>
+                        <b class="text-success">{{'مفعل'}}</b>
                         @else
-                          <b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b>
+                          <b class="text-danger">{{'غير مفعل'}}</b>
                         @endif
                       </td>
                       <td>
@@ -185,6 +185,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

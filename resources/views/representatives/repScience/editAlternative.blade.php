@@ -119,7 +119,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label>البونص</label>
+                                <label>البونص ( % )</label>
                                 <input value="{{$alt->bonus}}" type="text" name="bonus" class="form-control">
                                 @if ($errors->has('bonus'))
                                     <span class="help-block">

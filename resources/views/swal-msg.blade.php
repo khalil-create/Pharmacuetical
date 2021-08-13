@@ -6,6 +6,7 @@
       swal(msg, {
           icon: "success",
           button: "حسناً!",
+          timer: 2000,
       })
     </script>
   @endif

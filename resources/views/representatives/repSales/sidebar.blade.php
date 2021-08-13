@@ -1,8 +1,8 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+     <a href="/home" class="brand-link">
+        <imgsrc="{{asset('designImages/ab.jpg')}}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">التسويق الدوائي</span>
     </a>
 
@@ -17,7 +17,7 @@
             <a href="/repSales/profile/{{Auth::user()->id}}" class="d-block">
                 {{$username[0]}} {{Auth::user()->user_surname}}
                 <br>
-                <b> {{Auth::user()->user_type}} </b>
+                <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p>
             </a>
             </div>
         </div>
@@ -81,7 +81,7 @@
                                 $p == 'repSales/showChargedTasks' ||
                                 $path == 'repSales/performTask' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>المهام المكلفة</p>
+                <p>مهام مطلوبه</p>
             </a>
         </li>
         <li class="nav-item">

@@ -108,7 +108,7 @@
                         <th rowspan="1" colspan="1">العميل</th>
                         <th rowspan="1" colspan="1">الصنف</th>
                         <th rowspan="1" colspan="1">الكمية</th>
-                        <th rowspan="1" colspan="1">البونص</th>
+                        <th rowspan="1" colspan="1">البونص ( % )</th>
                         <th rowspan="1" colspan="1">الملاحظة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
@@ -159,6 +159,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

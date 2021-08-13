@@ -74,7 +74,7 @@
                           <a href="/managerSales/editSubArea/{{$area->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                           <input type="hidden" class="id" value="{{$area->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                          <a href="/managerSales/showRepresentatives/{{$area->id}}" ><i class="fas fa-tasks"></i></a>
+                          <a href="/managerSales/showSubareaReps/{{$area->id}}" ><i class="fas fa-tasks"></i></a>
                           <i class="fas fa-eye"></i>
                         </td>
                       </tr>
@@ -139,6 +139,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

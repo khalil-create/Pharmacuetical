@@ -73,21 +73,16 @@
                         <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
                         <td class="" style="">
                           <a href="/supervisor/editSubArea/{{$area->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                          {{-- <form action="/supervisor/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -70px;"><i class="fas fa-trash"></i></button>
-                          </form> --}}
                           <input type="hidden" class="id" value="{{$area->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                          <a href="/supervisor/showRepresentatives/{{$area->id}}" ><i class="fas fa-tasks"></i></a>
-                          <i class="fas fa-eye"></i>
+                          <a href="/supervisor/showSubareaReps/{{$area->id}}" ><i class="fas fa-tasks" title="المندوبيين"></i></a>
+                          <a href="/supervisor/showSubareaDetails/{{$area->id}}" ><i class="fas fa-eye" title="تفاصيل"></i></a>
                         </td>
                       </tr>
                     @endforeach
                   @endif
                   <div>
-                    <a href="{{url('/supervisor/addSubArea/0')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
+                    <a href="{{url('/supervisor/addSubArea',0)}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
                   </div>
                   </tbody>
                   <tfoot>
@@ -145,6 +140,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

@@ -71,14 +71,9 @@
                       <td>{{$comp->name_company}}</td>
                       <td>
                         <a href="/supervisor/categoryEdit/{{$cat->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        {{-- <form action="/supervisor/categoryDelete/{{$cat->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -160px;"><i class="fas fa-trash"></i></button>
-                          </form> --}}
                           <input type="hidden" class="id" value="{{$cat->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                          <i class="fas fa-eye"></i>
+                          <a href="/supervisor/showCategoryDetails/{{$cat->id}}"><i class="fas fa-eye" title="تفاصيل"></i></a>
                       </td>
                     </tr>
                     @endforeach
@@ -142,6 +137,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

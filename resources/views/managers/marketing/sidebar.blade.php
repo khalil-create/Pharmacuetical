@@ -1,10 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+     <a href="/home" class="brand-link">
+        <img src="{{asset('designImages/ab.jpg')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">التسويق الدوائي</span>
     </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
@@ -15,11 +14,11 @@
             <div class="info">
                 <a href="/managerMarketing/profile/{{Auth::user()->id}}" class="d-block">{{$username[0]}} {{Auth::user()->user_surname}}
                     {{-- <br> --}}
-                    <b> {{Auth::user()->user_type}} </b>
+                    <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p>
+                    {{-- <p class="text-bold text-sm"> {{Auth::user()->user_type}} </p> --}}
                 </a>
             </div>
         </div>
-
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
@@ -31,7 +30,6 @@
                 </div>
             </div>
         </div>
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -62,54 +60,15 @@
                                 $path =='managerMarketing/mainAreaSupervised'? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-user"></i>
-                <p>
-                ادارة المشرفين
-                <span class="badge badge-info right">6</span>
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{url('managerMarketing/manageTasks')}}" 
-            class="nav-link {{  $p == 'managerMarketing/manageTasks' || 
-                                $p == 'managerMarketing/addTask' ||
-                                $path =='managerMarketing/editTask'? 'active' : '' 
-                            }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                ادارة المهام
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{url('managerMarketing/manageSamples')}}" 
-            class="nav-link {{  $p == 'managerMarketing/manageSamples' || 
-                                $p == 'managerMarketing/addSample' ||
-                                $path =='managerMarketing/supervisorSamples'||
-                                $path =='managerMarketing/editSample'? 'active' : '' 
-                            }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                ادارة العينات
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{url('managerMarketing/managePlanTypes')}}" 
-            class="nav-link {{  $p == 'managerMarketing/managePlanTypes' ||
-                                $p == 'managerMarketing/addPlanType' ||
-                                $path == 'managerMarketing/editPlanType' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tree"></i>
-                <p>
-                ادارة الخطط
-                </p>
+                <p>ادارة المشرفين</p>
             </a>
         </li>
         <li class="nav-item {{ $p == 'managerMarketing/manageCompanies' || 
                                 $p == 'managerMarketing/companyAdd' ||
                                 $p == 'managerMarketing/manageCategory' ||
                                 $p == 'managerMarketing/categoryAdd' ||
-                                $path == 'managerMarketing/itemAdd' ||
-                                $path == 'managerMarketing/manageItem' ||
+                                $p == 'managerMarketing/itemAdd' ||
+                                $p == 'managerMarketing/manageItem' ||
                                 $path == 'managerMarketing/addUseExist' ||
                                 $path == 'managerMarketing/companyEdit' ||
                                 $path == 'managerMarketing/categryEdit' ||
@@ -121,8 +80,8 @@
                                 $p == 'managerMarketing/companyAdd' ||
                                 $p == 'managerMarketing/categoryAdd' ||
                                 $p == 'managerMarketing/manageCategory' ||
-                                $path == 'managerMarketing/itemAdd' ||
-                                $path == 'managerMarketing/manageItem' ||
+                                $p == 'managerMarketing/itemAdd' ||
+                                $p == 'managerMarketing/manageItem' ||
                                 $path == 'managerMarketing/addUseExist' ||
                                 $path == 'managerMarketing/companyEdit' ||
                                 $path == 'managerMarketing/categryEdit' ||
@@ -130,10 +89,7 @@
                                 $path == 'managerMarketing/itemEdit'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                ادارة الشركات
-                <i class="right fas fa-angle-left"></i>
-                </p>
+                <p>ادارة الشركات<i class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
@@ -157,28 +113,15 @@
                 </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{url('managerMarketing/manageItem',1)}}" 
-                    class="nav-link {{  $p == 'managerMarketing/manageItem/1'||
-                                        $p == 'managerMarketing/itemAdd/1' ||
+                    <a href="{{url('managerMarketing/manageItem')}}" 
+                    class="nav-link {{  $p == 'managerMarketing/manageItem'||
+                                        $p == 'managerMarketing/itemAdd' ||
                                         $path == 'managerMarketing/addUseExist' ||
                                         $path == 'managerMarketing/itemUses' ||
                                         $path == 'managerMarketing/itemEdit' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>اصناف لديها فئات</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('managerMarketing/manageItem',0)}}" 
-                    class="nav-link {{  $p == 'managerMarketing/manageItem/0'||
-                                        $p == 'managerMarketing/itemAdd/0' ||
-                                        $path == 'managerMarketing/itemUsesNoCat' ||
-                                        $path == 'managerMarketing/addUseNoCat' ||
-                                        $path == 'managerMarketing/editUseNoCat' ||
-                                        $path == 'managerMarketing/itemEditNoCat' ? 'active' : ''
-                                    }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>اصناف ليس لديها فئات</p>
+                        <p>الاصناف</p>
                     </a>
                 </li>
             </ul>
@@ -190,6 +133,8 @@
                                 $path == 'managerMarketing/editMainArea' ||
                                 $path == 'managerMarketing/supAreas' ||
                                 $path == 'managerMarketing/editSubArea' ||
+                                $path == 'managerMarketing/showSubareaReps' ||
+                                $path == 'managerMarketing/addSubareaReps' ||
                                 $path == 'managerMarketing/supAreas'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -200,6 +145,8 @@
                                 $path == 'managerMarketing/supAreas' || 
                                 $path == 'managerMarketing/editMainArea'||
                                 $path == 'managerMarketing/editSubArea' ||
+                                $path == 'managerMarketing/showSubareaReps' ||
+                                $path == 'managerMarketing/addSubareaReps' ||
                                 $path == 'managerMarketing/supAreas'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -224,7 +171,9 @@
                 <li class="nav-item">
                 <a href="{{url('managerMarketing/manageSubAreas')}}" 
                 class="nav-link {{  $p == 'managerMarketing/manageSubAreas'||
-                                    $path == 'managerMarketing/addSubArea' ||  
+                                    $path == 'managerMarketing/addSubArea' ||
+                                    $path == 'managerMarketing/showSubareaReps' ||
+                                    $path == 'managerMarketing/addSubareaReps' || 
                                     $path == 'managerMarketing/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -232,6 +181,43 @@
                 </a>
                 </li>
             </ul>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('managerMarketing/manageTasks')}}" 
+            class="nav-link {{  $p == 'managerMarketing/manageTasks' || 
+                                $p == 'managerMarketing/addTask' ||
+                                $path =='managerMarketing/editTask'? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                ادارة المهام
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('managerMarketing/manageSamples')}}" 
+            class="nav-link {{  $p == 'managerMarketing/manageSamples' || 
+                                $path == 'managerMarketing/addSupervisorSample' ||
+                                $path == 'managerMarketing/addSample' ||
+                                $path =='managerMarketing/supervisorSamples'||
+                                $path =='managerMarketing/editSupervisorSample'? 'active' : '' 
+                            }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                ادارة العينات
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('managerMarketing/managePlanTypes')}}" 
+            class="nav-link {{  $p == 'managerMarketing/managePlanTypes' ||
+                                $p == 'managerMarketing/addPlanType' ||
+                                $path == 'managerMarketing/editPlanType' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                ادارة الخطط
+                </p>
+            </a>
         </li>
         <li class="nav-item">
             <a href="{{url('managerMarketing/manageSalesObjectives')}}" 

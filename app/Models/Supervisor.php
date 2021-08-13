@@ -54,7 +54,7 @@ class Supervisor extends Model
     {
         return $this->hasMany('App\Models\Representative','supervisor_id','id');//(related,foriegn key,primary key)
     }
-    public function company()
+    public function companies()
     {
         return $this->hasMany('App\Models\Company','supervisor_id','id');//(related,foriegn key,primary key)
     }

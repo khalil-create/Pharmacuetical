@@ -59,8 +59,6 @@ i.icon-pencil.icon-white {
     display: -webkit-box;
 }
 .profiled-userpic img {
-
-
     width: 25px;
     height: 25px;
     border-radius: 9999px !important;
@@ -74,3 +72,4 @@ i.icon-pencil.icon-white {
     margin-right: 10px;
     margin-top: -2px;
 }
+

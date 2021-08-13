@@ -80,9 +80,9 @@
                       <td>{{$row->represnetatives->user->user_name_third}} {{$row->represnetatives->user->user_surname}}</td>
                       <td>
                         @if ($row->plan_status)
-                          <a href="/supervisor/notActivateRepPlan/{{$row->id}}"><b style="color:#0bab30">{{'مفعل'}}</b></a>
+                          <a href="/supervisor/notActivateRepPlan/{{$row->id}}"><b class="text-success">{{'مفعل'}}</b></a>
                         @else
-                          <a href="/supervisor/activateRepPlan/{{$row->id}}"><b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b></a>
+                          <a href="/supervisor/activateRepPlan/{{$row->id}}"><b class="text-danger">{{'غير مفعل'}}</b></a>
                         @endif
                       </td>
                       <td>
@@ -161,6 +161,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

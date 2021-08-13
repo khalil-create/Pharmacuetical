@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="float: right"> المعلومات الشخصية للمندوب/ ـة:  
+                    <span class="card-title" style="float: right"> المعلومات الشخصية للمندوبـ/ ـة:  
                         <span class="text-bold"> {{ $rep->user->user_name_third }} {{ $rep->user->user_surname }}</span>
                     </span>
                     <div class="card-tools float-right">
@@ -67,11 +67,9 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <!-- fix for small devices only -->
                         <div class="clearfix hidden-md-up"></div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span> --}}
                                 <div class="info-box-content">
                                     <span class="info-box-text">مكان الميلاد(محافظة-مديرية-عزلة)</span>
                                     <span class="info-box-number">{{$rep->user->birthplace}} - {{$rep->user->town}} - {{$rep->user->village}}</span>
@@ -80,7 +78,6 @@
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> --}}
                                 <div class="info-box-content">
                                     <span class="info-box-text">تأريخ الميلاد</span>
                                     <span class="info-box-number">{{$rep->user->birthdate}}</span>
@@ -89,7 +86,6 @@
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> --}}
                                 <div class="info-box-content">
                                     <span class="info-box-text">رقم الهاتف</span>
                                     <span class="info-box-number">{{$rep->user->phone_number}}</span>
@@ -98,7 +94,6 @@
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> --}}
                                 <div class="info-box-content">
                                     <span class="info-box-text">البريد الالكتروني</span>
                                     <span class="info-box-number">{{$rep->user->email}}</span>
@@ -107,7 +102,6 @@
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> --}}
                                 <div class="info-box-content">
                                     <span class="info-box-text">نوع الهوية</span>
                                     <span class="info-box-number">{{$rep->user->identity_type}}</span>
@@ -116,7 +110,6 @@
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> --}}
                                 <div class="info-box-content">
                                     <span class="info-box-text">رقم الهوية</span>
                                     <span class="info-box-number">{{$rep->user->identity_number}}</span>
@@ -125,7 +118,6 @@
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
-                                {{-- <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> --}}
                                 <div class="info-box-content">
                                     @php $date = explode(' ',$rep->user->created_at) @endphp
                                     <span class="info-box-text">تأريخ الانضمام</span>
@@ -142,7 +134,7 @@
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="float: right"> عملاء ومناطق المندوب/ ـة:  
+                    <span class="card-title" style="float: right"> عملاء ومناطق المندوبـ/ ـة:  
                         <span class="text-bold"> {{ $rep->user->user_name_third }} {{ $rep->user->user_surname }}</span>
                     </span>
                     <div class="card-tools float-right">
@@ -169,7 +161,6 @@
                                             <span class="info-box-text">العملاء</span>
                                             <span class="info-box-number">
                                                 {{$rep->customers->where('statues',true)->count()}}
-                                                <small>%</small>
                                             </span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->

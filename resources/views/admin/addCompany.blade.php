@@ -64,7 +64,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="sign_img_company">تحميل الصورة</label>
+                                    <label for="sign_img_company">تحميل شعار الشركة</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="sign_img_company">

@@ -91,9 +91,9 @@
                           </td>
                           <td>
                               @if ($row->statues)
-                                <a href="/supervisor/notActivateDoctor/{{$row->id}}" title="إلغاء التفعيل"><b style="color:#0bab30">{{'مفعل'}}</b></a>
+                                <a href="/supervisor/notActivateDoctor/{{$row->id}}" title="إلغاء التفعيل"><b class="text-success">{{'مفعل'}}</b></a>
                               @else
-                                <a href="/supervisor/activateDoctor/{{$row->id}}" title="تفعيل"><b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b></a>
+                                <a href="/supervisor/activateDoctor/{{$row->id}}" title="تفعيل"><b class="text-danger">{{'غير مفعل'}}</b></a>
                               @endif
                           </td>
                           <td>
@@ -165,6 +165,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

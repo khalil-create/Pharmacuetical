@@ -18,19 +18,23 @@ class SupervisorController extends Controller
 
     public function addSupervisor()
     {
-        return view('managers.marketing.addSupervisor');
+        $mainareas = Mainarea::all();
+        return view('managers.marketing.addSupervisor',compact('mainareas'));
     }
     public function storeSupervisor(Request $request)
     {
         $rules = $this->getRules();
+        $rules += ['userimage' => 'required'];
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
+        $file_name = '';
         if($request->hasfile('userimage'))
             $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-        
+        else
+            return redirect()->back()->with(['error' => 'يجب عليك تحميل الصورة']);
         $user = User::create([
             'user_name_third' => $request->usernamethird,
             'user_surname' => $request->usersurname,
@@ -47,10 +51,12 @@ class SupervisorController extends Controller
             'user_image' => $file_name,
             'password' => bcrypt($request->password),
         ]);
-            Supervisor::create([
-                'user_id' => $user->id,
-                'manager_id' => Auth::user()->manager->id,
-                ]);
+        $sup = Supervisor::create([
+            'user_id' => $user->id,
+            'manager_id' => Auth::user()->manager->id,
+        ]);
+        // if(sizeof($request->mainarea_ids) > 0)
+        //     $sup->mainareas()->attach($request->mainarea_ids);
 
         return redirect('/managerMarketing/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -59,17 +65,16 @@ class SupervisorController extends Controller
         return $rules = [
                 'usernamethird' => 'required|string|max:255',
                 'usersurname' => 'required|string|max:255',
-                'usertype' => 'required|string|max:255',
-                'sex' => 'required|string|max:255',
-                'birthdate' => 'required|string|max:255',
+                'sex' => 'required',
+                'birthdate' => 'required',
                 'birthplace' => 'required|string|max:255',
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'phonenumber' => 'numeric|required|max:999999999',
+                'phonenumber' => 'required|numeric|max:999999999',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric',
-                'userimage' => 'required',
+                // 'userimage' => 'required',
                 'password' => 'required|min:6|confirmed',
                 'password_confirmation' => 'required_with:password|same:password|min:6',
             ];
@@ -86,7 +91,7 @@ class SupervisorController extends Controller
             'usersurname.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
 
             'birthdate.required' => 'يجب عليك كتابة هذا الحقل',
-            'birthdate.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+            // 'birthdate.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
 
             'birthplace.required' => 'يجب عليك كتابة هذا الحقل',
             'birthplace.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -118,7 +123,7 @@ class SupervisorController extends Controller
             'identitynumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
             // 'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
 
-            'userimage.required' => 'يجب عليك كتابة هذا الحقل',
+            'userimage.required' => 'يجب عليك تحميل الصورة',
 
             'password.required' => 'يجب عليك كتابة كلمة السر',            
             'password.min' => ' الحد الادنى لكلمة السر هي 6 احرف',    

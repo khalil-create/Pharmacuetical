@@ -51,9 +51,6 @@
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         الكمية
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المندوب
-                      </th> --}}
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
@@ -71,27 +68,17 @@
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
                       <td>{{ $row->item->commercial_name }}</td>
                       <td>{{ $row->count }}</td>
-                      {{-- <td>
-                        {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
-                      </td> --}}
                       <td>
-                        <a href="/supervisor/divideSample/{{$row->id}}" class="btn btn-success">توزيع</a>
+                        <a href="/supervisor/divideSample/{{$row->id}}"><i class="fas fa-share" title="توزيع العينات بين المندوبين"></i></a>
                         <a href="/supervisor/displaySampleReps/{{$row->id}}">
                           <i class="fas fa-eye" title="عرض العينات الموزعة لكل مندوب"></i>
                         </a>
-                        {{-- <a href="/Supervisor/editSample/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a> --}}
-                        {{-- <form action="/Supervisor/deleteSample/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
-                        {{-- <i class="fas fa-eye"></i> --}}
                       </td>
                     </tr>
                   @endforeach
-                  {{-- <div>
+                  <div>
                     <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
-                  </div> --}}
+                  </div>
                   </tbody>
                   <tfoot>
                     @if($samples->count() > 0)                    
@@ -99,7 +86,6 @@
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">العينة</th>
                         <th rowspan="1" colspan="1">الكمية</th>
-                        {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
                     @endif

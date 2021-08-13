@@ -72,7 +72,7 @@
                       </td>
                       <td>
                         <a href="/managerSales/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <a href="/managerSales/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
+                        <a href="/managerSales/supAreas/{{$row->id}}"><i class="fas fa-map" title="المناطق الفرعية"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                         <i class="fas fa-eye"></i>
@@ -138,6 +138,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

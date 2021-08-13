@@ -95,15 +95,15 @@
                       </td>
                       <td>
                         @if ($row->statues)
-                        <b style="color:#0bab30">{{'مفعل'}}</b>
+                        <b class="text-success">{{'مفعل'}}</b>
                         @else
-                        <b style="color:hsl(0, 96%, 51%)">{{'غير مفعل'}}</b>
+                        <b class="text-danger">{{'غير مفعل'}}</b>
                         @endif
                       </td>
                       <td>
                         <a href="/repScience/editDoctor/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        {{-- <a href="/repScience/showMainareas/{{$row->id}}" ><i class="fas fa-tasks"></i></a> --}}
-                        <i class="fas fa-eye"></i>
+                        <a href="/repScience/showDoctorDetails/{{$row->id}}"><i class="fas fa-eye" title="تفاصيل اكثر"></i></a>
+                        {{-- <i class="fas fa-eye"></i> --}}
                         {{-- <form action="/repScience/deleteDoctor/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
@@ -176,6 +176,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

@@ -133,11 +133,11 @@
                                 @if($company->categories->count() > 0)
                                     @foreach ($company->categories as $row)
                                         <a href="/supervisor/showCategoryDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-2"  style="height: 70px;margin:10px">
-                                            <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                <div class="col-md-12">
-                                                    <h6 style="float:right">{{$row->name_cat}}</h6>
+                                            {{-- <div class="col-12" style="margin:12px -8px 38px 5px"> --}}
+                                                <div class="col-md-12" style="margin:15px -8px 15px">
+                                                    <h6>{{$row->name_cat}}</h6>
                                                 </div>
-                                            </div>
+                                            {{-- </div> --}}
                                         </a>
                                     @endforeach
                                 @else
@@ -155,11 +155,11 @@
                                             @endif
                                             @foreach ($cat->items as $item)
                                                 <a href="/supervisor/showItemDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-2"  style="height: 70px;margin:10px">
-                                                    <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                        <div class="col-md-12">
-                                                            <h6 style="float:right">{{$item->commercial_name}}</h6>
+                                                    {{-- <div class="col-12" style="margin:12px -8px 38px 5px"> --}}
+                                                        <div class="col-md-12" style="margin:15px -8px 15px">
+                                                            <h6>{{$item->commercial_name}}</h6>
                                                         </div>
-                                                    </div>
+                                                    {{-- </div> --}}
                                                 </a>
                                             @endforeach
                                         @endforeach
@@ -172,11 +172,11 @@
                                         @if($company->items->count() > 0)
                                             @foreach ($company->items as $item)
                                                 <a href="/supervisor/showItemDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                                    <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                        <div class="col-md-12">
-                                                            <h6 style="float:right">{{$item->commercial_name}}</h6>
+                                                    {{-- <div class="col-12" style="margin:12px -8px 38px 5px"> --}}
+                                                        <div class="col-md-12" style="margin:15px -8px 15px">
+                                                            <h6>{{$item->commercial_name}} lllll aiuh aoiu sa oius aoiu AOO</h6>
                                                         </div>
-                                                    </div>
+                                                    {{-- </div> --}}
                                                 </a>
                                             @endforeach
                                         @else

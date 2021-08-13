@@ -28,10 +28,10 @@ class SampleController extends Controller
     public function getSupervisorSamples($id)
     {
         $supervisor = Supervisor::find($id);
-        if(!$supervisor)
+        if($supervisor->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         
-        $samples = Sample::whereNotNull(['manager_id','supervisor_id'])->get();
+        $samples = Sample::whereNotNull('supervisor_id')->whereNull('representative_id')->get();
         // return $samples;
         // $items = Item::get();
         // $supervisors = Supervisor::whereHas('user')->get();
@@ -40,18 +40,28 @@ class SampleController extends Controller
     public function deleteSupervisorSamples($id)
     {
         $supervisor = Supervisor::find($id);
+        if($supervisor->samples()->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         $supervisor->samples()->delete();
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/managerMarketing/manageSamples')->with('status','تم حذف البيانات بشكل ناجح');
     }
-    public function addSample($id)
+    public function addSample($id) // because the id is optional
     {
-        $supervisor = Supervisor::with('company')->find($id);
-        // return $supervisor->company;
-        if($supervisor->count() < 1 || $supervisor->company->count() < 1)
-            return redirect()->back()->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد لهذا المشرف');
-        // $supervisors = Supervisor::whereHas('user')->get();
-        return view('managers.marketing.addSupervisorSample',compact('supervisor'));
+        if($id == 0){ // if id is not found
+            $items = Item::all();
+            if($items->count() < 1)
+                return redirect()->back()->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد لهذا المشرف');
+            $supervisors = Supervisor::all();
+            return view('managers.marketing.addSample',compact('items'))->with('supervisors',$supervisors);
+        }
+        else{ // id is found, this id is supervisor id
+            $supervisor = Supervisor::findOrfail($id);
+            $items = $this->getSupervisorItems($supervisor->user);
+            if($items->count() < 1)
+                return redirect()->back()->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد لهذا المشرف');
+            return view('managers.marketing.addSample',compact('supervisor'))->with('items',$items);
+        }
     }
     public function storeSample(Request $request,$id)
     {
@@ -61,17 +71,32 @@ class SampleController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        // return $request->manager_id;
-        Sample::create([
-            'item_id' => $request->item_id,
-            'count' => $request->count,
-            'manager_id' => Auth::user()->manager->id,
-            'supervisor_id' => $id,
-        ]);
+        if($id == 0)
+            $supervisor_id = $request->supervisor_id;
+        else
+            $supervisor_id = $id;
+
+        $item_id = $request->item_id;
+        $sample = Sample::where('supervisor_id',$supervisor_id)->where('item_id',$item_id)->first();
+        if($sample){
+            $sample->count += $request->count;
+            $sample->update();
+        }
+        else{
+            Sample::create([
+                'item_id' => $request->item_id,
+                'count' => $request->count,
+                'manager_id' => Auth::user()->manager->id,
+                'supervisor_id' => $supervisor_id,
+            ]);
+        }
         //////////////// Notify user //////////////////////////
-        $sup = Supervisor::findOrfail($id);
-        $this->notifyUser('عينات','لديك عينات جديده',$sup->user->id);
-        return redirect('/managerMarketing/supervisorSamples/'.$id)->with('status','تم إضافة البيانات بشكل ناجح');
+        if($id != 0){
+            $sup = Supervisor::findOrfail($id);
+            $this->notifyUser('عينات','لديك عينات جديده',$sup->user->id);
+            return redirect('/managerMarketing/supervisorSamples/'.$id)->with('status','تم إضافة البيانات بشكل ناجح');
+        }
+        return redirect('/managerMarketing/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -91,10 +116,14 @@ class SampleController extends Controller
     public function editSample($id)
     {
         $sample = Sample::find($id);
-        $supervisor = Supervisor::with('company')->find($sample->supervisor_id);
-        if($supervisor->count() < 1 || $supervisor->company->count() < 1)
+        if($sample->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
+        $supervisor = Supervisor::findOrfail($sample->supervisor_id);
+        $items = $this->getSupervisorItems($supervisor->user);
+        if($items->count() < 1)
             return redirect()->back()->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد لهذا المشرف');
-        return view('managers.marketing.editSupervisorSample',compact('supervisor'))->with('sample',$sample);
+        return view('managers.marketing.editSupervisorSample',compact('supervisor'))
+        ->with('sample',$sample)->with('items',$items);
     }
     public function updateSample(Request $request,$id)
     {
@@ -116,9 +145,9 @@ class SampleController extends Controller
     public function deleteSupervisorSample($id)
     {
         $sample = Sample::find($id);
-        $sup_id = $sample->supervisor_id;
+        if($sample->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         $sample->delete();
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/managerMarketing/supervisorSamples/'.$sup_id)->with('status','تم حذف البيانات بشكل ناجح');
     }
 }

@@ -79,7 +79,7 @@
                           @if($isLink == 'https')
                             <a href="{{$file}}">فتح البرنامج (فيديو)</a>
                           @else
-                            <a href="{{asset('reports/courses/'.$file)}}">فتح البرنامج</a>
+                            <a target="blank" href="{{asset('reports/courses/'.$file)}}">فتح البرنامج(.pdf)</a>
                           @endif
                       </td>
                       {{-- <td class="" style="">

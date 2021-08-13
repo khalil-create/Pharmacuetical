@@ -67,6 +67,8 @@
                                     <label for="unit" class="col-md-2 control-label">وحدة البيع</label>
                                         <select name="unit" id="unit" class="form-control custom-select rounded-0">
                                                 <option value="باكت">باكت</option>
+                                                <option value="شريط">شريط</option>
+                                                <option value="قارورة">قارورة</option>
                                         </select>
                                         @if ($errors->has('unit'))
                                             <span class="help-block">
@@ -85,7 +87,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="bonus">البونص</label>
+                                    <label for="bonus">البونص ( % )</label>
                                     <input type="text" name="bonus" class="form-control" id="bonus">
                                     @if ($errors->has('bonus'))
                                         <span class="help-block">

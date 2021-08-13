@@ -12,4 +12,9 @@ class NotificationController extends Controller
     {
         return view('notifications.allUnReadNotifications');
     }
+    public function unReadNotification()
+    {
+        Auth::user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
 }

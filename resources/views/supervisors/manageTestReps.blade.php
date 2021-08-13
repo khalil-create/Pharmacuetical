@@ -85,7 +85,7 @@
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                           @if($row->repResults->where('test_id',$test->id)->first()->result != null)
                             {{-- <a href="/supervisor/showDetialsTest/{{$row->id}}"><i class="fas fa-eye" title="التفاصيل"></i></a> --}}
-                            <a href="{{route('showRepsTest',['rep_id' => $row->id,'test_id' => $test->id])}}"><i class="fas fa-eye" title="التفاصيل"></i></a>
+                            <a href="{{route('showRepsTest',['rep_id' => $row->id,'test_id' => $test->id])}}"><i class="fas fa-eye" title="نتيجة الاختبار"></i></a>
                           @endif
                         </td>
                       </tr>
@@ -151,6 +151,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

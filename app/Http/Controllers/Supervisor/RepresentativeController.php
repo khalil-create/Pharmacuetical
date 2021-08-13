@@ -33,16 +33,17 @@ class RepresentativeController extends Controller
         $rep = User::where('user_type','مدير فريق')->get();
 
         $sup = Supervisor::find(Auth::user()->supervisor->id);
-        $subareas = $sup->subareas;
-        if($subareas->count() < 1)
-            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات علمي قبل مايتم اضافة على الاقل منطقة فرعية واحدة']);
+        $mainareas = $sup->mainareas;
+        // $subareas = $sup->subareas;
+        if($mainareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب علمي قبل مايتم اضافة على الاقل منطقة رئيسية واحدة']);
         
         $isExistTeamLeader = true;
         $teamLeader = User::where('user_type','مدير فريق')->get();
         if($teamLeader->count() < 1)
             $isExistTeamLeader = false;
         return view('supervisors.addRepresentative', compact('rep',$rep))
-        ->with('subareas',$subareas)->with('isExistTeamLeader',$isExistTeamLeader);              
+        ->with('mainareas',$mainareas)->with('isExistTeamLeader',$isExistTeamLeader);              
     }
     public function storeRepresentative(Request $request)
     {
@@ -61,7 +62,7 @@ class RepresentativeController extends Controller
         }
 
         $rules = $this->getRules();
-        $rules+=['userimage' => 'required',];
+        $rules+=['userimage' => 'required','email' => 'required|string|email|max:255|unique:users'];
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
@@ -95,6 +96,7 @@ class RepresentativeController extends Controller
             $rep = Representative::create(
                 [
                     'user_id' => $user->id,
+                    'mainarea_id' => $request->mainarea_id,
                     'supervisor_id' => Auth::user()->supervisor->id,
                 ]);
         }
@@ -102,11 +104,12 @@ class RepresentativeController extends Controller
             $rep = Representative::create(
                 [
                     'user_id' => $user->id,
+                    'mainarea_id' => $request->mainarea_id,
                     'supervisor_id' => Auth::user()->supervisor->id,
-                    'teemleader_id' => $request->teemleader_id,
+                    'teamleader_id' => $request->teamleader_id,
                 ]);
         }
-        $rep->subareas()->syncWithoutDetaching($request->subareasIds);
+        // $rep->subareas()->syncWithoutDetaching($request->subareasIds);
         return redirect('/supervisor/manageRepresentatives')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
@@ -121,7 +124,7 @@ class RepresentativeController extends Controller
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
                 'phonenumber' => 'numeric|required|max:999999999',
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'required|string|email|max:255',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric',
                 'password' => 'required|min:6|confirmed',
@@ -188,9 +191,10 @@ class RepresentativeController extends Controller
         $rep2 = User::where('user_type','مدير فريق')->get();
 
         $sup = Supervisor::find(Auth::user()->supervisor->id);
-        $subareas = $sup->subareas;//hasManyThrough relation
-        if($subareas->count() < 1)
-            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات علمي قبل مايتم اضافة على الاقل منطقة فرعية واحدة']);
+        $mainareas = $sup->mainareas;//hasManyThrough relation
+        // $subareas = $sup->subareas;//hasManyThrough relation
+        if($mainareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب علمي قبل مايتم اضافة على الاقل منطقة رئيسية واحدة']);
         
         $isExistTeamLeader = true;
         $teamLeader = User::where('user_type','مدير فريق')->get();
@@ -198,10 +202,11 @@ class RepresentativeController extends Controller
             $isExistTeamLeader = false;
 
         return view('supervisors.editRepresentative',compact('teamLeader',$teamLeader))
-        ->with('rep',$rep )->with('subareas',$subareas)->with('rep2',$rep2);
+        ->with('rep',$rep )->with('mainareas',$mainareas)->with('rep2',$rep2);
     }
     public function updateRepresentative(Request $request,$id)
     {
+        // return $request->mainarea_id;
         $rules = $this->getRules();
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
@@ -238,22 +243,17 @@ class RepresentativeController extends Controller
 
         // $rep->type = $request->Input('usertype');
         $rep = Representative::find($request->rep_id);
+        $rep->mainarea_id = $request->mainarea_id;
         if($user->user_type == 'مدير فريق'){
             $rep->supervisor_id = Auth::user()->supervisor->id;
             $rep->teamleader_id = null;
-            $rep->update();
         }
-        else if($user->user_type == 'مندوب علمي'){
-            $rep->teemleader_id = $request->teemleader_id;
+        elseif($user->user_type == 'مندوب علمي'){
+            $rep->teamleader_id = $request->teamleader_id;
         }
-        $rep->subareas()->syncWithoutDetaching($request->subareasIds);
+        $rep->update();
+        // $rep->subareas()->syncWithoutDetaching($request->subareasIds);
         return redirect('/supervisor/manageRepresentatives')->with('status','تم تعديل البيانات بشكل ناجح');
-    }
-    public function showRepresentatives($id)
-    {
-        $subarea = Subarea::find($id);
-        $rep = $subarea->representatives;
-        return view('supervisors.representativesSubArea', compact('subarea',$subarea))->with('rep',$rep);
     }
     public function showSubareas($id)
     {
@@ -265,7 +265,9 @@ class RepresentativeController extends Controller
     {
         $rep = Representative::with('user')->find($id);
         $sup = Supervisor::find(Auth::user()->supervisor->id);
-        $subareas = $sup->subareas;
+        $subareas = Subarea::where('mainarea_id',$rep->mainarea_id)->get();
+        if($subareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة مناطق فرعية لهذا المندوب ولا يملك منطقة رئيسية، يجب عليك اولاً اضافة منطقة رئيسية لهذا المندوب ']);
         return view('supervisors.addRepSubareas',compact('subareas'))->with('rep',$rep);
     }
     // public function storeRepMainArea(Request $request,$id)
@@ -279,11 +281,16 @@ class RepresentativeController extends Controller
     // }
     public function storeRepSubareas(Request $request,$id)
     {
+        $rules = ['sub_area_ids' => 'required'];
+        $messages = ['sub_area_ids.required' => 'يجب ان تختار على الاقل منطقة واحدة'];
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $rep = Representative::find($id);
-        // return $request->sub_area_ids;
         if($rep->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $rep->subareas()->syncWithoutDetaching($request->sub_area_ids);
+        $rep->subareas()->sync($request->sub_area_ids);
 
         return redirect('/supervisor/showSubareas/'.$id)->with('stat    us','تم اضافة المناطق للمندوب بشكل ناجح');
     }

@@ -120,4 +120,11 @@ class MainAreaController extends Controller
             return view('supervisors.mainAreaHasSubArea')->with('mainarea',$mainarea)->with('exist',0)->with('subareas',$subareas);
         }
     }
+    public function showMainareaDetails($id)
+    {
+        $mainarea = Mainarea::with(['representatives','subareas'])->findOrfail($id);
+        if($mainarea->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showMainareaDetails',compact('mainarea'));
+    }
 }

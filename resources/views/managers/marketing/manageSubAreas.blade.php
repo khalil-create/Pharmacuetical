@@ -73,14 +73,9 @@
                         <td class="sorting_1">{{$area->mainarea->name_main_area}}</td>
                         <td class="" style="">
                           <a href="/managerMarketing/editSubArea/{{$area->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                          {{-- <form action="/managerMarketing/deleteSubArea/{{$area->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash"></i></button>
-                          </form> --}}
                           <input type="hidden" class="id" value="{{$area->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                          <a href="/managerMarketing/showRepresentatives/{{$area->id}}"><i class="fas fa-tasks"></i></a>
+                          <a href="/managerMarketing/showSubareaReps/{{$area->id}}"><i class="fas fa-tasks"></i></a>
                           <i class="fas fa-eye"></i>
                         </td>
                       </tr>
@@ -145,6 +140,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

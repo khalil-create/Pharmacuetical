@@ -144,8 +144,15 @@ class ServiceController extends Controller
         $service->statues = false;
         $service->update();
         ////////////////// Notify user //////////////////
-        $user_id = $service->represntaitives->user->id;
+        $user_id = $service->representatives->user->id;
         $this->notifyUser('خدمات','تم رفض الخدمة',$user_id);
         return redirect('/supervisor/manageServices')->with('status','تم إالغاء تفعيل الخدمة');
+    }
+    public function showServiceDetails($id)
+    {
+        $service = Service::with(['customers','doctors'])->findOrfail($id);
+        if($service->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showServiceDetails',compact('service'));
     }
 }

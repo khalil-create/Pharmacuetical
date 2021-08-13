@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="col-md-12">
                         <div class="form-group">
-                            <form method="POST" action="/supervisor/updateCourse/{{$course->id}}"  enctype="multipart/form-data">
+                            <form method="POST" action="/supervisor/updateCourse/{{$course->id}}" onsubmit="return checkPointsType()" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="card-body">
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>عنوان البرنامج التدريبي</label>
-                                    <input value="{{$course->title}}" type="text" name="title" class="form-control">
+                                    <input value="{{$course->title}}" id="title" type="text" name="title" class="form-control">
                                     @if ($errors->has('title'))
                                         <span class="help-block">
                                             <small class="form-text text-danger">{{ $errors->first('title') }}</small>
@@ -105,7 +105,7 @@
                                                 </div>
                                                 <div class="col-12 imp-points" id="link" hidden>
                                                     <label>رابط الفيديو</label>
-                                                    <input type="text" id="imp_link" name="important_points_link" class="form-control">
+                                                    <input type="text" id="imp_link" placeholder="https://you.bu/" name="important_points_link" class="form-control">
                                                     @if ($errors->has('important_points_link'))
                                                         <span class="help-block">
                                                             <small class="form-text text-danger">{{ $errors->first('important_points_link') }}</small>

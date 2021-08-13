@@ -5,10 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Doctor;
-use App\Models\OfferService;
+use App\Models\OfferVisit;
 use App\Models\ProblemsSolve;
 use App\Models\Visit;
-use App\Models\Service;
 use App\Models\representative;
 use App\Models\User;
 use App\Models\Supervisor;
@@ -37,5 +36,12 @@ class VisitController extends Controller
 
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/supervisor/manageVisits')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showVisitDetails($id)
+    {
+        $visit = Visit::findOrfail($id);
+        if($visit->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('supervisors.showVisitDetails',compact('visit'));
     }
 }

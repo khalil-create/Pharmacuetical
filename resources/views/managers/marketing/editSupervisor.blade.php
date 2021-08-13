@@ -193,7 +193,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-5">
-                                                    <input id="phonenumber" value="{{$user->phone_number}}" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
+                                                    <input id="phonenumber"  onkeyup="checkPhoneNumber()" value="{{$user->phone_number}}" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
                                                     <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
                                                     @if ($errors->has('phonenumber'))
                                                         <span class="help-block">

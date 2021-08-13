@@ -9,10 +9,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">الصفحة الرئيسية</a>
+        <a href="/home" class="nav-link"><i class="fas fa-home" title="الصفحة الرئيسية"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="" class="nav-link">تواصل معنا</a>
+        <a href="" class="nav-link"><i class="fas fa-refresh" title="تحديث"></i></a>
       </li>
     </ul>
 
@@ -166,18 +166,20 @@
             @if(Auth::user()->unreadnotifications->count())
               {{Auth::user()->unreadnotifications->count()}} اشعار
             @else
-              لاوجد لديك اي اشعار
+              لايوجد لديك اي اشعار
             @endif
           </span>
           <div class="dropdown-divider"></div>
           @php $count = 0; @endphp
           @foreach (Auth::user()->unreadnotifications as $notify)
-            @if($count > 5)
+            @if($count >= 5)
               @break
             @endif
               @php
                   $route = userTrait::getRouteReadNotification($notify->data['title']);
                   $since = userTrait::getSinceTimePast($notify->updated_at);
+                  $userType = userTrait::getUserType();
+                  $route = $userType.$route;
                   $count++;
               @endphp
               <a href="{{route($route,['id' => $notify->id])}}" class="dropdown-item">
@@ -188,8 +190,10 @@
               </a>
           @endforeach
           <div class="dropdown-divider"></div>
-          <a href="/showAllUnReadNotifications" class="dropdown-item dropdown-footer">رؤية كل الاشعارات</a>
-          <a href="#" class="dropdown-item dropdown-footer">Mark all notifications as read</a>
+          @if(Auth::user()->unreadnotifications->count())
+            <a href="/Notifications/showAllUnReadNotifications" class="dropdown-item dropdown-footer">رؤية كل الاشعارات</a>
+            <a href="/Notifications/markAllNotifyAsRead" class="dropdown-item dropdown-footer">Mark all notifications as read</a>
+          @endif
         </div>
       </li>
       <li class="nav-item">

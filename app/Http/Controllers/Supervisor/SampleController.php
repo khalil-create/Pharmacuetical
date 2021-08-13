@@ -7,10 +7,12 @@ use App\Models\Manager;
 use App\Models\Supervisor;
 use App\Models\Representative;
 use App\Models\Item;
+use App\Models\User;
 use App\Traits\userTrait;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Samples;
 
 class SampleController extends Controller
 {
@@ -20,36 +22,32 @@ class SampleController extends Controller
         if($request->get('id')){
             $this->unreadNotify($request->get('id'));
         }
-        $samples = Sample::whereHas('supervisor')->whereNotNull('manager_id')->with(['supervisor' => function($q){
-            $q->where('id',Auth::user()->supervisor->id);
-        }])->get();
+        $samples = Sample::where('supervisor_id',Auth::user()->supervisor->id)->whereNull('representative_id')->get();
         return view('supervisors.manageSamples',compact('samples',$samples));
     }
-    // public function addSample()
-    // {
-    //     $items = Item::get();
-    //     if($items->count() < 1)
-    //         return redirect('/supervisors/manageSamples')->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد');
-    //     $rep = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
-    //     return view('supervisors.addSample',compact('rep',$rep))->with('items',$items);
-    // }
-    // public function storeSample(Request $request)
-    // {
-    //     $rules = $this->getRules();
-    //     $messages = $this->getMessages();
-    //     $validator = Validator::make($request->all(),$rules,$messages);
-    //     if($validator->fails()){
-    //         return redirect()->back()->withErrors($validator)->withInputs($request->all());
-    //     }
-    //     // return $request->manager_id;
-    //     Sample::create([
-    //         'item_id' => $request->item_id,
-    //         'count' => $request->count,
-    //         'representative_id' => $request->rep_id,
-    //         'supervisor_id' => Auth::user()->supervisor->id,
-    //     ]);
-    //     return redirect('/supervisor/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
-    // }
+    public function addSample()
+    {
+        $items = $this->getSupervisorItems(Auth::user());
+        if($items->count() < 1)
+            return redirect('/supervisors/manageSamples')->with('error','لايمكنك اضافة عينة ولم يتم اضافة على الأقل صنف واحد');
+        return view('supervisors.addSample',compact('items'));
+    }
+    public function storeSample(Request $request)
+    {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
+        Sample::create([
+            'item_id' => $request->item_id,
+            'count' => $request->count,
+            // 'manager_id' => $this->getManagerMarketingId(), 
+            'supervisor_id' => Auth::user()->supervisor->id,
+        ]);
+        return redirect('/supervisor/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
+    }
     protected function getRules()
     {
         return $rules = [
@@ -103,15 +101,9 @@ class SampleController extends Controller
         if(!$sample)
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         $samples = Sample::where('item_id',$sample->item_id)->whereNotNull(['representative_id','supervisor_id'])->get();
-        // return $samples->sortBy('representative_id');
-        $samples = $samples->sortBy('representative_id')->toArray(); //convert to array
+        $samples = $samples->sortBy('representative_id');
         // return $samples;
-        // $all_rep = Representative::where('supervisor_id',Auth::user()->supervisor->id)
-        // ->with('samples')->get();
-        // $all = $all_rep->samples->where('item_id',$sample->item_id)->get();
-        // return $all_rep->toArray();
         $rep = Representative::where('supervisor_id',Auth::user()->supervisor->id)->get();
-        // return $rep;
         return view('supervisors.divideSample',compact('sample'))->with('rep',$rep)->with('samples',$samples);
     }
     public function storeDividedSample(Request $request)

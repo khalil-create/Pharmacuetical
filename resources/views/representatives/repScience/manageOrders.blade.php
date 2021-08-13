@@ -40,7 +40,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($orders->count() > 0)
+                  {{-- @if($orders->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -64,11 +64,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي طلبية' }}
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -107,17 +107,17 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($orders->count() > 0)
+                    {{-- @if($orders->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">العميل</th>
                         <th rowspan="1" colspan="1">الصنف</th>
                         <th rowspan="1" colspan="1">الكمية</th>
-                        <th rowspan="1" colspan="1">البونص</th>
+                        <th rowspan="1" colspan="1">البونص ( % )</th>
                         <th rowspan="1" colspan="1">الملاحظة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>
@@ -164,6 +164,7 @@
                         success: function(response){
                             swal(response.status, {
                                 icon: "success",
+                                button: "حسناً!",
                             })
                             .then((result) =>{
                                 location.reload();

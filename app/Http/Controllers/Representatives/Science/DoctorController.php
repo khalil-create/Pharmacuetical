@@ -133,4 +133,11 @@ class DoctorController extends Controller
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/repScience/manageDoctors')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    public function showDoctorDetails($id)
+    {
+        $doctor = Doctor::with(['specialists','services'])->findOrfail($id);
+        if($doctor->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('representatives.repScience.showDoctorDetails',compact('doctor'));
+    }
 }

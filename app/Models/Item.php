@@ -32,7 +32,7 @@ class Item extends Model
     }
     public function specialists()
     {
-        return $this->belongsToMany('App\Models\Spesialist','specialists_items');
+        return $this->belongsToMany('App\Models\Specialist','specialists_items');
     }
     public function orders()
     {

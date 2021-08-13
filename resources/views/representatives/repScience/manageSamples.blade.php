@@ -1,42 +1,30 @@
 @extends('layouts.index')
 @section('title')
-    ادارة المناطق
+    ادارة العينات
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
 <div class="content-header content-wrapper">
-    <div class="container-fluid">
+  <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">ادارة المناطق</h1>
+          <h1 class="m-0">ادارة العينات</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
-            <li class="breadcrumb-item active">المناطق الفرعية</li>
+            <li class="breadcrumb-item active">العينات</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+  </div><!-- /.container-fluid -->
   <!-- /.content-header -->
   <div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right"> قائمة المناديب التابعين للمنطقة الفرعية:-  <h5>
-              @php
-                  $exist = 1;
-              @endphp
-              @if (isset($subarea))
-                  {{$subarea->name_sub_area}}
-                @else
-                  @php
-                      $exist=0;
-                  @endphp
-                  {{'هذه المنطقة غير موجوده'}}
-              @endif
-            </h5></span>
+            <span class="card-title" style="float: right">عيناتي</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
               <i class="fas fa-minus"></i>
@@ -52,41 +40,55 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if(isset($rep) && $rep->count() > 0)
+                  @if($samples->count() > 0)                    
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
                       </th>
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                        اسم المندوب
+                        العينة
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        الكمية
+                      </th>
+                      <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        العملية
                       </th>
                     </tr>
-                  @elseif($exist == 1)
-                    <div class="alert alert-danger notify-success">
-                      {{ 'لايوجد مناديب لهذه المنطقة' }}                    
+                  @else
+                    <div class="alert alert-danger notify-danger">
+                      {{ 'لم يتم اضافة اي عينة' }}
                     </div>
                   @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
-                  @foreach ($rep as $row)                  
+                  @foreach ($samples as $row)
                     <tr class="odd">
                       <td class="dtr-control" tabindex="0">{{$i++}}</td>
-                      <td>{{$row->user->user_name_third}}</td>
+                      <td>{{ $row->item->commercial_name }}</td>
+                      <td>{{ $row->count }}</td>
+                      <td>
+                        <a href="/supervisor/divideSample/{{$row->id}}"><i class="fas fa-share" title="توزيع العينات بين المندوبين"></i></a>
+                        <a href="/supervisor/displaySampleReps/{{$row->id}}">
+                          <i class="fas fa-eye" title="عرض العينات الموزعة لكل مندوب"></i>
+                        </a>
+                      </td>
                     </tr>
                   @endforeach
                   <div>
-                    <a href="{{url('/supervisor/addRepresentative')}}" class="btn btn-primary add">
-                      <i class="fas fa-plus"></i> اضافة مندوب</a>
+                    <a href="{{url('/supervisor/addSample')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a>
                   </div>
                   </tbody>
                   <tfoot>
-                  @if(isset($rep) && $rep->count() > 0)
-                    <tr>
-                      <th rowspan="1" colspan="1">#</th>
-                      <th rowspan="1" colspan="1">اسم المندوب</th>
-                    </tr>
-                  @endif
+                    @if($samples->count() > 0)                    
+                      <tr>
+                        <th rowspan="1" colspan="1">#</th>
+                        <th rowspan="1" colspan="1">العينة</th>
+                        <th rowspan="1" colspan="1">الكمية</th>
+                        <th rowspan="1" colspan="1">العملية</th>
+                      </tr>
+                    @endif
                   </tfoot>
                 </table>
               </div>

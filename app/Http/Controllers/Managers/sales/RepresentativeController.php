@@ -32,12 +32,13 @@ class RepresentativeController extends Controller
     {
         $rep = User::where('user_type','مدير فريق')->get();
 
-        $subareas = Subarea::all();
-        if($subareas->count() < 1)
-            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات علمي قبل مايتم اضافة على الاقل منطقة فرعية واحدة']);
+        $mainareas = Mainarea::all();
+        // $subareas = Subarea::all();
+        if($mainareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات قبل مايتم اضافة على الاقل منطقة رئيسية واحدة']);
         
         return view('managers.sales.addRepresentative', compact('rep',$rep))
-        ->with('subareas',$subareas);              
+        ->with('mainareas',$mainareas);              
     }
     public function storeRepresentative(Request $request)
     {
@@ -47,8 +48,7 @@ class RepresentativeController extends Controller
                 return redirect()->back()->with('error','هذا الايميل مستخدم لدى مستخدم اخر');
         }
         $rules = $this->getRules();
-        $rules +=[
-            'userimage' => 'required',];
+        $rules+=['userimage' => 'required','email' => 'required|string|email|max:255|unique:users'];
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
@@ -80,10 +80,11 @@ class RepresentativeController extends Controller
         $rep = Representative::create(
             [
                 'user_id' => $user->id,
+                'mainarea_id' => $request->mainarea_id,
                 'manager_id' => Auth::user()->manager->id,
             ]);
         
-        $rep->subareas()->syncWithoutDetaching($request->subareasIds);
+        // $rep->subareas()->syncWithoutDetaching($request->subareasIds);
         return redirect('/managerSales/manageRepresentatives')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
@@ -162,11 +163,12 @@ class RepresentativeController extends Controller
     {
         $rep = Representative::findOrfail($id);
 
-        $subareas = Subarea::all();
-        if($subareas->count() < 1)
-            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات علمي قبل مايتم اضافة على الاقل منطقة فرعية واحدة']);
+        $mainareas = Mainarea::all();
+        // $subareas = Subarea::all();
+        if($mainareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات قبل مايتم اضافة على الاقل منطقة رئيسية واحدة']);
         
-        return view('managers.sales.editRepresentative',compact('subareas'))
+        return view('managers.sales.editRepresentative',compact('mainareas'))
         ->with('rep',$rep );
     }
     public function updateRepresentative(Request $request,$id)
@@ -213,15 +215,12 @@ class RepresentativeController extends Controller
 
         // $rep->type = $request->Input('usertype');
         $rep = Representative::find($request->rep_id);
-        if($user->user_type == 'مدير فريق'){
-            $rep->supervisor_id = Auth::user()->supervisor->id;
-            $rep->teamleader_id = null;
-            $rep->update();
-        }
-        else if($user->user_type == 'مندوب علمي'){
-            $rep->teemleader_id = $request->teemleader_id;
-        }
-        $rep->subareas()->syncWithoutDetaching($request->subareasIds);
+        $rep->manager_id = Auth::user()->manager->id;
+        // $rep->teamleader_id = null;
+        $rep->mainarea_id = $request->mainarea_id;
+        $rep->update();
+        
+        // $rep->subareas()->syncWithoutDetaching($request->subareasIds);
         return redirect('/managerSales/manageRepresentatives')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function showSubareas($id)
@@ -233,7 +232,9 @@ class RepresentativeController extends Controller
     public function addRepSubareas($id)
     {
         $rep = Representative::with('user')->find($id);
-        $subareas = Subarea::all();
+        $subareas = Subarea::where('mainarea_id',$rep->mainarea_id)->get();
+        if($subareas->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة مناطق فرعية لهذا المندوب ولا يملك منطقة رئيسية، يجب عليك اولاً اضافة منطقة رئيسية لهذا المندوب ']);
         return view('managers.sales.addRepSubareas',compact('subareas'))->with('rep',$rep);
     }
     public function storeRepSubareas(Request $request,$id)
@@ -242,9 +243,9 @@ class RepresentativeController extends Controller
         // return $request->sub_area_ids;
         if($rep->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $rep->subareas()->syncWithoutDetaching($request->sub_area_ids);
+        $rep->subareas()->sync($request->sub_area_ids);
 
-        return redirect('/managerSales/showSubareas/'.$id)->with('stat    us','تم اضافة المناطق للمندوب بشكل ناجح');
+        return redirect('/managerSales/showSubareas/'.$id)->with('status','تم اضافة المناطق للمندوب بشكل ناجح');
     }
     public function deleteRepresentative($id)
     {
