@@ -46,7 +46,7 @@
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name_company">اسم الشركة</label>
+                                    <label for="name_company">اسم الشركة <span class="text-danger">*</span></label>
                                     <input type="text" name="name_company" class="form-control" id="name_company">
                                     @if ($errors->has('name_company'))
                                         <span class="help-block">
@@ -55,7 +55,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="country_manufacturing">بلد التصنيع</label>
+                                    <label for="country_manufacturing">بلد التصنيع <span class="text-danger">*</span></label>
                                     <input type="text" name="country_manufacturing" class="form-control" id="country_manufacturing">
                                     @if ($errors->has('country_manufacturing'))
                                         <span class="help-block">
@@ -64,7 +64,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="sign_img_company">تحميل شعار الشركة</label>
+                                    <label for="sign_img_company">تحميل شعار الشركة <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="sign_img_company">
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">لديها مجموعة اصناف</label>
+                                    <label for="">لديها مجموعة اصناف <span class="text-danger">*</span></label>
                                     <div class="radiobox">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" value="1" name="have_category" checked>
@@ -113,7 +113,7 @@
                             </div>
                             </div>
                             <!-- /.col -->
-                            
+
                             <!-- /.form-group -->
                         </form>
                         <!-- /.form-group -->

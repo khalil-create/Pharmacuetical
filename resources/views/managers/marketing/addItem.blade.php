@@ -46,7 +46,7 @@
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="commercial_name">الاسم التجاري</label>
+                                    <label for="commercial_name">الاسم التجاري <span class="text-danger">*</span></label>
                                     <input type="text" name="commercial_name" class="form-control" id="commercial_name">
                                     @if ($errors->has('commercial_name'))
                                         <span class="help-block">
@@ -55,7 +55,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="science_name">الاسم العلمي</label>
+                                    <label for="science_name">الاسم العلمي <span class="text-danger">*</span></label>
                                     <input type="text" name="science_name" class="form-control" id="science_name">
                                     @if ($errors->has('science_name'))
                                         <span class="help-block">
@@ -64,7 +64,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
-                                    <label for="unit" class="col-md-2 control-label">وحدة البيع</label>
+                                    <label for="unit" class="col-md-2 control-label">وحدة البيع <span class="text-danger">*</span></label>
                                         <select name="unit" id="unit" class="form-control custom-select rounded-0">
                                                 <option value="باكت">باكت</option>
                                                 <option value="شريط">شريط</option>
@@ -77,7 +77,7 @@
                                         @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">السعر</label>
+                                    <label for="price">السعر <span class="text-danger">*</span></label>
                                     <input type="text" name="price" class="form-control" id="price">
                                     @if ($errors->has('price'))
                                         <span class="help-block">
@@ -86,7 +86,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="bonus">البونص ( % )</label>
+                                    <label for="bonus">البونص ( % ) <span class="text-danger">*</span></label>
                                     <input type="text" name="bonus" class="form-control" id="bonus">
                                     @if ($errors->has('bonus'))
                                         <span class="help-block">
@@ -170,7 +170,7 @@
                             </div>
                             </div>
                             <!-- /.col -->
-                            
+
                             <!-- /.form-group -->
                         </form>
                         <!-- /.form-group -->

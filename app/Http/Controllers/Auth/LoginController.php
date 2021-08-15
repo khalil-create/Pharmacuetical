@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -20,6 +21,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
 
     /**
      * Where to redirect users after login.
@@ -37,5 +39,15 @@ class LoginController extends Controller
     {
         alert('مرحبا بك في نظام ادارة المكتب العلمي!')->autoclose(3000);
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @return mixed
+     */
+    protected function authenticated()
+    {
+        Auth::logoutOtherDevices(request('password'));
     }
 }

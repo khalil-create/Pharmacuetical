@@ -46,7 +46,7 @@
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name_cat">اسم المجموعة</label>
+                                    <label for="name_cat">اسم المجموعة <span class="text-danger">*</span></label>
                                     <input type="text" name="name_cat" class="form-control" id="name_cat">
                                     @if ($errors->has('name_cat'))
                                         <span class="help-block">
@@ -79,7 +79,7 @@
                             </div>
                             </div>
                             <!-- /.col -->
-                            
+
                             <!-- /.form-group -->
                         </form>
                         <!-- /.form-group -->
