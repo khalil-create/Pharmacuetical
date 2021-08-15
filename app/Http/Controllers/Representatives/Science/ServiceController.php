@@ -121,4 +121,11 @@ class ServiceController extends Controller
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/repScience/manageServices')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    public function showServiceDetails($id)
+    {
+        $service = Service::with(['customers','doctors'])->findOrfail($id);
+        if($service->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('representatives.repScience.showServiceDetails',compact('service'));
+    }
 }

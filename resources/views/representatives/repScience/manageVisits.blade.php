@@ -40,7 +40,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($visits->count() > 0)
+                  {{-- @if($visits->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -61,11 +61,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي زيارة' }}
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -96,12 +96,7 @@
                       </td>
                       <td>
                         <a href="/repScience/editVisit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <i class="fas fa-eye"></i>
-                        {{-- <form action="/repScience/deleteVisit/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -10px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/repScience/showVisitDetails/{{$row->id}}"><i class="nav-icon fas fa-eye" title="تفاصيل"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
@@ -112,7 +107,7 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($visits->count() > 0)
+                    {{-- @if($visits->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">العميل</th>
@@ -121,7 +116,7 @@
                         <th rowspan="1" colspan="1">نتيجة الزيارة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>

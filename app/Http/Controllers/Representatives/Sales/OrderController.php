@@ -42,7 +42,7 @@ class OrderController extends Controller
             'customer_id' => $request->customer_id,
             'item_id' => $request->item_id,
             'count' => $request->count,
-            'bonus' => $request->bonus,
+            // 'bonus' => $request->bonus,
             'note' => $request->note,
             'representative_id' => Auth::user()->representatives->id,
         ]);
@@ -55,7 +55,7 @@ class OrderController extends Controller
     {
         return $rules = [
                 'count' => 'required|numeric',
-                'bonus' => 'required|numeric',
+                // 'bonus' => 'required|numeric',
                 'note' => 'required|string',
                 ];
     }
@@ -65,8 +65,8 @@ class OrderController extends Controller
             'count.required' => 'يجب عليك كتابة هذا الحقل',
             'count.numeric' => 'يجب ان يكون هذا الحقل رقم',
 
-            'bonus.required' => 'يجب عليك كتابة هذا الحقل',
-            'bonus.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            // 'bonus.required' => 'يجب عليك كتابة هذا الحقل',
+            // 'bonus.numeric' => 'يجب ان يكون هذا الحقل رقم',
 
             'note.required' => 'يجب عليك كتابة هذا الحقل',
             'note.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -94,7 +94,7 @@ class OrderController extends Controller
         $order->customer_id = $request->customer_id;
         $order->item_id = $request->item_id;
         $order->count = $request->count;
-        $order->bonus = $request->bonus;
+        // $order->bonus = $request->bonus;
         $order->note = $request->note;
 
         $order->update();

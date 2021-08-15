@@ -149,4 +149,11 @@ class CustomerController extends Controller
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/repScience/manageCustomers')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    public function showCustomerDetails($id)
+    {
+        $customer = Customer::with(['orders','services'])->findOrfail($id);
+        if($customer->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('representatives.repScience.showCustomerDetails',compact('customer'));
+    }
 }

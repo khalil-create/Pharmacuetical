@@ -87,7 +87,7 @@
                       <td class="sorting_1">
                         {{$row->count}}
                       </td>
-                      <td>{{$row->bonus}}</td>
+                      <td>{{$row->item->bonus}}%</td>
                       <td>{{$row->note}}</td>
                       <td>
                         <a href="/managerSales/editOrder/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>

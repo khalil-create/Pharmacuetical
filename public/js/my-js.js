@@ -233,6 +233,37 @@ if(clinic_phone){
 ///////////////////////// end phone_Owner //////////////////////////////////////////////////////
 
 ///////////////////////// start phone_Contact //////////////////////////////////////////////////////
+    // Tel_phone_Contact = document.getElementById("Tel_phone_Contact");
+    // invalidContactPhone = document.getElementById("invalidContactPhone");
+    // // Tel_phone_Contact.onkeyup = function()
+    // function checkTelPhoneContact()
+    // {
+    //     let number = Tel_phone_Contact.value;
+    //     let ss = num => Number(num);
+    //     let intArr = Array.from(String(number),ss);
+    //     invalidContactPhone.hidden = true;
+    //     if(Tel_phone_Contact.value >= 01000000 && Tel_phone_Contact.value <= 09999999 && intArr[0] == 0){
+    //         invalidContactPhone.hidden = true;
+    //         Tel_phone_Contact.style.border = "1px solid #007bff";
+
+    //     }
+    //     else if(Tel_phone_Contact.value > 09999999){
+    //         if(intArr[0] != 0)
+    //             invalidContactPhone.textContent = "يجب ان يبدأ الرقم بـ 0";
+    //         else
+    //             invalidContactPhone.textContent = "يجب ان لا يتجاوز العدد لأكثر من 8 ارقام";
+    //         Tel_phone_Contact.style.border = "1px solid #dc3545";
+    //         invalidContactPhone.hidden = false;
+    //     }
+    //     else{
+    //         if(intArr[0] != 0)
+    //             invalidContactPhone.textContent = "يجب ان يبدأ الرقم بـ0";
+    //         else
+    //             invalidContactPhone.textContent = "ادخل 8 ارقام";
+    //         Tel_phone_Contact.style.border = "1px solid #dc3545";
+    //         invalidContactPhone.hidden = false;
+    //     }
+    // }
     Tel_phone_Contact = document.getElementById("Tel_phone_Contact");
     invalidContactPhone = document.getElementById("invalidContactPhone");
     // Tel_phone_Contact.onkeyup = function()
@@ -242,12 +273,12 @@ if(clinic_phone){
         let ss = num => Number(num);
         let intArr = Array.from(String(number),ss);
         invalidContactPhone.hidden = true;
-        if(Tel_phone_Contact.value >= 01000000 && Tel_phone_Contact.value <= 09999999 && intArr[0] == 0){
+        if(intArr.length == 8 && intArr[0] == 0){
             invalidContactPhone.hidden = true;
             Tel_phone_Contact.style.border = "1px solid #007bff";
 
         }
-        else if(Tel_phone_Contact.value > 09999999){
+        else if(intArr.length > 8){
             if(intArr[0] != 0)
                 invalidContactPhone.textContent = "يجب ان يبدأ الرقم بـ 0";
             else
@@ -493,6 +524,8 @@ function Validation()
 //////////////////////////// start check validation distribute all sales objectives/////////////////////////
 function ValidationDistributed()
 {
+    // alert('kkkkkkkkk');
+    // return false;
     var inps = document.getElementsByName('objective[]');
     var total_objective = document.getElementById('total_objective');
     var sum = 0;
@@ -501,6 +534,7 @@ function ValidationDistributed()
         sum = Number(sum) + Number(inps[i].value);
     }
     var total = total_objective.value;
+    
     if(sum < total){
         swal({
             title: "خطأ!",
@@ -577,7 +611,7 @@ function checkDataPlan()
     var month_entered = document.getElementById('month_entered');
     var month_plan = document.getElementById('month_plan');
     const arr_date = month_entered.value.split("-",3);
-    if(arr_date[1] != month_plan.value){
+    if(arr_date[1] != 0+month_plan.value){
         swal({
             title: "خطأ!",
             text: "يجب ان يكون التأريخ في شهر "+month_plan.value,

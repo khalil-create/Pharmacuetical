@@ -4,6 +4,15 @@
 @endsection
 @section('content')
   <!-- Content Header (Page header) -->
+  <script>
+    // swal('يجب ان يتم توزيع الهدف البيعي كامل', {
+    //       icon: "success",
+    //       button: "حسناً!",
+    //       timer: 2000,
+    //   })
+  </script>
+  {{-- @php alert('يجب ان يتم توزيع الهدف البيعي كامل')->autoclose(3000); @endphp --}}
+  {{-- @php alert()->warning('انتبه يجب ان يتم توزيع الهدف البيعي كامل بين المندوبين','تحذير')->autoclose(5000); @endphp --}}
 <div class="content-header content-wrapper">
   <div class="container-fluid">
       <div class="row mb-2">
@@ -59,7 +68,7 @@
                       <tbody>
                         <input name="item_id" value="{{$salesObjective->item_id}}" hidden>
                         <input id="total_objective" value="{{$salesObjective->objective}}" hidden>
-                        @php $i=0; @endphp
+                        {{-- @php $i=0; @endphp --}}
                         @foreach ($representatives as $row)
                         <tr>
                           <td>
@@ -67,15 +76,24 @@
                             <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                           </td>
                           <td>
-                            <input value="@if(sizeof($sales) > $i && sizeof($sales) != 0 && $sales[$i]['representative_id']==$row->id){{$sales[$i]["objective"]}} @else @php $i--; @endphp @endif"  type="text" placeholder="مقدار الهدف لهذا المندوب" name="objective[]" class="form-control">
+                            @php $found = false; @endphp
+                            @foreach($sales as $obj)
+                                @if($obj->representative_id == $row->id)
+                                    @php $found = true; @endphp
+                                    <input value="{{$obj->objective}}"  type="text" placeholder="مقدار الهدف لهذا المندوب" name="objective[]" class="form-control">
+                                    @break
+                                @endif
+                            @endforeach
+                            @if(!$found)
+                              <input type="text" placeholder="مقدار الهدف لهذا المندوب" name="objective[]" class="form-control">
+                            @endif
                             @if ($errors->has('objective'))
                               <span class="help-block">
                                   <small class="form-text text-danger">{{ $errors->first('objective') }}</small>
                               </span>
                             @endif
                           </td>
-                        </tr>
-                        @php $i++; @endphp
+                        </tr> 
                         @endforeach
                         <tr rowspan="2">
                           <label>الوصف</label>

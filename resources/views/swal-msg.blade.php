@@ -1,5 +1,6 @@
 @if (session('status'))
     <input value="{{ session('status') }}" id="success" hidden>
+    {{-- @php alert('' , 'تمت الاضافة بنجاح')->success( session('status')); @endphp --}}
     <script>
       var msg = document.getElementById('success').value;
       console.log(msg);

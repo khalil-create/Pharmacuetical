@@ -51,19 +51,20 @@
                             $i = 0;
                         @endphp
                         @foreach ($results_arr as $result)
-                            <div class="col-12 col-sm-6 col-md-2">
+                            <div class="col-12 col-sm-6 col-md-3">
                                 <div class="info-box mb-3">
                                     <div class="info-box-content @if($result >= 50) {{'alert-success'}} @else {{'alert-danger'}} @endif">
-                                        <span class="info-box-text">درجة الاختبار رقم {{++$i}}</span>
+                                        <span class="info-box-text">درجة اختبار المحاولة({{++$i}})</span>
                                         <span class="info-box-number">{{$result}}%</span>
                                     </div><!-- /.info-box-content -->
                                 </div>
                             </div>
                         @endforeach
-                        <div class="col-12 col-sm-6 col-md-2" style="height: 100%;width:100%">
-                            <a href="/repScience/repTests/{{$repResult->test->id}}" title="تفاصيل" class="btn alert-success btn-lg col-12" style="height: 85px">
-                                <div class="col-md-12 align-center" style="margin-top: 20px">
+                        <div class="col-12 col-sm-6 col-md-2">
+                            <a href="/repScience/repTests/{{$repResult->test->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-12" style="height: 80px">
+                                <div class="col-md-12 align-center" style="margin-top: 15px">
                                     <h6>اعادة الاختبار</h6>
+                                    <i class="fas fa-refresh"></i>
                                 </div>
                             </a>
                         </div>

@@ -74,7 +74,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>البونص ( % )</label>
                                 <input type="text" name="bonus" class="form-control">
                                 @if ($errors->has('bonus'))
@@ -82,7 +82,7 @@
                                         <small class="form-text text-danger">{{ $errors->first('bonus') }}</small>
                                     </span>
                                 @endif
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label>ملاحظة</label>
                                 {{-- <input type="text" name="note"  class="form-control"> --}}

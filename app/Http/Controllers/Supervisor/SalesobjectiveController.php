@@ -117,7 +117,8 @@ class SalesobjectiveController extends Controller
     {
         $salesObjective = Salesobjective::find($id);
         $sales = Salesobjective::where('item_id',$salesObjective->item_id)->whereNotNull(['supervisor_id','representative_id'])->get();
-        $sales = $sales->toArray();
+        // $sales = $sales->toArray();
+        $sales = $sales->sortBy('representative_id');
         // return $sales;
         if(!$salesObjective)
             redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
@@ -130,42 +131,11 @@ class SalesobjectiveController extends Controller
     {
         // retrieve objectives if exist
         $sales = Salesobjective::where('item_id',$request->item_id)->whereNotNull(['representative_id','supervisor_id'])->get();
-        // return $sales;
-        // $sales = $sales->toArray(); //convert to array
         $total_obj = sizeof($request->objective);
         $i = -1;
-        // return $sales;
-        // return $request->objective;
-        // return $request->representative;
         foreach($request->objective as $obj)
         {   
             $i++;
-            //if edit on objectives, update objective to new value
-            // if($sales && sizeof($sales) != $i && $sales[$i]["representative_id"] == $request->representative[$i] && $sales[$i]["objective"] != $obj){
-            //     if($obj == ''){
-            //         return "delete".$i;
-            //         $s = Salesobjective::findOrfail($sales[$i]["id"]);
-            //         $s->delete();
-            //     }
-            //     else
-            //     {
-            //         return "update".$i;
-            //         $s = Salesobjective::findOrfail($sales[$i]["id"]);
-            //         $s->objective = $obj;
-            //         $s->update();
-            //     }
-            // }
-            // else if($obj != ''){
-            //     return "create".$i;
-                // Salesobjective::create([
-                //     'objective' => $obj,
-                //     'description' => $request->description,
-                //     'supervisor_id' => Auth::user()->supervisor->id,
-                //     'representative_id' => $request->representative[$i],
-                //     'item_id' => $request->item_id,
-                // ]);
-            // }
-
             $exist = false;
             foreach($sales as $sale){
                 //if edit on samples, update sample to new value

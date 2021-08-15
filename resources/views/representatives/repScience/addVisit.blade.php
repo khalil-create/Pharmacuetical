@@ -39,151 +39,153 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                    <div class="form-group">
-                        <form method="POST" action="/repScience/storeVisit"  enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label>نوع العميل</label>
-                                <select onchange="showCustType()" id="cust_type" name="cust_type" class="custom-select rounded-0">
-                                    <option value="-1">
-                                        اختر نوع العميل
-                                    </option>
-                                    @if($customers->count() > 0)
-                                        <option value="0">
-                                            عميل (صيدلية-مستشفى)
-                                        </option>
-                                    @endif
-                                    @if($doctors->count() > 0)
-                                        <option value="1">
-                                            دكتور
-                                        </option>
-                                    @endif
-                                </select>
-                            </div>
-                            <div id="cust_name" class="form-group" hidden>
-                                <label>اسم العميل</label>
-                                <select  name="customer_id" class="custom-select rounded-0">
-                                    @foreach ($customers as $row)
-                                        <option value="{{$row->id}}">
-                                            {{$row->name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div id="doctor_name" class="form-group" hidden>
-                                <label>اسم الدكتور</label>
-                                <select name="doctor_id" class="custom-select rounded-0">
-                                    @foreach ($doctors as $row)
-                                        <option value="{{$row->id}}">
-                                            {{$row->name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>نوع الزيارة</label>
-                                <select onchange="checkVisitType()" id="visit_type" name="type" class="custom-select rounded-0">
-                                    <option value="-1">
-                                        اختر نوع الزيارة
-                                    </option>
-                                    <option value="1">
-                                        مصاحبة مع المشرف او علمية
-                                    </option>
-                                    <option value="2">
-                                        تقديم خدمة
-                                    </option>
-                                    <option value="3">
-                                        حل مشكلة
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>الفترة</label>
-                                <select id="period" name="period" class="custom-select rounded-0">
-                                    <option value="1">
-                                        صباحية
-                                    </option>
-                                    <option value="0">
-                                        مسائية
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>تأريخ الزيارة</label>
-                                <input type="date" class="form-control" name="date">
-                                @if ($errors->has('date'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('date') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div id="item" class="form-group" hidden>
-                                <label>الصنف المستهدف</label>
-                                <select name="item" class="custom-select rounded-0">
-                                    @foreach ($rep->items as $item)
-                                        <option value="{{$item->commercial_name}}">
-                                            {{$item->commercial_name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div id="scientific_mission" class="form-group" hidden>
-                                <label>الرسالة العلمية الموجهة</label>
-                                <input id="mission" name="scientific_mission" class="form-control">
-                                @if ($errors->has('scientific_mission'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('scientific_mission') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div id="service_name" class="form-group" hidden>
-                                <label>الخدمة</label>
-                                <select name="service_id" class="custom-select rounded-0">
-                                    @foreach ($rep->services as $serv)
-                                        <option value="{{$serv->id}}">
-                                            @if ($serv->type)
-                                                {{'خدمة مادية('.$serv->name.') تكلفتها بـ'.$serv->cost}}
-                                            @else
-                                                {{'خدمة عينية تكلفتها بـ'.$serv->cost}}
-                                            @endif
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div id="description" class="form-group" hidden>
-                                <label>وصف المشكلة</label>
-                                <textarea name="description" id="desc" cols="30" rows="4" class="form-control"></textarea>
-                                @if ($errors->has('description'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('description') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>نتيجة الزيارة</label>
-                                <textarea name="result" cols="30" rows="4" class="form-control"></textarea>
-                                @if ($errors->has('result'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('result') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group" >
-                                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                                    حفظ<i class="fas fa-save"></i>
-                                                </button>
+                                <form method="POST" action="/repScience/storeVisit"  enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label>نوع العميل</label>
+                                                <select onchange="showCustType()" id="cust_type" name="cust_type" class="custom-select rounded-0">
+                                                    <option value="-1">
+                                                        اختر نوع العميل
+                                                    </option>
+                                                    @if($customers->count() > 0)
+                                                        <option value="0">
+                                                            عميل (صيدلية-مستشفى)
+                                                        </option>
+                                                    @endif
+                                                    @if($doctors->count() > 0)
+                                                        <option value="1">
+                                                            دكتور
+                                                        </option>
+                                                    @endif
+                                                </select>
                                             </div>
+                                            <div id="cust_name" class="form-group col-md-6" hidden>
+                                                <label>اسم العميل</label>
+                                                <select  name="customer_id" class="custom-select rounded-0">
+                                                    @foreach ($customers as $row)
+                                                        <option value="{{$row->id}}">
+                                                            {{$row->name}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div id="doctor_name" class="form-group col-md-6" hidden>
+                                                <label>اسم الدكتور</label>
+                                                <select name="doctor_id" class="custom-select rounded-0">
+                                                    @foreach ($doctors as $row)
+                                                        <option value="{{$row->id}}">
+                                                            {{$row->name}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>نوع الزيارة</label>
+                                                <select onchange="checkVisitType()" id="visit_type" name="type" class="custom-select rounded-0">
+                                                    <option value="-1">
+                                                        اختر نوع الزيارة
+                                                    </option>
+                                                    <option value="1">
+                                                        مصاحبة مع المشرف او علمية
+                                                    </option>
+                                                    <option value="2">
+                                                        تقديم خدمة
+                                                    </option>
+                                                    <option value="3">
+                                                        حل مشكلة
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>الفترة</label>
+                                                <select id="period" name="period" class="custom-select rounded-0">
+                                                    <option value="1">
+                                                        صباحية
+                                                    </option>
+                                                    <option value="0">
+                                                        مسائية
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>تأريخ الزيارة</label>
+                                                <input type="date" class="form-control" name="date">
+                                                @if ($errors->has('date'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('date') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div id="item" class="form-group col-md-6" hidden>
+                                                <label>الصنف المستهدف</label>
+                                                <select name="item" class="custom-select rounded-0">
+                                                    @foreach ($rep->items as $item)
+                                                        <option value="{{$item->commercial_name}}">
+                                                            {{$item->commercial_name}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div id="scientific_mission" class="form-group col-md-6" hidden>
+                                                <label>الرسالة العلمية الموجهة</label>
+                                                <input id="mission" name="scientific_mission" class="form-control">
+                                                @if ($errors->has('scientific_mission'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('scientific_mission') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div id="service_name" class="form-group col-md-6" hidden>
+                                                <label>الخدمة</label>
+                                                <select name="service_id" class="custom-select rounded-0">
+                                                    @foreach ($rep->services as $serv)
+                                                        <option value="{{$serv->id}}">
+                                                            @if ($serv->type)
+                                                                {{'خدمة مادية('.$serv->name.') تكلفتها بـ'.$serv->cost}}
+                                                            @else
+                                                                {{'خدمة عينية تكلفتها بـ'.$serv->cost}}
+                                                            @endif
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div id="description" class="form-group col-md-6" hidden>
+                                                <label>وصف المشكلة</label>
+                                                <textarea name="description" id="desc" cols="30" rows="4" class="form-control"></textarea>
+                                                @if ($errors->has('description'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('description') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>نتيجة الزيارة</label>
+                                                <textarea name="result" cols="30" rows="4" class="form-control"></textarea>
+                                                @if ($errors->has('result'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('result') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="form-group" >
+                                            <button type="submit" class="btn btn-primary font" >
+                                                حفظ<i class="fas fa-save"></i>
+                                            </button>
                                         </div>
-                                    </form><!-- /.form -->
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.card-body -->
-                </div><!-- /.card -->
-            </div><!-- /.container-fluid -->
+                                    </div><!-- /.card-body -->
+                                </form><!-- /.form -->
+                            </div><!-- /.form-group -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.container-fluid -->
     </section>
     <div class="card-footer">
         Footer

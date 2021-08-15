@@ -3,17 +3,9 @@
 namespace App\Http\Controllers\Supervisor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Doctor;
-use App\Models\OfferVisit;
-use App\Models\ProblemsSolve;
 use App\Models\Visit;
-use App\Models\representative;
-use App\Models\User;
 use App\Models\Supervisor;
-use App\Models\VisitComposition;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\userTrait;
 class VisitController extends Controller
 {

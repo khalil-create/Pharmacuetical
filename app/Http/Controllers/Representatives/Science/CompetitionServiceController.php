@@ -105,6 +105,12 @@ class CompetitionServiceController extends Controller
         $competitionService->delete();
 
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/repScience/manageCompetitionServices')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    // public function showCompetitionServiceDetails($id)
+    // {
+    //     $compServices = CompetitionService::findOrfail($id);
+    //     if($compServices->count() < 1)
+    //         return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+    //     return view('representatives.repScience.showCompetitionServiceDetails',compact('compServices'));
+    // }
 }

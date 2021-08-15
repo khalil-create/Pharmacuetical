@@ -179,22 +179,6 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-4">
-                            <div class="info-box mb-3">
-                                <div class="info-box-content">
-                                    <span class="info-box-text">يتبع المندوب</span>
-                                    <span class="info-box-number">
-                                        @foreach ($customer->representative as $rep)
-                                            @if ($rep->user->user_type == 'مندوب علمي' || $rep->user->user_type == 'مدير فريق')
-                                                <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @else
-                                                <p><span class="text-success">م.مبيعات: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @endif
-                                        @endforeach
-                                    </span>
-                                </div><!-- /.info-box-content -->
-                            </div><!-- /.info-box -->
-                        </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.card-body -->
             </div><!-- /.card -->

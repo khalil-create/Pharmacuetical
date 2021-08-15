@@ -45,141 +45,127 @@
                                     <form method="POST" action="/repScience/storeAlternative"  enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="card-body">
-                                            <div class="form-group">
-                                                <label>الاسم التجاري</label>
-                                                <input type="text" name="commercial_name" class="form-control">
-                                                @if ($errors->has('commercial_name'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('commercial_name') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>اسم الوكالة</label>
-                                                <input type="text" name="agency_name" class="form-control">
-                                                @if ($errors->has('agency_name'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('agency_name') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>اسم الشركة</label>
-                                                <input type="text" name="company_name" class="form-control">
-                                                @if ($errors->has('company_name'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('company_name') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>بلد التصنيع</label>
-                                                <input type="text" name="country_manufacturing" class="form-control">
-                                                @if ($errors->has('country_manufacturing'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('country_manufacturing') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>الوحدة</label>
-                                                    <select name="unit" class="custom-select rounded-0">
-                                                        <option value="باكت">باكت</option>
-                                                        <option value="شريط">شريط</option>
-                                                        <option value="قارورة">قارورة</option>
-                                                    </select>
-                                                    @if ($errors->has('unit'))
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>الاسم التجاري</label>
+                                                    <input type="text" name="commercial_name" class="form-control">
+                                                    @if ($errors->has('commercial_name'))
                                                         <span class="help-block">
-                                                            <small class="form-text text-danger">{{ $errors->first('unit') }}</small>
+                                                            <small class="form-text text-danger">{{ $errors->first('commercial_name') }}</small>
                                                         </span>
                                                     @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>العبوة</label>
-                                                <input type="text" name="refill" class="form-control">
-                                                @if ($errors->has('refill'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('refill') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>السعر</label>
-                                                <input type="text" name="price" class="form-control">
-                                                @if ($errors->has('price'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('price') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label>البونص ( % )</label>
-                                                <input type="text" name="bonus" class="form-control">
-                                                @if ($errors->has('bonus'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('bonus') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="newTool">وسائل الترويج المستخدمة</label>
-                                                    {{-- <div class="form-inline">
-                                                        <div class="input-group">
-                                                            <input id="newTool"  placeholder="اضافة وسيلة أخرى" autocomplete="off">
-                                                            <div>
-                                                                <button id="btnAdd">
-                                                                <i class="fas fa-plus fa-fw"></i>
-                                                                </button>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>اسم الوكالة</label>
+                                                    <input type="text" name="agency_name" class="form-control">
+                                                    @if ($errors->has('agency_name'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('agency_name') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>اسم الشركة</label>
+                                                    <input type="text" name="company_name" class="form-control">
+                                                    @if ($errors->has('company_name'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('company_name') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>بلد التصنيع</label>
+                                                    <input type="text" name="country_manufacturing" class="form-control">
+                                                    @if ($errors->has('country_manufacturing'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('country_manufacturing') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>الوحدة</label>
+                                                        <select name="unit" class="custom-select rounded-0">
+                                                            <option value="باكت">باكت</option>
+                                                            <option value="شريط">شريط</option>
+                                                            <option value="قارورة">قارورة</option>
+                                                        </select>
+                                                        @if ($errors->has('unit'))
+                                                            <span class="help-block">
+                                                                <small class="form-text text-danger">{{ $errors->first('unit') }}</small>
+                                                            </span>
+                                                        @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>العبوة</label>
+                                                    <input type="text" name="refill" class="form-control">
+                                                    @if ($errors->has('refill'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('refill') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>السعر</label>
+                                                    <input type="text" name="price" class="form-control">
+                                                    @if ($errors->has('price'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('price') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>البونص ( % )</label>
+                                                    <input type="text" name="bonus" class="form-control">
+                                                    @if ($errors->has('bonus'))
+                                                        <span class="help-block">
+                                                            <small class="form-text text-danger">{{ $errors->first('bonus') }}</small>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="newTool">وسائل الترويج المستخدمة</label>
+                                                        {{-- <div class="form-inline">
+                                                            <div class="input-group">
+                                                                <input id="newTool"  placeholder="اضافة وسيلة أخرى" autocomplete="off">
+                                                                <div>
+                                                                    <button id="btnAdd">
+                                                                    <i class="fas fa-plus fa-fw"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div> --}}
-                                                    <select id="list" name="promotion_materials[]" class="custom-select rounded-0" multiple>
-                                                        <option value="عينات">
-                                                            عينات
-                                                        </option>
-                                                        <option value="خدمات">
-                                                            خدمات
-                                                        </option>
-                                                        <option value="لقاءات علمية">
-                                                            لقاءات علمية
-                                                        </option>
-                                                        <option value="بونص اضافي">
-                                                            بونص اضافي
-                                                        </option>
-                                                    </select>
-                                                    @if ($errors->has('promotion_materials'))
+                                                        </div> --}}
+                                                        <select id="list" name="promotion_materials[]" class="custom-select rounded-0" multiple>
+                                                            <option value="عينات">
+                                                                عينات
+                                                            </option>
+                                                            <option value="خدمات">
+                                                                خدمات
+                                                            </option>
+                                                            <option value="لقاءات علمية">
+                                                                لقاءات علمية
+                                                            </option>
+                                                            <option value="بونص اضافي">
+                                                                بونص اضافي
+                                                            </option>
+                                                        </select>
+                                                        @if ($errors->has('promotion_materials'))
+                                                            <span class="help-block">
+                                                                <small class="form-text text-danger">{{ $errors->first('promotion_materials') }}</small>
+                                                            </span>
+                                                        @endif
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>تأريخ النزول للسوق</label>
+                                                    <input type="date" class="form-control" name="date">
+                                                    @if ($errors->has('date'))
                                                         <span class="help-block">
-                                                            <small class="form-text text-danger">{{ $errors->first('promotion_materials') }}</small>
+                                                            <small class="form-text text-danger">{{ $errors->first('date') }}</small>
                                                         </span>
                                                     @endif
-                                            </div>
-                                            {{-- <script>
-                                                const btnAdd = document.querySelector('#btnAdd');
-                                                const list = document.querySelector('#list');
-                                                const new = document.querySelector('#newTool');
-
-                                                btnAdd.onclick = (e) => {
-                                                    e.preventDefault();
-                                                    if(new.value == ''){
-                                                        alert('قم بإدخال العنصر اولا')ك
-                                                        return;
-                                                    }
-                                                    const option = new Option(new.value,new.value);
-                                                    list.add(option,undefined);
-                                                    new.value = '';
-                                                };
-                                            </script> --}}
-                                            <div class="form-group">
-                                                <label>تأريخ النزول للسوق</label>
-                                                <input type="date" class="form-control" name="date">
-                                                @if ($errors->has('date'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('date') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div>
+                                                </div>
+                                            </div><!-- /.row -->
                                             <div class="form-group" >
-                                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
+                                                <button type="submit" class="btn btn-primary font">
                                                     حفظ<i class="fas fa-save"></i>
                                                 </button>
                                             </div>

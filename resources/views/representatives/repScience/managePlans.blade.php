@@ -40,7 +40,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($plans->count() > 0)
+                  {{-- @if($plans->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -64,11 +64,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي خطة' }}
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -86,19 +86,15 @@
                         @endif
                       </td>
                       <td>
+                        @php $percent = $row->plan_progress/$row->customers_all->count() * 100; @endphp
                         <div class="progress progress_sm">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57" aria-valuenow="55" style="width:{{$row->plan_progress}}%;"></div>
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57" aria-valuenow="55" style="width:{{$percent}}%;"></div>
                         </div>
-                        <small>%{{$row->plan_progress}} مكتمل</small>
+                        <small>%{{$percent}} مكتمل</small>
                       </td>
                       <td>
                         <a href="/repScience/editPlan/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <a href="/repScience/planDetials/{{$row->id}}"><i title="عرض الخطط" class="fas fa-eye"></i></a>
-                        {{-- <form action="/repScience/deletePlan/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
@@ -109,7 +105,7 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($plans->count() > 0)
+                    {{-- @if($plans->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">شهر الخطة</th>
@@ -119,7 +115,7 @@
                         <th rowspan="1" colspan="1">مستوى الإنجاز</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>

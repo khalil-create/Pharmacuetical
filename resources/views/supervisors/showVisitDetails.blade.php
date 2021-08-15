@@ -217,7 +217,7 @@
                                                     <h6 style="float:right">{{$row->name}}</h6>
                                                     <small class="text-sm text-bold floatt">
                                                         @if($row->statues)
-                                                            <span>{{'مقبوله'}}</span>
+                                                            <span>{{'مقبوله'}} <i class="fas fa-check"></i></span>
                                                         @else
                                                             <span class="text-danger">{{'غير مقبوله'}}</span>
                                                         @endif
@@ -242,7 +242,7 @@
                                                         <h6 style="float:right">{{$row->name}}</h6>
                                                         <small class="text-sm text-bold floatt">
                                                             @if($row->statues)
-                                                                <span>{{'مقبوله'}}</span>
+                                                                <span>{{'مقبوله'}} <i class="fas fa-check"></i></span>
                                                             @else
                                                                 <span class="text-danger">{{'غير مقبوله'}}</span>
                                                             @endif

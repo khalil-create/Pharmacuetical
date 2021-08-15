@@ -86,10 +86,11 @@
                         @endif
                       </td>
                       <td>
+                        @php $percent = $row->plan_progress/$row->customers_all->count() * 100; @endphp
                         <div class="progress progress_sm">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57" aria-valuenow="55" style="width:{{$row->plan_progress}}%;"></div>
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57" aria-valuenow="55" style="width:{{$percent}}%;"></div>
                         </div>
-                        <small>%{{$row->plan_progress}} مكتمل</small>
+                        <small>%{{$percent}} مكتمل</small>
                       </td>
                       <td>
                         <a href="/supervisor/editRepPlan/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>

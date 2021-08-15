@@ -87,11 +87,11 @@
                       <td class="sorting_1">
                         {{$row->count}}
                       </td>
-                      <td>{{$row->bonus}}</td>
+                      <td>{{$row->item->bonus}}%</td>
                       <td>{{$row->note}}</td>
                       <td>
                         <a href="/repScience/editOrder/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <i class="fas fa-eye"></i>
+                        <a href="/repScience/showOrderDetails/{{$row->id}}"><i class="fas fa-eye"></i></a>
                         {{-- <form action="/repScience/deleteOrder/{{$row->id}}" method="post" style="float: right;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}

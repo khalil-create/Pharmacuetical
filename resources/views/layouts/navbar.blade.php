@@ -146,7 +146,7 @@
               <a href="/representative/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
             @endif
             <a href="{{route('logout')}}" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();" class="btn btn-default btn-flat float-right">تسجيل الخروج</a>
+            document.getElementById('logout-form').submit();" class="btn btn-default btn-flat float-right"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               {{ csrf_field() }}
           </form>

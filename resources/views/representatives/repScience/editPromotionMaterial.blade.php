@@ -38,12 +38,7 @@
                 </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
-                @if (session('error'))
-                    <div class="alert alert-danger notify-error">
-                        {{ session('error') }}
-                    </div>
-                @endif
+                <div class="card-body">>
                 <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
@@ -51,49 +46,51 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>الصنف المنافس</label>
-                                <input value="{{$promotion->competitor->item_name}}" type="text" name="item_name" class="form-control">
-                                @if ($errors->has('item_name'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('item_name') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>نوع المادة الترويجية</label>
-                                <input value="{{$promotion->type}}" type="text" name="type" class="form-control">
-                                @if ($errors->has('type'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('type') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>المستهدفون</label>
-                                <input value="{{$promotion->targets}}" type="text" name="targets" class="form-control">
-                                @if ($errors->has('targets'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('targets') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="sign_img_company">إرفاق الصورة</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input value="{{asset('images/items/'.$promotion->image)}}" type="file" class="custom-file-input" name="image">
-                                        <label class="custom-file-label" for="image"></label>
-                                        @if ($errors->has('image'))
-                                            <span class="help-block">
-                                                <small class="form-text text-danger">{{ $errors->first('image') }}</small>
-                                            </span>
-                                        @endif
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>الصنف المنافس</label>
+                                    <input value="{{$promotion->competitor->item_name}}" type="text" name="item_name" class="form-control">
+                                    @if ($errors->has('item_name'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('item_name') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>نوع المادة الترويجية</label>
+                                    <input value="{{$promotion->type}}" type="text" name="type" class="form-control">
+                                    @if ($errors->has('type'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('type') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>المستهدفون</label>
+                                    <input value="{{$promotion->targets}}" type="text" name="targets" class="form-control">
+                                    @if ($errors->has('targets'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('targets') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="sign_img_company">إرفاق الصورة</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input value="{{asset('images/items/'.$promotion->image)}}" type="file" class="custom-file-input" name="image">
+                                            <label class="custom-file-label" for="image"></label>
+                                            @if ($errors->has('image'))
+                                                <span class="help-block">
+                                                    <small class="form-text text-danger">{{ $errors->first('image') }}</small>
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div><!-- /.row -->
                             <div class="form-group" >
-                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
+                                <button type="submit" class="btn btn-primary font">
                                     تعديل <i class="fas fa-edit"></i>
                                 </button>
                             </div>

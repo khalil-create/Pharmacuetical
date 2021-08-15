@@ -28,6 +28,8 @@ class OrderController extends Controller
         // $items = Item::whereHas('representat')
         if($customers->count() < 1)
             return redirect()->back()->with(['error' => 'لايمكنك اضافة طلبية، الرجاء اضافة على الاقل عميل واحد!!! أو ان العملاء الذين اضفتهم لم يتم تفعيلهم']);
+        if($items->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة طلبية لأنه لاتوجد لديك اصناف! .... اطلب من مشرفك اضافة صنف واحد على الاقل ']);
         return view('representatives.repScience.addOrder',compact('customers'))->with('items',$items);
     }
     public function storeOrder(Request $request)
@@ -42,7 +44,7 @@ class OrderController extends Controller
             'customer_id' => $request->customer_id,
             'item_id' => $request->item_id,
             'count' => $request->count,
-            'bonus' => $request->bonus,
+            // 'bonus' => $request->bonus,
             'note' => $request->note,
             'representative_id' => Auth::user()->representatives->id,
         ]);
@@ -52,7 +54,7 @@ class OrderController extends Controller
     {
         return $rules = [
                 'count' => 'required|numeric',
-                'bonus' => 'required|numeric',
+                // 'bonus' => 'required|numeric',
                 'note' => 'required|string',
                 ];
     }
@@ -62,8 +64,8 @@ class OrderController extends Controller
             'count.required' => 'يجب عليك كتابة هذا الحقل',
             'count.numeric' => 'يجب ان يكون هذا الحقل رقم',
 
-            'bonus.required' => 'يجب عليك كتابة هذا الحقل',
-            'bonus.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            // 'bonus.required' => 'يجب عليك كتابة هذا الحقل',
+            // 'bonus.numeric' => 'يجب ان يكون هذا الحقل رقم',
 
             'note.required' => 'يجب عليك كتابة هذا الحقل',
             'note.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -91,7 +93,7 @@ class OrderController extends Controller
         $order->customer_id = $request->customer_id;
         $order->item_id = $request->item_id;
         $order->count = $request->count;
-        $order->bonus = $request->bonus;
+        // $order->bonus = $request->bonus;
         $order->note = $request->note;
 
         $order->update();
@@ -108,5 +110,12 @@ class OrderController extends Controller
 
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/repScience/manageOrders')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showOrderDetails($id)
+    {
+        $order = Order::with('customer')->findOrfail($id);
+        if($order->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('representatives.repScience.showOrderDetails',compact('order'));
     }
 }

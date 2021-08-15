@@ -124,7 +124,7 @@
           <div class="col-sm-12">
             <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
               <thead>
-                @if($plan->customers_all->count() > 0)
+                {{-- @if($plan->customers_all->count() > 0) --}}
                   <tr role="row">
                     <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                       #
@@ -138,21 +138,27 @@
                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                       العميل
                     </th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                      ملاحظة
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                      الحالة
+                    </th>
                     <th class="sorting align-center" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">
                       العملية
                     </th>
                   </tr>
-                @else
+                {{-- @else
                   <div class="alert alert-danger notify-error">
                     {{ 'لم يتم اضافة اي خطة' }}
                   </div>
-                @endif
+                @endif --}}
               </thead>
               <tbody>
-                <?php $i=1?>
+                <?php $i=0;?>
                 @foreach ($plan->customers_all as $row)
                   <tr class="odd">
-                    <td class="dtr-control" tabindex="0">{{$i++}}</td>
+                    <td class="dtr-control" tabindex="0">{{++$i}}</td>
                     <td>{{$row->visit_date}}</td>
                     <td>{{$row->period}}</td>
                     <td>
@@ -160,6 +166,14 @@
                           {{$row->customer->name}}
                       @else
                           {{$row->doctor->name}}
+                      @endif
+                    </td>
+                    <td>{{$row->note}}</td>
+                    <td>
+                      @if ($row->visited)
+                          <i class="fas fa-check"></i>
+                      @else
+                          <i class="fas fa-close"></i>
                       @endif
                     </td>
                     <td>
@@ -171,15 +185,17 @@
                 @endforeach
               </tbody>
               <tfoot>
-                @if($plan->customers_all->count() > 0)
+                {{-- @if($plan->customers_all->count() > 0) --}}
                   <tr>
                     <th rowspan="1" colspan="1">#</th>
                     <th rowspan="1" colspan="1">تأريخ الزيارة</th>
                     <th rowspan="1" colspan="1">الفترة</th>
                     <th rowspan="1" colspan="1">العميل</th>
+                    <th rowspan="1" colspan="1">ملاحظة</th>
+                    <th rowspan="1" colspan="1">الحالة</th>
                     <th rowspan="1" colspan="1">العملية</th>
                   </tr>
-                @endif
+                {{-- @endif --}}
               </tfoot>
             </table>
           </div>

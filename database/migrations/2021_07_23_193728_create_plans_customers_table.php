@@ -17,6 +17,7 @@ class CreatePlansCustomersTable extends Migration
             $table->increments('id');
             $table->date('visit_date');
             $table->string('period');
+            $table->boolean('visited');
             $table->string('note',500)->nullable();
 
             $table->unsignedInteger('plan_id')->unsigned();

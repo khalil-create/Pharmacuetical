@@ -69,6 +69,8 @@
                                 $path == 'repScience/editDoctor' ||
                                 $path == 'repScience/editCustomer'||
                                 $path == 'repScience/showDoctorDetails'||
+                                $path == 'repScience/showCustomerDetails'||
+                                $path == 'repScience/showOrderDetails'||
                                 $path == 'repScience/editOrder'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -81,6 +83,8 @@
                                 $path == 'repScience/editDoctor' ||
                                 $path == 'repScience/editCustomer'||
                                 $path == 'repScience/showDoctorDetails'||
+                                $path == 'repScience/showCustomerDetails'||
+                                $path == 'repScience/showOrderDetails'||
                                 $path == 'repScience/editOrder'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -105,6 +109,7 @@
                 <a href="/repScience/manageCustomers"
                     class="nav-link {{  $p == 'repScience/manageCustomers' ||
                                         $p == 'repScience/addCustomer' ||
+                                        $path == 'repScience/showCustomerDetails' ||
                                         $path == 'repScience/editCustomer'? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -115,6 +120,7 @@
                     <a href="/repScience/manageOrders"
                     class="nav-link {{  $p == 'repScience/manageOrders' ||
                                         $p == 'repScience/addOrder' ||
+                                        $path == 'repScience/showOrderDetails' ||
                                         $path == 'repScience/editOrder'? 'active' : '' }}">
                         <i class="fas fa-inbox nav-icon"></i>
                         <p>
@@ -182,6 +188,9 @@
                                 $p == 'repScience/addPromotionMaterial' ||
                                 $path == 'repScience/editAlternative' ||
                                 $path == 'repScience/editCompetitionService'||
+                                $path == 'repScience/showAlternativeDetails'||
+                                // $path == 'repScience/showCompetitionServiceDetails'||
+                                // $path == 'repScience/showPromotionMaterialDetails'||
                                 $path == 'repScience/editPromotionMaterial'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -194,6 +203,9 @@
                                 $p == 'repScience/addPromotionMaterial' ||
                                 $path == 'repScience/editAlternative' ||
                                 $path == 'repScience/editCompetitionService'||
+                                $path == 'repScience/showAlternativeDetails'||
+                                // $path == 'repScience/showCompetitionServiceDetails'||
+                                // $path == 'repScience/showPromotionMaterialDetails'||
                                 $path == 'repScience/editPromotionMaterial'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -207,6 +219,7 @@
                 <a href="/repScience/manageAlternatives"
                     class="nav-link {{  $p == 'repScience/manageAlternatives' || 
                                         $p == 'repScience/addAlternative' ||
+                                        $path == 'repScience/showAlternativeDetails'||
                                         $path == 'repScience/editAlternative'? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -217,6 +230,7 @@
                 <a href="/repScience/manageCompetitionServices"
                     class="nav-link {{  $p == 'repScience/manageCompetitionServices' ||
                                         $p == 'repScience/addCompetitionService' ||
+                                        // $path == 'repScience/showCompetitionServiceDetails'||
                                         $path == 'repScience/editCompetitionService'? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -227,6 +241,7 @@
                     <a href="/repScience/managePromotionMaterials"
                     class="nav-link {{  $p == 'repScience/managePromotionMaterials' ||
                                         $p == 'repScience/addPromotionMaterial' ||
+                                        // $path == 'repScience/showPromotionMaterialDetails'||
                                         $path == 'repScience/editPromotionMaterial'? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>المواد الترويجية</p>
@@ -251,6 +266,7 @@
             <a href="/repScience/manageServices"
             class="nav-link {{  $p == 'repScience/manageServices' ||
                                 $p == 'repScience/addService' ||
+                                $path == 'repScience/showServiceDetails'||
                                 $path == 'repScience/editService'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>
@@ -262,11 +278,10 @@
             <a href="/repScience/manageVisits"
             class="nav-link {{  $p == 'repScience/manageVisits' ||
                                 $p == 'repScience/addVisit' ||
+                                $path == 'repScience/showVisitDetails' ||
                                 $path == 'repScience/editVisit'? 'active' : '' }}">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>
-                الزيارات
-                </p>
+                <p>الزيارات</p>
             </a>
         </li>
         {{-- <li class="nav-item">

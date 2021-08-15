@@ -59,7 +59,6 @@
                       <tbody>
                         <input name="item_id" value="{{$salesObjective->item_id}}" hidden>
                         <input id="total_objective" value="{{$salesObjective->objective}}" hidden>
-                        @php $i=0; @endphp
                         @foreach ($supervisors as $row)
                         <tr>
                           <td>
@@ -67,7 +66,17 @@
                             <label style="float: right">{{$row->user->user_name_third}} {{$row->user->user_surname}}</label>
                           </td>
                           <td>
-                            <input value="@if(sizeof($sales) > $i && sizeof($sales) != 0){{$sales[$i]["objective"]}} @endif" type="text" placeholder="الهدف البيعي لهذا المشرف" name="objective[]" class="form-control">
+                            @php $found = false; @endphp
+                            @foreach($sales as $obj)
+                                @if($obj->supervisor_id == $row->id)
+                                    @php $found = true; @endphp
+                                    <input value="{{$obj->objective}}" type="text" placeholder="الهدف البيعي لهذا المشرف" name="objective[]" class="form-control">
+                                    @break
+                                @endif
+                            @endforeach
+                            @if(!$found)
+                              <input type="text" placeholder="مقدار الهدف لهذا المشرف" name="objective[]" class="form-control">
+                            @endif
                             @if ($errors->has('objective'))
                               <span class="help-block">
                                   <small class="form-text text-danger">{{ $errors->first('objective') }}</small>
@@ -75,7 +84,6 @@
                             @endif
                           </td>
                         </tr>
-                        @php $i++; @endphp
                         @endforeach
                         <tr rowspan="2">
                           <label>الوصف</label>

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    ادارة الخدمات
+    ادارة الزيارات
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0">ادارة الخدمات</h1>
+                <h1 class="m-0">ادارة الزيارات</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
-                        <li class="breadcrumb-item active">تفاصيل الخدمة</li>
+                        <li class="breadcrumb-item active">تفاصيل الزيارة</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="float: right"> معلومات الخدمة
+                    <span class="card-title" style="float: right"> معلومات الزيارة
                         <span class="text-bold"></span>
                     </span>
                     <div class="card-tools float-right">
@@ -41,16 +41,18 @@
                 <div class="card-body">
                     <!-- Info boxes -->
                     <div class="row">
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box">
                                 <div class="info-box-content">
-                                    <span class="info-box-text">نوع الخدمة</span>
+                                    <span class="info-box-text">نوع الزيارة</span>
                                     <span class="info-box-number">
-                                        @if($service->type)
-                                            {{'خدمة مادية:- '}}{{$service->name}}
+                                        @if ($visit->type == 1)
+                                            {{'مصحوبة مع المشرف/علمية'}}
+                                        @elseif($visit->type == 2)
+                                            {{'عرض خدمة'}}
                                         @else
-                                            {{'خدمة عينية'}}
-                                        @endif    
+                                            {{'حل مشكلة'}}
+                                        @endif
                                     </span>
                                 </div> <!-- /.info-box-content -->
                             </div><!-- /.info-box -->
@@ -58,19 +60,87 @@
                         <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
-                                    <span class="info-box-text">تكلفتها</span>
+                                    <span class="info-box-text">فترة الزيارة</span>
                                     <span class="info-box-number">
-                                        {{$service->cost}}
+                                        @if ($visit->period == 1)
+                                            {{'AM'}}
+                                        @elseif($visit->period == 2)
+                                            {{'PM'}}
+                                        @endif
                                     </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
-                                    @php $date = explode(' ',$service->created_at) @endphp
-                                    <span class="info-box-text">تأريخ الطلب</span>
-                                    <span class="info-box-number">{{$date[0]}}</span>
+                                    <span class="info-box-text">تأريخ الزيارة</span>
+                                    <span class="info-box-number">{{$visit->date}}</span>
+                                </div><!-- /.info-box-content -->
+                            </div><!-- /.info-box -->
+                        </div><!-- /.col -->
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <div class="info-box-content">
+                                    <span class="info-box-text">العميل</span>
+                                    <span class="info-box-number">
+                                        @if ($visit->doctor)
+                                            {{'د. '.$visit->doctor->name}}
+                                        @else
+                                            {{$visit->customer->name}}
+                                        @endif
+                                    </span>
+                                </div> <!-- /.info-box-content -->
+                            </div><!-- /.info-box -->
+                        </div><!-- /.col -->
+                        @if ($visit->type == 1)
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="info-box mb-3">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">الصنف المستهدف</span>
+                                        <span class="info-box-number">{{$visit->composition->item}}</span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="info-box mb-3">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">الرسالة العلمية الموجهة</span>
+                                        <span class="info-box-number">{{$visit->composition->scientific_mission}}</span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+                        @elseif($visit->type == 2)
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="info-box mb-3">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">الخدمة التي تم عرضها</span>
+                                        <span class="info-box-number">
+                                            @if($visit->serviceOffer->services->type)
+                                                {{'خدمة مادية:- '}}{{$visit->serviceOffer->services->name}}
+                                            @else
+                                                {{'خدمة عينية'}}
+                                            @endif
+                                            {{'تكلفتها بـ '}}{{$visit->serviceOffer->services->cost}}
+                                        </span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+                        @else
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="info-box mb-3">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">وصف المشكلة</span>
+                                        <span class="info-box-number">{{$visit->solveProblem->description}}</span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div><!-- /.col -->
+                        @endif
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="info-box mb-3">
+                                <div class="info-box-content">
+                                    <span class="info-box-text">نتيجة الزيارة</span>
+                                    <span class="info-box-number">{{$visit->result}}</span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
@@ -79,14 +149,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">تتبع المندوب</span>
                                     <span class="info-box-number">
-                                        {{-- @foreach($service->representatives as $rep)
-                                            @if ($rep->user->user_type == 'مندوب علمي' || $rep->user->user_type == 'مدير فريق')
-                                                <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @else
-                                                <p><span class="text-success">م.مبيعات: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @endif
-                                        @endforeach --}}
-                                        {{$service->representatives->whereNotNull('supervisor_id')->first()->user->user_name_third}} {{$service->representatives->whereNotNull('supervisor_id')->first()->user->user_surname}}
+                                        {{$visit->representative->user->user_name_third}} {{$visit->representative->user->user_surname}}
                                     </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
@@ -96,12 +159,12 @@
             </div><!-- /.card -->
         </div><!-- /.container-fluid -->
     </section>
-    <section class="content" >
+    {{-- <section class="content" >
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
                     <span class="card-title" style="float: right"> العملاء والاطباء الذين طلبوا الخدمة
-                        <span class="text-bold">{{$service->name}}</span>
+                        <span class="text-bold">{{$visit->name}}</span>
                     </span>
                     <div class="card-tools float-right">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -126,7 +189,7 @@
                                         <div class="info-box-content">
                                             <span class="info-box-text">العملاء</span>
                                             <span class="info-box-number">
-                                                {{$service->serviceCustomers->count()}}
+                                                {{$visit->visitCustomers->count()}}
                                             </span>
                                         </div><!-- /.info-box-content -->
                                     </div><!-- /.info-box -->
@@ -138,7 +201,7 @@
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">الاطباء</span>
-                                            <span class="info-box-number">{{$service->serviceDoctors->count()}}</span>
+                                            <span class="info-box-number">{{$visit->visitDoctors->count()}}</span>
                                         </div><!-- /.info-box-content -->
                                     </nav><!-- /.info-box -->
                                 </a>
@@ -146,17 +209,17 @@
                         </nav>
                         <div class="tab-content p-3" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"><!-- representatives -->
-                                @if($service->serviceCustomers->count() > 0)
-                                    @foreach ($service->customers as $row)
+                                @if($visit->visitCustomers->count() > 0)
+                                    @foreach ($visit->customers as $row)
                                         <a href="/supervisor/showCustomerDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
                                             <div class="col-12">
-                                                <div class="col-md-12" style="margin:0px 0px -8px 5px;float:right">
-                                                    <h6>{{$row->name}}</h6>
-                                                    <small class="text-sm text-bold">
+                                                <div class="col-md-12" style="margin:10px 0px -8px 5px;float:right">
+                                                    <h6 style="float:right">{{$row->name}}</h6>
+                                                    <small class="text-sm text-bold floatt">
                                                         @if($row->statues)
                                                             <span>{{'مقبوله'}} <i class="fas fa-check"></i></span>
                                                         @else
-                                                            <span class="text-danger">{{'غير مقبوله'}} <i class="fas fa-close"></i></span>
+                                                            <span class="text-danger">{{'غير مقبوله'}}</span>
                                                         @endif
                                                     </small>
                                                 </div>
@@ -169,19 +232,19 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"><!-- services -->
-                                @if($service->serviceDoctors->count() > 0)
+                            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"><!-- visits -->
+                                @if($visit->visitDoctors->count() > 0)
                                     <div class="row">
-                                        @foreach ($service->doctors as $row)
+                                        @foreach ($visit->doctors as $row)
                                             <a href="/supervisor/showOrderDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
                                                 <div class="col-12">
-                                                    <div class="col-md-12" style="margin:0px 0px -8px 5px;float:right">
-                                                        <h6>{{$row->name}}</h6>
-                                                        <small class="text-sm text-bold">
+                                                    <div class="col-md-12" style="margin:10px 0px -8px 5px;float:right">
+                                                        <h6 style="float:right">{{$row->name}}</h6>
+                                                        <small class="text-sm text-bold floatt">
                                                             @if($row->statues)
                                                                 <span>{{'مقبوله'}} <i class="fas fa-check"></i></span>
                                                             @else
-                                                                <span class="text-danger">{{'غير مقبوله'}} <i class="fas fa-close"></i></span>
+                                                                <span class="text-danger">{{'غير مقبوله'}}</span>
                                                             @endif
                                                         </small>
                                                     </div>
@@ -200,6 +263,6 @@
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div><!-- /.container-fluid -->
-    </section>
+    </section> --}}
 </div>
 @endsection

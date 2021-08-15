@@ -110,7 +110,8 @@ class SalesobjectiveController extends Controller
     {
         $salesObjective = Salesobjective::find($id);
         $sales = Salesobjective::where('item_id',$salesObjective->item_id)->whereNotNull(['supervisor_id','manager_id'])->get();
-        $sales = $sales->toArray();
+        $sales = $sales->sortBy('supervisor_id');
+        // $sales = $sales->toArray();
         // return $sales;
         // $salesObjectiveDistributed = Salesobjective::whereDosntHave('supervisor')
         // ->where('item_id',$salesObjective->item_id)->get();
@@ -125,27 +126,34 @@ class SalesobjectiveController extends Controller
     {
         $sales = Salesobjective::where('item_id',$request->item_id)->whereNotNull(['manager_id','supervisor_id'])->get();
 
-        $sales = $sales->toArray(); //convert to array
+        // $sales = $sales->toArray(); //convert to array
         $total_obj = sizeof($request->objective);
         $i = -1;
         foreach($request->objective as $obj)
         {   
             $i++;
-            //if edit on objectives, update objective to new value
-            if($sales && sizeof($sales) != $i && $sales[$i]["supervisor_id"] == $request->supervisor[$i] && $sales[$i]["objective"] != $obj){
-                if($obj == ''){
-                    $s = Salesobjective::findOrfail($sales[$i]["id"]);
-                    $s->delete();
-                }
-                else
-                {
-                    $s = Salesobjective::findOrfail($sales[$i]["id"]);
-                    $s->objective = $obj;
-                    $s->update();
+            $exist = false;
+            foreach($sales as $sale){
+                //if edit on samples, update sample to new value
+                if($sale->supervisor_id == $request->supervisor[$i]){
+                    if($sale->objective != $obj){
+                        if($obj == ''){
+                            // return "delete".$i;
+                            $s = Salesobjective::findOrfail($sale->id);
+                            $s->delete();
+                        }
+                        else{
+                            // return "update".$i;
+                            $s = Salesobjective::findOrfail($sale->id);
+                            $s->objective = $obj;
+                            $s->update();
+                        }
+                    }
+                    $exist = true;
+                    break;
                 }
             }
-            else if($obj != '')
-            {
+            if(!$exist && $obj != ''){
                 Salesobjective::create([
                     'objective' => $obj,
                     'description' => $request->description,
@@ -155,9 +163,39 @@ class SalesobjectiveController extends Controller
                 ]);
                 //////////////// Notify user //////////////////////////
                 $sup = Supervisor::findOrfail($request->supervisor[$i]);
-                $this->notifyUser('اهداف','لديك هدف بيعي جديد',$sup->user->id);
+                $this->notifyUser('اهداف','يوجد لديك هدف بيعي',$sup->user->id);
             }
         }
+        // foreach($request->objective as $obj)
+        // {   
+        //     $i++;
+        //     //if edit on objectives, update objective to new value
+        //     if($sales && sizeof($sales) != $i && $sales[$i]["supervisor_id"] == $request->supervisor[$i] && $sales[$i]["objective"] != $obj){
+        //         if($obj == ''){
+        //             $s = Salesobjective::findOrfail($sales[$i]["id"]);
+        //             $s->delete();
+        //         }
+        //         else
+        //         {
+        //             $s = Salesobjective::findOrfail($sales[$i]["id"]);
+        //             $s->objective = $obj;
+        //             $s->update();
+        //         }
+        //     }
+        //     else if($obj != '')
+        //     {
+        //         Salesobjective::create([
+        //             'objective' => $obj,
+        //             'description' => $request->description,
+        //             'manager_id' => Auth::user()->manager->id,
+        //             'supervisor_id' => $request->supervisor[$i],
+        //             'item_id' => $request->item_id,
+        //         ]);
+        //         //////////////// Notify user //////////////////////////
+        //         $sup = Supervisor::findOrfail($request->supervisor[$i]);
+        //         $this->notifyUser('اهداف','لديك هدف بيعي جديد',$sup->user->id);
+        //     }
+        // }
         return redirect('/managerMarketing/manageSalesObjectives')->with('status','تم توزيع الهدف البيعي بشكل ناجح');
     }
 }

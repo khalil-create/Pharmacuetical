@@ -73,7 +73,13 @@
                             <img src="{{asset('images/users/'.$row->user->user_image)}}" class="img-users">
                             {{$row->user->user_name_third}} {{$row->user->user_surname}}
                           </td>
-                          <td>{{$row->repResults->first()->result}}</td>
+                          <td>
+                            @php $results_arr = explode('+',$row->repResults->first()->result);$try = 1; @endphp
+                            @foreach ($results_arr as $result)
+                                {{'المحاولة ('.$try.') : '.$result}}%<br>
+                                @php $try++; @endphp
+                            @endforeach
+                          </td>
                           <td>
                             <input type="hidden" class="test_id" value="{{$test->id}}">
                             <input type="hidden" class="rep_id" value="{{$row->id}}">

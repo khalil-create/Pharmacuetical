@@ -12,6 +12,7 @@ class PlansCustomer extends Model
         'visit_date',
         'period',
         'note',
+        'visited',
         'plan_id',
         'customer_id',
         'doctor_id',

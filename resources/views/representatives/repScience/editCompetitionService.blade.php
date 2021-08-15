@@ -39,11 +39,6 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                @if (session('error'))
-                    <div class="alert alert-danger notify-error">
-                        {{ session('error') }}
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
@@ -51,60 +46,62 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>الصنف المنافس</label>
-                                <input value="{{$service->competitor->item_name}}" type="text" name="item_name" class="form-control">
-                                @if ($errors->has('item_name'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('item_name') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            @php
-                                $money='';$physical='';
-                                if($service->type) $physical = 'selected';
-                                else $money = 'selected';
-                            @endphp
-                            <div class="form-group">
-                                <label>نوع الخدمة</label>
-                                <select id="type" name="type" class="custom-select rounded-0">
-                                    <option value="0" {{$money}}>
-                                        عيني
-                                    </option>
-                                    <option value="1" {{$physical}}>
-                                        مادي
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>هدف تقديم الخدمة</label>
-                                <input value="{{$service->service_goal}}" type="text" name="service_goal" class="form-control">
-                                @if ($errors->has('service_goal'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('service_goal') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>فترة تقديم الخدمة</label>
-                                <input value="{{$service->service_period}}" type="text" name="service_period" class="form-control">
-                                @if ($errors->has('service_period'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('service_period') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>مصدر المعلومة</label>
-                                <input value="{{$service->source}}" type="text" name="source" class="form-control">
-                                @if ($errors->has(' '))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('source') }}</small>
-                                    </span>
-                                @endif
-                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>الصنف المنافس</label>
+                                    <input value="{{$service->competitor->item_name}}" type="text" name="item_name" class="form-control">
+                                    @if ($errors->has('item_name'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('item_name') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                @php
+                                    $money='';$physical='';
+                                    if($service->type) $physical = 'selected';
+                                    else $money = 'selected';
+                                @endphp
+                                <div class="form-group col-md-6">
+                                    <label>نوع الخدمة</label>
+                                    <select id="type" name="type" class="custom-select rounded-0">
+                                        <option value="0" {{$money}}>
+                                            عيني
+                                        </option>
+                                        <option value="1" {{$physical}}>
+                                            مادي
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>هدف تقديم الخدمة</label>
+                                    <input value="{{$service->service_goal}}" type="text" name="service_goal" class="form-control">
+                                    @if ($errors->has('service_goal'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('service_goal') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>فترة تقديم الخدمة</label>
+                                    <input value="{{$service->service_period}}" type="text" name="service_period" class="form-control">
+                                    @if ($errors->has('service_period'))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('service_period') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>مصدر المعلومة</label>
+                                    <input value="{{$service->source}}" type="text" name="source" class="form-control">
+                                    @if ($errors->has(' '))
+                                        <span class="help-block">
+                                            <small class="form-text text-danger">{{ $errors->first('source') }}</small>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div><!-- /.row -->
                             <div class="form-group" >
-                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
+                                <button type="submit" class="btn btn-primary font">
                                     تعديل <i class="fas fa-edit"></i>
                                 </button>
                             </div>

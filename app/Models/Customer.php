@@ -46,4 +46,8 @@ class Customer extends Model
     {
         return $this->belongsToMany('App\Models\Plan','plans_customers');
     }
+    public function visits()
+    {
+        return $this->hasMany('App\Models\Visit','customer_id','id');
+    }
 }

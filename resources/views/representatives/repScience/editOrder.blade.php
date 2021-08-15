@@ -39,81 +39,83 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                    <div class="form-group">
-                        <form id="form" method="POST" action="/repScience/updateOrder/{{$order->id}}"  enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        {{ method_field('PUT') }}
-                        <div class="card-body">
-                            <div id="cust_name" class="form-group">
-                                <label>العميل</label>
-                                <select name="customer_id" class="custom-select rounded-0">
-                                    @foreach ($customers as $row)
-                                        <option value="{{$row->id}}"
-                                            @if ($row->id == $order->customer_id)
-                                                {{'selected'}}
-                                            @endif>
-                                            {{$row->name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div id="cust_name" class="form-group">
-                                <label>الصنف</label>
-                                <select  name="item_id" class="custom-select rounded-0">
-                                    @foreach ($items as $row)
-                                        <option value="{{$row->id}}"
-                                            @if ($row->id == $order->item_id)
-                                                {{'selected'}}
-                                            @endif>
-                                            {{$row->commercial_name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label>الكمية</label>
-                                <input value="{{$order->count}}" type="text" name="count" class="form-control">
-                                @if ($errors->has('count'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('count') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>البونص ( % )</label>
-                                <input value="{{$order->bonus}}" type="text" name="bonus" class="form-control">
-                                @if ($errors->has('bonus'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('bonus') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>ملاحظة</label>
-                                {{-- <input type="text" name="note"  class="form-control"> --}}
-                                <textarea name="note" id="form" cols="30" rows="4" class="form-control">{{$order->note}}</textarea>
-                                @if ($errors->has('note'))
-                                    <span class="help-block">
-                                        <small class="form-text text-danger">{{ $errors->first('note') }}</small>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group" >
-                                <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                    تعديل <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form><!-- /.form -->
-            </div><!-- /.form-group -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-</div><!-- /.card-body -->
-</div><!-- /.card -->
-</div><!-- /.container-fluid -->
+                                <form id="form" method="POST" action="/repScience/updateOrder/{{$order->id}}"  enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div id="cust_name" class="form-group col-md-6">
+                                                <label>العميل</label>
+                                                <select name="customer_id" class="custom-select rounded-0">
+                                                    @foreach ($customers as $row)
+                                                        <option value="{{$row->id}}"
+                                                            @if ($row->id == $order->customer_id)
+                                                                {{'selected'}}
+                                                            @endif>
+                                                            {{$row->name}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div id="cust_name" class="form-group col-md-6">
+                                                <label>الصنف</label>
+                                                <select  name="item_id" class="custom-select rounded-0">
+                                                    @foreach ($items as $row)
+                                                        <option value="{{$row->id}}"
+                                                            @if ($row->id == $order->item_id)
+                                                                {{'selected'}}
+                                                            @endif>
+                                                            {{$row->commercial_name}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>الكمية</label>
+                                                <input value="{{$order->count}}" type="text" name="count" class="form-control">
+                                                @if ($errors->has('count'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('count') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            {{-- <div class="form-group col-md-6">
+                                                <label>البونص ( % )</label>
+                                                <input value="{{$order->bonus}}" type="text" name="bonus" class="form-control">
+                                                @if ($errors->has('bonus'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('bonus') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div> --}}
+                                            <div class="form-group col-md-6">
+                                                <label>ملاحظة</label>
+                                                {{-- <input type="text" name="note"  class="form-control"> --}}
+                                                <textarea name="note" id="form" cols="30" rows="4" class="form-control">{{$order->note}}</textarea>
+                                                @if ($errors->has('note'))
+                                                    <span class="help-block">
+                                                        <small class="form-text text-danger">{{ $errors->first('note') }}</small>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="form-group" >
+                                            <button type="submit" class="btn btn-primary font">
+                                                تعديل <i class="fas fa-edit"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form><!-- /.form -->
+                        </div><!-- /.form-group -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.card-body -->
+        </div><!-- /.card -->
+    </div><!-- /.container-fluid -->
 </section>
 <div class="card-footer">
 Footer

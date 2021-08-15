@@ -138,4 +138,11 @@ class AlternativeController extends Controller
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/repScience/manageAlternatives')->with('status','تم حذف البيانات بشكل ناجح');
     }
+    public function showAlternativeDetails($id)
+    {
+        $alternative = Alternative::findOrfail($id);
+        if($alternative->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('representatives.repScience.showAlternativeDetails',compact('alternative'));
+    }
 }

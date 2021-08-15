@@ -27,7 +27,9 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                    <h3 class="card-title" style="float: right">تعديل اصناف المندوب</h3>
+                    <h3 class="card-title" style="float: right">تحديد اصناف للمندوبـ/ـة :- 
+                        <span class="text-bold">{{$rep->user->user_name_third}} {{$rep->user->user_surname}}</span>
+                    </h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -70,7 +72,7 @@
                                     </div>
                                     <div class="form-group" >
                                         <button type="submit" class="btn btn-primary font" style="margin-top: 10px;">
-                                            تعديل <i class="fas fa-edit"></i>
+                                            حفظ <i class="fas fa-save"></i>
                                         </button>
                                     </div>
                                 </form><!-- /.form -->

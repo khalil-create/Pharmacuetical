@@ -28,6 +28,11 @@ class TaskController extends Controller
     }
     public function storePerformTask(Request $request,$id)
     {
+        if($request->hasfile('report_task_file') && $request->report_task_text != '')
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة نوعين من التقرير في مهمة واحدة يجب عليك تحميل ملف او كتابة نص']);
+        else if(!$request->hasfile('report_task_file') && $request->report_task_text == '')
+            return redirect()->back()->with(['error' => 'يجب عليك تحميل ملف او كتابة نص']);
+
         $task = Task::findOrfail($id);
         if($task->report_task){
             $report = $task->report_task;

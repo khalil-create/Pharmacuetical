@@ -37,7 +37,10 @@ class TestController extends Controller
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
         */
-        
+        $repTest = RepresentativeTest::where('test_id',$id)->where('representative_id',Auth::user()->representatives->id)->first();
+        $results_arr = explode("+",$repTest->result);
+        if(sizeof($results_arr) >= 5)
+            return redirect()->back()->with(['error' => 'لقد وصلت للحد الأقصى لعدد مرات المحاولات (5)']);
         $tests = $test1->type()->with('questions')->get();
         return view('representatives.repScience.repTest',compact('tests'))
         ->with('test1',$test1);

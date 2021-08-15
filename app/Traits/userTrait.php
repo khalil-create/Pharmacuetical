@@ -50,6 +50,8 @@ trait userTrait
         $dateAndTime = explode(' ',$updated_at); 
         $notifyTime = explode(':',$dateAndTime[1]);
         $notifyHour = $notifyTime[0];
+        // $notifyHour = $notifyHour == '00' ? 1:$notifyHour;
+        // return $dateAndTime[1];//00:30:20
         $notifyMin = $notifyTime[1];
         
         $notifyDate = date("Y M d",strtotime($dateAndTime[0]));
@@ -63,6 +65,7 @@ trait userTrait
         $currentMonth = $currentDate[1];
         
         $currentTime = date("h:i:A",strtotime(Carbon::now()));
+        // return $currentTime;
         $currentTime = explode(':',$currentTime);
         $currentHour = $currentTime[0];
         $currentMin = $currentTime[1];
@@ -81,7 +84,12 @@ trait userTrait
                 else {
                     if($currentHour-1 == $notifyHour){
                         $dif = (60 - $notifyMin) + $currentMin;
-                        $since = 'منذ '.$dif.' دقيقة';
+                        if($dif >= 60){
+                            $since = 'منذ ساعة و '.($dif-60).' دقيقة';
+                        }
+                        else{
+                            $since = 'منذ '.$dif.' دقيقة';
+                        }
                     }
                     else{
                         $dif = $currentHour - $notifyHour;

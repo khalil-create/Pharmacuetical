@@ -40,7 +40,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($competitors->count() > 0)
+                  {{-- @if($competitors->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -61,11 +61,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي خدمة منافسة' }}
-                    </div>
-                  @endif
+                    </div> 
+                  @endif--}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -84,12 +84,7 @@
                       <td>{{$row->CompetitionService->source}}</td>
                       <td>
                         <a href="/repScience/editCompetitionService/{{$row->CompetitionService->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
-                        <i class="fas fa-eye"></i>
-                        {{-- <form action="/repScience/deleteCompetitionService/{{$row->CompetitionService->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        {{-- <a href="/repScience/showCompetitionServiceDetails/{{$row->CompetitionService->id}}"><i class="nav-icon fas fa-eye" title="تفاصيل"></i></a> --}}
                         <input type="hidden" class="id" value="{{$row->CompetitionService->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                       </td>
@@ -100,7 +95,7 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($competitors->count() > 0)
+                    {{-- @if($competitors->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">الصنف المنافس</th>
@@ -109,7 +104,7 @@
                         <th rowspan="1" colspan="1">مصدر المعلومة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>

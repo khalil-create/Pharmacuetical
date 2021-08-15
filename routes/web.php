@@ -516,6 +516,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::post('/storeCustomer', 'CustomerController@storeCustomer');
     Route::get('/editCustomer/{id}', 'CustomerController@editCustomer');
     Route::put('/updateCustomer/{id}', 'CustomerController@updateCustomer');
+    Route::get('/showCustomerDetails/{id}', 'CustomerController@showCustomerDetails');
     Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
     
     Route::get('/manageOrders', 'OrderController@getAllOrders');
@@ -523,6 +524,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::post('/storeOrder', 'OrderController@storeOrder');
     Route::get('/editOrder/{id}', 'OrderController@editOrder');
     Route::put('/updateOrder/{id}', 'OrderController@updateOrder');
+    Route::get('/showOrderDetails/{id}', 'OrderController@showOrderDetails');
     Route::delete('/deleteOrder/{id}', 'OrderController@deleteOrder');
 
     Route::get('/manageAlternatives', 'AlternativeController@getAllAlternatives')->name('repScience.show.alternatives');
@@ -530,6 +532,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::post('/storeAlternative', 'AlternativeController@storeAlternative');
     Route::get('/editAlternative/{id}', 'AlternativeController@editAlternative');
     Route::put('/updateAlternative/{id}', 'AlternativeController@updateAlternative');
+    Route::get('/showAlternativeDetails/{id}', 'AlternativeController@showAlternativeDetails');
     Route::delete('/deleteAlternative/{id}', 'AlternativeController@deleteAlternative');
 
     Route::get('/manageCompetitionServices', 'CompetitionServiceController@getAllCompetitionServices');
@@ -537,6 +540,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::post('/storeCompetitionService', 'CompetitionServiceController@storeCompetitionService');
     Route::get('/editCompetitionService/{id}', 'CompetitionServiceController@editCompetitionService');
     Route::put('/updateCompetitionService/{id}', 'CompetitionServiceController@updateCompetitionService');
+    // Route::get('/showCompetitionServiceDetails/{id}', 'CompetitionServiceController@showCompetitionServiceDetails');
     Route::delete('/deleteCompetitionService/{id}', 'CompetitionServiceController@deleteCompetitionService');
 
     Route::get('/managePromotionMaterials', 'PromotionController@getAllPromotionMaterials');
@@ -564,6 +568,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::post('/storeService', 'ServiceController@storeService');
     Route::get('/editService/{id}', 'ServiceController@editService');
     Route::put('/updateService/{id}', 'ServiceController@updateService');
+    Route::get('/showServiceDetails/{id}', 'ServiceController@showServiceDetails');
     Route::delete('/deleteService/{id}', 'ServiceController@deleteService');
     
     Route::get('/manageVisits', 'VisitController@getAllVisits');
@@ -571,6 +576,7 @@ Route::group(['prefix'=>'repScience','namespace'=>'App\Http\Controllers\Represen
     Route::post('/storeVisit', 'VisitController@storeVisit');
     Route::get('/editVisit/{id}', 'VisitController@editVisit');
     Route::put('/updateVisit/{id}', 'VisitController@updateVisit');
+    Route::get('/showVisitDetails/{id}', 'VisitController@showVisitDetails');
     Route::delete('/deleteVisit/{id}', 'VisitController@deleteVisit');
     
     Route::get('/manageCourses', 'TrainingCourseController@getAllCourses')->name('repScience.show.courses');

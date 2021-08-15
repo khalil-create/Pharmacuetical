@@ -58,8 +58,11 @@
                         الهدف
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        العملية
+                        مستوى الإنجاز
                       </th>
+                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
+                        العملية
+                      </th> --}}
                     </tr>
                   @else
                     <div class="alert alert-danger notify-danger">
@@ -83,16 +86,22 @@
                         {{ $row->objective }}
                       </td>
                       <td>
+                        @php
+                            $rep_orders = $row->item->orders->where('representative_id',$row->representative_id)->where('item_id',$row->item_id);
+                            $countOrders_sum = $rep_orders->sum('count');
+                            $price_countOrders = $countOrders_sum * $row->item->price;
+                            $percent = $price_countOrders / $row->objective * 100;
+                        @endphp
+                        <div class="progress progress_sm">
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57" aria-valuenow="55" style="width:{{$percent}}%;"></div>
+                        </div>
+                        <small>%{{$percent}} مكتمل</small>
+                      </td>
+                      {{-- <td>
                         <a href="/supervisor/editDividedSalesObjective/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        {{-- <form action="/supervisor/deleteDividedSalesObjective/{{$salesObjective->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -100px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
                         <input type="hidden" class="id" value="{{$salesObjective->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        {{-- <i class="fas fa-eye"></i> --}}
-                      </td>
+                      </td> --}}
                     </tr>
                   @endforeach
                   <div>
@@ -111,7 +120,8 @@
                         {{-- <th rowspan="1" colspan="1">الصنف</th> --}}
                         <th rowspan="1" colspan="1">المندوب</th>
                         <th rowspan="1" colspan="1">الهدف</th>
-                        <th rowspan="1" colspan="1">العملية</th>
+                        <th rowspan="1" colspan="1">مستوى الإنجاز</th>
+                        {{-- <th rowspan="1" colspan="1">العملية</th> --}}
                       </tr>
                     @endif
                   </tfoot>

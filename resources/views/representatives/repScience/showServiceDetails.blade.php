@@ -74,23 +74,6 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <div class="info-box-content">
-                                    <span class="info-box-text">تتبع المندوب</span>
-                                    <span class="info-box-number">
-                                        {{-- @foreach($service->representatives as $rep)
-                                            @if ($rep->user->user_type == 'مندوب علمي' || $rep->user->user_type == 'مدير فريق')
-                                                <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @else
-                                                <p><span class="text-success">م.مبيعات: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @endif
-                                        @endforeach --}}
-                                        {{$service->representatives->whereNotNull('supervisor_id')->first()->user->user_name_third}} {{$service->representatives->whereNotNull('supervisor_id')->first()->user->user_surname}}
-                                    </span>
-                                </div><!-- /.info-box-content -->
-                            </div><!-- /.info-box -->
-                        </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
@@ -155,7 +138,7 @@
                                                     <small class="text-sm text-bold">
                                                         @if($row->statues)
                                                             <span>{{'مقبوله'}} <i class="fas fa-check"></i></span>
-                                                        @else
+                                                        @else   
                                                             <span class="text-danger">{{'غير مقبوله'}} <i class="fas fa-close"></i></span>
                                                         @endif
                                                     </small>

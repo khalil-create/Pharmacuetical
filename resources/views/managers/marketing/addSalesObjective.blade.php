@@ -45,39 +45,41 @@
                             <form method="POST" action="{{ url('managerMarketing/storeSalesObjective') }}"  enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>الصنف</label>
-                                    <select name="item_id" class="form-control custom-select rounded-0">
-                                        @foreach ($items as $row)
-                                                <option value="{{$row->id}}">{{ $row->commercial_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('item_id'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="objective">مقدار الهدف</label>
-                                    <input type="text" name="objective" class="form-control">
-                                    @if ($errors->has('objective'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('objective') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">الوصف</label>
-                                    <input type="text" name="description" class="form-control">
-                                    @if ($errors->has('description'))
-                                        <span class="help-block">
-                                            <small class="form-text text-danger">{{ $errors->first('description') }}</small>
-                                        </span>
-                                    @endif
-                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>الصنف</label>
+                                        <select name="item_id" class="form-control custom-select rounded-0">
+                                            @foreach ($items as $row)
+                                                    <option value="{{$row->id}}">{{ $row->commercial_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('item_id'))
+                                            <span class="help-block">
+                                                <small class="form-text text-danger">{{ $errors->first('item_id') }}</small>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="objective">مقدار الهدف</label>
+                                        <input type="text" name="objective" class="form-control">
+                                        @if ($errors->has('objective'))
+                                            <span class="help-block">
+                                                <small class="form-text text-danger">{{ $errors->first('objective') }}</small>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="description">الوصف</label>
+                                        <input type="text" name="description" class="form-control">
+                                        @if ($errors->has('description'))
+                                            <span class="help-block">
+                                                <small class="form-text text-danger">{{ $errors->first('description') }}</small>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div><!-- /.row -->
                                 <div class="form-group" >
-                                    <button type="submit" class="btn btn-primary font" style="margin: 10px">
+                                    <button type="submit" class="btn btn-primary font">
                                         حفظ<i class="fas fa-save"></i>
                                     </button>
                                 </div>

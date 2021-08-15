@@ -40,7 +40,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($tests->count() > 0)
+                  {{-- @if($tests->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -55,11 +55,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-danger">
                       {{ 'لم يتم اضافة اي اختبار' }}
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -85,14 +85,14 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($tests->count() > 0)
+                    {{-- @if($tests->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1" style="">اسم الاختبار</th>
                         {{-- <th rowspan="1" colspan="1" style="">الحالة</th> --}}
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>

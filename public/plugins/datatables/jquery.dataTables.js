@@ -1782,7 +1782,7 @@
 			// Backwards compatibility - if there is no sEmptyTable given, then use the same as
 			// sZeroRecords - assuming that is given.
 			if ( ! lang.sEmptyTable && zeroRecords &&
-				defaults.sEmptyTable === "لايوجد بيانات حالياً" )
+				defaults.sEmptyTable === "لاتوجد بيانات حالياً" )
 			{
 				_fnMap( lang, lang, 'sZeroRecords', 'sEmptyTable' );
 			}
@@ -11508,7 +11508,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "لايوجد بيانات حالياً",
+			"sEmptyTable": "لاتوجد بيانات حالياً",
 	
 	
 			/**

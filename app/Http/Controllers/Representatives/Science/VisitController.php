@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Representatives\Science;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
 use App\Models\Doctor;
 use App\Models\OfferService;
 use App\Models\ProblemsSolve;
 use App\Models\Visit;
-use App\Models\Service;
+use App\Models\Plan;
+use App\Models\PlansCustomer;
 use App\Models\representative;
-use App\Models\User;
-use App\Models\SubArea;
 use App\Models\VisitComposition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -76,6 +74,30 @@ class VisitController extends Controller
                 'description' => $request->description,
                 'visit_id' => $visit->id,
             ]);
+        }
+        $date = explode('-',$request->date);
+        $plan_month = '0'.$date[1];
+        $plan = Plan::where('plan_month',$plan_month)->where('representative_id',Auth::user()->representatives->id)
+        ->where('plan_status',true)->first();
+        if($plan->count()){
+            $plan->plan_progress += 1;
+            $plan->update();
+        }
+        if($cust_id){
+            $planCust = PlansCustomer::where('plan_id',$plan->id)->where('customer_id',$cust_id)
+            ->where('visited',false)->first();
+            if($planCust->count()){
+                $planCust->visited = true;
+                $planCust->update();
+            }
+        }
+        else{
+            $planCust = PlansCustomer::where('plan_id',$plan->id)->where('doctor_id',$doc_id)
+            ->where('visited',false)->first();
+            if($planCust->count()){
+                $planCust->visited = true;
+                $planCust->update();
+            }
         }
         return redirect('/repScience/manageVisits')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -174,7 +196,21 @@ class VisitController extends Controller
         
         $visit->delete();
 
+        $date = explode('-',$visit->date);
+        $plan_month = '0'.$date[1];
+        $plan = Plan::where('plan_month',$plan_month)->where('representative_id',Auth::user()->representatives->id)
+        ->where('plan_status',true)->first();
+        if($plan->count()){
+            $plan->plan_progress -= 1;
+            $plan->update();
+        }
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/repScience/manageVisits')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showVisitDetails($id)
+    {
+        $visit = Visit::findOrfail($id);
+        if($visit->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('representatives.repScience.showVisitDetails',compact('visit'));
     }
 }

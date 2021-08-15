@@ -9,6 +9,7 @@ use App\Models\Plan;
 use App\Models\PlansCustomer;
 use App\Models\Representative;
 use App\Models\PlanType;
+use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 class PlanCustController extends Controller
@@ -17,9 +18,27 @@ class PlanCustController extends Controller
     {
         $plan = Plan::with('customers_all')->findOrfail($id);
         $rep = Representative::findOrfail(Auth::user()->representatives->id);
+        // $rep = Representative::with(['visits' => function($q){
+        //     $q->select('representative_id','date','customer_id','doctor_id');
+        // }])->findOrfail(Auth::user()->representatives->id);
         $customers = $rep->customers;
         $doctors = Doctor::where('representative_id',Auth::user()->representatives->id)->where('statues',1)->select('id','name')->get();
 
+        // $visit = collect($rep->visits);
+        // return $visit;
+        // $visit = $visit->transform(function($value,$key){
+        //     $date_arr = explode('-',$value['date']);
+        //     // $date = $date_arr[1];
+        //     $cust = $value['customer_id'];
+        //     $doc = $value['doctor_id'];
+        //     $visit['date'] = $date_arr;
+        //     $visit['customer_id'] = $cust;
+        //     $visit['doctor_id'] = $doc;
+        //     return $visit;
+        //     // return $value['month'] = $date[1];
+        //     // return $value['date'];
+        // })->toArray();
+        // return $visit;
         return view('representatives.repScience.planDetials',compact('plan'))
         ->with('customers',$customers)->with('doctors',$doctors);
     }
