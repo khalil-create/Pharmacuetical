@@ -43,12 +43,12 @@
                                         <div class="col-md-6">
                                             <div class="khalil">
                                                 <div class="card-header">
-                                                    <h3 class="card-title" style="float: right">الاسم</h3>
+                                                    <h3 class="card-title" style="float: right">الاسم <span class="text-danger">*</span></h3>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-8">
-                                                            <input type="text" name="usernamethird" class="form-control" placeholder="الاسم الثلاثي">
+                                                            <input type="text" name="usernamethird" class="form-control" placeholder="الاسم الثلاثي" value="{{ old('usernamethird') }}">
                                                             @if ($errors->has('usernamethird'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('usernamethird') }}</small>
@@ -56,7 +56,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-4">
-                                                            <input type="text" name="usersurname" class="form-control" placeholder="اللقب">
+                                                            <input type="text" name="usersurname" class="form-control" placeholder="اللقب" value="{{ old('usersurname') }}">
                                                             @if ($errors->has('usersurname'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('usersurname') }}</small>
@@ -80,14 +80,14 @@
                                                 @endif
                                             </div> --}}
                                             <div class="form-group">
-                                                <label for="">الجنس</label>
+                                                <label for="">الجنس <span class="text-danger">*</span></label>
                                                 <div class="radiobox">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" value="ذكر" name="sex" checked>
+                                                        <input class="form-check-input" type="radio" value="ذكر" name="sex" checked value="{{ old('sex') }}">
                                                         <label class="form-check-label">ذكر</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="sex" value="انثى">
+                                                        <input class="form-check-input" type="radio" name="sex" value="انثى" value="{{ old('sex') }}">
                                                         <label class="form-check-label">انثى</label>
                                                     </div>
                                                 </div>
@@ -107,7 +107,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-6">
-                                                            <input onkeyup="checkPassword()" id="password_confirmation" type="password" name="password_confirmation" class="form-control" placeholder="التأكيد">
+                                                            <input onkeyup="checkPassword()" id="password_confirmation" type="password" name="password_confirmation" class="form-control" placeholder="التأكيد" >
                                                             <small class="form-text text-danger" id="inalidPasswordConfirmation" hidden>{{'ليست متطابقه'}}</small>
                                                             @if ($errors->has('password_confirmation'))
                                                                 <span class="help-block">
@@ -122,12 +122,12 @@
                                         <div class="col-md-6">
                                             <div class="khalil">
                                                 <div class="card-header">
-                                                    <h3 class="card-title" style="float: right">معلومات الاتصال</h3>
+                                                    <h3 class="card-title" style="float: right">معلومات الاتصال <span class="text-danger">*</span></h3>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-7">
-                                                            <input type="text" name="email" class="form-control" placeholder="البريد الإلكتروني">
+                                                            <input type="text" name="email" class="form-control" placeholder="البريد الإلكتروني" value="{{ old('email') }}">
                                                             @if ($errors->has('email'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('email') }}</small>
@@ -135,7 +135,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-5">
-                                                            <input id="phonenumber" onkeyup="checkPhoneNumber()" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف">
+                                                            <input id="phonenumber" onkeyup="checkPhoneNumber()" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف" value="{{ old('phonenumber') }}">
                                                             <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
                                                             @if ($errors->has('phonenumber'))
                                                                 <span class="help-block">
@@ -150,7 +150,7 @@
                                                 <label for="userimage">تحميل الصورة</label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name="userimage">
+                                                        <input type="file" class="custom-file-input" name="userimage" value="{{ old('userimage') }}">
                                                         <label class="custom-file-label" for="userimage"></label>
                                                         @if ($errors->has('userimage'))
                                                             <span class="help-block">
@@ -162,12 +162,12 @@
                                             </div>
                                             <div class="khalil">
                                                 <div class="card-header">
-                                                    <h3 class="card-title" style="float: right">مكان الميلاد</h3>
+                                                    <h3 class="card-title" style="float: right">مكان الميلاد <span class="text-danger">*</span></h3>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <input type="text" name="birthplace" class="form-control" placeholder="المحافظة">
+                                                            <input type="text" name="birthplace" class="form-control" placeholder="المحافظة" value="{{ old('birthplace') }}">
                                                             @if ($errors->has('birthplace'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('birthplace') }}</small>
@@ -175,7 +175,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-4">
-                                                            <input type="text" name="town" class="form-control" placeholder="المديرية">
+                                                            <input type="text" name="town" class="form-control" placeholder="المديرية" value="{{ old('town') }}">
                                                             @if ($errors->has('town'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('town') }}</small>
@@ -183,7 +183,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-4">
-                                                            <input type="text" name="village" class="form-control" placeholder="العزلة">
+                                                            <input type="text" name="village" class="form-control" placeholder="العزلة" value="{{ old('village') }}">
                                                             @if ($errors->has('village'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('village') }}</small>
@@ -196,8 +196,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="birthdate">تأريخ الميلاد</label>
-                                                    <input type="date" class="form-control" name="birthdate">
+                                                    <label for="birthdate">تأريخ الميلاد <span class="text-danger">*</span></label>
+                                                    <input type="date" class="form-control" name="birthdate" value="{{ old('birthdate') }}">
                                                     @if ($errors->has('birthdate'))
                                                         <span class="help-block">
                                                             <small class="form-text text-danger">{{ $errors->first('birthdate') }}</small>
@@ -207,12 +207,12 @@
                                                 <div class="form-group">
                                                     <div class="khalil">
                                                         <div class="card-header">
-                                                            <h3 class="card-title" style="float: right">معلومات الهوية</h3>
+                                                            <h3 class="card-title" style="float: right">معلومات الهوية <span class="text-danger">*</span></h3>
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="col-6">
-                                                                    <input type="text" name="identitytype" class="form-control" placeholder="نوع الهوية">
+                                                                    <input type="text" name="identitytype" class="form-control" placeholder="نوع الهوية" value="{{ old('identitytype') }}">
                                                                     @if ($errors->has('identitytype'))
                                                                         <span class="help-block">
                                                                             <small class="form-text text-danger">{{ $errors->first('identitytype') }}</small>
@@ -220,7 +220,7 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="col-6">
-                                                                    <input type="text" name="identitynumber" class="form-control" placeholder="رقم الهوية">
+                                                                    <input type="text" name="identitynumber" class="form-control" placeholder="رقم الهوية" value="{{ old('identitynumber') }}">
                                                                     @if ($errors->has('identitynumber'))
                                                                         <span class="help-block">
                                                                             <small class="form-text text-danger">{{ $errors->first('identitynumber') }}</small>

@@ -23,12 +23,29 @@ class SupervisorController extends Controller
     }
     public function storeSupervisor(Request $request)
     {
-        $rules = $this->getRules();
-        $rules += ['userimage' => 'required'];
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
+        $request->validate([
+            'usernamethird' => 'required|string|max:255',
+                'usersurname' => 'required|string|max:255',
+                'sex' => 'required',
+                'birthdate' => 'required|before:today',
+                'birthplace' => 'required|string|max:255',
+                'town' => 'required|string|max:255',
+                'village' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'phonenumber' => 'required|numeric|max:999999999',
+                'identitytype' => 'required|string|max:255',
+                'identitynumber' => 'required|numeric',
+                'userimage' => 'required',
+                'password' => 'required|min:6|confirmed',
+                'password_confirmation' => 'required_with:password|same:password|min:6',
+            ]);
+
+        // $rules = $this->getRules();
+        // $rules += ['userimage' => 'required'];
+    //  = $this->getMessages();
+        $validator = Validator::make($request->validated());
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+            return redirect()->back()->withErrors($validator)->withInputs($request->validated());
         }
         $file_name = '';
         if($request->hasfile('userimage'))
@@ -57,82 +74,10 @@ class SupervisorController extends Controller
         ]);
         // if(sizeof($request->mainarea_ids) > 0)
         //     $sup->mainareas()->attach($request->mainarea_ids);
-
+        // $validated = $request->validated();
         return redirect('/managerMarketing/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
-    protected function getRules()
-    {
-        return $rules = [
-                'usernamethird' => 'required|string|max:255',
-                'usersurname' => 'required|string|max:255',
-                'sex' => 'required',
-                'birthdate' => 'required',
-                'birthplace' => 'required|string|max:255',
-                'town' => 'required|string|max:255',
-                'village' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'phonenumber' => 'required|numeric|max:999999999',
-                'identitytype' => 'required|string|max:255',
-                'identitynumber' => 'required|numeric',
-                // 'userimage' => 'required',
-                'password' => 'required|min:6|confirmed',
-                'password_confirmation' => 'required_with:password|same:password|min:6',
-            ];
-    }
-    protected function getMessages()
-    {
-        return $messages = [
-            'usernamethird.required' => 'يجب عليك كتابة هذا الحقل',
-            'usernamethird.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'usernamethird.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-            
-            'usersurname.required' => 'يجب عليك كتابة هذا الحقل',
-            'usersurname.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'usersurname.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
 
-            'birthdate.required' => 'يجب عليك كتابة هذا الحقل',
-            // 'birthdate.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-
-            'birthplace.required' => 'يجب عليك كتابة هذا الحقل',
-            'birthplace.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'birthplace.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-
-            'town.required' => 'يجب عليك كتابة هذا الحقل',
-            'town.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'town.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-
-            'village.required' => 'يجب عليك كتابة هذا الحقل',
-            'village.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'village.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-
-            'email.required' => 'يجب عليك كتابة هذا الحقل',
-            'email.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'email.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-            'email.unique' => 'هذا الايميل مستخدم لدى مستخدم اخر',
-            'email.email' => 'هذا ليس بريد اكتروني',
-
-            'phonenumber.required' => 'يجب عليك كتابة هذا الحقل',
-            'phonenumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'phonenumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
-
-            'identitytype.required' => 'يجب عليك كتابة هذا الحقل',
-            'identitytype.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
-            'identitytype.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
-
-            'identitynumber.required' => 'يجب عليك كتابة هذا الحقل',
-            'identitynumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            // 'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
-
-            'userimage.required' => 'يجب عليك تحميل الصورة',
-
-            'password.required' => 'يجب عليك كتابة كلمة السر',            
-            'password.min' => ' الحد الادنى لكلمة السر هي 6 احرف',    
-
-            'password_confirmation.same' => 'ليست متطابقة مع كلمة السر',            
-            'password_confirmation.required_with' => 'ليست متطابقة مع كلمة السر',            
-            'password_confirmation.min' => 'الحد الادنى لكلمة السر هي 6 احرف',            
-        ];
-    }
     public function getAllSupervisor(Request $request)
     {
         if($request->get('id')){
@@ -159,8 +104,8 @@ class SupervisorController extends Controller
         $user = User::find($id);
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-                
-        //$user->update($request->all());
+
+        //$user->update($request->validated());
         $user->user_name_third = $request->Input('usernamethird');
         $user->user_surname = $request->Input('usersurname');
         $user->sex = $request->Input('sex');
@@ -186,7 +131,7 @@ class SupervisorController extends Controller
     public function deleteSupervisor($id)
     {
         $user = User::findOrFail($id);
-        
+
         if(!$user)
             return redirect()->back()->with(['error' => 'لا توجد بيانات لحذفها ']);
 
@@ -199,13 +144,13 @@ class SupervisorController extends Controller
         $user->delete();
 
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/managerMarketing/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');        
+        // return redirect('/managerMarketing/manageSupervisors')->with('status','تم حذف البيانات بشكل ناجح');
     }
     public function getSupervisorAreas($id)
     {
         $sup = Supervisor::where('user_id',$id)->first();
         $supervisor = Supervisor::find($sup->id);
-        
+
         if(!$supervisor)
             return redirect()->back()->with(['error' => 'لا توجد بيانات']);
         return view('managers.marketing.mainAreaSupervised',compact('supervisor',$supervisor));
