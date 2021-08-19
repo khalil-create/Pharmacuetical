@@ -36,6 +36,7 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middl
     Route::post('/storeUser', 'UserController@storeUser')->name('storeUser');
     Route::get('/editUser/{id}', 'UserController@editUser');
     Route::put('/userUpdate/{id}', 'UserController@userUpdate');
+    Route::get('/showUserDetails/{id}', 'UserController@showUserDetails');
     Route::delete('/deleteUser/{id}', 'UserController@deleteUser');
 
     Route::get('/manageMainAreas', 'MainAreaController@getAllAreas')->name('admin.show.mainareas');
@@ -110,14 +111,6 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::put('/profileUpdate/{id}', 'ProfileController@profileUpdate');
 
     // Route::get('/managerMarketing/home', 'SalesobjectiveController@home')->name('home');
-    Route::get('/manageSalesObjectives', 'SalesobjectiveController@getAllSalesObjectives')->name('managerMarketing.show.objectives');
-    Route::get('/addSalesObjective', 'SalesobjectiveController@addSalesObjective');
-    Route::post('/storeSalesObjective', 'SalesobjectiveController@storeSalesObjective');
-    Route::get('/editSalesObjective/{id}', 'SalesobjectiveController@editSalesObjective');
-    Route::put('/updateSalesObjective/{id}', 'SalesobjectiveController@updateSalesObjective');
-    Route::delete('/deleteSalesObjective/{id}', 'SalesobjectiveController@deleteSalesObjective');
-    Route::get('/distributeSalesObjective/{id}', 'SalesobjectiveController@distributeSalesObjective');
-    Route::post('/storeDistributedSalesObjForSup', 'SalesobjectiveController@storeDistributedSalesObjForSup');
     
     Route::get('/manageSupervisors', 'SupervisorController@getAllSupervisor')->name('managerMarketing.show.supervisors');
     Route::get('/addSupervisor', 'SupervisorController@addSupervisor');
@@ -125,8 +118,122 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::get('/editSupervisor/{id}', 'SupervisorController@editSupervisor');
     Route::put('/supervisorUpdate/{id}', 'SupervisorController@updateSupervisor');
     Route::get('/mainAreaSupervised/{id}', 'SupervisorController@getSupervisorAreas');
+    Route::get('/showSupervisorDetails/{id}', 'SupervisorController@showSupervisorDetails');
     Route::delete('/deleteSupervisor/{id}', 'SupervisorController@deleteSupervisor');
     
+    Route::get('/manageCompanies', 'CompanyController@getAllCompanies')->name('managerMarketing.show.companies');
+    Route::get('/companyAdd', 'CompanyController@addCompany');
+    Route::post('/companyStore', 'CompanyController@storeCompany');
+    Route::get('/companyEdit/{id}', 'CompanyController@editCompany');
+    Route::put('/companyUpdate/{id}', 'CompanyController@UpdateCompany');
+    Route::get('/showCompanyDetails/{id}', 'CompanyController@showCompanyDetails');
+    Route::delete('/companyDelete/{id}', 'CompanyController@deleteCompany');
+
+    Route::get('/manageCategory', 'CategoryController@getAllCategories')->name('managerMarketing.show.categories');
+    Route::get('/categoryAdd', 'CategoryController@addCategory');
+    Route::post('/categoryStore', 'CategoryController@storeCategory');
+    Route::get('/categoryEdit/{id}', 'CategoryController@editCategory');
+    Route::put('/categoryUpdate/{id}', 'CategoryController@UpdateCategory');
+    Route::get('/showCategoryDetails/{id}', 'CategoryController@showCategoryDetails');
+    Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
+
+    Route::get('/manageItem', 'ItemController@getAllItems')->name('managerMarketing.show.items');
+    Route::get('/itemAdd', 'ItemController@addItem');
+    Route::post('/itemStore', 'ItemController@storeItem');
+    Route::get('/itemEdit/{id}', 'ItemController@editItem');
+    Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
+    Route::get('/showItemDetails/{id}', 'ItemController@showItemDetails');
+    Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
+
+    Route::get('/manageMainAreas', 'MainAreaController@getAllAreas')->name('managerMarketing.show.mainareas');
+    Route::get('/addMainArea', 'MainAreaController@addMainArea');
+    Route::post('/storeMainArea', 'MainAreaController@storeMainArea');
+    Route::get('/editMainArea/{areaid}', 'MainAreaController@editMainArea');
+    Route::put('/UpdateMainArea/{areaid}', 'MainAreaController@UpdateMainArea');
+    Route::delete('/deleteMainArea/{id}', 'MainAreaController@deleteMainArea');
+    Route::get('/supAreas/{id}', 'MainAreaController@getSupAreasForMainArea');
+    Route::get('/showMainareaDetails/{id}', 'MainAreaController@showMainareaDetails');
+
+    Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea')->name('managerMarketing.show.subareas');
+    Route::get('/addSubArea/{id?}', 'SubAreaController@addSubArea');
+    Route::post('/storeSubArea/{id?}', 'SubAreaController@storeSubArea');
+    Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
+    Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
+    Route::get('/showSubareaDetails/{areaid}', 'SubAreaController@showSubareaDetails');
+    Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
+
+    Route::get('/showSubareaReps/{id}', 'SubAreaController@showSubareaReps');
+    Route::get('/addSubareaReps/{id}', 'SubAreaController@addSubareaReps');
+    Route::post('/storeSubareaReps/{id}', 'SubAreaController@storeSubareaReps');
+
+    Route::get('/itemUses/{id}', 'UsesController@getItemUses');
+    Route::get('/itemUsesNoCat/{id}', 'UsesController@getItemUses');    
+    Route::get('/addUse/{id}', 'UsesController@addUse');
+    Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
+    Route::post('/storeUse', 'UsesController@storeUse');
+    Route::post('/storeUsesExist', 'UsesController@storeUsesExist');
+    Route::get('/editUse/{id}', 'UsesController@editUse');
+    Route::put('/updateUse/{id}', 'UsesController@updateUse');
+    Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
+
+    Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives')->name('managerMarketing.show.Representatives');
+    Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');
+    Route::post('/storeRepresentative', 'RepresentativeController@storeRepresentative');
+    Route::get('/editRepresentative/{id}', 'RepresentativeController@editRepresentative');
+    Route::put('/updateRepresentative/{id}', 'RepresentativeController@updateRepresentative');
+    Route::get('/showSubareas/{id}', 'RepresentativeController@showSubareas');
+    Route::get('/addRepSubareas/{id}', 'RepresentativeController@addRepSubareas');
+    Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
+    // Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
+    Route::get('/showRepDetails/{id}', 'RepresentativeController@showRepDetails');
+    Route::delete('/deleteRepresentative/{id}', 'RepresentativeController@deleteRepresentative');
+
+    Route::get('/manageRepItems', 'RepItemController@getAllRepItems');
+    // Route::get('/addRepItem', 'RepItemController@addRepItem');
+    // Route::post('/storeRepItem', 'RepItemController@storeRepItem');
+    Route::get('/editRepItems/{id}', 'RepItemController@editRepItems');
+    Route::put('/updateRepItems/{id}', 'RepItemController@updateRepItem');
+    // Route::delete('/deleteRepItem/{id}', 'RepItemController@deleteRepItem');
+    
+    Route::get('/manageSalesRepresentatives', 'SalesRepresentativeController@getAllSalesRepresentatives');
+    Route::get('/addSalesRepresentative', 'SalesRepresentativeController@addSalesRepresentative');
+    Route::post('/storeSalesRepresentative', 'SalesRepresentativeController@storeSalesRepresentative');
+    Route::get('/editSalesRepresentative/{id}', 'SalesRepresentativeController@editSalesRepresentative');
+    Route::put('/updateSalesRepresentative/{id}', 'SalesRepresentativeController@updateSalesRepresentative');
+    Route::get('/showSalesRepSubareas/{id}', 'SalesRepresentativeController@showSalesRepSubareas');
+    Route::get('/addSalesRepSubareas/{id}', 'SalesRepresentativeController@addSalesRepSubareas');
+    Route::post('/storeSalesRepSubareas/{id}', 'SalesRepresentativeController@storeSalesRepSubareas');
+    Route::get('/showSalesRepDetails/{id}', 'SalesRepresentativeController@showSalesRepDetails');
+    Route::delete('/deleteSalesRepresentative/{id}', 'SalesRepresentativeController@deleteSalesRepresentative');
+
+    Route::get('/manageDoctors', 'DoctorController@getAllDoctors')->name('managerMarketing.show.doctors');
+    Route::get('/addDoctor', 'DoctorController@addDoctor');
+    Route::post('/storeDoctor', 'DoctorController@storeDoctor');
+    Route::get('/editDoctor/{id}', 'DoctorController@editDoctor');
+    Route::put('/updateDoctor/{id}', 'DoctorController@updateDoctor');
+    Route::get('/activateDoctor/{id}', 'DoctorController@activateDoctor');
+    Route::get('/notActivateDoctor/{id}', 'DoctorController@notActivateDoctor');
+    Route::get('/showDoctorDetails/{id}', 'DoctorController@showDoctorDetails');
+    Route::delete('/deleteDoctor/{id}', 'DoctorController@deleteDoctor');
+
+    Route::get('/manageCustomers', 'CustomerController@getAllCustomers')->name('managerMarketing.show.customers');
+    Route::get('/addCustomer', 'CustomerController@addCustomer');
+    Route::post('/storeCustomer', 'CustomerController@storeCustomer');
+    Route::get('/editCustomer/{id}', 'CustomerController@editCustomer');
+    Route::put('/updateCustomer/{id}', 'CustomerController@updateCustomer');
+    Route::get('/activateCustomer/{id}', 'CustomerController@activateCustomer');
+    Route::get('/notActivateCustomer/{id}', 'CustomerController@notActivateCustomer');
+    Route::get('/showCustomerDetails/{id}', 'CustomerController@showCustomerDetails');
+    Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
+    
+    Route::get('/manageOrders', 'OrderController@getAllOrders')->name('managerMarketing.show.orders');
+    Route::get('/addOrder', 'OrderController@addOrder');
+    Route::post('/storeOrder', 'OrderController@storeOrder');
+    Route::get('/editOrder/{id}', 'OrderController@editOrder');
+    Route::put('/updateOrder/{id}', 'OrderController@updateOrder');
+    Route::get('/showOrderDetails/{id}', 'OrderController@showOrderDetails');
+    Route::delete('/deleteOrder/{id}', 'OrderController@deleteOrder');
+        
     Route::get('/manageTasks', 'TaskController@getAllTasks')->name('managerMarketing.show.tasks');
     Route::get('/addTask', 'TaskController@addTask');
     Route::post('/storeTask', 'TaskController@storeTask');
@@ -147,56 +254,6 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::put('/updateSupervisorSample/{id}', 'SampleController@updateSample');
     Route::delete('/deleteSupervisorSample/{id}', 'SampleController@deleteSupervisorSample');
 
-    Route::get('/manageCompanies', 'CompanyController@getAllCompanies')->name('managerMarketing.show.companies');
-    Route::get('/companyAdd', 'CompanyController@addCompany');
-    Route::post('/companyStore', 'CompanyController@storeCompany');
-    Route::get('/companyEdit/{id}', 'CompanyController@editCompany');
-    Route::put('/companyUpdate/{id}', 'CompanyController@UpdateCompany');
-    Route::delete('/companyDelete/{id}', 'CompanyController@deleteCompany');
-
-    Route::get('/manageCategory', 'CategoryController@getAllCategories')->name('managerMarketing.show.categories');
-    Route::get('/categoryAdd', 'CategoryController@addCategory');
-    Route::post('/categoryStore', 'CategoryController@storeCategory');
-    Route::get('/categoryEdit/{id}', 'CategoryController@editCategory');
-    Route::put('/categoryUpdate/{id}', 'CategoryController@UpdateCategory');
-    Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
-
-    Route::get('/manageItem', 'ItemController@getAllItems')->name('managerMarketing.show.items');
-    Route::get('/itemAdd', 'ItemController@addItem');
-    Route::post('/itemStore', 'ItemController@storeItem');
-    Route::get('/itemEdit/{id}', 'ItemController@editItem');
-    Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
-    Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
-
-    Route::get('/itemUses/{id}', 'UsesController@getItemUses');
-    Route::get('/itemUsesNoCat/{id}', 'UsesController@getItemUses');    
-    Route::get('/addUse/{id}', 'UsesController@addUse');
-    Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
-    Route::post('/storeUse', 'UsesController@storeUse');
-    Route::post('/storeUsesExist', 'UsesController@storeUsesExist');
-    Route::get('/editUse/{id}', 'UsesController@editUse');
-    Route::put('/updateUse/{id}', 'UsesController@updateUse');
-    Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
-    
-    Route::get('/manageMainAreas', 'MainAreaController@getAllAreas')->name('managerMarketing.show.mainareas');
-    Route::get('/addMainArea', 'MainAreaController@addMainArea');
-    Route::post('/storeMainArea', 'MainAreaController@storeMainArea');
-    Route::get('/editMainArea/{areaid}', 'MainAreaController@editMainArea');
-    Route::put('/UpdateMainArea/{areaid}', 'MainAreaController@UpdateMainArea');
-    Route::delete('/deleteMainArea/{id}', 'MainAreaController@deleteMainArea');
-    Route::get('/supAreas/{id}', 'MainAreaController@getSupAreasForMainArea');
-
-    Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea')->name('managerMarketing.show.subareas');
-    Route::get('/addSubArea/{id?}', 'SubAreaController@addSubArea');
-    Route::post('/storeSubArea/{id?}', 'SubAreaController@storeSubArea');
-    Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
-    Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
-    Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
-
-    Route::get('/showSubareaReps/{id}', 'SubAreaController@showSubareaReps');
-    Route::get('/addSubareaReps/{id}', 'SubAreaController@addSubareaReps');
-    Route::post('/storeSubareaReps/{id}', 'SubAreaController@storeSubareaReps');
-    
     Route::get('/managePlanTypes', 'PlanTypeController@getAllPlanTypes')->name('managerMarketing.show.planTypes');
     Route::get('/addPlanType', 'PlanTypeController@addPlanType');
     Route::post('/storePlanType', 'PlanTypeController@storePlanType');
@@ -204,6 +261,14 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::put('/updatePlanType/{id}', 'PlanTypeController@updatePlanType');
     Route::delete('/deletePlanType/{id}', 'PlanTypeController@deletePlanType');
 
+    Route::get('/manageSalesObjectives', 'SalesobjectiveController@getAllSalesObjectives')->name('managerMarketing.show.objectives');
+    Route::get('/addSalesObjective', 'SalesobjectiveController@addSalesObjective');
+    Route::post('/storeSalesObjective', 'SalesobjectiveController@storeSalesObjective');
+    Route::get('/editSalesObjective/{id}', 'SalesobjectiveController@editSalesObjective');
+    Route::put('/updateSalesObjective/{id}', 'SalesobjectiveController@updateSalesObjective');
+    Route::delete('/deleteSalesObjective/{id}', 'SalesobjectiveController@deleteSalesObjective');
+    Route::get('/distributeSalesObjective/{id}', 'SalesobjectiveController@distributeSalesObjective');
+    Route::post('/storeDistributedSalesObjForSup', 'SalesobjectiveController@storeDistributedSalesObjForSup');
 });
 
 Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Managers\sales','middleware'=>'auth','middleware'=>'managerSales'],function(){
@@ -219,6 +284,7 @@ Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Manage
     Route::get('/showSubareas/{id}', 'RepresentativeController@showSubareas');
     Route::get('/addRepSubareas/{id}', 'RepresentativeController@addRepSubareas');
     Route::post('/storeRepSubareas/{id}', 'RepresentativeController@storeRepSubareas');
+    Route::get('/showRepDetails/{id}', 'RepresentativeController@showRepDetails');
     Route::delete('/deleteRepresentative/{id}', 'RepresentativeController@deleteRepresentative');
 
     Route::get('/manageMainAreas', 'MainAreaController@getAllAreas');

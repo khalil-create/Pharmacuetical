@@ -103,13 +103,22 @@
             $name = explode(' ',Auth::user()->user_name_third);
         @endphp
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-          <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="user-image img-circle elevation-2" alt="User Image">
+          {{-- <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="user-image img-circle elevation-2" alt="User Image"> --}}
+          @if (Auth::user()->user_image)
+              <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="user-image img-circle elevation-2" alt="User Image">
+          @else
+              <img src="{{asset('designImages/user.png')}}" class="user-image img-circle elevation-2" alt="User Image">
+          @endif
           <span class="d-none d-md-inline">{{$name[0]}} {{Auth::user()->user_surname}}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- User image -->
           <li class="user-header bg-primary">
-            <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
+              @if (Auth::user()->user_image)
+                  <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="img-circle elevation-2" alt="User Image">
+              @else
+                  <img src="{{asset('designImages/user.png')}}" class="img-circle elevation-2" alt="User Image">
+              @endif
             <p>
               {{$name[0]}} {{Auth::user()->user_surname}} - {{Auth::user()->user_type}}
               <small>عضو في الفريق منذ {{Auth::user()->created_at}}</small>
@@ -184,6 +193,7 @@
               @endphp
               <a href="{{route($route,['id' => $notify->id])}}" class="dropdown-item">
                 <i class="fas fa-envelope mr-2"></i>
+                {{-- <div style="overflow-wrap: break-word;height: 100px;">{{$notify->data['content']}}</div> --}}
                 {{$notify->data['content']}}
                 <p class="text-sm text-muted"><i class="far fa-clock mr-2" style="margin-left: 10px"></i>{{ $since }}</p>
                 {{-- <span class="float-right text-muted text-sm"></span> --}}

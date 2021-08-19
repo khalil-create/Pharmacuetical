@@ -61,12 +61,13 @@ class UserController extends Controller
         }
         
         // dd($request->all());
-        // $rules = $this->getRules();
-        // $messages = $this->getMessages();
-        // $validator = Validator::make($request->all(),$rules,$messages);
-        // if($validator->fails()){
-        //     return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        // }
+        $rules = $this->getRules();
+        $rules+=['userimage' => 'required','email' => 'required|string|email|max:255|unique:users','phonenumber' => 'unique:users',];
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         // $file_name = $this->saveImage($request->file('userimage'),'images/users/');
         if($request->hasfile('userimage'))
         {
@@ -147,6 +148,12 @@ class UserController extends Controller
 
     public function userUpdate(Request $request,$id)
     {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $usertype = $request->Input('usertype');
         $managerMarketing = User::where('user_type','مدير تسويق')->first();
         $managerSales = User::where('user_type','مدير مبيعات')->first();
@@ -321,7 +328,7 @@ class UserController extends Controller
                 'birthplace' => 'required|string|max:255',
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'required|string|email|max:255',
                 'phonenumber' => 'numeric|required|max:999999999',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric||max:20',
@@ -365,6 +372,7 @@ class UserController extends Controller
             'phonenumber.required' => 'يجب عليك كتابة هذا الحقل',
             'phonenumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
             'phonenumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phonenumber.unique' => 'هذا الرقم بالفعل مسجل على حساب اخر.. تأكد من الرقم',
 
             'identitytype.required' => 'يجب عليك كتابة هذا الحقل',
             'identitytype.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -390,7 +398,7 @@ class UserController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده']);
         
-        $this->deleteFile($user->userimage,'images/users/');
+        $this->deleteFile($user->user_image,'images/users/');
         $user->delete();
         // if($user->user_type == 'مشرف')
         // {
@@ -409,5 +417,12 @@ class UserController extends Controller
         // }
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/admin/displayAllUsers')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showUserDetails($id)
+    {
+        $user = User::findOrfail($id);
+        if($user->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('admin.showUserDetails',compact('user'));   
     }
 }
