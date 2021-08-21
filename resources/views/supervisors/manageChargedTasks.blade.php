@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageChargedTasks">ادارة المهام</a></li>
             <li class="breadcrumb-item active">المهام</li>
           </ol>
         </div><!-- /.col -->
@@ -39,8 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                  @if($tasks->count() > 0)                    
+                  <thead>                   
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -50,10 +49,7 @@
                       </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         الوصف
-                      </th> 
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المشرف
-                      </th> --}}
+                      </th>
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         اخر تأريخ للتنفيذ
                       </th>
@@ -64,11 +60,6 @@
                         العملية
                       </th>
                     </tr>
-                  @else
-                    <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي مهمة' }}
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                     <?php $i=1?>
@@ -89,6 +80,16 @@
                           @if ($row->performed == 0)
                               <a href="/supervisor/performTask/{{$row->id}}"><i class="fas fa-play" title="تنفيذ المهمة"></i></a>
                           @else
+                              @php
+                                $report = $row->report_task;
+                                $index = strpos($report,'.');
+                                $isFile = substr($report,$index + 1);
+                              @endphp
+                              @if($isFile == 'pdf' || $isFile == 'xlsx' || $isFile == 'docx')
+                                <a href="{{asset('reports/tasks/'.$row->report_task)}}" target="blank"><i class="fas fa-eye" title="عرض التقرير"></i></a>
+                              @else
+                                {{$report}}
+                              @endif
                               <a href="/supervisor/performTask/{{$row->id}}"><i class="fas fa-edit" title="تعديل تنفيذ المهمة"></i></a>
                           @endif
                         </td>
@@ -96,17 +97,14 @@
                     @endforeach
                   </tbody>
                   <tfoot>
-                    @if($tasks->count() > 0)                    
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">المهمه</th>
                         <th rowspan="1" colspan="1">الوصف</th>
-                        {{-- <th rowspan="1" colspan="1">المشرف</th --}}
                         <th rowspan="1" colspan="1">اخر تأريخ للتنفيذ</th>
                         <th rowspan="1" colspan="1">الحالة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
                   </tfoot>
                 </table>
               </div>

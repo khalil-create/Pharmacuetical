@@ -29,6 +29,11 @@ class CompanyController extends Controller
     }
     public function storeCompany(Request $request)
     {
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+            'country_manufacturing' => 'required|string|max:255',
+            'sign_img_company' => 'required',
+        ]);
         $file_name = null;
         if($request->hasfile('sign_img_company'))
                 $file_name = $this->saveImage($request->file('sign_img_company'),'images/signsCompany/');
@@ -63,14 +68,18 @@ class CompanyController extends Controller
         if(!$company)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         $supervisors = Supervisor::whereHas('user')->get();
-        return view('managers.marketing.editCompany', compact('company',$company))->with('supervisors',$supervisors);
+        return view('showCompanyDetails.editCompany', compact('company',$company))->with('supervisors',$supervisors);
     }
     public function UpdateCompany(Request $request,$id)
     {
         $company = Company::findOrfail($id);
         if($company->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+            'country_manufacturing' => 'required|string|max:255',
+            // 'sign_img_company' => 'required',
+        ]);
         $file_name = $company->sign_img_company;
         if($request->hasfile('sign_img_company'))
         {
@@ -95,5 +104,12 @@ class CompanyController extends Controller
         $company->delete();
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
         // return redirect('/managerMarketing/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showCompanyDetails($id)
+    {
+        $company = Company::with(['categories','items'])->findOrfail($id);
+        if($company->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('managers.marketing.showCompanyDetails',compact('company'));
     }
 }

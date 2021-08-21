@@ -10,11 +10,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0">ادارة الطلبيات</h1>
+                    <h1 class="m-0">ادارة الطلبيات</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/supervisor/manageOrders">ادارة الطلبيات</a></li>
                         <li class="breadcrumb-item active">تفاصيل الطلبيه</li>
                     </ol>
                 </div><!-- /.col -->
@@ -29,15 +29,14 @@
                         <span class="text-bold"> {{ $order->customer->name }}</span>
                     </span>
                     <div class="card-tools float-right">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                    </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                </div>
-                <!-- /.card-header -->
+                </div><!-- /.card-header -->
                 <div class="card-body">
                     <!-- Info boxes -->
                     <div class="row">
@@ -106,7 +105,9 @@
                                     <span class="info-box-number">
                                         @foreach ($order->customer->representative as $rep)
                                             @if ($rep->user->user_type == 'مندوب علمي' || $rep->user->user_type == 'مدير فريق')
-                                                <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
+                                                <a href="/supervisor/showRepDetails/{{$rep->id}}" title="تفاصيل">
+                                                    <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
+                                                </a>
                                             @else
                                                 <p><span class="text-success">م.مبيعات: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
                                             @endif

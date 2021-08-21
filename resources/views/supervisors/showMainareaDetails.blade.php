@@ -2,7 +2,6 @@
 @section('title')
     ادارة المناطق
 @endsection
-
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -14,7 +13,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/supervisor/manageMainAreas">ادارة المناطق الرئيسية</a></li>
                         <li class="breadcrumb-item active">تفاصيل المنطقة الرئيسية</li>
                     </ol>
                 </div><!-- /.col -->
@@ -116,35 +115,23 @@
                                 @if($mainarea->representatives->whereNotNull('supervisor_id')->count() > 0)
                                     @foreach ($mainarea->representatives->whereNotNull('supervisor_id') as $row)
                                         <a href="/supervisor/showRepDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                            <div class="col-12" style="margin:1px -8px 38px 5px">
-                                                <div class="col-md-12" style="float:right">
-                                                    {{$row->user->user_name_third}} {{$row->user->user_surname}}
-                                                </div>
+                                            <div style="margin:1px -8px 38px 5px">
+                                                <h6>{{$row->user->user_name_third}} {{$row->user->user_surname}}</h6>
                                             </div>
                                         </a>
                                     @endforeach
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذه المنطقة مندوبيين علميين' }}
-                                    </div>
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"><!-- subareas -->
                                 @if($mainarea->subareas->count() > 0)
                                     <div class="row">
                                         @foreach ($mainarea->subareas as $row)
-                                            <a href="/supervisor/showOrderDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                                <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                    <div class="col-md-12">
-                                                        <h6 style="float:right">{{$row->name_sub_area}}</h6>
-                                                    </div>
+                                            <a href="/supervisor/showSubareaDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
+                                                <div style="margin:12px -8px 38px 5px">
+                                                    <h6 style="float:right">{{$row->name_sub_area}}</h6>
                                                 </div>
                                             </a>
                                         @endforeach
-                                    </div>
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذه المنطقة الرئيسية مناطق فرعية' }}
                                     </div>
                                 @endif
                             </div>

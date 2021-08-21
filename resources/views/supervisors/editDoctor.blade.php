@@ -13,7 +13,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="/supervisor/manageDoctors">ادارة الاطباء</a></li>
                 <li class="breadcrumb-item active">الاطباء</li>
                 </ol>
             </div><!-- /.col -->

@@ -12,14 +12,12 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageOrders">ادارة الطلبيات</a></li>
             <li class="breadcrumb-item active">الطلبيات</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-  <!-- /.content-header -->
-  <div>
+  </div><!-- /.container-fluid --><div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">
@@ -27,20 +25,18 @@
             <h3 class="card-title" style="float: right">قائمة الطلبيات</h3>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
-          </div>
-          <!-- /.card-header -->
+          </div><!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($supervisor->orders->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -64,11 +60,6 @@
                         العملية
                       </th>
                     </tr>
-                  @else
-                    <div class="alert alert-danger notify-error">
-                      {{ 'لم يتم اضافة اي طلبية' }}
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -102,17 +93,15 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($supervisor->orders->count() > 0)
-                      <tr>
-                        <th rowspan="1" colspan="1">#</th>
-                        <th rowspan="1" colspan="1">العميل</th>
-                        <th rowspan="1" colspan="1">الصنف</th>
-                        <th rowspan="1" colspan="1">الكمية</th>
-                        <th rowspan="1" colspan="1">البونص ( % )</th>
-                        <th rowspan="1" colspan="1">الملاحظة</th>
-                        <th rowspan="1" colspan="1">العملية</th>
-                      </tr>
-                    @endif
+                    <tr>
+                      <th rowspan="1" colspan="1">#</th>
+                      <th rowspan="1" colspan="1">العميل</th>
+                      <th rowspan="1" colspan="1">الصنف</th>
+                      <th rowspan="1" colspan="1">الكمية</th>
+                      <th rowspan="1" colspan="1">البونص ( % )</th>
+                      <th rowspan="1" colspan="1">الملاحظة</th>
+                      <th rowspan="1" colspan="1">العملية</th>
+                    </tr>
                   </tfoot>
                 </table>
               </div>

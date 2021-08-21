@@ -24,11 +24,15 @@ class OrderController extends Controller
     }
     public function addOrder()
     {
-        $supervisor = Supervisor::findOrfail(Auth::user()->supervisor->id);
-        $customers = $supervisor->customers->where('statues',true);
+        $supervisor = Supervisor::find(Auth::user()->supervisor->id);
+        $reps = $supervisor->representatives;
+        $customers = collect();
+        foreach($reps as $rep){
+            $customers = $customers->concat($rep->customers->where('statues',true));
+        }
         if($customers->count() < 1)
             return redirect()->back()->with(['error' => 'لايمكنك اضافة طلبية، الرجاء اضافة على الاقل عميل واحد!!! أو ان العملاء الذين اضفتهم لم يتم تفعيلهم']);
-        return view('supervisors.addOrder',compact('supervisor'));
+        return view('supervisors.addOrder',compact('supervisor'))->with('customers',$customers);
     }
     public function storeOrder(Request $request)
     {
@@ -38,21 +42,33 @@ class OrderController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        Order::create([
-            'customer_id' => $request->customer_id,
-            'item_id' => $request->item_id,
-            'count' => $request->count,
-            'bonus' => $request->bonus,
-            'note' => $request->note,
-            'representative_id' => $request->rep_id,
-        ]);
+        $cust = Customer::find($request->customer_id);
+        $repSience = $cust->representative->whereNotNull('supervisor_id')->first();
+
+        $cust_order_registered = Order::where('customer_id',$cust->id)->where('item_id',$request->item_id)
+        ->where('representative_id',$repSience->id)->first();
+        if($cust_order_registered){
+            $cust_order_registered->count += $request->count;
+            $cust_order_registered->note = $request->note;
+            $cust_order_registered->update();
+        }
+        else{
+            Order::create([
+                'customer_id' => $cust->id,
+                'item_id' => $request->item_id,
+                'count' => $request->count,
+                // 'bonus' => $request->bonus,
+                'note' => $request->note,
+                'representative_id' => $repSience->id,
+            ]);
+        }
         return redirect('/supervisor/manageOrders')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
         return $rules = [
                 'count' => 'required|numeric',
-                'bonus' => 'required|numeric',
+                // 'bonus' => 'required|numeric',
                 'note' => 'required|string',
                 ];
     }
@@ -62,8 +78,8 @@ class OrderController extends Controller
             'count.required' => 'يجب عليك كتابة هذا الحقل',
             'count.numeric' => 'يجب ان يكون هذا الحقل رقم',
 
-            'bonus.required' => 'يجب عليك كتابة هذا الحقل',
-            'bonus.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            // 'bonus.required' => 'يجب عليك كتابة هذا الحقل',
+            // 'bonus.numeric' => 'يجب ان يكون هذا الحقل رقم',
 
             'note.required' => 'يجب عليك كتابة هذا الحقل',
             'note.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -71,9 +87,12 @@ class OrderController extends Controller
     }
     public function editOrder($id)
     {
-        $supervisor = Supervisor::findOrfail(Auth::user()->supervisor->id);
-        $customers = $supervisor->customers->where('statues',true);
-
+        $supervisor = Supervisor::find(Auth::user()->supervisor->id);
+        $reps = $supervisor->representatives;
+        $customers = collect();
+        foreach($reps as $rep){
+            $customers = $customers->concat($rep->customers->where('statues',true));
+        }
         $order = Order::find($id); 
         if($order->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
@@ -90,7 +109,7 @@ class OrderController extends Controller
         $order->customer_id = $request->customer_id;
         $order->item_id = $request->item_id;
         $order->count = $request->count;
-        $order->bonus = $request->bonus;
+        // $order->bonus = $request->bonus;
         $order->note = $request->note;
 
         $order->update();

@@ -12,37 +12,33 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/managerMarketing/manageMainAreas">ادارة المناطق الرئيسية</a></li>
             <li class="breadcrumb-item active">المناطق الرئيسية</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-  <!-- /.content-header -->
-  <div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right"> قائمة المناطق الفرعية الخاصة بالمنطقة الرئيسية <h5>
+            <span class="card-title" style="float: right"> قائمة المناطق الفرعية الخاصة بالمنطقة الرئيسية <span class="text-bold">
                   {{ $mainarea->name_main_area }}
-            </h5></span>
+            </span></span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
-          </div>
-          <!-- /.card-header -->
+          </div><!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                  @if(isset($subareas) && $exist == 1)                    
+                  <thead>                   
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -51,11 +47,6 @@
                         اسم المنطقة الرئيسية
                       </th>
                     </tr>
-                  @elseif($exist == 1)
-                    <div class="alert alert-success notify-success">
-                      {{ 'لايوجد مناطق فرعية لهذه المنطقة الرئيسية' }}               
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -69,13 +60,11 @@
                     <a href="/managerMarketing/addSubArea/{{$mainarea->id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة منطقة فرعية</a>
                   </div>
                   </tbody>
-                  <tfoot>
-                  @if(isset($subareas) && $exist == 1)                    
+                  <tfoot>                    
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">اسم المنطقة الرئيسية</th>
                     </tr>
-                  @endif
                   </tfoot>
                 </table>
               </div>
@@ -86,6 +75,5 @@
         <!-- /.card -->
       </div>
     </div>
-  </div>
 </div>
 @endsection

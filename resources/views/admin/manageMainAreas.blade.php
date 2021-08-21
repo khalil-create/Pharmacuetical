@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/admin/manageMainAreas">ادارة المناطق الرئيسية</a></li>
             <li class="breadcrumb-item active">المناطق الرئيسية</li>
           </ol>
         </div><!-- /.col -->
@@ -36,21 +36,11 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success notify-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger notify-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($mainareas->count() > 0)
+                  {{-- @if($mainareas->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -65,11 +55,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي منطقة رئيسية' }}
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -80,17 +70,12 @@
                       <td class="sorting_1">
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
-                      <td class="" style="">
+                      <td>
                         <a href="/admin/editMainArea/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        <a href="/admin/supAreas/{{$row->id}}" class="btn btn-success">المناطق الفرعية</a>
-                        {{-- <form action="/admin/deleteMainArea/{{$row->id}}" method="post" style="float: right;">
-                          {{csrf_field()}}
-                          {{method_field('DELETE')}}
-                          <button style="border: none;margin-left: -150px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/admin/supAreas/{{$row->id}}"><i class="fas fa-map" title="المناطق الفرعية"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        <i class="fas fa-eye"></i>
+                        <a href="/admin/showMainareaDetails/{{$row->id}}"><i class="fas fa-eye" title="تفاصسل"></i></a>
                       </td>
                     </tr>
                   @endforeach
@@ -99,14 +84,14 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($mainareas->count() > 0)
+                    {{-- @if($mainareas->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم المنطقة</th>
                         <th rowspan="1" colspan="1">اسم المشرف عليها</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>
@@ -120,7 +105,6 @@
   </div>
 </div>
 @endsection
-
 @section('script')
   <script>
     $(document).ready(function(){

@@ -32,14 +32,15 @@ class ItemController extends Controller
     }
     public function storeItem(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        if(!$request->have_category)
-            $rules +=['category_id' => 'required',];
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $rules = [
+            'commercial_name' => 'required|string|max:255',
+            'science_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'bonus' => 'required|numeric|max:255',
+            // 'company_ids' => 'required',
+        ];
+        if(!$request->have_category) $rules +=['company_ids' => 'required',];
+        $request->validate($rules);
         if($request->have_category){
             $category_id = $request->category_id;
         }
@@ -57,7 +58,7 @@ class ItemController extends Controller
         if(!$request->have_category){
             $item->companies()->attach($request->company_ids);
         }
-        if(sizeof($request->specialist_ids) > 0)
+        if($request->specialist_ids)
             $item->specialists()->attach($request->specialist_ids);
         return redirect('/supervisor/manageItem')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -93,16 +94,18 @@ class ItemController extends Controller
     }
     public function UpdateItem(Request $request,$id)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
         $item = Item::find($id);
-        
         if($item->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        $rules = [
+            'commercial_name' => 'required|string|max:255',
+            'science_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'bonus' => 'required|numeric|max:255',
+            // 'company_ids' => 'required',
+        ];
+        if(!$request->have_category) $rules +=['company_ids' => 'required',];
+        $request->validate($rules);
         if($request->have_category){   
             $category_id = $request->category_id;
         }else{
@@ -118,7 +121,7 @@ class ItemController extends Controller
         if(!$request->have_category){
             $item->companies()->sync($request->company_ids);
         }
-        if(sizeof($request->specialist_ids) > 0)
+        if($request->specialist_ids)
             $item->specialists()->sync($request->specialist_ids);
         return redirect('/supervisor/manageItem')->with('status','تم تعديل البيانات بشكل ناجح');
     }

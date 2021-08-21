@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageSamples">ادارة العينات</a></li>
             <li class="breadcrumb-item active">العينات</li>
           </ol>
         </div><!-- /.col -->
@@ -39,8 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                  @if($samples->count() > 0)                    
+                  <thead>                  
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -55,11 +54,6 @@
                         العملية
                       </th>
                     </tr>
-                  @else
-                    <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي عينة' }}
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -73,6 +67,10 @@
                         <a href="/supervisor/displaySampleReps/{{$row->id}}">
                           <i class="fas fa-eye" title="عرض العينات الموزعة لكل مندوب"></i>
                         </a>
+                        @if(!$row->manager_id)<!-- this mean if condition false then who add this sample row is manager otherwise supervisor  -->
+                          <input type="hidden" class="id" value="{{$row->id}}">
+                          <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
+                        @endif
                       </td>
                     </tr>
                   @endforeach
@@ -101,4 +99,51 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.DeleteBtn').click(function(e){
+            e.preventDefault();
+            var id = $(this).closest("tr").find('.id').val();
+            
+            swal({
+                title: "هل انت متأكد من حذف البيانات?",
+                text: "عند حذفك للبيانات المحددة لايمكنك استرجاعها!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var data = {
+                        "_token": $('input[name=_token]').val(),
+                        "id": id,
+                    };
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/supervisor/deleteSample/'+id,
+                        data: data,
+                        // dataType: "data"
+                        success: function(response){
+                            swal(response.status, {
+                                icon: "success",
+                                button: "حسناً!",
+                            })
+                            .then((result) =>{
+                                location.reload();
+                            });
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+  </script>
 @endsection

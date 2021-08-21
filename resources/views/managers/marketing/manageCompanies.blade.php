@@ -12,14 +12,12 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/managerMarketing/manageCompanies">ادارة الشركات</a></li>
             <li class="breadcrumb-item active">الشركات</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
   </div><!-- /.container-fluid -->
-  <!-- /.content-header -->
-  <div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">
@@ -40,7 +38,10 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($company->count() > 0)                    
+<<<<<<< HEAD
+=======
+                  {{-- @if($company->count() > 0)                     --}}
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -58,11 +59,14 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+<<<<<<< HEAD
+=======
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي شركة' }}
                     </div>
-                  @endif
+                  @endif --}}
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -77,17 +81,15 @@
                       <td>
                         {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
                       </td>
+<<<<<<< HEAD
+                      <td>
+=======
                       <td class="" style="">
-                        <a href="/managerMarketing/companyEdit/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        {{-- <form action="/managerMarketing/companyDelete/{{$row->id}}" method="post" style="float: right;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                                <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
+                        <a href="/managerMarketing/companyEdit/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
-                        <i class="fas fa-eye"></i>
-
+                        <a href="/managerMarketing/showCompanyDetails/{{$row->id}}"><i class="nav-icon fas fa-eye" title="تفاصيل"></i></a>
                       </td>
                     </tr>
                   @endforeach
@@ -96,7 +98,10 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($company->count() > 0)                    
+<<<<<<< HEAD
+=======
+                    {{-- @if($company->count() > 0)                     --}}
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم الشركة</th>
@@ -104,18 +109,18 @@
                         <th rowspan="1" colspan="1">اسم المشرف عليها</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
-                    @endif
+<<<<<<< HEAD
+=======
+                    {{-- @endif --}}
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                   </tfoot>
                 </table>
               </div>
             </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
+          </div><!-- /.card-body -->
+        </div><!-- /.card -->
       </div>
     </div>
-  </div>
 </div>
 @endsection
 @section('script')

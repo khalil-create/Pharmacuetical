@@ -40,7 +40,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($supervisor->count() > 0)
+                  {{-- @if($supervisor->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -58,11 +58,11 @@
                         العملية
                       </th>
                     </tr>
-                  @else
+                  {{-- @else
                     <div class="alert alert-danger notify-error">
                       {{ 'لم يتم اضافة اي مشرف' }}
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -76,16 +76,11 @@
                       <td class="sorting_1">{{$row->sex}}</td>
                       <td class="" style="">{{$row->email}}</td>
                       <td>
-                        <a href="/managerMarketing/editSupervisor/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                        {{-- <form action="/managerMarketing/deleteSupervisor/{{$row->id}}" method="post">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
+                        <a href="/managerMarketing/editSupervisor/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                         <input type="hidden" class="id" value="{{$row->id}}">
                         <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                         <a href="/managerMarketing/mainAreaSupervised/{{$row->id}}"><i class="fas fa-tasks"></i></a>
-                        <i class="fas fa-eye"></i>
+                        <a href="/managerMarketing/showSupervisorDetails/{{$row->id}}"><i class="nav-icon fas fa-eye" title="تفاصيل"></i></a>
                       </td>
                     </tr>
                   @endforeach
@@ -94,7 +89,7 @@
                   </div>
                   </tbody>
                   <tfoot>
-                    @if($supervisor->count() > 0)
+                    {{-- @if($supervisor->count() > 0) --}}
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">الاسم</th>
@@ -102,7 +97,7 @@
                         <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
                         <th rowspan="1" colspan="1" style="">العملية</th>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>

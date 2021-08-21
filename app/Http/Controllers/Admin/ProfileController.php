@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    public function index($id)
+    public function profile($id)
     {
         $user = User::findOrfail($id);
-        return view('profile',compact('user')); 
+        // return $manager->supervisors;
+        return view('admin.profile',compact('user')); 
     }
 }

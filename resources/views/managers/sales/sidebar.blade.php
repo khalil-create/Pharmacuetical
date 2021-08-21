@@ -60,6 +60,7 @@
                                     $p == 'managerSales/addRepresentative' ||
                                     $path == 'managerSales/showSubareas' ||
                                     $path == 'managerSales/addRepSubareas' ||
+                                    $path == 'managerSales/showRepDetails' ||
                                     $path =='managerSales/editRepresentative'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-user nav-icon"></i>

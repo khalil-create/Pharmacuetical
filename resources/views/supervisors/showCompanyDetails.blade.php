@@ -14,7 +14,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/managerMarketing/manageCompanies">ادارة الشركات</a></li>
                         <li class="breadcrumb-item active">تفاصيل الشركة</li>
                     </ol>
                 </div><!-- /.col -->
@@ -52,7 +52,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-5">
+                        {{-- <div class="col-12 col-sm-6 col-md-5">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">المشرف عليها</span>
@@ -61,7 +61,7 @@
                                     </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
-                        </div><!-- /.col -->
+                        </div><!-- /.col --> --}}
                         <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">

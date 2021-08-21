@@ -61,13 +61,22 @@ class RepresentativeController extends Controller
                 return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب قبل مايتم اضافة مدير فريق']);
         }
 
-        $rules = $this->getRules();
-        $rules+=['userimage' => 'required','email' => 'required|string|email|max:255|unique:users'];
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'usernamethird' => 'required|string|max:255',
+            'usersurname' => 'required|string|max:255',
+            'sex' => 'required',
+            'birthdate' => 'required|before:today',
+            'birthplace' => 'required|string|max:255',
+            'town' => 'required|string|max:255',
+            'village' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone_number' => 'required|numeric|max:999999999|min:700000000|unique:users',
+            'identitytype' => 'required|string|max:255',
+            'identitynumber' => 'required|numeric',
+            'userimage' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+        ]);
         
         $file_name = null;
         if($request->hasfile('userimage'))
@@ -85,7 +94,7 @@ class RepresentativeController extends Controller
             'town' => $request->town,
             'village' => $request->village,
             'email' => $request->email,
-            'phone_number' => $request->phonenumber,
+            'phone_number' => $request->phone_number,
             'identity_type' => $request->identitytype,
             'identity_number' => $request->identitynumber,
             'user_image' => $file_name,
@@ -123,8 +132,8 @@ class RepresentativeController extends Controller
                 'birthplace' => 'required|string|max:255',
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
-                'phonenumber' => 'numeric|required|max:999999999',
-                'email' => 'required|string|email|max:255',
+                // 'email' => 'required|string|email|max:255',
+                // 'phone_number' => 'numeric|required|max:999999999',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric',
                 'password' => 'required|min:6|confirmed',
@@ -163,9 +172,10 @@ class RepresentativeController extends Controller
             'email.unique' => 'هذا الايميل مستخدم لدى مستخدم اخر',
             'email.email' => 'هذا ليس بريد اكتروني',
 
-            'phonenumber.required' => 'يجب عليك كتابة هذا الحقل',
-            'phonenumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'phonenumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phone_number.required' => 'يجب عليك كتابة هذا الحقل',
+            'phone_number.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            'phone_number.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phone_number.unique' => 'هذا الرقم بالفعل مسجل على حساب اخر.. تأكد من الرقم',
 
             'identitytype.required' => 'يجب عليك كتابة هذا الحقل',
             'identitytype.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -206,22 +216,30 @@ class RepresentativeController extends Controller
     }
     public function updateRepresentative(Request $request,$id)
     {
-        // return $request->mainarea_id;
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
         $user = User::find($id);
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        
-            if($request->hasfile('userimage'))
-            {
-                $this->deleteFile($user->userimage,'images/users/');
-                $file_name = $this->saveImage($request->file('userimage'),'images/users/');
-            }
+        $request->validate([
+            'usernamethird' => 'required|string|max:255',
+            'usersurname' => 'required|string|max:255',
+            'sex' => 'required',
+            'birthdate' => 'required|before:today',
+            'birthplace' => 'required|string|max:255',
+            'town' => 'required|string|max:255',
+            'village' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email'.($id ? ",$id" : ''),
+            'phone_number' => 'required|numeric|max:999999999|min:700000000|unique:users,phone_number'.($id ? ",$id" : ''),
+            'identitytype' => 'required|string|max:255',
+            'identitynumber' => 'required|numeric',
+            // 'userimage' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+        ]);
+        if($request->hasfile('userimage'))
+        {
+            $this->deleteFile($user->userimage,'images/users/');
+            $file_name = $this->saveImage($request->file('userimage'),'images/users/');
+        }
 
         //$user->update($request->all());
         $user->user_name_third = $request->Input('usernamethird');
@@ -233,7 +251,7 @@ class RepresentativeController extends Controller
         $user->town = $request->Input('town');
         $user->village = $request->Input('village');
         $user->email = $request->Input('email');
-        $user->phone_number = $request->Input('phonenumber');
+        $user->phone_number = $request->Input('phone_number');
         $user->identity_type = $request->Input('identitytype');
         $user->identity_number = $request->Input('identitynumber');
         $user->password = bcrypt($request->Input('password'));

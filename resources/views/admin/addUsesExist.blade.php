@@ -10,18 +10,17 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0">ادارة الاصناف</h1>
+                    <h1 class="m-0">ادارة الاصناف</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
-                    <li class="breadcrumb-item active">استخدامات الاصناف</li>
-                </ol>
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/admin/manageItem">ادارة الاصناف</a></li>
+                        <li class="breadcrumb-item active">استخدامات الاصناف</li>
+                    </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    </div><!-- /.content-header -->
     <section class="content" >
         <div class="container-fluid">
             <!-- SELECT2 EXAMPLE -->
@@ -30,14 +29,13 @@
                     <h3 class="card-title" style="float: right">إضافة استخدامات موجودة</h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
+                            <i class="fas fa-minus"></i>
                         </button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
-                </div>
-                <!-- /.card-header -->
+                </div><!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -45,7 +43,7 @@
                                 @if($uses->count() > 0)
                                     <form method="POST" action="{{ url('admin/storeUsesExist') }}"  enctype="multipart/form-data">
                                         {{ csrf_field() }}
-                                        <div class="card-body">
+                                        <div class="card-body border">
                                             <div class="form-group">
                                                 <label for="usesIds" class="col-md-6 control-label">استخدامات موجودة</label>
                                                 <select name="usesIds[]" id="exist_uses" class="form-control custom-select rounded-0" multiple>
@@ -64,11 +62,11 @@
                                             </div>
                                             <input type="text" name="id" value="{{$id}}" hidden>
                                             <div class="form-group" >
-                                                <button type="submit" class="btn btn-primary font" style="margin: 10px">
+                                                <button type="submit" class="btn btn-primary font">
                                                     حفظ<i class="fas fa-save"></i>
                                                 </button>
                                             </div>
-                                        <!-- /.form-group -->
+                                        </div><!-- /.card-body -->
                                     </form>
                                 @else
                                     <div class="alert alert-success notify-success">
@@ -76,18 +74,18 @@
                                     </div>
                                     <a href="/admin/addUse/{{$id}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة استخدام</a>
                                 @endif
-                            </div>
-                            <!-- / form-group -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-        <!-- /.container-fluid -->
+                            </div><!-- /.form-group -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.container-fluid -->
     </section>
-</div>
+    <div class="card-footer">
+    Footer
+    </div>
+</div><!-- /.content-header -->
+@endsection
+@section('scripts')
+
 @endsection

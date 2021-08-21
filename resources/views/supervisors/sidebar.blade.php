@@ -102,7 +102,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/supervisor/manageRepItems" 
+                    <a href="/supervisor/manageRepItems"
                     class="nav-link {{  $p == 'supervisor/manageRepItems'||
                                         $p == 'supervisor/addRepItems' ||
                                         $p == 'supervisor/manageRepItems' ||
@@ -128,8 +128,7 @@
                                 $path == 'supervisor/showOrderDetails'||
                                 $path == 'supervisor/editOrder'? 'menu-open' : ''
                             }}">
-            <a href="#"
-            class="nav-link {{  $p == 'supervisor/manageDoctors' || 
+            <a href="#"class="nav-link {{  $p == 'supervisor/manageDoctors' || 
                                 $p == 'supervisor/manageCustomers' ||
                                 $p == 'supervisor/manageOrders' ||
                                 $p == 'supervisor/addDoctor' ||
@@ -181,7 +180,8 @@
                         <p>الطلبيات</p>
                     </a>
                 </li>
-            </ul>
+            </ul
+            >
         </li>
         <li class="nav-item {{  $p == 'supervisor/manageCompanies' || 
                                 $p == 'supervisor/companyAdd' ||
@@ -190,18 +190,17 @@
                                 $p == 'supervisor/manageItem' ||
                                 $p == 'supervisor/itemAdd' ||
                                 $path == 'supervisor/companyEdit' ||
-                                $path == 'supervisor/categryEdit' ||
+                                $path == 'supervisor/categoryEdit' ||
                                 $path == 'supervisor/itemUses' ||
-                                $path == 'supervisor/itemUsesNoCat' ||
+                                // $path == 'supervisor/itemUsesNoCat' ||
+                                $path == 'supervisor/addUse' ||
                                 $path == 'supervisor/addUseExist' ||
-                                $path == 'supervisor/addUseExistNoCat' ||
                                 $path == 'supervisor/itemEdit' ||
                                 $path == 'supervisor/editUse' ||
-                                $path == 'supervisor/editUseNoCat' ||
+                                // $path == 'supervisor/editUseNoCat' ||
                                 $path == 'supervisor/showCompanyDetails' ||
                                 $path == 'supervisor/showCategoryDetails' ||
-                                $path == 'supervisor/showItemDetails' ||
-                                $path == 'supervisor/itemEditNoCat'? 'menu-open' : ''
+                                $path == 'supervisor/showItemDetails' ? 'menu-open' : ''
                             }}">
             <a href="#"
                 class="nav-link {{  $p == 'supervisor/manageCompanies' || 
@@ -211,18 +210,17 @@
                                     $p == 'supervisor/manageItem' ||
                                     $p == 'supervisor/itemAdd' ||
                                     $path == 'supervisor/companyEdit' ||
-                                    $path == 'supervisor/categryEdit' ||
+                                    $path == 'supervisor/categoryEdit' ||
                                     $path == 'supervisor/itemUses' ||
                                     $path == 'supervisor/addUseExist' ||
-                                    $path == 'supervisor/addUseExistNoCat' ||
-                                    $path == 'supervisor/itemUsesNoCat' ||
+                                    $path == 'supervisor/addUse' ||
+                                    $path == 'supervisor/itemUses' ||
                                     $path == 'supervisor/itemEdit'||
                                     $path == 'supervisor/editUse' ||
-                                    $path == 'supervisor/editUseNoCat' ||
+                                    // $path == 'supervisor/editUseNoCat' ||
                                     $path == 'supervisor/showCompanyDetails' ||
                                     $path == 'supervisor/showCategoryDetails' ||
-                                    $path == 'supervisor/showItemDetails' ||
-                                    $path == 'supervisor/itemEditNoCat'? 'active' : ''
+                                    $path == 'supervisor/showItemDetails' ? 'active' : ''
                                 }}">
                     <i class="nav-icon far fa-building"></i>
                     <p>
@@ -259,6 +257,7 @@
                                         $p == 'supervisor/itemAdd' ||
                                         $path == 'supervisor/itemUses' ||
                                         $path == 'supervisor/addUseExist' ||
+                                        $path == 'supervisor/addUse' ||
                                         $path == 'supervisor/editUse' ||
                                         $path == 'supervisor/showItemDetails' ||
                                         $path == 'supervisor/itemEdit' ? 'active' : ''

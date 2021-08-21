@@ -21,8 +21,6 @@ class SampleController extends Controller
         }
         $samples = Sample::whereNotNull(['manager_id','supervisor_id'])->get();
         $supervisors = Supervisor::with('user')->get();
-        // $supervisors = $supervisors->toArray();
-        // return $supervisors;
         return view('managers.marketing.manageSamples',compact('samples',$samples))->with('supervisors',$supervisors);
     }
     public function getSupervisorSamples($id)

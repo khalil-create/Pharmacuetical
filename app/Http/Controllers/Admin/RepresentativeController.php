@@ -49,12 +49,13 @@ class RepresentativeController extends Controller
                 return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب قبل مايتم اضافة مدير فريق']);
         }
 
-        // $rules = $this->getRules();
-        // $messages = $this->getMessages();
-        // $validator = Validator::make($request->all(),$rules,$messages);
-        // if($validator->fails()){
-        //     return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        // }
+        $rules = $this->getRules();
+        $rules+=['userimage' => 'required','email' => 'required|string|email|max:255|unique:users','phonenumber' => 'unique:users',];
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
 
         if($request->hasfile('userimage'))
         {
@@ -98,7 +99,7 @@ class RepresentativeController extends Controller
                 'birthplace' => 'required|string|max:255',
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'required|string|email|max:255',
                 'phonenumber' => 'numeric|required|max:999999999',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric||max:20',
@@ -142,6 +143,7 @@ class RepresentativeController extends Controller
             'phonenumber.required' => 'يجب عليك كتابة هذا الحقل',
             'phonenumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
             'phonenumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phonenumber.unique' => 'هذا الرقم بالفعل مسجل على حساب اخر.. تأكد من الرقم',
 
             'identitytype.required' => 'يجب عليك كتابة هذا الحقل',
             'identitytype.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -169,6 +171,12 @@ class RepresentativeController extends Controller
     }
     public function updateRepresentative(Request $request,$id)
     {
+        $rules = $this->getRules();
+        $messages = $this->getMessages();
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+        }
         $user = User::find($id);
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);

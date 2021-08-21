@@ -3,11 +3,10 @@
     الصفحة الرئيسية
 @endsection
 @section('content')
-<div class="content-wrapper">
+<div class="content-header content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
+    <div class="container-fluid">
+        <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0">الصفحة الرئيسية</h1>
             </div><!-- /.col -->
@@ -17,11 +16,8 @@
                 <li class="breadcrumb-item active"></li>
                 </ol>
             </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

@@ -46,36 +46,46 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middl
     Route::put('/UpdateMainArea/{areaid}', 'MainAreaController@UpdateMainArea');
     Route::delete('/deleteMainArea/{id}', 'MainAreaController@deleteMainArea');
     Route::get('/supAreas/{id}', 'MainAreaController@getSupAreasForMainArea');
+    Route::get('/showMainareaDetails/{id}', 'MainAreaController@showMainareaDetails');
 
     Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea')->name('admin.show.subareas');
     Route::get('/addSubArea/{id?}', 'SubAreaController@addSubArea');
     Route::post('/storeSubArea/{id?}', 'SubAreaController@storeSubArea');
     Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
     Route::put('/UpdateSubArea/{areaid}', 'SubAreaController@UpdateSubArea');
+    Route::get('/showSubareaDetails/{areaid}', 'SubAreaController@showSubareaDetails');
     Route::delete('/deleteSubArea/{id}', 'SubAreaController@deleteSubArea');
 
-    Route::get('/manageCompany', 'CompanyController@getAllCompanies')->name('admin.show.companies');
-    Route::get('/addCompany', 'CompanyController@addCompany');
-    Route::post('/storeCompany', 'CompanyController@storeCompany');
-    Route::get('/editCompany/{id}', 'CompanyController@editCompany');
-    Route::put('/UpdateCompany/{id}', 'CompanyController@UpdateCompany');
-    Route::delete('/deleteCompany/{id}', 'CompanyController@deleteCompany');
+    Route::get('/showSubareaReps/{id}', 'SubAreaController@showSubareaReps');
+    Route::get('/addSubareaReps/{id}', 'SubAreaController@addSubareaReps');
+    Route::post('/storeSubareaReps/{id}', 'SubAreaController@storeSubareaReps');
 
-    Route::get('/manageCategories', 'CategoryController@getAllCategories')->name('admin.show.categories');
-    Route::get('/addCategory', 'CategoryController@addCategory');
-    Route::post('/storeCategory', 'CategoryController@storeCategory');
-    Route::get('/editCategory/{id}', 'CategoryController@editCategory');
+    Route::get('/manageCompanies', 'CompanyController@getAllCompanies')->name('admin.show.companies');
+    Route::get('/companyAdd', 'CompanyController@addCompany');
+    Route::post('/companyStore', 'CompanyController@storeCompany');
+    Route::get('/companyEdit/{id}', 'CompanyController@editCompany');
+    Route::put('/companyUpdate/{id}', 'CompanyController@UpdateCompany');
+    Route::get('/showCompanyDetails/{id}', 'CompanyController@showCompanyDetails');
+    Route::delete('/companyDelete/{id}', 'CompanyController@deleteCompany');
+
+    Route::get('/manageCategory', 'CategoryController@getAllCategories')->name('admin.show.categories');
+    Route::get('/categoryAdd', 'CategoryController@addCategory');
+    Route::post('/categoryStore', 'CategoryController@storeCategory');
+    Route::get('/categoryEdit/{id}', 'CategoryController@editCategory');
     Route::put('/UpdateCategory/{id}', 'CategoryController@UpdateCategory');
-    Route::delete('/deleteCategory/{id}', 'CategoryController@deleteCategory');
+    Route::get('/showCategoryDetails/{id}', 'CategoryController@showCategoryDetails');
+    Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
 
-    Route::get('/manageItems', 'ItemController@getAllItems')->name('admin.show.items');
-    Route::get('/addItem', 'ItemController@addItem');
-    Route::post('/storeItem', 'ItemController@storeItem');
-    Route::get('/editItem/{id}', 'ItemController@editItem');
-    Route::put('/UpdateItem/{id}', 'ItemController@UpdateItem');
-    Route::delete('/deleteItem/{id}', 'ItemController@deleteItem');
-    
+    Route::get('/manageItem', 'ItemController@getAllItems')->name('admin.show.items');
+    Route::get('/itemAdd', 'ItemController@addItem');
+    Route::post('/itemStore', 'ItemController@storeItem');
+    Route::get('/itemEdit/{id}', 'ItemController@editItem');
+    Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
+    Route::get('/showItemDetails/{id}', 'ItemController@showItemDetails');
+    Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
+
     Route::get('/itemUses/{id}', 'UsesController@getItemUses');
+    Route::get('/itemUsesNoCat/{id}', 'UsesController@getItemUses');    
     Route::get('/addUse/{id}', 'UsesController@addUse');
     Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
     Route::post('/storeUse', 'UsesController@storeUse');
@@ -84,7 +94,35 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin','middl
     Route::put('/updateUse/{id}', 'UsesController@updateUse');
     Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
 
-    Route::get('/manageSamples', 'SampleController@getAllSamples');
+    Route::get('/manageDoctors', 'DoctorController@getAllDoctors')->name('admin.show.doctors');
+    Route::get('/addDoctor', 'DoctorController@addDoctor');
+    Route::post('/storeDoctor', 'DoctorController@storeDoctor');
+    Route::get('/editDoctor/{id}', 'DoctorController@editDoctor');
+    Route::put('/updateDoctor/{id}', 'DoctorController@updateDoctor');
+    Route::get('/activateDoctor/{id}', 'DoctorController@activateDoctor');
+    Route::get('/notActivateDoctor/{id}', 'DoctorController@notActivateDoctor');
+    Route::get('/showDoctorDetails/{id}', 'DoctorController@showDoctorDetails');
+    Route::delete('/deleteDoctor/{id}', 'DoctorController@deleteDoctor');
+
+    Route::get('/manageCustomers', 'CustomerController@getAllCustomers')->name('admin.show.customers');
+    Route::get('/addCustomer', 'CustomerController@addCustomer');
+    Route::post('/storeCustomer', 'CustomerController@storeCustomer');
+    Route::get('/editCustomer/{id}', 'CustomerController@editCustomer');
+    Route::put('/updateCustomer/{id}', 'CustomerController@updateCustomer');
+    Route::get('/activateCustomer/{id}', 'CustomerController@activateCustomer');
+    Route::get('/notActivateCustomer/{id}', 'CustomerController@notActivateCustomer');
+    Route::get('/showCustomerDetails/{id}', 'CustomerController@showCustomerDetails');
+    Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
+    
+    Route::get('/manageOrders', 'OrderController@getAllOrders')->name('admin.show.orders');
+    Route::get('/addOrder', 'OrderController@addOrder');
+    Route::post('/storeOrder', 'OrderController@storeOrder');
+    Route::get('/editOrder/{id}', 'OrderController@editOrder');
+    Route::put('/updateOrder/{id}', 'OrderController@updateOrder');
+    Route::get('/showOrderDetails/{id}', 'OrderController@showOrderDetails');
+    Route::delete('/deleteOrder/{id}', 'OrderController@deleteOrder');
+        
+    Route::get('/manageSamples', 'SampleController@getAllSamples')->name('admin.show.samples');
     Route::get('/addSample', 'SampleController@addSample');
     Route::post('/storeSample', 'SampleController@storeSample');
     Route::get('/editSample/{id}', 'SampleController@editSample');
@@ -133,7 +171,7 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::get('/categoryAdd', 'CategoryController@addCategory');
     Route::post('/categoryStore', 'CategoryController@storeCategory');
     Route::get('/categoryEdit/{id}', 'CategoryController@editCategory');
-    Route::put('/categoryUpdate/{id}', 'CategoryController@UpdateCategory');
+    Route::put('/UpdateCategory/{id}', 'CategoryController@UpdateCategory');
     Route::get('/showCategoryDetails/{id}', 'CategoryController@showCategoryDetails');
     Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
 
@@ -144,6 +182,16 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::put('/itemUpdate/{id}', 'ItemController@UpdateItem');
     Route::get('/showItemDetails/{id}', 'ItemController@showItemDetails');
     Route::delete('/itemDelete/{id}', 'ItemController@deleteItem');
+
+    Route::get('/itemUses/{id}', 'UsesController@getItemUses');
+    Route::get('/itemUsesNoCat/{id}', 'UsesController@getItemUses');    
+    Route::get('/addUse/{id}', 'UsesController@addUse');
+    Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
+    Route::post('/storeUse', 'UsesController@storeUse');
+    Route::post('/storeUsesExist', 'UsesController@storeUsesExist');
+    Route::get('/editUse/{id}', 'UsesController@editUse');
+    Route::put('/updateUse/{id}', 'UsesController@updateUse');
+    Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
 
     Route::get('/manageMainAreas', 'MainAreaController@getAllAreas')->name('managerMarketing.show.mainareas');
     Route::get('/addMainArea', 'MainAreaController@addMainArea');
@@ -166,16 +214,6 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::get('/addSubareaReps/{id}', 'SubAreaController@addSubareaReps');
     Route::post('/storeSubareaReps/{id}', 'SubAreaController@storeSubareaReps');
 
-    Route::get('/itemUses/{id}', 'UsesController@getItemUses');
-    Route::get('/itemUsesNoCat/{id}', 'UsesController@getItemUses');    
-    Route::get('/addUse/{id}', 'UsesController@addUse');
-    Route::get('/addUseExist/{id}', 'UsesController@addUseExist');
-    Route::post('/storeUse', 'UsesController@storeUse');
-    Route::post('/storeUsesExist', 'UsesController@storeUsesExist');
-    Route::get('/editUse/{id}', 'UsesController@editUse');
-    Route::put('/updateUse/{id}', 'UsesController@updateUse');
-    Route::delete('/deleteUse/{id}', 'UsesController@deleteUse');
-
     Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives')->name('managerMarketing.show.Representatives');
     Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');
     Route::post('/storeRepresentative', 'RepresentativeController@storeRepresentative');
@@ -195,7 +233,7 @@ Route::group(['prefix'=>'managerMarketing','namespace'=>'App\Http\Controllers\Ma
     Route::put('/updateRepItems/{id}', 'RepItemController@updateRepItem');
     // Route::delete('/deleteRepItem/{id}', 'RepItemController@deleteRepItem');
     
-    Route::get('/manageSalesRepresentatives', 'SalesRepresentativeController@getAllSalesRepresentatives');
+    Route::get('/manageSalesRepresentatives', 'SalesRepresentativeController@getAllSalesRepresentatives')->name('managerMarketing.show.salesReps');
     Route::get('/addSalesRepresentative', 'SalesRepresentativeController@addSalesRepresentative');
     Route::post('/storeSalesRepresentative', 'SalesRepresentativeController@storeSalesRepresentative');
     Route::get('/editSalesRepresentative/{id}', 'SalesRepresentativeController@editSalesRepresentative');
@@ -276,7 +314,7 @@ Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Manage
     Route::get('/profile/{id}', 'ProfileController@profile');
     Route::put('/profileUpdate/{id}', 'ProfileController@profileUpdate');
 
-    Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives');
+    Route::get('/manageRepresentatives', 'RepresentativeController@getAllRepresentatives')->name('managerSales.show.representatives');
     Route::get('/addRepresentative', 'RepresentativeController@addRepresentative');
     Route::post('/storeRepresentative', 'RepresentativeController@storeRepresentative');
     Route::get('/editRepresentative/{id}', 'RepresentativeController@editRepresentative');
@@ -287,7 +325,7 @@ Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Manage
     Route::get('/showRepDetails/{id}', 'RepresentativeController@showRepDetails');
     Route::delete('/deleteRepresentative/{id}', 'RepresentativeController@deleteRepresentative');
 
-    Route::get('/manageMainAreas', 'MainAreaController@getAllAreas');
+    Route::get('/manageMainAreas', 'MainAreaController@getAllAreas')->name('managerSales.show.mainareas');
     Route::get('/addMainArea', 'MainAreaController@addMainArea');
     Route::post('/storeMainArea', 'MainAreaController@storeMainArea');
     Route::get('/editMainArea/{areaid}', 'MainAreaController@editMainArea');
@@ -295,7 +333,7 @@ Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Manage
     Route::delete('/deleteMainArea/{id}', 'MainAreaController@deleteMainArea');
     Route::get('/supAreas/{id}', 'MainAreaController@getSupAreasForMainArea');
 
-    Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea');
+    Route::get('/manageSubAreas', 'SubAreaController@getAllSubArea')->name('managerSales.show.subareas');
     Route::get('/addSubArea/{id}', 'SubAreaController@addSubArea');
     Route::post('/storeSubArea/{id}', 'SubAreaController@storeSubArea');
     Route::get('/editSubArea/{areaid}', 'SubAreaController@editSubArea');
@@ -307,7 +345,7 @@ Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Manage
     Route::get('/addSubareaReps/{id}', 'SubAreaController@addSubareaReps');
     Route::post('/storeSubareaReps/{id}', 'SubAreaController@storeSubareaReps');
 
-    Route::get('/manageCustomers', 'CustomerController@getAllCustomers');
+    Route::get('/manageCustomers', 'CustomerController@getAllCustomers')->name('managerSales.show.customers');
     Route::get('/addCustomer', 'CustomerController@addCustomer');
     Route::post('/storeCustomer', 'CustomerController@storeCustomer');
     Route::get('/editCustomer/{id}', 'CustomerController@editCustomer');
@@ -316,21 +354,21 @@ Route::group(['prefix'=>'managerSales','namespace'=>'App\Http\Controllers\Manage
     Route::get('/notActivateCustomer/{id}', 'CustomerController@notActivateCustomer');
     Route::delete('/deleteCustomer/{id}', 'CustomerController@deleteCustomer');
     
-    Route::get('/manageOrders', 'OrderController@getAllOrders');
+    Route::get('/manageOrders', 'OrderController@getAllOrders')->name('managerSales.show.orders');
     Route::get('/addOrder', 'OrderController@addOrder');
     Route::post('/storeOrder', 'OrderController@storeOrder');
     Route::get('/editOrder/{id}', 'OrderController@editOrder');
     Route::put('/updateOrder/{id}', 'OrderController@updateOrder');
     Route::delete('/deleteOrder/{id}', 'OrderController@deleteOrder');
     
-    Route::get('/manageTasks', 'TaskController@getAllTasks');
+    Route::get('/manageTasks', 'TaskController@getAllTasks')->name('managerSales.show.tasks');
     Route::get('/addTask', 'TaskController@addTask');
     Route::post('/storeTask', 'TaskController@storeTask');
     Route::get('/editTask/{id}', 'TaskController@editTask');
     Route::put('/updateTask/{id}', 'TaskController@updateTask');
     Route::delete('/deleteTask/{id}', 'TaskController@deleteTask');
     
-    Route::get('/manageServices', 'ServiceController@getAllServices');
+    Route::get('/manageServices', 'ServiceController@getAllServices')->name('managerSales.show.services');
     Route::get('/addService', 'ServiceController@addService');
     Route::post('/storeService', 'ServiceController@storeService');
     Route::get('/editService/{id}', 'ServiceController@editService');
@@ -404,7 +442,7 @@ Route::group(['prefix'=>'supervisor','namespace'=>'App\Http\Controllers\Supervis
     Route::get('/categoryAdd', 'CategoryController@addCategory');
     Route::post('/categoryStore', 'CategoryController@storeCategory');
     Route::get('/categoryEdit/{id}', 'CategoryController@editCategory');
-    Route::put('/categoryUpdate/{id}', 'CategoryController@UpdateCategory');
+    Route::put('/UpdateCategory/{id}', 'CategoryController@UpdateCategory');
     Route::get('/showCategoryDetails/{id}', 'CategoryController@showCategoryDetails');
     Route::delete('/categoryDelete/{id}', 'CategoryController@deleteCategory');
 

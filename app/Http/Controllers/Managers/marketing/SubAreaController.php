@@ -23,11 +23,12 @@ class SubAreaController extends Controller
         }
         $subArea = Subarea::with('mainarea')->get();
 
-        if(!($subArea->count() > 0))
-            return view('managers.Marketing.manageSubAreas')->with('status','لايوجد مناطق فرعية الرجاء اضافة منطقة فرعية');
+        // if(!($subArea->count() > 0))
+        //     return view('managers.Marketing.manageSubAreas')->with('status','لايوجد مناطق فرعية الرجاء اضافة منطقة فرعية');
         return view('managers.Marketing.manageSubAreas')->with('subArea',$subArea);
     }
-    public function addSubArea($id){
+    public function addSubArea($id)
+    {
         $mainareas = Mainarea::all();
         if(isset($id) && $id != 0){
             $mainarea = Mainarea::find($id);
@@ -43,10 +44,9 @@ class SubAreaController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        $mainarea = Mainarea::where('name_main_area',$request->name_main_area)->first();
-        $subarea = Subarea::create([
+        Subarea::create([
             'name_sub_area' => $request->name_sub_area,
-            'mainarea_id' =>$mainarea->id,
+            'mainarea_id' =>$request->main_area_id,
         ]);   
         if(isset($id) && $id != 0)
             return redirect('/managerMarketing/supAreas/'.$id)->with('status','تم إضافة البيانات بشكل ناجح');
@@ -63,32 +63,34 @@ class SubAreaController extends Controller
         return $messages = [
             'name_sub_area.required' => 'يجب عليك كتابة المنطقة الفرعية',
             'name_sub_area.unique' => 'هذه المنطقة موجوده مسبقاً',
+            'name_sub_area.string' => 'يجب عليك كتابة هذا الحقل بشكل نصي',
+            'name_sub_area.max' => 'يجب ان لاتتجاوز عدد الأحرف لأكثر من 255 حرفاً',
         ];
     }
     public function editSubArea($id)
     {
         $subarea = Subarea::find($id);
-        if($subarea->count() < 1)
+        if(!$subarea)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $mainarea = Mainarea::find($subarea->mainarea_id);
         $mainareas = Mainarea::all();
-        return view('managers.Marketing.editSubArea', compact('subarea',$subarea))->with('mainarea',$mainarea)
-        ->with('mainareas',$mainareas);
+        return view('managers.Marketing.editSubArea', compact('subarea'))->with('mainareas',$mainareas);
     }
     public function UpdateSubArea(Request $request,$id)
     {
-        $rules = $this->getRules();
+        $subarea = Subarea::find($id);
+        if($subarea->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        if($subarea->name_sub_area == $request->name_sub_area)
+            $rules = ['name_sub_area' => 'required|string|max:255', ];
+        else
+            $rules = $this->getRules();
         $messages = $this->getMessages();
         $validator = Validator::make($request->all(),$rules,$messages);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        $subarea = Subarea::find($id);
-        if($subarea->count() < 1)
-            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $mainarea = Mainarea::where('name_main_area',$request->name_main_area)->first();
         $subarea->name_sub_area = $request->Input('name_sub_area');
-        $subarea->mainarea_id = $mainarea->id;
+        $subarea->mainarea_id = $request->sub_area_id;
         $subarea->update();
 
         return redirect('/managerMarketing/manageSubAreas')->with('status','تم تعديل البيانات بشكل ناجح');
@@ -107,6 +109,13 @@ class SubAreaController extends Controller
         $subarea = Subarea::find($id);
         $reps = $subarea->representatives;
         return view('managers.marketing.showSubareaReps', compact('subarea',$subarea))->with('reps',$reps);
+    }
+    public function showSubareaDetails($id)
+    {
+        $subarea = Subarea::with('representatives')->findOrfail($id);
+        if($subarea->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('managers.marketing.showSubareaDetails',compact('subarea'));
     }
     public function addSubareaReps($id)
     {

@@ -57,6 +57,7 @@
             class="nav-link {{  $p == 'managerMarketing/manageSupervisors' || 
                                 $p == 'managerMarketing/addSupervisor' ||
                                 $path =='managerMarketing/editSupervisor' || 
+                                $path =='managerMarketing/showSupervisorDetails' || 
                                 $path =='managerMarketing/mainAreaSupervised'? 'active' : '' 
                             }}">
                 <i class="nav-icon fas fa-user"></i>
@@ -70,10 +71,15 @@
                                 $p == 'managerMarketing/itemAdd' ||
                                 $p == 'managerMarketing/manageItem' ||
                                 $path == 'managerMarketing/addUseExist' ||
+                                $path == 'managerMarketing/addUse' ||
+                                $path == 'managerMarketing/editUse' ||
                                 $path == 'managerMarketing/companyEdit' ||
-                                $path == 'managerMarketing/categryEdit' ||
+                                $path == 'managerMarketing/categoryEdit' ||
                                 $path == 'managerMarketing/itemUses' ||
-                                $path == 'managerMarketing/editItems'? 'menu-open' : ''
+                                $path == 'managerMarketing/showCompanyDetails' ||
+                                $path == 'managerMarketing/showCategoryDetails' ||
+                                $path == 'managerMarketing/showItemDetails' ||
+                                $path == 'managerMarketing/itemEdit'? 'menu-open' : ''
                             }}">
             <a href="#"
             class="nav-link {{  $p == 'managerMarketing/manageCompanies' || 
@@ -83,9 +89,14 @@
                                 $p == 'managerMarketing/itemAdd' ||
                                 $p == 'managerMarketing/manageItem' ||
                                 $path == 'managerMarketing/addUseExist' ||
+                                $path == 'managerMarketing/editUse' ||
+                                $path == 'managerMarketing/addUse' ||
                                 $path == 'managerMarketing/companyEdit' ||
-                                $path == 'managerMarketing/categryEdit' ||
+                                $path == 'managerMarketing/categoryEdit' ||
                                 $path == 'managerMarketing/itemUses' ||
+                                $path == 'managerMarketing/showCompanyDetails' ||
+                                $path == 'managerMarketing/showCategoryDetails' ||
+                                $path == 'managerMarketing/showItemDetails' ||
                                 $path == 'managerMarketing/itemEdit'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -96,6 +107,7 @@
                 <a href="{{url('managerMarketing/manageCompanies')}}" 
                 class="nav-link {{  $p == 'managerMarketing/manageCompanies' ||
                                     $p == 'managerMarketing/companyAdd' ||
+                                $path == 'managerMarketing/showCompanyDetails' ||
                                     $path == 'managerMarketing/companyEdit' ? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -106,6 +118,7 @@
                 <a href="{{url('managerMarketing/manageCategory')}}" 
                 class="nav-link {{  $p == 'managerMarketing/manageCategory'||
                                     $p == 'managerMarketing/categoryAdd' ||
+                                $path == 'managerMarketing/showCategoryDetails' ||
                                     $path == 'managerMarketing/categoryEdit' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -117,7 +130,10 @@
                     class="nav-link {{  $p == 'managerMarketing/manageItem'||
                                         $p == 'managerMarketing/itemAdd' ||
                                         $path == 'managerMarketing/addUseExist' ||
+                                        $path == 'managerMarketing/editUse' ||
+                                        $path == 'managerMarketing/addUse' ||
                                         $path == 'managerMarketing/itemUses' ||
+                                        $path == 'managerMarketing/showItemDetails' ||
                                         $path == 'managerMarketing/itemEdit' ? 'active' : ''
                                     }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
@@ -135,6 +151,8 @@
                                 $path == 'managerMarketing/editSubArea' ||
                                 $path == 'managerMarketing/showSubareaReps' ||
                                 $path == 'managerMarketing/addSubareaReps' ||
+                                $path == 'managerMarketing/showMainareaDetails' ||
+                                $path == 'managerMarketing/showSubareaDetails' ||
                                 $path == 'managerMarketing/supAreas'? 'menu-open' : ''
                             }}">
             <a href="#"
@@ -147,6 +165,8 @@
                                 $path == 'managerMarketing/editSubArea' ||
                                 $path == 'managerMarketing/showSubareaReps' ||
                                 $path == 'managerMarketing/addSubareaReps' ||
+                                $path == 'managerMarketing/showMainareaDetails' ||
+                                $path == 'managerMarketing/showSubareaDetails' ||
                                 $path == 'managerMarketing/supAreas'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -162,6 +182,7 @@
                                     $p == 'managerMarketing/addMainArea' ||
                                     $path == 'managerMarketing/supAreas' || 
                                     $path == 'managerMarketing/editMainArea' ||
+                                    $path == 'managerMarketing/showMainareaDetails' ||
                                     $path == 'managerMarketing/supAreas'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -173,7 +194,8 @@
                 class="nav-link {{  $p == 'managerMarketing/manageSubAreas'||
                                     $path == 'managerMarketing/addSubArea' ||
                                     $path == 'managerMarketing/showSubareaReps' ||
-                                    $path == 'managerMarketing/addSubareaReps' || 
+                                    $path == 'managerMarketing/addSubareaReps' ||
+                                    $path == 'managerMarketing/showSubareaDetails' || 
                                     $path == 'managerMarketing/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -181,6 +203,159 @@
                 </a>
                 </li>
             </ul>
+        </li>
+        <li class="nav-item {{  $p == 'managerMarketing/manageRepresentatives' || 
+                                $p == 'managerMarketing/addRepresentative' ||
+                                $p == 'managerMarketing/manageRepItems' ||
+                                $path == 'managerMarketing/editRepItems' ||
+                                $path == 'managerMarketing/showSubareas' ||
+                                $path == 'managerMarketing/addRepSubareas' ||
+                                $path == 'managerMarketing/showRepDetails' ||
+                                $path == 'managerMarketing/storeRepMainArea' ||
+                                $path =='managerMarketing/editRepresentative'||
+                                $p == 'managerMarketing/manageSalesRepresentatives' || 
+                                $p == 'managerMarketing/addSalesRepresentative' ||
+                                // $p == 'managerMarketing/manageSalesRepItems' ||
+                                // $path == 'managerMarketing/editSalesRepItems' ||
+                                $path == 'managerMarketing/showSalesRepSubareas' ||
+                                $path == 'managerMarketing/addSalesRepSubareas' ||
+                                $path == 'managerMarketing/showSalesRepDetails' ||
+                                // $path == 'managerMarketing/storeSalesRepMainArea' ||
+                                $path =='managerMarketing/editSalesRepresentative'? 'menu-open' : '' 
+                            }}">
+            <a href="#"
+                class="nav-link {{  $p == 'managerMarketing/manageRepresentatives' || 
+                                    $p == 'managerMarketing/addRepresentative' ||
+                                    $p == 'managerMarketing/manageRepItems' ||
+                                    $path == 'managerMarketing/editRepItems' ||
+                                    $path == 'managerMarketing/showSubareas' ||
+                                    $path == 'managerMarketing/addRepSubareas' ||
+                                    $path == 'managerMarketing/showRepDetails' ||
+                                    $path == 'managerMarketing/storeRepMainArea' ||
+                                    $path =='managerMarketing/editRepresentative'||
+                                    $p == 'managerMarketing/manageSalesRepresentatives' || 
+                                    $p == 'managerMarketing/addSalesRepresentative' ||
+                                    // $p == 'managerMarketing/manageSalesRepItems' ||
+                                    // $path == 'managerMarketing/editSalesRepItems' ||
+                                    $path == 'managerMarketing/showSalesRepSubareas' ||
+                                    $path == 'managerMarketing/addSalesRepSubareas' ||
+                                    $path == 'managerMarketing/showSalesRepDetails' ||
+                                    // $path == 'managerMarketing/storeSalesRepMainArea' ||
+                                    $path =='managerMarketing/editSalesRepresentative'? 'active' : ''
+                                }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>ادارة المندوبيين<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="/managerMarketing/manageRepresentatives" 
+                        class="nav-link {{  $p == 'managerMarketing/manageRepresentatives' || 
+                                            $p == 'managerMarketing/addRepresentative' ||
+                                            $path == 'managerMarketing/showMainareas' ||
+                                            $path == 'managerMarketing/showSubareas' ||
+                                            $path == 'managerMarketing/addRepSubareas' ||
+                                            $path == 'managerMarketing/showRepDetails' ||
+                                            $path =='managerMarketing/editRepresentative'? 'active' : '' 
+                                        }}" class="nav-link">
+                        <i class="far fa-user nav-icon"></i>
+                        <p>المندوبيين العلميين</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/managerMarketing/manageSalesRepresentatives" 
+                        class="nav-link {{  $p == 'managerMarketing/manageSalesRepresentatives' ||
+                                            $p == 'managerMarketing/addSalesRepresentative' ||
+                                            $path == 'managerMarketing/showSalesRepMainareas' ||
+                                            $path == 'managerMarketing/showSalesRepSubareas' ||
+                                            $path == 'managerMarketing/addSalesRepSubareas' ||
+                                            $path == 'managerMarketing/showSalesRepDetails' ||
+                                            $path =='managerMarketing/editSalesRepresentative'? 'active' : '' 
+                                        }}" class="nav-link">
+                            <i class="far fa-user nav-icon"></i>
+                            <p>مندوبيين المبيعات</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/managerMarketing/manageRepItems"
+                    class="nav-link {{  $p == 'managerMarketing/manageRepItems'||
+                                        $p == 'managerMarketing/addRepItems' ||
+                                        $p == 'managerMarketing/manageRepItems' ||
+                                        $path == 'managerMarketing/editRepItems' ||
+                                        $path == 'managerMarketing/editRepItems' ? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>اصناف المندوبيين</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item {{  $p == 'managerMarketing/manageDoctors' || 
+                                $p == 'managerMarketing/manageCustomers' ||
+                                $p == 'managerMarketing/manageOrders' ||
+                                $p == 'managerMarketing/addDoctor' ||
+                                $p == 'managerMarketing/addCustomer' ||
+                                $p == 'managerMarketing/addOrder' ||
+                                $path == 'managerMarketing/editDoctor' ||
+                                $path == 'managerMarketing/editCustomer'||
+                                $path == 'managerMarketing/showDoctorDetails'||
+                                $path == 'managerMarketing/showCustomerDetails'||
+                                $path == 'managerMarketing/showOrderDetails'||
+                                $path == 'managerMarketing/editOrder'? 'menu-open' : ''
+                            }}">
+            <a href="#"class="nav-link {{  $p == 'managerMarketing/manageDoctors' || 
+                                $p == 'managerMarketing/manageCustomers' ||
+                                $p == 'managerMarketing/manageOrders' ||
+                                $p == 'managerMarketing/addDoctor' ||
+                                $p == 'managerMarketing/addCustomer' ||
+                                $p == 'managerMarketing/addOrder' ||
+                                $path == 'managerMarketing/editDoctor' ||
+                                $path == 'managerMarketing/editCustomer'||
+                                $path == 'managerMarketing/showDoctorDetails'||
+                                $path == 'managerMarketing/showCustomerDetails'||
+                                $path == 'managerMarketing/showOrderDetails'||
+                                $path == 'managerMarketing/editOrder'? 'active' : ''
+                            }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                ادارة العملاء
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/managerMarketing/manageDoctors"
+                    class="nav-link {{  $p == 'managerMarketing/manageDoctors' || 
+                                        $p == 'managerMarketing/addDoctor' ||
+                                        $path == 'managerMarketing/showDoctorDetails'||
+                                        $path == 'managerMarketing/editDoctor'? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-user nav-icon"></i>
+                        <p>الاطباء</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/managerMarketing/manageCustomers"
+                        class="nav-link {{  $p == 'managerMarketing/manageCustomers' ||
+                                            $p == 'managerMarketing/addCustomer' ||
+                                            $path == 'managerMarketing/showCustomerDetails'||
+                                            $path == 'managerMarketing/editCustomer'? 'active' : ''
+                                        }}" class="nav-link">
+                            <i class="far fa-user nav-icon"></i>
+                            <p>العملاء</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/managerMarketing/manageOrders"
+                    class="nav-link {{  $p == 'managerMarketing/manageOrders' ||
+                                        $p == 'managerMarketing/addOrder' ||
+                                        $path == 'managerMarketing/showOrderDetails'||
+                                        $path == 'managerMarketing/editOrder'? 'active' : '' }}">
+                        <i class="fas fa-inbox nav-icon"></i>
+                        <p>الطلبيات</p>
+                    </a>
+                </li>
+            </ul
+            >
         </li>
         <li class="nav-item">
             <a href="{{url('managerMarketing/manageTasks')}}" 

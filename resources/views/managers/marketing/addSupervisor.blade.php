@@ -1,3 +1,4 @@
+@php use App\Arrays\Arrays; @endphp
 @extends('layouts.index')
 @section('title')
     ادارة المشرفين
@@ -12,7 +13,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="/managerMarketing/manageSupervisors">ادارة المشرفين</a></li>
                     <li class="breadcrumb-item active">المشرفين</li>
                 </ol>
             </div><!-- /.col -->
@@ -66,57 +67,73 @@
                                                     </div>
                                                 </div><!-- /.card-body -->
                                             </div>
-                                            {{-- <div class="form-group">
-                                                <label class="col-md-12 control-label">اختر مناطق الاشراف</label>
-                                                <select name="mainarea_ids[]" class="form-control custom-select rounded-0" multiple>
-                                                    @foreach ($mainareas as $row)
-                                                        <option value="{{$row->id}}">{{$row->name_main_area}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('mainarea_ids'))
-                                                    <span class="help-block">
-                                                        <small class="form-text text-danger">{{ $errors->first('mainarea_ids') }}</small>
-                                                    </span>
-                                                @endif
-                                            </div> --}}
                                             <div class="form-group">
                                                 <label for="">الجنس <span class="text-danger">*</span></label>
                                                 <div class="radiobox">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" value="ذكر" name="sex" checked value="{{ old('sex') }}">
+                                                        <input class="form-check-input" type="radio" value="ذكر" name="sex" checked>
                                                         <label class="form-check-label">ذكر</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="sex" value="انثى" value="{{ old('sex') }}">
+                                                        <input class="form-check-input" type="radio" name="sex" value="انثى" {{ old('sex') == 'انثى' ? 'checked':''}}>
                                                         <label class="form-check-label">انثى</label>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="userimage">تحميل الصورة</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" name="userimage">
+                                                        <label class="custom-file-label" for="userimage"></label>
+                                                        @if ($errors->has('userimage'))
+                                                            <span class="help-block">
+                                                                <small class="form-text text-danger">{{ $errors->first('userimage') }}</small>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div><br>
                                             <div class="khalil">
                                                 <div class="card-header">
-                                                    <h3 class="card-title" style="float: right">كلمة السر</h3>
+                                                    <h3 class="card-title" style="float: right">معلومات الهوية</h3>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <input id="password" type="password" name="password" class="form-control" placeholder="كلمة السر">
-                                                            @if ($errors->has('password'))
+<<<<<<< HEAD
+                                                            <input type="text" name="identitytype" value="{{ old('identitytype') }}" class="form-control" placeholder="نوع الهوية">
+=======
+                                                            <input type="text" name="identitytype" class="form-control" placeholder="نوع الهوية">
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
+                                                            @if ($errors->has('identitytype'))
                                                                 <span class="help-block">
-                                                                    <small class="form-text text-danger">{{ $errors->first('password') }}</small>
+                                                                    <small class="form-text text-danger">{{ $errors->first('identitytype') }}</small>
                                                                 </span>
                                                             @endif
                                                         </div>
                                                         <div class="col-6">
+<<<<<<< HEAD
+                                                            <input type="text" name="identitynumber" value="{{ old('identitynumber') }}" class="form-control" placeholder="رقم الهوية">
+                                                            @if ($errors->has('identitynumber'))
+=======
+<<<<<<< HEAD
                                                             <input onkeyup="checkPassword()" id="password_confirmation" type="password" name="password_confirmation" class="form-control" placeholder="التأكيد" >
                                                             <small class="form-text text-danger" id="inalidPasswordConfirmation" hidden>{{'ليست متطابقه'}}</small>
                                                             @if ($errors->has('password_confirmation'))
+=======
+                                                            <input type="text" name="identitynumber" class="form-control" placeholder="رقم الهوية">
+                                                            @if ($errors->has('identitynumber'))
+>>>>>>> e27ae5a820be234eed21bad62f91f038951c0bf3
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                                                                 <span class="help-block">
-                                                                    <small class="form-text text-danger">{{ $errors->first('password_confirmation') }}</small>
+                                                                    <small class="form-text text-danger">{{ $errors->first('identitynumber') }}</small>
                                                                 </span>
                                                             @endif
                                                         </div>
                                                     </div>
-                                                </div><!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card-body -->
                                             </div>
                                         </div><!-- /.col-md -->
                                         <div class="col-md-6">
@@ -135,17 +152,28 @@
                                                             @endif
                                                         </div>
                                                         <div class="col-5">
+<<<<<<< HEAD
+                                                            <input id="phonenumber" onkeyup="checkPhoneNumber()" type="text" value="{{ old('phone_number') }}" name="phone_number" class="form-control" placeholder="رقم الهاتف">
+=======
+<<<<<<< HEAD
                                                             <input id="phonenumber" onkeyup="checkPhoneNumber()" type="text" name="phonenumber" class="form-control" placeholder="رقم الهاتف" value="{{ old('phonenumber') }}">
+=======
+                                                            <input id="phonenumber" onkeyup="checkPhoneNumber()" type="text" name="phone_number" class="form-control" placeholder="رقم الهاتف">
+>>>>>>> e27ae5a820be234eed21bad62f91f038951c0bf3
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                                                             <small id="invalidPhoneNo" class="form-text text-danger" hidden></small>
-                                                            @if ($errors->has('phonenumber'))
+                                                            @if ($errors->has('phone_number'))
                                                                 <span class="help-block">
-                                                                    <small class="form-text text-danger">{{ $errors->first('phonenumber') }}</small>
+                                                                    <small class="form-text text-danger">{{ $errors->first('phone_number') }}</small>
                                                                 </span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                 </div><!-- /.card-body -->
                                             </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
                                             <div class="form-group">
                                                 <label for="userimage">تحميل الصورة</label>
                                                 <div class="input-group">
@@ -160,30 +188,40 @@
                                                     </div>
                                                 </div>
                                             </div>
+=======
+>>>>>>> e27ae5a820be234eed21bad62f91f038951c0bf3
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                                             <div class="khalil">
                                                 <div class="card-header">
-                                                    <h3 class="card-title" style="float: right">مكان الميلاد <span class="text-danger">*</span></h3>
+                                                    <h3 class="card-title" style="float: right">مكان الميلاد</h3>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col-4">
-                                                            <input type="text" name="birthplace" class="form-control" placeholder="المحافظة" value="{{ old('birthplace') }}">
-                                                            @if ($errors->has('birthplace'))
-                                                                <span class="help-block">
-                                                                    <small class="form-text text-danger">{{ $errors->first('birthplace') }}</small>
-                                                                </span>
-                                                            @endif
+                                                        <div class="form-group col-md-4">
+                                                        <label class="control-label">المحافظة</label>
+                                                        <select name="birthplace" class="form-control custom-select rounded-0">
+                                                            @foreach (Arrays::getAllCities() as $city)
+                                                                <option value="{{$city}}" {{ old('birthplace') == $city ? 'selected':'' }}>{{$city}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('birthplace'))
+                                                            <span class="help-block">
+                                                                <small class="form-text text-danger">{{ $errors->first('birthplace') }}</small>
+                                                            </span>
+                                                        @endif
                                                         </div>
-                                                        <div class="col-4">
-                                                            <input type="text" name="town" class="form-control" placeholder="المديرية" value="{{ old('town') }}">
+                                                        <div class="form-group col-md-4">
+                                                        <label class="control-label">المديرية</label>
+                                                            <input type="text" value="{{ old('town') }}" name="town" class="form-control" placeholder="المديرية">
                                                             @if ($errors->has('town'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('town') }}</small>
                                                                 </span>
                                                             @endif
                                                         </div>
-                                                        <div class="col-4">
-                                                            <input type="text" name="village" class="form-control" placeholder="العزلة" value="{{ old('village') }}">
+                                                        <div class="form-group col-md-4">
+                                                            <label class="control-label">العزلة</label>
+                                                            <input type="text" value="{{ old('village') }}" name="village" class="form-control" placeholder="العزلة">
                                                             @if ($errors->has('village'))
                                                                 <span class="help-block">
                                                                     <small class="form-text text-danger">{{ $errors->first('village') }}</small>
@@ -191,8 +229,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- /.card-body -->
+                                                </div><!-- /.card-body -->
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group">
@@ -204,6 +241,8 @@
                                                         </span>
                                                     @endif
                                                 </div>
+<<<<<<< HEAD
+=======
                                                 <div class="form-group">
                                                     <div class="khalil">
                                                         <div class="card-header">
@@ -227,10 +266,32 @@
                                                                         </span>
                                                                     @endif
                                                                 </div>
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
+                                                <div class="khalil">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title" style="float: right">كلمة السر</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <input id="password" type="password" name="password" class="form-control" placeholder="كلمة السر">
+                                                                @if ($errors->has('password'))
+                                                                    <span class="help-block">
+                                                                        <small class="form-text text-danger">{{ $errors->first('password') }}</small>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <input onkeyup="checkPassword()" id="password_confirmation" type="password" name="password_confirmation" class="form-control" placeholder="التأكيد">
+                                                                <small class="form-text text-danger" id="inalidPasswordConfirmation" hidden>{{'ليست متطابقه'}}</small>
+                                                                @if ($errors->has('password_confirmation'))
+                                                                    <span class="help-block">
+                                                                        <small class="form-text text-danger">{{ $errors->first('password_confirmation') }}</small>
+                                                                    </span>
+                                                                @endif
                                                             </div>
                                                         </div>
-                                                        <!-- /.card-body -->
-                                                    </div>
+                                                    </div><!-- /.card-body -->
                                                 </div>
                                             </div>
                                         </div>

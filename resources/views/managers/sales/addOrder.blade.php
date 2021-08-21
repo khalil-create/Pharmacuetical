@@ -13,31 +13,27 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="/managerSales/manageOrders">ادارة الطلبيات</a></li>
                 <li class="breadcrumb-item active">الطلبيات</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-
-<!-- /.content-header -->
-<div>
     <section class="content" >
-            <div class="container-fluid">
+        <div class="container-fluid">
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
-                <h3 class="card-title" style="float: right">إضافة طلبية</h3>
-                <div class="card-tools float-right">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                </div>
-                <!-- /.card-header -->
+                    <h3 class="card-title" style="float: right">إضافة طلبية</h3>
+                    <div class="card-tools float-right">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div><!-- /.card-header -->
                 <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">

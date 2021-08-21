@@ -38,12 +38,9 @@ class MainAreaController extends Controller
     //////////////////////////////////////////////////////////////////////////////////////////////////
     public function storeMainArea(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'name_main_area' => 'required|string|max:255|unique:mainareas',
+        ]);
         // $user = User::where('user_name_third',$request->supervisor_name)->first();
         // $supervisor = Supervisor::where('user_id',$user->id)->first();
         Mainarea::create([
@@ -78,18 +75,14 @@ class MainAreaController extends Controller
         return view('supervisors.editMainArea', compact('area'));
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function UpdateMainArea(Request $request,$areaid)
+    public function UpdateMainArea(Request $request,$id)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
-        $mainArea = Mainarea::find($areaid);
-        
+        $mainArea = Mainarea::find($id);
         if($mainArea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        $request->validate([
+            'name_main_area' => 'required|string|max:255|unique:mainareas,email'.($id ? ",$id" : ''),
+        ]);
         // $sup = Supervisor::find($request->supervisor_id);
         $mainArea->name_main_area = $request->Input('name_main_area');
         $mainArea->supervisor_id = Auth::user()->supervisor->id;

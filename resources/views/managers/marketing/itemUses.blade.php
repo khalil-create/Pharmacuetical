@@ -12,39 +12,35 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/managerMarketing/manageItem">ادارة الاصناف</a></li>
             <li class="breadcrumb-item active">استخدامات الاصناف</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-  <!-- /.content-header -->
-  <div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right"> قائمة الاستخدامات للصنف :- <h5>
+            <span class="card-title" style="float: right"> قائمة الاستخدامات للصنف :- <span class="text-bold">
               @if(isset($item))    
                 {{ $item->commercial_name }}
               @endif
-            </h5></span>
+            </span></span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
-          </div>
-          <!-- /.card-header -->
+          </div><!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                  @if(isset($item) && $item->uses->count() > 0)                    
+                  <thead>                  
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -56,11 +52,6 @@
                         العملية
                       </th>
                     </tr>
-                  @else
-                  <div class="alert alert-success notify-success">
-                    {{ 'لم يتم اضافة اي استخدام لهذا الصنف' }}               
-                  </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php 
@@ -91,25 +82,20 @@
                     {{-- @endif --}}
                   </div>
                   </tbody>
-                  <tfoot>
-                  @if(isset($item) && $item->uses->count() > 0)                    
+                  <tfoot>                 
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">الاستخدام</th>
                       <th rowspan="1" colspan="1">العملية</th>
                     </tr>
-                  @endif
                   </tfoot>
                 </table>
               </div>
             </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
+          </div><!-- /.card-body -->
+        </div><!-- /.card -->
       </div>
     </div>
-  </div>
 </div>
 @endsection
 @section('script')

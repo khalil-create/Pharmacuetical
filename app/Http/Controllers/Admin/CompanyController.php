@@ -12,12 +12,15 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    use userTrait;//for save images of users
+    use userTrait;//for save images
 
-    public function getAllCompanies()
+    public function getAllCompanies(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $company = Company::whereHas('supervisor')->get();
-        return view('admin.manageCompany',compact('company',$company));
+        return view('admin.manageCompanies',compact('company',$company));
     }
     public function addCompany()
     {
@@ -26,6 +29,11 @@ class CompanyController extends Controller
     }
     public function storeCompany(Request $request)
     {
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+            'country_manufacturing' => 'required|string|max:255',
+            'sign_img_company' => 'required',
+        ]);
         $file_name = null;
         if($request->hasfile('sign_img_company'))
                 $file_name = $this->saveImage($request->file('sign_img_company'),'images/signsCompany/');
@@ -36,24 +44,24 @@ class CompanyController extends Controller
             'sign_img_company' => $file_name,
             'supervisor_id' => $request->supervisor_id,
         ]);
-        return redirect('/admin/manageCompany')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageCompanies')->with('status','تم إضافة البيانات بشكل ناجح');
     }
-    protected function getRules()
-    {
-        return $rules = [
-                'name_company' => 'required|string|max:255',
-                'country_manufacturing' => 'required|string|max:255',
-                'sign_img_company' => 'required|string|max:255',
-            ];
-    }
-    protected function getMessages()
-    {
-        return $messages = [
-            'name_company.required' => 'يجب عليك كتابة المنطقة الرئيسية',
-            'country_manufacturing.required' => 'يجب عليك كتابة بلد التصنيع',
-            'sign_img_company.required' => 'يجب عليك تحميل الصورة  ',
-        ];
-    }
+    // protected function getRules()
+    // {
+    //     return $rules = [
+    //             'name_company' => 'required|string|max:255',
+    //             'country_manufacturing' => 'required|string|max:255',
+    //             'sign_img_company' => 'required|string|max:255',
+    //         ];
+    // }
+    // protected function getMessages()
+    // {
+    //     return $messages = [
+    //         'name_company.required' => 'يجب عليك كتابة المنطقة الرئيسية',
+    //         'country_manufacturing.required' => 'يجب عليك كتابة بلد التصنيع',
+    //         'sign_img_company.required' => 'يجب عليك تحميل الصورة  ',
+    //     ];
+    // }
     public function editCompany($id)
     {
         $company = Company::find($id); 
@@ -68,6 +76,11 @@ class CompanyController extends Controller
         if($company->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+            'country_manufacturing' => 'required|string|max:255',
+            // 'sign_img_company' => 'required',
+        ]);
         $file_name = $company->sign_img_company;
         if($request->hasfile('sign_img_company'))
         {
@@ -76,22 +89,28 @@ class CompanyController extends Controller
         }
         $company->name_company = $request->name_company;
         $company->country_manufacturing = $request->country_manufacturing;
-        $company->have_category = $request->have_category;
         $company->sign_img_company = $file_name;
+        $company->have_category = $request->have_category;
         $company->supervisor_id = $request->supervisor_id;
         $company->update();
-        return redirect('/admin/manageCompany')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageCompanies')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteCompany($id)
     {
         $company = Company::findOrfail($id);
         if(!$company)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-
+        
         $this->deleteFile($company->sign_img_company,'images/signsCompany/');
         $company->delete();
-
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/admin/manageCompany')->with('status','تم حذف البيانات بشكل ناجح');
+        // return redirect('/admin/manageCompanies')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showCompanyDetails($id)
+    {
+        $company = Company::with(['categories','items'])->findOrfail($id);
+        if($company->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('admin.showCompanyDetails',compact('company'));
     }
 }

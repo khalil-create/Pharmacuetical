@@ -31,12 +31,9 @@ class UsesController extends Controller
     }
     public function storeUse(Request $request)
     {
-        $validator = Validator::make($request->all(),
-        ['use' => 'required|string|max:255',],
-        ['use.required' => 'يجب عليك كتابة الاستخدام',]);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'use' => 'required|string|max:255',
+        ]);
         $use = Uses::create([
             'use' => $request->use,
         ]); 
@@ -45,12 +42,9 @@ class UsesController extends Controller
     }
     public function storeUsesExist(Request $request)
     {
-        $validator = Validator::make($request->all(),
-        ['usesIds' => 'required',],
-        ['usesIds.required' => 'يجب عليك اختيار على الاقل استخدام واحد',]);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'usesIds' => 'required|max:255',
+        ]);
         $item = Item::find($request->id);
         $item->uses()->syncWithoutDetaching($request->usesIds);
         return redirect('/supervisor/itemUses/'.$request->id)->with('status','تم إضافة البيانات بشكل ناجح');
@@ -64,12 +58,9 @@ class UsesController extends Controller
     }
     public function updateUse(Request $request,$id)
     {
-        $validator = Validator::make($request->all(),
-        ['use' => 'required|string|max:255',],
-        ['use.required' => 'يجب عليك كتابة الاستخدام',]);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'use' => 'required|string|max:255',
+        ]);
         $use = Uses::find($id);
         if($use->items->first()->category_id != null)
             $have_category = 1;

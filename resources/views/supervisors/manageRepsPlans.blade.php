@@ -120,10 +120,8 @@
                 </table>
               </div>
             </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
+          </div><!-- /.card-body -->
+        </div><!-- /.card -->
       </div>
     </div>
   </div>

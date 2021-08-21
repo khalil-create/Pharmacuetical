@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageRepItems">ادارة اصناف المندوبين</a></li>
             <li class="breadcrumb-item active">اصناف المندوبين</li>
           </ol>
         </div><!-- /.col -->
@@ -40,7 +40,6 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if($reps->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -55,11 +54,6 @@
                         العملية
                       </th>
                     </tr>
-                  @else
-                    <div class="alert alert-danger notify-error">
-                      {{ 'لم يتم اضافة اي مندوب' }}
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -80,28 +74,17 @@
                       </td>
                       <td>
                         <a href="/supervisor/editRepItems/{{$row->id}}"><i class="nav-icon fas fa-plus" title="اضافة اصناف"></i></a>
-                        {{-- <i class="fas fa-eye"></i> --}}
-                        {{-- <form action="/Supervisor/deleteRepItems/{{$row->id}}" method="post" style="float: right;">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                            <button style="border: none;margin-left: -10px;"><i class="fas fa-trash"></i></button>
-                        </form> --}}
                       </td>
                     </tr>
                   @endforeach
-                  <div>
-                    {{-- <a href="{{url('/supervisor/addRepresentative')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مندوب</a> --}}
-                  </div>
                   </tbody>
                   <tfoot>
-                    @if($reps->count() > 0)
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم المندوب</th>
                         <th rowspan="1" colspan="1">الاصناف</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
                   </tfoot>
                 </table>
               </div>

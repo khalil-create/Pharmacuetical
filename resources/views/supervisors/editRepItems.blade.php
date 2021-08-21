@@ -10,18 +10,24 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0">ادارة الاصناف</h1>
+                    <h1 class="m-0">ادارة الاصناف</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
+<<<<<<< HEAD
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/supervisor/manageRepItems">ادارة اصناف المندوبين</a></li>
+                        <li class="breadcrumb-item active">اصناف المندوبين</li>
+                    </ol>
+=======
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
-                    <li class="breadcrumb-item active">اصناف المندوبين العلميين</li>
+                    <li class="breadcrumb-item"><a href="/supervisor/manageRepItems">ادارة اصناف المندوبين</a></li>
+                    <li class="breadcrumb-item active">اصناف المندوبين</li>
                 </ol>
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    </div><!-- /.content-header -->
     <section class="content" >
         <div class="container-fluid">
             <!-- SELECT2 EXAMPLE -->
@@ -32,14 +38,13 @@
                     </h3>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
+                            <i class="fas fa-minus"></i>
                         </button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
-                </div>
-                <!-- /.card-header -->   
+                </div><!-- /.card-header -->   
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -66,7 +71,7 @@
                                         </select>
                                         @if ($errors->has('items_ids'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('items_ids') }}</strong>
+                                                <small class="text-sm text-danger">{{ $errors->first('items_ids') }}</small>
                                             </span>
                                         @endif
                                     </div>

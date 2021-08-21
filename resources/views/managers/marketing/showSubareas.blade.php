@@ -14,7 +14,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="/managerMarketing/manageRepresentatives">ادارة المندوبين</a></li>
                     <li class="breadcrumb-item active">مناطق المندوب</li>
                 </ol>
                 </div><!-- /.col -->
@@ -28,13 +28,13 @@
             <div class="card card-default" style="margin-left: 20px;">
                 <div class="card-header">
                     <span class="card-title" style="float: right">اضافة مناطق فرعية للمندوب :-
-                    <h5>
+                    <span class="text0bold">
                         @if (isset($rep))
                             {{$rep->user->user_name_third}} {{$rep->user->user_surname}}
                         @endif
-                    </h5>
+                    </span>
                     التابعه للمشرف :- 
-                    <h5>{{$rep->supervisor->user->user_name_third}} {{$rep->supervisor->user->user_surname}}</h5> 
+                    <span class="text-bold">{{$rep->supervisor->user->user_name_third}} {{$rep->supervisor->user->user_surname}}</span> 
                     </span>
                     <div class="card-tools float-right">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -47,16 +47,6 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success notify-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-error notify-error">
-                            {{ session('error') }}
-                        </div>
-                    @endif
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

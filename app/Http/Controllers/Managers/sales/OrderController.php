@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Item;
+use App\Models\Manager;
 use App\Models\Order;
 use App\Models\Representative;
 use App\Models\Supervisor;
@@ -24,14 +25,21 @@ class OrderController extends Controller
     }
     public function addOrder()
     {
-        $customers = Customer::where('statues',true)->get();
+        $managerSales = Manager::find(Auth::user()->manager->id);
+        $SalesReps = $managerSales->representatives;
+        if($SalesReps->count() < 1)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة طلبية، الرجاء اضافة على الاقل مندوب مبيعات واحد!!! ']);
+        $customers = collect();
+        foreach($SalesReps as $rep){
+            $customers = $customers->concat($rep->customers->where('statues',true));
+        }
         if($customers->count() < 1)
             return redirect()->back()->with(['error' => 'لايمكنك اضافة طلبية، الرجاء اضافة على الاقل عميل واحد!!! أو ان العملاء الذين اضفتهم لم يتم تفعيلهم']);
         $items = Item::all();
-        $reps = Representative::with('user')
-        ->where('manager_id',Auth::user()->manager->id)->get();
+        // $reps = Representative::with('user')
+        // ->where('manager_id',Auth::user()->manager->id)->get();
         return view('managers.sales.addOrder',compact('customers'))
-        ->with('items',$items)->with('reps',$reps);
+        ->with('items',$items);
     }
     public function storeOrder(Request $request)
     {
@@ -41,14 +49,33 @@ class OrderController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        Order::create([
-            'customer_id' => $request->customer_id,
-            'item_id' => $request->item_id,
-            'count' => $request->count,
-            'bonus' => $request->bonus,
-            'note' => $request->note,
-            'representative_id' => $request->rep_id,
-        ]);
+        // Order::create([
+        //     'customer_id' => $request->customer_id,
+        //     'item_id' => $request->item_id,
+        //     'count' => $request->count,
+        //     'bonus' => $request->bonus,
+        //     'note' => $request->note,
+        //     'representative_id' => $request->rep_id,
+        // ]);
+        $cust = Customer::find($request->customer_id);
+        $repSales = $cust->representative->whereNotNull('manager_id')->first();
+
+        $cust_order_registered = Order::where('customer_id',$cust->id)->where('item_id',$request->item_id)
+        ->where('representative_id',$repSales->id)->first();
+        if($cust_order_registered){
+            $cust_order_registered->count += $request->count;
+            $cust_order_registered->note = $request->note;
+            $cust_order_registered->update();
+        }
+        else{
+            Order::create([
+                'customer_id' => $cust->id,
+                'item_id' => $request->item_id,
+                'count' => $request->count,
+                'note' => $request->note,
+                'representative_id' => $repSales->id,
+            ]);
+        }
         return redirect('/managerSales/manageOrders')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()

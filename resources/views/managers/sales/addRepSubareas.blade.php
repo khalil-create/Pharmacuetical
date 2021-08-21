@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/managerSales/manageRepresentatives">ادارة مندوبيين المبيعات</a></li>
             <li class="breadcrumb-item active">مناطق المندوب</li>
           </ol>
         </div><!-- /.col -->
@@ -25,7 +25,7 @@
         <div class="card card-default">
           <div class="card-header">
             <span class="card-title" style="float: right"> اضافة مناطق فرعية للمندوب :- 
-              <h5> {{$rep->user->user_name_third}} {{$rep->user->user_surname}} </h5>
+              <span class="text-bold"> {{$rep->user->user_name_third}} {{$rep->user->user_surname}} </span>
             </span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">

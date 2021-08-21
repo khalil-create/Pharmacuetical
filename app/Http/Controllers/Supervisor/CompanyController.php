@@ -30,12 +30,11 @@ class CompanyController extends Controller
     }
     public function storeCompany(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+            'country_manufacturing' => 'required|string|max:255',
+            'sign_img_company' => 'required',
+        ]);
         $file_name = null;
         if($request->hasfile('sign_img_company'))
                 $file_name = $this->saveImage($request->file('sign_img_company'),'images/signsCompany/');
@@ -77,7 +76,11 @@ class CompanyController extends Controller
         $company = Company::findOrfail($id);
         if($company->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        
+        $request->validate([
+            'name_company' => 'required|string|max:255',
+            'country_manufacturing' => 'required|string|max:255',
+            // 'sign_img_company' => 'required',
+        ]);
         $file_name = $company->sign_img_company;
         if($request->hasfile('sign_img_company'))
         {

@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageDoctors">ادارة الاطباء</a></li>
             <li class="breadcrumb-item active">الاطباء</li>
           </ol>
         </div><!-- /.col -->
@@ -40,7 +40,6 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                    @if($supervisor->doctors->count() > 0)
                       <tr role="row">
                           <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                           #
@@ -61,11 +60,6 @@
                           العملية
                           </th>
                         </tr>
-                      @else
-                        <div class="alert alert-danger notify-error">
-                          {{ 'لم يتم اضافة اي دكتور' }}
-                        </div>
-                      @endif
                     </thead>
                     <tbody>
                       <?php $i=1?>
@@ -109,7 +103,6 @@
                       </div>
                     </tbody>
                     <tfoot>
-                      @if($supervisor->doctors->count() > 0)
                         <tr>
                           <th rowspan="1" colspan="1">#</th>
                           <th rowspan="1" colspan="1">الاسم</th>
@@ -118,7 +111,6 @@
                           <th rowspan="1" colspan="1">الحالة</th>
                           <th rowspan="1" colspan="1">العملية</th>
                         </tr>
-                      @endif
                     </tfoot>
                 </table>
               </div>

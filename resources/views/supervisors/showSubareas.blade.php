@@ -24,9 +24,9 @@
             <div class="container-fluid">
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title" style="float: right"> قائمة المناطق الفرعية للمندوب :-  <h5>
+                        <span class="card-title" style="float: right"> قائمة المناطق الفرعية للمندوب :-  <span class="text-bold">
                         {{$rep->user->user_name_third}} {{$rep->user->user_surname}}
-                        </h5></span>
+                        </span></span>
                         <div class="card-tools float-right">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>

@@ -25,24 +25,21 @@ class MainAreaController extends Controller
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public function addMainArea()
     {
-        $supervisor = User::whereHas('supervisor')->get();
-        return view('Managers.marketing.addMainArea', compact('supervisor',$supervisor));
+        $supervisor = Supervisor::whereHas('user')->get();
+        if(!$supervisor)
+            return redirect()->back()->with(['error' => 'لايمكنك اضافة منطقة رئيسيه قبل مايتم اضافة على الاقل مشرف واحد ']);
+        return view('Managers.marketing.addMainArea', compact('supervisor'));
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     public function storeMainArea(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
-        $user = User::where('user_name_third',$request->supervisor_name)->first();
-        $supervisor = Supervisor::where('user_id',$user->id)->first();
+        $request->validate([
+            'name_main_area' => 'required|string|max:255|unique:mainareas',
+        ]);
         Mainarea::create([
             'name_main_area' => $request->name_main_area,
-            'supervisor_id' => $supervisor->id,
+            'supervisor_id' => $request->supervisor_id,
         ]);        
         return redirect('/managerMarketing/manageMainAreas')->with('status','تم إضافة البيانات بشكل ناجح');
     }
@@ -67,29 +64,21 @@ class MainAreaController extends Controller
         $area = Mainarea::find($areaid); 
         if($area->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $supervisor = Supervisor::findOrfail($area->supervisor_id);
-        // $supervisor = $sup1->user()->get();
         $supervisors = Supervisor::whereHas('user')->get();
         // return $supervisors;
-        return view('Managers.marketing.editMainArea', compact('supervisor',$supervisor))->with('supervisors',$supervisors)
-        ->with('area',$area);
+        return view('Managers.marketing.editMainArea', compact('supervisors'))->with('area',$area);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function UpdateMainArea(Request $request,$areaid)
+    public function UpdateMainArea(Request $request,$id)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
-        $mainArea = Mainarea::find($areaid);
-        
+        $mainArea = Mainarea::find($id);
         if($mainArea->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $sup = Supervisor::find($request->supervisor_id);
+        $request->validate([
+            'name_main_area' => 'required|string|max:255|unique:mainareas,email'.($id ? ",$id" : ''),
+        ]);
         $mainArea->name_main_area = $request->Input('name_main_area');
-        $mainArea->supervisor_id = $sup->id;
+        $mainArea->supervisor_id = $request->supervisor_id;
         $mainArea->update();
 
         return redirect('/managerMarketing/manageMainAreas')->with('status','تم تعديل البيانات بشكل ناجح');
@@ -116,5 +105,12 @@ class MainAreaController extends Controller
         else{
             return view('Managers.marketing.mainAreaHasSubArea')->with('mainarea',$mainarea)->with('exist',0)->with('subareas',$subareas);
         }
+    }
+    public function showMainareaDetails($id)
+    {
+        $mainarea = Mainarea::with(['representatives','subareas'])->findOrfail($id);
+        if($mainarea->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('Managers.marketing.showMainareaDetails',compact('mainarea'));
     }
 }

@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageSalesObjectives">ادارة الاهداف البيعية</a></li>
             <li class="breadcrumb-item active">الاهداف البيعية</li>
           </ol>
         </div><!-- /.col -->
@@ -39,8 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                  @if($salesObjectives->count() > 0)                    
+                  <thead>                   
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -54,18 +53,10 @@
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         الوصف
                       </th>
-                      {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                        المندوب
-                      </th> --}}
                       <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                         العملية
                       </th>
                     </tr>
-                  @else
-                    <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي هدف بيعي' }}
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -75,9 +66,6 @@
                       <td>{{ $row->item->commercial_name }}</td>
                       <td>{{ $row->objective }}</td>
                       <td>{{ $row->description }}</td>
-                      {{-- <td>
-                        {{ $row->representative->user->user_name_third }} {{ $row->representative->user->user_surname }}
-                      </td> --}}
                       <td>
                         <a href="/supervisor/divideSalesObjective/{{$row->id}}"><i class="nav-icon fas fa-share" title="توزيع الهدف البيعي على المندوبين"></i></a>
                         <a href="/supervisor/displaySalesObjectiveReps/{{$row->id}}">
@@ -93,21 +81,15 @@
                       </td>
                     </tr>
                   @endforeach
-                  <div>
-                    {{-- <a href="{{url('/supervisor/addsalesObjective')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة عينة</a> --}}
-                  </div>
                   </tbody>
-                  <tfoot>
-                    @if($salesObjectives->count() > 0)                    
+                  <tfoot>              
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">الصنف</th>
                         <th rowspan="1" colspan="1">الهدف</th>
                         <th rowspan="1" colspan="1">الوصف</th>
-                        {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
                   </tfoot>
                 </table>
               </div>

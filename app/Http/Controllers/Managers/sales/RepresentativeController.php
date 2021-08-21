@@ -30,30 +30,33 @@ class RepresentativeController extends Controller
     }
     public function addRepresentative()
     {
-        $rep = User::where('user_type','مدير فريق')->get();
+        // $rep = User::where('user_type','مدير فريق')->get();
 
         $mainareas = Mainarea::all();
         // $subareas = Subarea::all();
         if($mainareas->count() < 1)
             return redirect()->back()->with(['error' => 'لايمكنك اضافة مندوب مبيعات قبل مايتم اضافة على الاقل منطقة رئيسية واحدة']);
         
-        return view('managers.sales.addRepresentative', compact('rep',$rep))
-        ->with('mainareas',$mainareas);              
+        return view('managers.sales.addRepresentative', compact('mainareas'));
     }
     public function storeRepresentative(Request $request)
     {
-        $users = User::select('email')->get();
-        foreach($users as $user){
-            if($user->email == $request->email)
-                return redirect()->back()->with('error','هذا الايميل مستخدم لدى مستخدم اخر');
-        }
-        $rules = $this->getRules();
-        $rules+=['userimage' => 'required','email' => 'required|string|email|max:255|unique:users'];
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'usernamethird' => 'required|string|max:255',
+            'usersurname' => 'required|string|max:255',
+            'sex' => 'required',
+            'birthdate' => 'required|before:today',
+            'birthplace' => 'required|string|max:255',
+            'town' => 'required|string|max:255',
+            'village' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone_number' => 'required|numeric|max:999999999|min:700000000|unique:users',
+            'identitytype' => 'required|string|max:255',
+            'identitynumber' => 'required|numeric',
+            'userimage' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+        ]);
         $file_name = null;
         if($request->hasfile('userimage'))
         {
@@ -70,7 +73,7 @@ class RepresentativeController extends Controller
             'town' => $request->town,
             'village' => $request->village,
             'email' => $request->email,
-            'phone_number' => $request->phonenumber,
+            'phone_number' => $request->phone_number,
             'identity_type' => $request->identitytype,
             'identity_number' => $request->identitynumber,
             'user_image' => $file_name,
@@ -97,7 +100,7 @@ class RepresentativeController extends Controller
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
-                'phonenumber' => 'numeric|required|max:999999999',
+                'phone_number' => 'numeric|required|max:999999999',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric',
                 // 'userimage' => 'required',
@@ -137,9 +140,10 @@ class RepresentativeController extends Controller
             'email.unique' => 'هذا الايميل مستخدم لدى مستخدم اخر',
             'email.email' => 'هذا ليس بريد اكتروني',
 
-            'phonenumber.required' => 'يجب عليك كتابة هذا الحقل',
-            'phonenumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
-            'phonenumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phone_number.required' => 'يجب عليك كتابة هذا الحقل',
+            'phone_number.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            'phone_number.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phone_number.unique' => 'هذا الرقم بالفعل مسجل على حساب اخر.. تأكد من الرقم',
 
             'identitytype.required' => 'يجب عليك كتابة هذا الحقل',
             'identitytype.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
@@ -177,17 +181,22 @@ class RepresentativeController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
-        $users = User::select('id','email')->get();
-        foreach($users as $u){
-            if($u->email == $request->email && $id != $u->id)
-                return redirect()->back()->with('error','هذا الايميل مستخدم لدى مستخدم اخر');
-        }
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate([
+            'usernamethird' => 'required|string|max:255',
+            'usersurname' => 'required|string|max:255',
+            'sex' => 'required',
+            'birthdate' => 'required|before:today',
+            'birthplace' => 'required|string|max:255',
+            'town' => 'required|string|max:255',
+            'village' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email'.($id ? ",$id" : ''),
+            'phone_number' => 'required|numeric|max:999999999|min:700000000|unique:users,phone_number'.($id ? ",$id" : ''),
+            'identitytype' => 'required|string|max:255',
+            'identitynumber' => 'required|numeric',
+            // 'userimage' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+        ]);
         // return $user;
         if($request->hasfile('userimage'))
         {
@@ -205,7 +214,7 @@ class RepresentativeController extends Controller
         $user->town = $request->Input('town');
         $user->village = $request->Input('village');
         $user->email = $request->Input('email');
-        $user->phone_number = $request->Input('phonenumber');
+        $user->phone_number = $request->Input('phone_number');
         $user->identity_type = $request->Input('identitytype');
         $user->identity_number = $request->Input('identitynumber');
         $user->password = bcrypt($request->Input('password'));
@@ -256,5 +265,11 @@ class RepresentativeController extends Controller
         $user->delete();
         
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+    }public function showRepDetails($id)
+    {
+        $rep = Representative::with(['customers','doctors','subareas'])->findOrfail($id);
+        if($rep->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('Managers.sales.showRepDetails',compact('rep'));   
     }
 }

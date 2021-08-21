@@ -14,7 +14,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/supervisor/manageCustomers">ادارة العملاء</a></li>
                         <li class="breadcrumb-item active">تفاصيل العملاء</li>
                     </ol>
                 </div><!-- /.col -->
@@ -124,21 +124,21 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-2">
+                        <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">الحالة</span>
                                     <span class="info-box-number">
                                         @if ($customer->statues)
-                                            <a href="/supervisor/notActivateDoctor/{{$doctor->id}}" title="إلغاء التفعيل"><span class="info-box-number text-success">{{'مفعل'}}</span></a>
+                                            <a href="/supervisor/notActivateDoctor/{{$customer->id}}" title="إلغاء التفعيل"><span class="info-box-number text-success">{{'مفعل'}}</span></a>
                                         @else
-                                            <a href="/supervisor/activateDoctor/{{$doctor->id}}" title="تفعيل"><span class="info-box-number text-danger">{{'غير مفعل'}}</span></a>
+                                            <a href="/supervisor/activateDoctor/{{$customer->id}}" title="تفعيل"><span class="info-box-number text-danger">{{'غير مفعل'}}</span></a>
                                         @endif
                                     </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">اسم مسؤول الاتصال</span>
@@ -146,7 +146,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span>الموقع الوظيفي لمسؤول الاتصال</span>
@@ -154,7 +154,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="">رقم الهاتف المحمول لمسؤول الاتصال</span>
@@ -162,7 +162,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="">رقم الهاتف الأرضي لمسؤول الاتصال</span>
@@ -170,28 +170,30 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
-                                    @php $date = explode(' ',$customer->created_at) @endphp
-                                    <span class="info-box-text">تأريخ الانضمام</span>
-                                    <span class="info-box-number">{{$date[0]}}</span>
+                                    <span class="info-box-text">يتبع المندوبين</span>
+                                    <span class="info-box-number">
+                                        @foreach ($customer->representative as $rep)
+                                            @if ($rep->user->user_type == 'مندوب علمي' || $rep->user->user_type == 'مدير فريق')
+                                                <a href="/supervisor/showRepDetails/{{$rep->id}}" title="تفاصيل">
+                                                    <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
+                                                </a>
+                                            @else
+                                                <p><span class="text-success">م.مبيعات: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
+                                            @endif
+                                        @endforeach
+                                    </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
-                                    <span class="info-box-text">يتبع المندوب</span>
-                                    <span class="info-box-number">
-                                        @foreach ($customer->representative as $rep)
-                                            @if ($rep->user->user_type == 'مندوب علمي' || $rep->user->user_type == 'مدير فريق')
-                                                <p><span class="text-success">م.علمي: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @else
-                                                <p><span class="text-success">م.مبيعات: </span> {{$rep->user->user_name_third}} {{$rep->user->user_surname}}<p>
-                                            @endif
-                                        @endforeach
-                                    </span>
+                                    @php $date = explode(' ',$customer->created_at) @endphp
+                                    <span class="info-box-text">تأريخ الانضمام</span>
+                                    <span class="info-box-number">{{$date[0]}}</span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
@@ -267,10 +269,6 @@
                                             {{-- </div> --}}
                                         </a>
                                     @endforeach
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذه الخدمة عملاء' }}
-                                    </div>
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"><!-- Orders -->
@@ -285,10 +283,6 @@
                                                 {{-- </div> --}}
                                             </a>
                                         @endforeach
-                                    </div>
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذا العميل طلبيات' }}
                                     </div>
                                 @endif
                             </div>

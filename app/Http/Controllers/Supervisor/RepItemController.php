@@ -55,13 +55,13 @@ class RepItemController extends Controller
             'items_ids.required' => 'يجب عليك اختيار على الاقل صنف واحد',
         ];
     }
-    public function deleteRepItem($id)
-    {
-        $RepItem = Item::find($id);
-        if($RepItem->count() < 1)
-            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
-        $RepItem->delete();
-        return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('/supervisor/manageRepItem')->with('status','تم حذف البيانات بشكل ناجح');
-    }
+    // public function deleteRepItem($id)
+    // {
+    //     $RepItem = Item::find($id);
+    //     if($RepItem->count() < 1)
+    //         return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+    //     $RepItem->delete();
+    //     return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
+    //     // return redirect('/supervisor/manageRepItem')->with('status','تم حذف البيانات بشكل ناجح');
+    // }
 }

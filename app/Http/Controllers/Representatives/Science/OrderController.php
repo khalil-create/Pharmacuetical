@@ -40,14 +40,22 @@ class OrderController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        Order::create([
-            'customer_id' => $request->customer_id,
-            'item_id' => $request->item_id,
-            'count' => $request->count,
-            // 'bonus' => $request->bonus,
-            'note' => $request->note,
-            'representative_id' => Auth::user()->representatives->id,
-        ]);
+        $cust_order_registered = Order::where('customer_id',$request->customer_id)->where('item_id',$request->item_id)
+        ->where('representative_id',Auth::user()->representatives->id)->first();
+        if($cust_order_registered){
+            $cust_order_registered->count += $request->count;
+            $cust_order_registered->note = $request->note;
+            $cust_order_registered->update();
+        }
+        else{
+            Order::create([
+                'customer_id' => $request->customer_id,
+                'item_id' => $request->item_id,
+                'count' => $request->count,
+                'note' => $request->note,
+                'representative_id' => Auth::user()->representatives->id,
+            ]);
+        }
         return redirect('/repScience/manageOrders')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()

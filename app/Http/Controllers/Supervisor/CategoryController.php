@@ -30,12 +30,11 @@ class CategoryController extends Controller
     }
     public function storeCategory(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate(
+            [
+                'name_cat' => 'required|string|max:255',
+            ]
+        );
         $company = Company::find($request->company_id);
         $cat = Category::create([
             'name_cat' => $request->name_cat,
@@ -70,6 +69,11 @@ class CategoryController extends Controller
         $category = Category::find($id);
         if($category->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        $request->validate(
+            [
+                'name_cat' => 'required|string|max:255',
+            ]
+        );
         $category->name_cat = $request->name_cat;
         $category->update();
         

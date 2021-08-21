@@ -18,8 +18,6 @@
         </div><!-- /.col -->
       </div><!-- /.row -->
   </div><!-- /.container-fluid -->
-  <!-- /.content-header -->
-  <div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">

@@ -12,7 +12,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="/managerSales/manageRepresentatives">ادارة مندوبيين المبيعات</a></li>
                 <li class="breadcrumb-item active">مندوبين المبيعات</li>
             </ol>
             </div><!-- /.col -->
@@ -24,9 +24,9 @@
         <div class="container-fluid">
             <div class="card card-default">
             <div class="card-header">
-                <span class="card-title" style="float: right"> قائمة المناطق الفرعية للمندوب :-  <h5>
+                <span class="card-title" style="float: right"> قائمة المناطق الفرعية للمندوب :-  <span class="text-bold">
                 {{$rep->user->user_name_third}} {{$rep->user->user_surname}}
-                </h5></span>
+                </span></span>
                 <div class="card-tools float-right">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -42,7 +42,6 @@
                 <div class="col-sm-12">
                     <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                     <thead>
-                    @if($subareas->count() > 0)
                         <tr role="row">
                         <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                             #
@@ -51,11 +50,6 @@
                             اسم المنطقة الفرعية
                         </th>
                         </tr>
-                    @else
-                        <div class="alert alert-danger notify-success">
-                            {{ 'لايوجد مناطق لهذا المندوب' }}                    
-                        </div>
-                    @endif
                     </thead>
                     <tbody>
                     <?php $i=1?>
@@ -71,12 +65,10 @@
                     </div>
                     </tbody>
                     <tfoot>
-                    @if($subareas->count() > 0)
                         <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">اسم المنطقة الفرعية</th>
                         </tr>
-                    @endif
                     </tfoot>
                     </table>
                 </div>

@@ -12,19 +12,17 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/managerMarketing/manageSubAreas">ادارة المناطق الفرعية</a></li>
             <li class="breadcrumb-item active">المناطق الفرعية</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-  <!-- /.content-header -->
-  <div>
     <div class="content">
       <div class="container-fluid">
         <div class="card card-default">
           <div class="card-header">
-            <span class="card-title" style="float: right"> قائمة المناديب التابعين للمنطقة الفرعية:-  <h5>
+            <span class="card-title" style="float: right"> قائمة المناديب التابعين للمنطقة الفرعية:-  <span class="text-bold">
               @php
                   $exist = 1;
               @endphp
@@ -36,23 +34,21 @@
                   @endphp
                   {{'هذه المنطقة غير موجوده'}}
               @endif
-            </h5></span>
+            </span></span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
-          </div>
-          <!-- /.card-header -->
+          </div><!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if(isset($reps) && $reps->count() > 0)
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -61,11 +57,6 @@
                         اسم المندوب
                       </th>
                     </tr>
-                  @elseif($exist == 1)
-                    <div class="alert alert-danger notify-success">
-                      {{ 'لايوجد مناديب لهذه المنطقة' }}                    
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -81,12 +72,10 @@
                   </div>
                   </tbody>
                   <tfoot>
-                  @if(isset($reps) && $reps->count() > 0)
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">اسم المندوب</th>
                     </tr>
-                  @endif
                   </tfoot>
                 </table>
               </div>
@@ -97,6 +86,5 @@
         <!-- /.card -->
       </div>
     </div>
-  </div>
 </div>
 @endsection

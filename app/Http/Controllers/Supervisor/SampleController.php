@@ -40,12 +40,26 @@ class SampleController extends Controller
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInputs($request->all());
         }
-        Sample::create([
-            'item_id' => $request->item_id,
-            'count' => $request->count,
-            // 'manager_id' => $this->getManagerMarketingId(), 
-            'supervisor_id' => Auth::user()->supervisor->id,
-        ]);
+        $supervisor_id = Auth::user()->supervisor->id;
+        $item_id = $request->item_id;
+        $sample = Sample::where('supervisor_id',$supervisor_id)->where('item_id',$item_id)->first();
+        if($sample){
+            $sample->count += $request->count;
+            $sample->update();
+        }
+        else{
+            $sample = Sample::create([
+                'item_id' => $item_id,
+                'count' => $request->count,
+                // 'manager_id' => $this->getManagerMarketingId(), 
+                'supervisor_id' => $supervisor_id,
+            ]);
+        }
+        ////////////////////// Notify user //////////////////////////////////
+        $name = explode(' ',Auth::user()->user_name_third);
+        $user_managerMarketing_id = User::where('user_type','مدير تسويق')->first()->id;
+        $notify_msg = 'قام المشرف '.  $name[0].' باضافة عينات له';
+        $this->notifyUser('عينات',$notify_msg,$user_managerMarketing_id);
         return redirect('/supervisor/manageSamples')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()

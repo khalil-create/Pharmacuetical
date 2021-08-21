@@ -12,10 +12,9 @@
         <a href="/home" class="nav-link"><i class="fas fa-home" title="الصفحة الرئيسية"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="" class="nav-link"><i class="fas fa-refresh" title="تحديث"></i></a>
+        <a href="/{{request()->path()}}" class="nav-link"><i class="fas fa-refresh" title="تحديث"></i></a>
       </li>
     </ul>
-
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
@@ -39,7 +38,6 @@
           </form>
         </div>
       </li>
-
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -101,6 +99,7 @@
       <li class="nav-item dropdown user-menu">
         @php
             $name = explode(' ',Auth::user()->user_name_third);
+            $date = explode(' ',Auth::user()->created_at);
         @endphp
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
           {{-- <img src="{{asset('images/users/'.Auth::user()->user_image)}}" class="user-image img-circle elevation-2" alt="User Image"> --}}
@@ -121,7 +120,7 @@
               @endif
             <p>
               {{$name[0]}} {{Auth::user()->user_surname}} - {{Auth::user()->user_type}}
-              <small>عضو في الفريق منذ {{Auth::user()->created_at}}</small>
+              <small>عضو في الفريق منذ {{$date[0]}}</small>
             </p>
           </li>
           <!-- Menu Body -->
@@ -146,13 +145,13 @@
             @elseif(Auth::user()->user_type == 'مدير تسويق')
               <a href="/managerMarketing/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
             @elseif(Auth::user()->user_type == 'مدير مبيعات')
-              <a href="/manageSales/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
+              <a href="/managerSales/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
             @elseif(Auth::user()->user_type == 'مشرف')
               <a href="/supervisor/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
             @elseif(Auth::user()->user_type == 'مندوب علمي')
-              <a href="/representative/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
+              <a href="/repScience/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
             @elseif(Auth::user()->user_type == 'مندوب مبيعات')
-              <a href="/representative/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
+              <a href="/repSales/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
             @endif
             <a href="{{route('logout')}}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();" class="btn btn-default btn-flat float-right"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>

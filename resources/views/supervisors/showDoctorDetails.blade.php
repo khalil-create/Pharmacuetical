@@ -14,7 +14,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/supervisor/manageDoctors">ادارة الاطباء</a></li>
                         <li class="breadcrumb-item active">تفاصيل الاطباء</li>
                     </ol>
                 </div><!-- /.col -->
@@ -154,7 +154,9 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">يتبع المندوب</span>
                                     <span class="info-box-number">
-                                        {{$doctor->representative->user->user_name_third}} {{$doctor->representative->user->user_surname}}
+                                        <a href="/supervisor/showRepDetails/{{$doctor->representative_id}}" title="تفاصيل">
+                                            {{$doctor->representative->user->user_name_third}} {{$doctor->representative->user->user_surname}}
+                                        </a>
                                     </span>
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
@@ -226,42 +228,30 @@
                                 @if($doctor->services->count() > 0)
                                     @foreach ($doctor->services as $row)
                                         <a href="/supervisor/showServiceDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                            {{-- <div class="col-12" style="margin:1px -8px 38px 5px"> --}}
-                                                <div class="col-md-12 align-right" style="margin:15px -8px 15px">
-                                                    <small>
-                                                        @if ($row->type)
-                                                            {{'خدمة مادية '}}
-                                                        @else
-                                                            {{'خدمة عينية '}}
-                                                        @endif
-                                                        {{$row->name}} {{' تكلفتها '.$row->cost}}
-                                                    </small>
-                                                </div>
-                                            {{-- </div> --}}
+                                            <div class="col-md-12 align-right" style="margin:15px -8px 15px">
+                                                <small>
+                                                    @if ($row->type)
+                                                        {{'خدمة مادية '}}
+                                                    @else
+                                                        {{'خدمة عينية '}}
+                                                    @endif
+                                                    {{$row->name}} {{' تكلفتها '.$row->cost}}
+                                                </small>
+                                            </div>
                                         </a>
                                     @endforeach
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذا الطبيب خدمات' }}
-                                    </div>
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"><!-- Doctors -->
                                 @if($doctor->specialists->count() > 0)
                                     <div class="row">
                                         @foreach ($doctor->specialists as $row)
-                                            <a href="/supervisor/showspecialistDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
-                                                {{-- <div class="col-12" style="margin:12px -8px 38px 5px"> --}}
-                                                    <div class="col-md-12 align-right" style="margin:15px -8px 15px">
-                                                        <h6>{{$row->name}}</h6>
-                                                    </div>
-                                                {{-- </div> --}}
+                                            <a href="/supervisor/showSpecialistDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
+                                                <div class="col-md-12 align-right" style="margin:15px -8px 15px">
+                                                    <h6>{{$row->name}}</h6>
+                                                </div>
                                             </a>
                                         @endforeach
-                                    </div>
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لايوجد لدى هذا العميل تخصصات' }}
                                     </div>
                                 @endif
                             </div>

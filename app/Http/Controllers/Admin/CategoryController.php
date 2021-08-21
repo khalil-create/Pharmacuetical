@@ -6,14 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use App\Models\Company;
+use App\Traits\userTrait;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function getAllCategories()
+    use userTrait;
+    public function getAllCategories(Request $request)
     {
+        if($request->get('id')){
+            $this->unreadNotify($request->get('id'));
+        }
         $cat = Category::with('companies')->get();
-        
         return view('admin.manageCategories',compact('cat',$cat));
     }
     public function addCategory()
@@ -23,12 +27,11 @@ class CategoryController extends Controller
     }
     public function storeCategory(Request $request)
     {
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+        $request->validate(
+            [
+                'name_cat' => 'required|string|max:255',
+            ]
+        );
         $company = Company::find($request->company_id);
         $cat = Category::create([
             'name_cat' => $request->name_cat,
@@ -36,7 +39,7 @@ class CategoryController extends Controller
         //attach is add the new value above the old value even the new is the same old value
         $company->categories()->attach($cat->id);
         
-        return redirect('.admin/manageCategories')->with('status','تم إضافة البيانات بشكل ناجح');
+        return redirect('/admin/manageCategory')->with('status','تم إضافة البيانات بشكل ناجح');
     }
     protected function getRules()
     {
@@ -63,13 +66,18 @@ class CategoryController extends Controller
         $category = Category::find($id);
         if($category->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        $request->validate(
+            [
+                'name_cat' => 'required|string|max:255',
+            ]
+        );
         $category->name_cat = $request->name_cat;
         $category->update();
         
         //sync is delete the old value and add the new value
         $category->companies()->sync($request->company_id);
 
-        return redirect('.admin/manageCategories')->with('status','تم تعديل البيانات بشكل ناجح');
+        return redirect('/admin/manageCategory')->with('status','تم تعديل البيانات بشكل ناجح');
     }
     public function deleteCategory($id)
     {
@@ -77,11 +85,15 @@ class CategoryController extends Controller
         if($category->count() < 1)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
         
-        $category->companies()->detach();
-        $category->items()->delete();
         $category->delete();
-        
+
         return response()->json(['status' => 'تم حذف البيانات بشكل ناجح']);
-        // return redirect('.admin/manageCategories')->with('status','تم حذف البيانات بشكل ناجح');
+    }
+    public function showCategoryDetails($id)
+    {
+        $category = Category::with('items')->findOrfail($id);
+        if($category->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('admin.showCategoryDetails',compact('category'));
     }
 }

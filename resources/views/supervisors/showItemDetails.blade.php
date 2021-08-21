@@ -13,7 +13,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+                        <li class="breadcrumb-item"><a href="/supervisor/manageItem">ادارة الاصناف</a></li>
                         <li class="breadcrumb-item active">تفاصيل الاصناف</li>
                     </ol>
                 </div><!-- /.col -->
@@ -55,7 +55,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-4">
+                        <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">السعر</span>
@@ -63,7 +63,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-4">
+                        <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">البونص</span>
@@ -71,7 +71,7 @@
                                 </div><!-- /.info-box-content -->
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-4">
+                        <div class="col-12 col-sm-6 col-md-2">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     <span class="info-box-text">الوحدة</span>
@@ -80,11 +80,15 @@
                             </div><!-- /.info-box -->
                         </div><!-- /.col -->
                         @if($item->category)
-                            <div class="col-12 col-sm-6 col-md-4">
+                            <div class="col-12 col-sm-6 col-md-2">
                                 <div class="info-box mb-3">
                                     <div class="info-box-content">
                                         <span class="info-box-text">مجموعة الصنف</span>
-                                        <span class="info-box-number">{{$item->category->name_cat}}</span>
+                                        <span class="info-box-number">
+                                            <a href="/supervisor/showCategoryDetails/{{$item->category_id}}" title="تفاصيل">
+                                                {{$item->category->name_cat}}
+                                            </a>
+                                        </span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
@@ -95,36 +99,16 @@
                                         <span class="info-box-text">تمتلكله الشركات التالية:-</span>
                                         <span class="info-box-number">
                                             @foreach ($item->companies as $comp)
-                                                <p class="text-bold">{{$comp->name_company}}</p>
+                                            <a href="/supervisor/showCompanyDetails/{{$comp->id}}" title="تفاصيل">
+                                                - {{$comp->name_company}}
+                                            </a>
                                             @endforeach
                                         </span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div><!-- /.col -->
                         @endif
-                        {{-- <div class="col-12 col-sm-6 col-md-4">
-                            <div class="info-box mb-3">
-                                <div class="info-box-content">
-                                    <span class="info-box-text">المشرفين عليها</span>
-                                    <span class="info-box-number">
-                                        @php $supID_collect = collect(); $found = false; @endphp
-                                        @foreach ($item->companies as $comp)
-                                            @foreach ($supID_collect as $supId)
-                                                @if($supId == $comp->supervisor->id)
-                                                    @php $found = true; @endphp
-                                                    @break;
-                                                @endif
-                                            @endforeach
-                                            @if(!$found)
-                                                <p>{{$comp->supervisor->user->user_name_third}} {{$comp->supervisor->user->user_surname}}</p>
-                                                @php $supID_collect->push($comp->supervisor->id); @endphp
-                                            @endif
-                                        @endforeach
-                                    </span>
-                                </div><!-- /.info-box-content -->
-                            </div><!-- /.info-box -->
-                        </div><!-- /.col --> --}}
-                        <div class="col-12 col-sm-6 col-md-4">
+                        <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
                                 <div class="info-box-content">
                                     @php $date = explode(' ',$item->created_at) @endphp
@@ -190,36 +174,31 @@
                             <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"><!-- uses -->
                                 @if($item->uses->count() > 0)
                                     @foreach ($item->uses as $row)
+<<<<<<< HEAD
+                                        {{-- <a href="/supervisor/showUseDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px"> --}}
+                                        <a class="btn btn-block btn-default btn-lg col-md-12"  style="height: 70px;margin:10px">
+                                            <div class="col-12" style="margin:12px -8px 38px 5px">
+=======
                                         <a href="/supervisor/showUseDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
                                             <div class="col-12" style="margin:1px -8px 38px 5px">
-                                                <div class="col-md-12" style="float:right">
-                                                    <h6 style="float:right">{{$row->use}}</h6>
-                                                </div>
+>>>>>>> 4bc6d0e5719fbdf8d90c9dc20f8daaa499dc4193
+                                                <h6 style="float:right">{{$row->use}}</h6>
                                             </div>
                                         </a>
                                     @endforeach
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لم يتم اضافة اي استخدام لهذا الصنف' }}
-                                    </div>
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"><!-- specialists -->
                                 @if($item->specialists->count() > 0)
                                     <div class="row">
                                         @foreach ($item->specialists as $row)
-                                            <a href="/supervisor/showSpecialistDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
+                                            {{-- <a href="/supervisor/showSpecialistDetails/{{$row->id}}" title="تفاصيل" class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px"> --}}
+                                            <a class="btn btn-block btn-default btn-lg col-md-3"  style="height: 70px;margin:10px">
                                                 <div class="col-12" style="margin:12px -8px 38px 5px">
-                                                    <div class="col-md-12">
-                                                        <h6 style="float:right">{{$row->name}}</h6>
-                                                    </div>
+                                                    <h6 style="float:right">{{$row->name}}</h6>
                                                 </div>
                                             </a>
                                         @endforeach
-                                    </div>
-                                @else
-                                    <div class="alert alert-danger notify-error">
-                                        {{ 'لم يتم اضافة لهذا الصنف اي تخصصات مستهدفة، اذا اردت ذلك فـ عليك تعديل بيانات هذا الصنف واضافة تخصصاته المستهدفة' }}
                                     </div>
                                 @endif
                             </div>

@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageRepresentatives">ادارة مندوبيين المبيعات</a></li>
             <li class="breadcrumb-item active">المناطق الفرعية</li>
           </ol>
         </div><!-- /.col -->
@@ -52,7 +52,7 @@
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                  @if(isset($reps) && $reps->count() > 0)
+                  {{-- @if(isset($reps) && $reps->count() > 0) --}}
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -60,12 +60,12 @@
                       <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                         اسم المندوب
                       </th>
-                    </tr>
+                    {{-- </tr>
                   @elseif($exist == 1)
                     <div class="alert alert-danger notify-success">
                       {{ 'لايوجد مناديب لهذه المنطقة' }}                    
                     </div>
-                  @endif
+                  @endif --}}
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -81,12 +81,12 @@
                   </div>
                   </tbody>
                   <tfoot>
-                  @if(isset($reps) && $reps->count() > 0)
+                  {{-- @if(isset($reps) && $reps->count() > 0) --}}
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">اسم المندوب</th>
                     </tr>
-                  @endif
+                  {{-- @endif --}}
                   </tfoot>
                 </table>
               </div>

@@ -32,21 +32,20 @@ class SupervisorController extends Controller
                 'town' => 'required|string|max:255',
                 'village' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'phonenumber' => 'required|numeric|max:999999999',
+                'phone_number' => 'required|numeric|max:999999999|min:700000000|unique:users',
                 'identitytype' => 'required|string|max:255',
                 'identitynumber' => 'required|numeric',
                 'userimage' => 'required',
                 'password' => 'required|min:6|confirmed',
                 'password_confirmation' => 'required_with:password|same:password|min:6',
             ]);
-
         // $rules = $this->getRules();
         // $rules += ['userimage' => 'required'];
     //  = $this->getMessages();
-        $validator = Validator::make($request->validated());
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->validated());
-        }
+        // $validator = Validator::make($request->validated());
+        // if($validator->fails()){
+        //     return redirect()->back()->withErrors($validator)->withInputs($request->validated());
+        // }
         $file_name = '';
         if($request->hasfile('userimage'))
             $file_name = $this->saveImage($request->file('userimage'),'images/users/');
@@ -62,7 +61,7 @@ class SupervisorController extends Controller
             'town' => $request->town,
             'village' => $request->village,
             'email' => $request->email,
-            'phone_number' => $request->phonenumber,
+            'phone_number' => $request->phone_number,
             'identity_type' => $request->identitytype,
             'identity_number' => $request->identitynumber,
             'user_image' => $file_name,
@@ -78,6 +77,80 @@ class SupervisorController extends Controller
         return redirect('/managerMarketing/manageSupervisors')->with('status','تم إضافة البيانات بشكل ناجح');
     }
 
+    protected function getRules()
+    {
+        return $rules = [
+                'usernamethird' => 'required|string|max:255',
+                'usersurname' => 'required|string|max:255',
+                'sex' => 'required',
+                'birthdate' => 'required',
+                'birthplace' => 'required|string|max:255',
+                'town' => 'required|string|max:255',
+                'village' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'phone_number' => 'required|numeric|max:999999999',
+                'identitytype' => 'required|string|max:255',
+                'identitynumber' => 'required|numeric',
+                // 'userimage' => 'required',
+                'password' => 'required|min:6|confirmed',
+                'password_confirmation' => 'required_with:password|same:password|min:6',
+            ];
+    }
+    protected function getMessages()
+    {
+        return $messages = [
+            'usernamethird.required' => 'يجب عليك كتابة هذا الحقل',
+            'usernamethird.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'usernamethird.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'usersurname.required' => 'يجب عليك كتابة هذا الحقل',
+            'usersurname.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'usersurname.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'birthdate.required' => 'يجب عليك كتابة هذا الحقل',
+            // 'birthdate.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'birthplace.required' => 'يجب عليك كتابة هذا الحقل',
+            'birthplace.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'birthplace.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'town.required' => 'يجب عليك كتابة هذا الحقل',
+            'town.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'town.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'village.required' => 'يجب عليك كتابة هذا الحقل',
+            'village.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'village.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'email.required' => 'يجب عليك كتابة هذا الحقل',
+            'email.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'email.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+            'email.unique' => 'هذا الايميل مستخدم لدى مستخدم اخر',
+            'email.email' => 'هذا ليس بريد اكتروني',
+
+            'phone_number.required' => 'يجب عليك كتابة هذا الحقل',
+            'phone_number.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            'phone_number.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 9',
+            'phone_number.unique' => 'هذا الرقم بالفعل مسجل على حساب اخر.. تأكد من الرقم',
+
+            'identitytype.required' => 'يجب عليك كتابة هذا الحقل',
+            'identitytype.string' => 'يجب ان يكون هذا الحقل نص وليس رقم',
+            'identitytype.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 255',
+
+            'identitynumber.required' => 'يجب عليك كتابة هذا الحقل',
+            'identitynumber.numeric' => 'يجب ان يكون هذا الحقل رقم',
+            // 'identitynumber.max' => 'يجب ان لايتجاوز عدد الاحرف اكثر من 20',
+
+            'userimage.required' => 'يجب عليك تحميل الصورة',
+
+            'password.required' => 'يجب عليك كتابة كلمة السر',
+            'password.min' => ' الحد الادنى لكلمة السر هي 6 احرف',
+
+            'password_confirmation.same' => 'ليست متطابقة مع كلمة السر',
+            'password_confirmation.required_with' => 'ليست متطابقة مع كلمة السر',
+            'password_confirmation.min' => 'الحد الادنى لكلمة السر هي 6 احرف',
+        ];
+    }
     public function getAllSupervisor(Request $request)
     {
         if($request->get('id')){
@@ -105,6 +178,22 @@ class SupervisorController extends Controller
         if(!$user)
             return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
 
+        $request->validate([
+            'usernamethird' => 'required|string|max:255',
+            'usersurname' => 'required|string|max:255',
+            'sex' => 'required',
+            'birthdate' => 'required|before:today',
+            'birthplace' => 'required|string|max:255',
+            'town' => 'required|string|max:255',
+            'village' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email'.($id ? ",$id" : ''),
+            'phone_number' => 'required|numeric|max:999999999|min:700000000|unique:users,phone_number'.($id ? ",$id" : ''),
+            'identitytype' => 'required|string|max:255',
+            'identitynumber' => 'required|numeric',
+            // 'userimage' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+        ]);
         //$user->update($request->validated());
         $user->user_name_third = $request->Input('usernamethird');
         $user->user_surname = $request->Input('usersurname');
@@ -114,7 +203,7 @@ class SupervisorController extends Controller
         $user->town = $request->Input('town');
         $user->village = $request->Input('village');
         $user->email = $request->Input('email');
-        $user->phone_number = $request->Input('phonenumber');
+        $user->phone_number = $request->Input('phone_number');
         $user->identity_type = $request->Input('identitytype');
         $user->identity_number = $request->Input('identitynumber');
         $user->password = bcrypt($request->Input('password'));
@@ -154,5 +243,20 @@ class SupervisorController extends Controller
         if(!$supervisor)
             return redirect()->back()->with(['error' => 'لا توجد بيانات']);
         return view('managers.marketing.mainAreaSupervised',compact('supervisor',$supervisor));
+    }
+    public function showSupervisorDetails($id)
+    {
+        $user = User::findOrfail($id);
+        $supervisor = $user->supervisor;
+        $reps = $supervisor->representatives;
+        $customers = collect();
+        foreach($reps as $rep){
+            $customers = $customers->concat($rep->customers->where('statues',true));
+        }
+        // $doctors = $supervisor->doctors->where('statues',true);
+        if($supervisor->count() < 1)
+            return redirect()->back()->with(['error' => 'هذه البيانات غير موجوده ']);
+        return view('managers.marketing.showSupervisorDetails',compact('supervisor'))
+        ->with('customers',$customers);
     }
 }

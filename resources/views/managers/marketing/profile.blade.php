@@ -14,15 +14,13 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
-              <li class="breadcrumb-item active">بروفايل المستخدم</li>
+              <li class="breadcrumb-item"><a href="/managerMarketing/profile/{{Auth::user()->id}}">البروفايل الشخصي</a></li>
+              <li class="breadcrumb-item active"></li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </div>
-
-    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="card card-default">
@@ -30,14 +28,13 @@
             <span class="card-title" style="float: right">بروفايلي</span>
             <div class="card-tools float-right">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
-              <i class="fas fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="remove">
-              <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </button>
             </div>
-          </div>
-          <!-- /.card-header -->
+          </div><!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
@@ -50,8 +47,11 @@
                   </div>
                   <div class="widget-user-image text-center">
                     <img class="img-circle elevation-2 "
+                    @if(Auth::user()->user_image)
                         src="{{asset('images/users/'.$user->user_image)}}"
-                        alt="User profile picture">
+                    @else
+                        src="{{asset('designImages/user.png')}}"
+                    @endif>
                   </div>
                   <div class="card-footer">
                     <ul class="list-group list-group-unbordered mb-3">
@@ -59,16 +59,16 @@
                           <b>المشرفين</b> <a class="float-right">{{$manager->supervisors->count()}}</a>
                       </li>
                       <li class="list-group-item">
-                        <b>المناديب</b> <a class="float-right">{{App\Models\Representative::all()->count()}}</a>
+                        <b>المندوبيين</b> <a class="float-right">{{App\Models\Representative::all()->count()}}</a>
                       </li>
                       <li class="list-group-item">
-                        <b>العملاء</b> <a class="float-right">{{App\Models\Customer::all()->count()+App\Models\Doctor::all()->count()}}</a>
+                        <b>العملاء</b> <a class="float-right">{{App\Models\Customer::where('statues',true)->get()->count()+App\Models\Doctor::where('statues',true)->get()->count()}}</a>
                       </li>
                       <li class="list-group-item">
                           <b>الشركات</b> <a class="float-right">{{App\Models\Company::all()->count()}}</a>
                       </li>
                     </ul>
-                    <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                    <a href="#" class="btn btn-primary btn-block"><b>{{$user->user_name_third}} {{$user->user_surname}}</b></a>
                   </div><!-- /.card-footer -->
                 </div><!-- /.card -->
               </div>
@@ -77,23 +77,12 @@
                 <div class="card card-primary">
                   <div class="card-header">
                     <h3 class="card-title">About Me</h3>
-                  </div>
-                  <!-- /.card-header -->
+                  </div> <!-- /.card-header -->
                   <div class="card-body">
-                    {{-- <strong><i class="fas fa-book mr-1"></i> الاسم</strong>
-                    <p class="text-muted">
-                      {{$user->user_name_third}} {{$user->user_surname}}
-                    </p>
-
-                    <hr> --}}
                     <strong><i class="fas fa-map-marker-alt mr-1"></i> مكان وتأريخ الميلاد</strong>
                     <p class="text-muted">
                       {{$user->birthplace}} - {{$user->town}} - {{$user->village}} - {{$user->birthdate}}
                     </p>
-                    
-                    {{-- <hr>
-                    <strong><i class="fas fa-map-marker-alt mr-1"></i> تأريخ الميلاد</strong>
-                    <p class="text-muted"></p> --}}
                     
                     <hr>
                     <strong><i class="fas fa-male mr-1"></i> الجنس</strong>
@@ -110,14 +99,10 @@
                     <hr>
                     <strong><i class="fas fa-pencil-alt mr-1"></i>الهوية</strong>
                     <p class="text-muted">{{$user->identity_type}}: {{$user->identity_number}}</p>
-
-                    
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-              </div>
-              <!-- /.col -->
+                  </div><!-- /.card-body -->
+                </div><!-- /.card -->
+              </div><!-- /.col -->
+{{--
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header p-2">
@@ -127,9 +112,10 @@
                       <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">تعديل البيانات </a></li>
                     </ul>
                   </div><!-- /.card-header -->
+
                   <div class="card-body">
                     <div class="tab-content">
-                      <div class="active tab-pane" id="activity">
+                      {{-- <div class="active tab-pane" id="activity">
                         <!-- Post -->
                         <div class="post">
                           <div class="user-block">
@@ -261,7 +247,7 @@
                       <div class="tab-pane" id="settings">
                         <div class="row">
                             <div class="form-group">
-                              <form action="/managerMarketing/supervisorUpdate/{{$user->id}}" class="form" method="POST" enctype="multipart/form-data">
+                              <form action="/managerMarketing/profileUpdate/{{$user->id}}" class="form" method="POST" enctype="multipart/form-data">
                                   {{ csrf_field() }}
                                   {{method_field('PUT')}}
                                   <div class="col-md-6">
@@ -463,8 +449,10 @@
                       </div><!-- /.tab-pane -->
                     </div><!-- /.tab-content -->
                   </div><!-- /.card-body -->
+
                 </div><!-- /.card -->
               </div> <!-- /.col -->
+--}}
             </div><!-- /.row -->
           </div><!-- /.card-body -->
         </div><!-- /.card -->

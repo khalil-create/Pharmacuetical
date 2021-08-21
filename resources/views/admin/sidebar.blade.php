@@ -72,50 +72,108 @@
                 </p>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a href="{{url('manageSupervisors')}}" 
-            class="nav-link {{  $p == 'manageSupervisors' || 
-                                $p == 'addSupervisor' ||
-                                $path =='editSupervisor' || 
-                                $path =='mainAreaSupervised'? 'active' : '' 
+        
+        <li class="nav-item {{ $p == 'admin/manageCompanies' || 
+                                $p == 'admin/companyAdd' ||
+                                $p == 'admin/manageCategory' ||
+                                $p == 'admin/categoryAdd' ||
+                                $p == 'admin/itemAdd' ||
+                                $p == 'admin/manageItem' ||
+                                $path == 'admin/addUseExist' ||
+                                $path == 'admin/addUse' ||
+                                $path == 'admin/editUse' ||
+                                $path == 'admin/companyEdit' ||
+                                $path == 'admin/categoryEdit' ||
+                                $path == 'admin/itemUses' ||
+                                $path == 'admin/showCompanyDetails' ||
+                                $path == 'admin/showCategoryDetails' ||
+                                $path == 'admin/showItemDetails' ||
+                                $path == 'admin/itemEdit'? 'menu-open' : ''
                             }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                ادارة المشرفين
-                <span class="badge badge-info right">6</span>
-                </p>
-            </a>
-        </li> --}}
-        {{-- <li class="nav-item">
-            <a href="{{url('manageRepresentatives')}}" 
-            class="nav-link {{  $p == 'manageRepresentatives' || 
-                                $p == 'addRepresentative' ||
-                                $path == 'showMainareas' ||
-                                $path == 'storeRepMainArea' ||
-                                $path =='editRepresentative'? 'active' : '' 
+            <a href="#"
+            class="nav-link {{  $p == 'admin/manageCompanies' || 
+                                $p == 'admin/companyAdd' ||
+                                $p == 'admin/categoryAdd' ||
+                                $p == 'admin/manageCategory' ||
+                                $p == 'admin/itemAdd' ||
+                                $p == 'admin/manageItem' ||
+                                $path == 'admin/addUseExist' ||
+                                $path == 'admin/addUse' ||
+                                $path == 'admin/editUse' ||
+                                $path == 'admin/companyEdit' ||
+                                $path == 'admin/categoryEdit' ||
+                                $path == 'admin/itemUses' ||
+                                $path == 'admin/showCompanyDetails' ||
+                                $path == 'admin/showCategoryDetails' ||
+                                $path == 'admin/showItemDetails' ||
+                                $path == 'admin/itemEdit'? 'active' : ''
                             }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                ادارة المناديب
-                <span class="badge badge-info right">6</span>
-                </p>
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>ادارة الشركات<i class="right fas fa-angle-left"></i></p>
             </a>
-        </li> --}}
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="{{url('admin/manageCompanies')}}" 
+                class="nav-link {{  $p == 'admin/manageCompanies' ||
+                                    $p == 'admin/companyAdd' ||
+                                $path == 'admin/showCompanyDetails' ||
+                                    $path == 'admin/companyEdit' ? 'active' : '' 
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>الشركات</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{url('admin/manageCategory')}}" 
+                class="nav-link {{  $p == 'admin/manageCategory'||
+                                    $p == 'admin/categoryAdd' ||
+                                $path == 'admin/showCategoryDetails' ||
+                                    $path == 'admin/categoryEdit' ? 'active' : ''
+                                }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>مجموعات الاصناف</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/manageItem')}}" 
+                    class="nav-link {{  $p == 'admin/manageItem'||
+                                        $p == 'admin/itemAdd' ||
+                                        $path == 'admin/addUseExist' ||
+                                        $path == 'admin/editUse' ||
+                                        $path == 'admin/addUse' ||
+                                        $path == 'admin/itemUses' ||
+                                        $path == 'admin/showItemDetails' ||
+                                        $path == 'admin/itemEdit' ? 'active' : ''
+                                    }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>الاصناف</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="nav-item {{ $p == 'admin/manageMainAreas' || 
                                 $p == 'admin/addMainArea' || 
-                                $p == 'admin/addSubArea' || 
                                 $p == 'admin/manageSubAreas' ||
+                                $path == 'admin/addSubArea' || 
                                 $path == 'admin/editMainArea' ||
                                 $path == 'admin/editSubArea' ||
+                                $path =='admin/showMainareaDetails'||
+                                $path =='admin/showSubareaDetails'||
+                                $path =='admin/showSubareaReps'||
+                                $path =='admin/addSubareaReps'||
                                 $path == 'admin/supAreas'? 'menu-open' : ''
                             }}">
             <a href="#"
             class="nav-link {{  $p == 'admin/manageMainAreas' ||
                                 $p == 'admin/addMainArea' || 
-                                $p == 'admin/addSubArea' || 
                                 $p == 'admin/manageSubAreas' || 
+                                $path == 'admin/addSubArea' || 
                                 $path == 'admin/editMainArea'||
                                 $path == 'admin/editSubArea' ||
+                                $path =='admin/showMainareaDetails'||
+                                $path =='admin/showSubareaDetails'||
+                                $path =='admin/showSubareaReps'||
+                                $path =='admin/addSubareaReps'||
                                 $path == 'admin/supAreas'? 'active' : ''
                             }}">
                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -130,6 +188,7 @@
                 class="nav-link {{  $p == 'admin/manageMainAreas' ||
                                     $p == 'admin/addMainArea' || 
                                     $path == 'admin/editMainArea' ||
+                                    $path =='admin/showMainareaDetails'||
                                     $path == 'admin/supAreas'? 'active' : '' 
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -139,7 +198,10 @@
                 <li class="nav-item">
                 <a href="{{url('admin/manageSubAreas')}}" 
                 class="nav-link {{  $p == 'admin/manageSubAreas'||
-                                    $p == 'admin/addSubArea' || 
+                                    $path == 'admin/addSubArea' || 
+                                    $path =='admin/showSubareaDetails'||
+                                    $path =='admin/showSubareaReps'||
+                                    $path =='admin/addSubareaReps'||
                                     $path == 'admin/editSubArea' ? 'active' : ''
                                 }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -148,68 +210,73 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item {{ $p == 'admin/manageCompany' || 
-                                $p == 'admin/addCompany' ||
-                                $p == 'admin/manageCategories' ||
-                                $p == 'admin/addCategory' ||
-                                $p == 'admin/manageItems' ||
-                                $p == 'admin/addItem' ||
-                                $path == 'admin/editCompany' ||
-                                $path == 'admin/editCategries' ||
-                                $path == 'admin/itemUses' ||
-                                $path == 'admin/editItems'? 'menu-open' : ''
+        <li class="nav-item {{  $p == 'admin/manageDoctors' || 
+                                $p == 'admin/manageCustomers' ||
+                                $p == 'admin/manageOrders' ||
+                                $p == 'admin/addDoctor' ||
+                                $p == 'admin/addCustomer' ||
+                                $p == 'admin/addOrder' ||
+                                $path == 'admin/editDoctor' ||
+                                $path == 'admin/editCustomer'||
+                                $path == 'admin/showDoctorDetails'||
+                                $path == 'admin/showCustomerDetails'||
+                                $path == 'admin/showOrderDetails'||
+                                $path == 'admin/editOrder'? 'menu-open' : ''
                             }}">
-            <a href="#"
-            class="nav-link {{  $p == 'admin/manageCompany' || 
-                                $p == 'admin/addCompany' ||
-                                $p == 'admin/addCategory' ||
-                                $p == 'admin/manageCategories' ||
-                                $p == 'admin/manageItems' ||
-                                $p == 'admin/addItem' ||
-                                $path == 'admin/editCompany' ||
-                                $path == 'admin/editCategry' ||
-                                $path == 'admin/itemUses' ||
-                                $path == 'admin/editItem'? 'active' : ''
+            <a href="#"class="nav-link {{  $p == 'admin/manageDoctors' || 
+                                $p == 'admin/manageCustomers' ||
+                                $p == 'admin/manageOrders' ||
+                                $p == 'admin/addDoctor' ||
+                                $p == 'admin/addCustomer' ||
+                                $p == 'admin/addOrder' ||
+                                $path == 'admin/editDoctor' ||
+                                $path == 'admin/editCustomer'||
+                                $path == 'admin/showDoctorDetails'||
+                                $path == 'admin/showCustomerDetails'||
+                                $path == 'admin/showOrderDetails'||
+                                $path == 'admin/editOrder'? 'active' : ''
                             }}">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
-                ادارة الشركات
+                ادارة العملاء
                 <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{url('admin/manageCompany')}}" 
-                class="nav-link {{  $p == 'admin/manageCompany' ||
-                                    $p == 'admin/addCompany' ||
-                                    $path == 'admin/editCompany' ? 'active' : '' 
-                                }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>الشركات</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="{{url('admin/manageCategories')}}" 
-                class="nav-link {{  $p == 'admin/manageCategories'||
-                                    $p == 'admin/addCategory' ||
-                                    $path == 'admin/editCategry' ? 'active' : ''
-                                }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>مجموعات الاصناف</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/manageItems')}}" 
-                    class="nav-link {{  $p == 'admin/manageItems'||
-                                        $p == 'admin/addItem' ||
-                                        $path == 'admin/itemUses' ||
-                                        $path == 'admin/editItem' ? 'active' : ''
+                <a href="/admin/manageDoctors"
+                    class="nav-link {{  $p == 'admin/manageDoctors' || 
+                                        $p == 'admin/addDoctor' ||
+                                        $path == 'admin/showDoctorDetails'||
+                                        $path == 'admin/editDoctor'? 'active' : ''
                                     }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>الاصناف</p>
+                        <i class="far fa-user nav-icon"></i>
+                        <p>الاطباء</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/manageCustomers"
+                        class="nav-link {{  $p == 'admin/manageCustomers' ||
+                                            $p == 'admin/addCustomer' ||
+                                            $path == 'admin/showCustomerDetails'||
+                                            $path == 'admin/editCustomer'? 'active' : ''
+                                        }}" class="nav-link">
+                            <i class="far fa-user nav-icon"></i>
+                            <p>العملاء</p>
                     </a>
-                    </li>
-            </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/manageOrders"
+                    class="nav-link {{  $p == 'admin/manageOrders' ||
+                                        $p == 'admin/addOrder' ||
+                                        $path == 'admin/showOrderDetails'||
+                                        $path == 'admin/editOrder'? 'active' : '' }}">
+                        <i class="fas fa-inbox nav-icon"></i>
+                        <p>الطلبيات</p>
+                    </a>
+                </li>
+            </ul
+            >
         </li>
         <li class="nav-item">
             <a href="{{url('admin/manageSamples')}}" 

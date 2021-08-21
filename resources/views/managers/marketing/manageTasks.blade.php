@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageTasks">ادارة المهام</a></li>
             <li class="breadcrumb-item active">المهام</li>
           </ol>
         </div><!-- /.col -->
@@ -39,8 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                  @if($tasks->count() > 0)                    
+                  <thead>            
                     <tr role="row">
                       <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                         #
@@ -64,11 +63,6 @@
                         العملية
                       </th>
                     </tr>
-                  @else
-                    <div class="alert alert-danger notify-danger">
-                      {{ 'لم يتم اضافة اي مهمة' }}
-                    </div>
-                  @endif
                   </thead>
                   <tbody>
                   <?php $i=1?>
@@ -79,7 +73,6 @@
                       <td>{{ $row->description }}</td>
                       <td>
                         {{ $row->supervisor->user->user_name_third }} {{ $row->supervisor->user->user_surname }}
-                        {{-- {{$row->supervisor_id}} --}}
                       </td>
                       <td>{{ $row->last_date }}</td>
                       <td>
@@ -92,11 +85,6 @@
                       <td>
                         @if ($row->performed == 0)
                           <a href="/managerMarketing/editTask/{{$row->id}}"><i class="nav-icon fas fa-edit"></i></a>
-                          {{-- <form action="/managerMarketing/deleteTask/{{$row->id}}" method="post" style="float: right;">
-                                  {{csrf_field()}}
-                                  {{method_field('DELETE')}}
-                                  <button style="border: none;"><i class="fas fa-trash"></i></button>
-                          </form> --}}
                           <input type="hidden" class="id" value="{{$row->id}}">
                           <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                         @else
@@ -106,7 +94,7 @@
                               $isFile = substr($report,$index + 1);
                           @endphp
                           @if($isFile == 'pdf' || $isFile == 'xlsx' || $isFile == 'docx')
-                            <a href="{{asset('reports/tasks/'.$row->report_task)}}"><i class="fas fa-eye" title="عرض التقرير"></i></a>
+                            <a href="{{asset('reports/tasks/'.$row->report_task)}}" target="blank"  ><i class="fas fa-eye" title="عرض التقرير"></i></a>
                           @else
                             {{$report}}
                           @endif
@@ -118,8 +106,7 @@
                     <a href="{{url('/managerMarketing/addTask')}}" class="btn btn-primary add"><i class="fas fa-plus"></i> اضافة مهمة</a>
                   </div>
                   </tbody>
-                  <tfoot>
-                    @if($tasks->count() > 0)                    
+                  <tfoot>           
                       <tr>
                         <th rowspan="1" colspan="1">#</th>
                         <th rowspan="1" colspan="1">المهمه</th>
@@ -129,7 +116,6 @@
                         <th rowspan="1" colspan="1">الحالة</th>
                         <th rowspan="1" colspan="1">العملية</th>
                       </tr>
-                    @endif
                   </tfoot>
                 </table>
               </div>

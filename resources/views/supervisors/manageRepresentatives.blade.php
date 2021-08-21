@@ -12,7 +12,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/home">الصفحة الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="/supervisor/manageRepresentatives">ادارة المندوبيين</a></li>
             <li class="breadcrumb-item active">المندوبين العلميين</li>
           </ol>
         </div><!-- /.col -->
@@ -23,7 +23,7 @@
     <div class="container-fluid">
       <div class="card card-default">
         <div class="card-header">
-          <h3 class="card-title" style="float: right">قائمة المناديب</h3>
+          <h3 class="card-title" style="float: right">قائمة المندوبين العلميين</h3>
           <div class="card-tools float-right">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
@@ -39,7 +39,6 @@
             <div class="col-sm-12">
               <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 <thead>
-                @if($rep->count() > 0)
                   <tr role="row">
                     <th class="sorting number" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">
                       #
@@ -50,9 +49,6 @@
                     <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                       الصفة الوظيفية
                     </th>
-                    {{-- <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
-                      المشرف
-                    </th> --}}
                     <th class="sorting sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" aria-sort="descending">
                       الجنس
                     </th>
@@ -63,11 +59,6 @@
                       العملية
                     </th>
                   </tr>
-                @else
-                  <div class="alert alert-danger notify-error">
-                    {{ 'لم يتم اضافة اي مندوب' }}
-                  </div>
-                @endif
                 </thead>
                 <tbody>
                 <?php $i=1?>
@@ -79,20 +70,12 @@
                       {{$row->user->user_name_third}} {{$row->user->user_surname}}
                     </td>
                     <td class="sorting_1">{{$row->user->user_type}}</td>
-                    {{-- <td class="sorting_1">
-                      {{$row->supervisor->user->user_name_third}} {{$row->supervisor->user->user_surname}}
-                    </td> --}}
                     <td class="sorting_1">{{$row->user->sex}}</td>
                     <td>{{$row->user->email}}</td>
                     <td>
                       <a href="/supervisor/editRepresentative/{{$row->id}}"><i class="nav-icon fas fa-edit" title="تعديل"></i></a>
                       <a href="/supervisor/showSubareas/{{$row->id}}" title="مناطق هذا المندوب"><i class="fas fa-tasks"></i></a>
                       <a href="/supervisor/showRepDetails/{{$row->id}}" ><i class="fas fa-eye" title="تفاصيل اكثر"></i></a>
-                      {{-- <form action="/supervisor/deleteRepresentative/{{$row->id}}" method="post" style="float: right;">
-                          {{csrf_field()}}
-                          {{method_field('DELETE')}}
-                          <button style="border: none;margin-left: -10px;"><i class="fas fa-trash"></i></button>
-                      </form> --}}
                       <input type="hidden" class="id" value="{{$row->id}}">
                       <a type="button"><i class="fas fa-trash DeleteBtn"></i></a>
                     </td>
@@ -103,17 +86,14 @@
                 </div>
                 </tbody>
                 <tfoot>
-                  @if($rep->count() > 0)
                     <tr>
                       <th rowspan="1" colspan="1">#</th>
                       <th rowspan="1" colspan="1">الاسم</th>
                       <th rowspan="1" colspan="1">الصفة الوظيفية</th>
-                      {{-- <th rowspan="1" colspan="1">المشرف</th> --}}
                       <th rowspan="1" colspan="1">الجنس</th>
                       <th rowspan="1" colspan="1" style="">البريد الالكتروني</th>
                       <th rowspan="1" colspan="1" style="">العملية</th>
                     </tr>
-                  @endif
                 </tfoot>
               </table>
             </div>

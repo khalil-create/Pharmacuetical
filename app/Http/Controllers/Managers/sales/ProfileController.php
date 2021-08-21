@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mangers\sales;
+namespace App\Http\Controllers\Managers\sales;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function index($id)
+    public function profile($id)
     {
         $user = User::findOrfail($id);
-        return view('profile',compact('user')); 
+        return view('managers.sales.profile',compact('user'));
     }
 }
